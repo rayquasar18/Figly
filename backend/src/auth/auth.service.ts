@@ -419,6 +419,28 @@ export class AuthService {
   }
 
   // ---------------------
+  // Get Current User
+  // ---------------------
+
+  async getMe(userId: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        emailVerified: true,
+      },
+    });
+
+    if (!user) {
+      throw new UnauthorizedException('User khong ton tai');
+    }
+
+    return { user };
+  }
+
+  // ---------------------
   // Cookie Management
   // ---------------------
 

@@ -87,10 +87,10 @@ export class AuthController {
   }
 
   @Get('me')
-  @UseGuards(JwtAuthGuard, EmailVerifiedGuard)
+  @UseGuards(JwtAuthGuard)
   async me(@Req() req: Request) {
     const { userId } = req.user as any;
-    return { userId };
+    return this.authService.getMe(userId);
   }
 
   // ---------------------
