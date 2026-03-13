@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-03 Frontend Profile Experience
-last_updated: "2026-03-13T21:24:03.515Z"
-last_activity: 2026-03-14 -- Completed 02-03 Instagram-style profile page with edit modal, signup username, complete-profile gate
+stopped_at: Completed 02-04 Social Graph Frontend
+last_updated: "2026-03-13T21:30:48.266Z"
+last_activity: 2026-03-14 -- Completed 02-04 Follow button, follower/following lists with optimistic UI
 progress:
   total_phases: 10
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 7
-  completed_plans: 6
+  completed_plans: 7
   percent: 85
 ---
 
@@ -21,37 +21,37 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-13)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 2: Profiles & Social Graph
+**Current focus:** Phase 3 (next phase -- Phase 2 complete)
 
 ## Current Position
 
 Phase: 2 of 10 (Profiles & Social Graph)
-Plan: 3 of 4 in current phase (complete)
+Plan: 4 of 4 in current phase (complete)
 Status: Executing
-Last activity: 2026-03-14 -- Completed 02-03 Instagram-style profile page with edit modal, signup username, complete-profile gate
+Last activity: 2026-03-14 -- Completed 02-04 Follow button, follower/following lists with optimistic UI
 
-Progress: [████████░░] 85% (Phase 2: 3/4 plans)
+Progress: [██████████] 100% (Phase 2: 4/4 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 6
-- Average duration: 10 min
-- Total execution time: 0.95 hours
+- Total plans completed: 7
+- Average duration: 9 min
+- Total execution time: 1.0 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation-auth | 3 | 37 min | 12 min |
-| 02-profiles-social-graph | 3 | 20 min | 7 min |
+| 02-profiles-social-graph | 4 | 23 min | 6 min |
 
 **Recent Trend:**
-- Last 5 plans: 11, 7, 6, 7 min
-- Trend: stable
+- Last 5 plans: 7, 6, 7, 3 min
+- Trend: stable/improving
 
 *Updated after each plan completion*
-| Phase 02 P03 | 7 | 3 tasks | 21 files |
+| Phase 02 P04 | 3 | 3 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -88,6 +88,9 @@ Recent decisions affecting current work:
 - [02-03]: Shared signupSchema updated to include username field (was missing vs backend DTO)
 - [02-03]: App layout gates all routes behind username: redirects to /complete-profile if null
 - [02-03]: Follow button rendered as placeholder with data-follow-placeholder for Plan 02-04
+- [02-04]: FollowButton hover shows destructive styling for visual unfollow confirmation cue
+- [02-04]: IntersectionObserver infinite scroll with sentinel div for follower/following lists
+- [02-04]: Debounced search (300ms) on follower/following lists passed to query hooks
 - [Phase 02]: ProfileEditModal uses shadcn Dialog per user decision for modal overlay
 - [Phase 02]: App layout gates all routes behind username: redirects to /complete-profile if null
 
@@ -102,6 +105,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-13T21:24:03.513Z
-Stopped at: Completed 02-03 Frontend Profile Experience
+Last session: 2026-03-13T21:29:05.000Z
+Stopped at: Completed 02-04 Social Graph Frontend
 Resume file: None
