@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-01 Schema & Shared Types
-last_updated: "2026-03-13T20:55:51Z"
-last_activity: 2026-03-14 -- Completed 02-01 Schema extension, shared types/validators, signup username
+stopped_at: Completed 02-02 Profiles & Social Modules
+last_updated: "2026-03-13T21:09:06.024Z"
+last_activity: 2026-03-14 -- Completed 02-02 Profiles & Social NestJS modules with full test coverage
 progress:
   total_phases: 10
   completed_phases: 1
   total_plans: 7
-  completed_plans: 4
-  percent: 25
+  completed_plans: 5
+  percent: 71
 ---
 
 # Project State
@@ -26,28 +26,28 @@ See: .planning/PROJECT.md (updated 2026-03-13)
 ## Current Position
 
 Phase: 2 of 10 (Profiles & Social Graph)
-Plan: 1 of 4 in current phase (complete)
+Plan: 2 of 4 in current phase (complete)
 Status: Executing
-Last activity: 2026-03-14 -- Completed 02-01 Schema extension, shared types/validators, signup username
+Last activity: 2026-03-14 -- Completed 02-02 Profiles & Social NestJS modules with full test coverage
 
-Progress: [███░░░░░░░] 25% (Phase 2: 1/4 plans)
+Progress: [███████░░░] 71% (Phase 2: 2/4 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 4
-- Average duration: 11 min
-- Total execution time: 0.73 hours
+- Total plans completed: 5
+- Average duration: 10 min
+- Total execution time: 0.83 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation-auth | 3 | 37 min | 12 min |
-| 02-profiles-social-graph | 1 | 7 min | 7 min |
+| 02-profiles-social-graph | 2 | 13 min | 7 min |
 
 **Recent Trend:**
-- Last 5 plans: 11, 15, 11, 7 min
+- Last 5 plans: 15, 11, 7, 6 min
 - Trend: improving
 
 *Updated after each plan completion*
@@ -78,6 +78,10 @@ Recent decisions affecting current work:
 - [02-01]: Reserved username check in AuthService (not Zod schema) to separate validation from business logic
 - [02-01]: P2002 catch on signup for username race condition handling
 - [02-01]: avatarId @unique for Prisma one-to-one relation requirement
+- [02-02]: ProfilesModule imports MediaModule for StorageService avatar presigned URL resolution
+- [02-02]: Cursor pagination uses take+1 pattern to avoid separate COUNT query
+- [02-02]: Follow/unfollow idempotent via P2002/P2025 error catching
+- [02-02]: Batch follow-status check with IN clause + Set for O(1) lookup
 
 ### Pending Todos
 
@@ -90,6 +94,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-13T20:55:51Z
-Stopped at: Completed 02-01 Schema & Shared Types
-Resume file: .planning/phases/02-profiles-social-graph/02-02-PLAN.md
+Last session: 2026-03-13T21:09:06Z
+Stopped at: Completed 02-02 Profiles & Social Modules
+Resume file: .planning/phases/02-profiles-social-graph/02-03-PLAN.md
