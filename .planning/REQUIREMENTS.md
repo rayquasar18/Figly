@@ -8,11 +8,11 @@
 ### Authentication
 
 - [x] **AUTH-01**: User can sign up with email and password
-- [ ] **AUTH-02**: User receives email verification after signup
-- [ ] **AUTH-03**: User can reset password via email link
+- [x] **AUTH-02**: User receives email verification after signup
+- [x] **AUTH-03**: User can reset password via email link
 - [x] **AUTH-04**: User session persists across browser refresh
-- [ ] **AUTH-05**: User can log in with Google OAuth
-- [ ] **AUTH-06**: User can log in with Apple Sign-In
+- [x] **AUTH-05**: User can log in with Google OAuth
+- [x] **AUTH-06**: User can log in with Apple Sign-In
 
 ### Profiles
 
@@ -124,11 +124,11 @@
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | AUTH-01 | Phase 1 | Complete |
-| AUTH-02 | Phase 1 | Pending |
-| AUTH-03 | Phase 1 | Pending |
+| AUTH-02 | Phase 1 | Complete |
+| AUTH-03 | Phase 1 | Complete |
 | AUTH-04 | Phase 1 | Complete |
-| AUTH-05 | Phase 1 | Pending |
-| AUTH-06 | Phase 1 | Pending |
+| AUTH-05 | Phase 1 | Complete |
+| AUTH-06 | Phase 1 | Complete |
 | PROF-01 | Phase 2 | Pending |
 | PROF-02 | Phase 2 | Pending |
 | PROF-03 | Phase 2 | Pending |
