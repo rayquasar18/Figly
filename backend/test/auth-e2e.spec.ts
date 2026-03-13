@@ -11,6 +11,7 @@ describe('Auth E2E (real DB)', () => {
   const testEmail = `e2e-${Date.now()}@test.com`;
   const testPassword = 'TestPass123';
   const testName = 'E2E Tester';
+  const testUsername = `e2e_user_${Date.now()}`;
   let cookies: string[] = [];
 
   beforeAll(async () => {
@@ -45,7 +46,7 @@ describe('Auth E2E (real DB)', () => {
   it('POST /api/auth/signup — creates user', async () => {
     const res = await request(app.getHttpServer())
       .post('/api/auth/signup')
-      .send({ email: testEmail, password: testPassword, name: testName })
+      .send({ email: testEmail, password: testPassword, name: testName, username: testUsername })
       .expect(201);
 
     expect(res.body.user.email).toBe(testEmail);
@@ -56,14 +57,14 @@ describe('Auth E2E (real DB)', () => {
   it('POST /api/auth/signup — rejects duplicate email', async () => {
     await request(app.getHttpServer())
       .post('/api/auth/signup')
-      .send({ email: testEmail, password: testPassword, name: testName })
+      .send({ email: testEmail, password: testPassword, name: testName, username: `${testUsername}_dup` })
       .expect(409);
   });
 
   it('POST /api/auth/signup — rejects weak password', async () => {
     const res = await request(app.getHttpServer())
       .post('/api/auth/signup')
-      .send({ email: 'weak@test.com', password: '12345678', name: 'Weak' })
+      .send({ email: 'weak@test.com', password: '12345678', name: 'Weak', username: 'weakuser' })
       .expect(400);
 
     expect(res.body.message).toBeDefined();
