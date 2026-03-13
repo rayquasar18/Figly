@@ -1,28 +1,16 @@
 ---
 phase: 01-foundation-auth
-verified: 2026-03-13T14:15:00Z
-status: gaps_found
-score: 16/18 must-haves verified
-gaps:
-  - truth: "File uploaded via media endpoint is processed into 3 thumbnail sizes"
-    status: failed
-    reason: "MediaProcessor is a plain @Injectable() class — it does not carry the @Processor('media-processing') decorator from @nestjs/bullmq and does not extend WorkerHost. BullMQ has no mechanism to dispatch queued jobs to it. The process() method logic is sound and unit-tested in isolation, but it will never be called at runtime."
-    artifacts:
-      - path: "backend/src/media/media.processor.ts"
-        issue: "Missing @Processor('media-processing') decorator and WorkerHost extension; class is registered as a plain NestJS provider, not a BullMQ worker"
-    missing:
-      - "Add `import { Processor, WorkerHost } from '@nestjs/bullmq'` to media.processor.ts"
-      - "Replace `@Injectable()` with `@Processor('media-processing')` on the MediaProcessor class"
-      - "Extend class with `extends WorkerHost` so BullMQ can discover and invoke the process() method"
-      - "Confirm media.module.ts still registers the class as a provider (already done)"
-  - truth: "Processed media is retrievable via presigned URL"
-    status: partial
-    reason: "GET /media/:id returns presigned URLs correctly once Media record has COMPLETED status, but since the processor is never invoked by BullMQ, records remain in PROCESSING state indefinitely at runtime. The wiring for retrieving URLs is correct; the blocker is the same processor registration gap."
-    artifacts:
-      - path: "backend/src/media/media.processor.ts"
-        issue: "Same as above — media records will never reach COMPLETED status at runtime"
-    missing:
-      - "Same fix as gap 1 — fix the @Processor decorator so processing actually completes"
+verified: 2026-03-13T14:45:00Z
+status: passed
+score: 18/18 must-haves verified
+re_verification:
+  previous_status: gaps_found
+  previous_score: 16/18
+  gaps_closed:
+    - "File uploaded via media endpoint is processed into 3 thumbnail sizes — MediaProcessor now has @Processor('media-processing') and extends WorkerHost"
+    - "Processed media is retrievable via presigned URL — root cause (processor not wired to BullMQ) is resolved; records will now reach COMPLETED status at runtime"
+  gaps_remaining: []
+  regressions: []
 human_verification:
   - test: "Full auth flow in browser"
     expected: "Visit http://localhost:3000 -> redirected to /login; signup -> verify email (check Resend or server log) -> login -> dashboard shows 'Chao mung, {name}!'; refresh page stays logged in; logout returns to /login"
@@ -44,9 +32,9 @@ human_verification:
 # Phase 1: Foundation and Auth Verification Report
 
 **Phase Goal:** Users can securely create accounts, authenticate, and the entire infrastructure (monorepo, database, media pipeline) is operational for all subsequent phases
-**Verified:** 2026-03-13T14:15:00Z
-**Status:** gaps_found
-**Re-verification:** No — initial verification
+**Verified:** 2026-03-13T14:45:00Z
+**Status:** passed
+**Re-verification:** Yes — after gap closure (previous score 16/18, now 18/18)
 
 ---
 
@@ -72,10 +60,10 @@ human_verification:
 | 14 | User can log in with Google OAuth | VERIFIED | GoogleStrategy validates via handleGoogleLogin(); GET /auth/google and callback implemented; GoogleAuthGuard registered |
 | 15 | User can log in with Apple Sign-In | VERIFIED | AppleStrategy validates via handleAppleLogin(); POST /auth/apple and callback implemented; POST callback correctly handles Apple's POST-based flow |
 | 16 | OAuth login links to existing account if email matches | VERIFIED | handleGoogleLogin() and handleAppleLogin() both: findByProviderId -> findByEmail (link + set emailVerified=true) -> create new |
-| 17 | File uploaded via media endpoint is processed into 3 thumbnail sizes | FAILED | MediaProcessor is missing @Processor('media-processing') decorator and WorkerHost extension. BullMQ cannot dispatch queued jobs to it at runtime. Unit tests call processor.process() directly — they pass but don't validate the BullMQ wiring |
-| 18 | Processed media is retrievable via presigned URL | PARTIAL | StorageService.getPresignedUrl() and MediaService.getMedia() are correctly implemented. Presigned URL generation logic is verified. However, media records will remain in PROCESSING status at runtime because the processor is never invoked, meaning largeKey/mediumKey/thumbnailKey remain null |
+| 17 | File uploaded via media endpoint is processed into 3 thumbnail sizes | VERIFIED | MediaProcessor now carries `@Processor('media-processing')` at line 15 and `extends WorkerHost` at line 16. BullMQ will discover and dispatch queued jobs to the `process()` method. Sharp resizes to thumbnail/medium/large and uploads each variant to MinIO. |
+| 18 | Processed media is retrievable via presigned URL | VERIFIED | Root cause resolved: processor is now wired to BullMQ. Once a job completes, the media record is updated to COMPLETED with thumbnailKey/mediumKey/largeKey set. StorageService.getPresignedUrl() and MediaService.getMedia() were already correct. |
 
-**Score:** 16/18 truths verified (1 failed, 1 partial — both from same root cause)
+**Score:** 18/18 truths verified
 
 ---
 
@@ -103,7 +91,7 @@ human_verification:
 | `frontend/src/app/(auth)/login/page.tsx` | Login page with form and OAuth buttons | VERIFIED | 52 lines; LoginForm + SocialLoginButtons; "hoac" divider; links to signup and forgot-password |
 | `frontend/src/app/(auth)/signup/page.tsx` | Signup page with form | VERIFIED | 34 lines; SignupForm; link to login |
 | `backend/src/media/media.service.ts` | Upload, queue processing, get status | VERIFIED | 100 lines; validates mimetype/size; uploads to MinIO; creates Media record; queues job; getMedia with presigned URLs |
-| `backend/src/media/media.processor.ts` | BullMQ worker for image resizing | STUB | 74 lines; logic is substantive but missing @Processor decorator and WorkerHost extension — not wired to BullMQ job queue at runtime |
+| `backend/src/media/media.processor.ts` | BullMQ worker for image resizing | VERIFIED | 77 lines; `@Processor('media-processing')` at line 15; `extends WorkerHost` at line 16; `super()` in constructor; process() downloads original, sharp-resizes to 3 sizes, uploads variants, updates DB to COMPLETED |
 | `backend/src/media/storage.service.ts` | MinIO/S3 abstraction | VERIFIED | 90 lines; upload, download, getPresignedUrl; onModuleInit creates bucket |
 
 ---
@@ -123,8 +111,8 @@ human_verification:
 | `frontend/src/lib/api-client.ts` | `backend/src/auth/auth.controller.ts` | HTTP with credentials (cookies) | WIRED | `withCredentials: true` on axios instance; 401 interceptor POSTs to /auth/refresh |
 | `frontend/src/hooks/queries/auth-queries.ts` | `frontend/src/lib/api-client.ts` | TanStack Query hooks | WIRED | `import { apiClient } from '@/lib/api-client'`; used in all 7 query/mutation functions |
 | `frontend/src/app/(app)/layout.tsx` | `frontend/src/hooks/queries/auth-queries.ts` | Auth guard redirect | WIRED | `import { useMe }` from auth-queries; `router.replace('/login')` when !user; `router.replace('/verify-email')` when !emailVerified |
-| `backend/src/media/media.service.ts` | `backend/src/media/media.processor.ts` | BullMQ job queue | NOT_WIRED | mediaQueue.add() correctly queues the job, but MediaProcessor has no @Processor decorator — BullMQ will never route the job to it |
-| `backend/src/media/media.processor.ts` | `backend/src/media/storage.service.ts` | S3 upload of processed variants | PARTIAL | storageService.upload() call exists in code; would work IF processor were invoked; not wired at BullMQ level |
+| `backend/src/media/media.service.ts` | `backend/src/media/media.processor.ts` | BullMQ job queue | WIRED | mediaQueue.add() queues job; MediaProcessor registered as provider in media.module.ts with @Processor('media-processing') — BullMQ will route the job to process() |
+| `backend/src/media/media.processor.ts` | `backend/src/media/storage.service.ts` | S3 upload of processed variants | WIRED | storageService.upload() called for each of 3 variants inside process(); StorageService injected via constructor |
 
 ---
 
@@ -139,7 +127,7 @@ human_verification:
 | AUTH-05 | 01-02, 01-03 | User can log in with Google OAuth | SATISFIED | GoogleStrategy, GoogleAuthGuard, GET /auth/google + callback endpoint; SocialLoginButtons component redirects to /auth/google |
 | AUTH-06 | 01-02, 01-03 | User can log in with Apple Sign-In | SATISFIED | AppleStrategy, AppleAuthGuard, POST /auth/apple + callback endpoint; SocialLoginButtons component |
 
-All 6 AUTH requirements are satisfied. No orphaned requirements — REQUIREMENTS.md traceability maps AUTH-01 through AUTH-06 exclusively to Phase 1, and all three plans claimed all 6 requirements.
+All 6 AUTH requirements are satisfied. No orphaned requirements.
 
 ---
 
@@ -147,8 +135,9 @@ All 6 AUTH requirements are satisfied. No orphaned requirements — REQUIREMENTS
 
 | File | Line | Pattern | Severity | Impact |
 |------|------|---------|----------|--------|
-| `backend/src/media/media.processor.ts` | 14-15 | Missing `@Processor('media-processing')` decorator; uses `@Injectable()` only | Blocker | BullMQ jobs queued by MediaService will never be picked up at runtime. Media thumbnails are never generated. Records remain in PROCESSING state indefinitely. |
-| `backend/src/auth/strategies/apple.strategy.ts` | 13-22 | Dynamic `require('passport-apple')` with DummyStrategy fallback | Warning | If passport-apple is not installed, Apple Sign-In silently uses a no-op strategy with no error. Should fail loudly. |
+| `backend/src/auth/strategies/apple.strategy.ts` | 13-22 | Dynamic `require('passport-apple')` with DummyStrategy fallback | Warning | If passport-apple is not installed, Apple Sign-In silently uses a no-op strategy with no error. Should fail loudly. Non-blocking for other phase goals. |
+
+The previous blocker anti-pattern (missing `@Processor` on MediaProcessor) is resolved.
 
 ---
 
@@ -182,21 +171,27 @@ All 6 AUTH requirements are satisfied. No orphaned requirements — REQUIREMENTS
 
 **Test:** Send 6 rapid POST requests to /auth/login with invalid credentials within 1 minute
 **Expected:** First 5 return 401 (wrong credentials), 6th returns 429 Too Many Requests
-**Why human:** Requires running backend and rapid HTTP calls (can use curl but needs human to execute)
+**Why human:** Requires running backend and rapid HTTP calls
+
+### 6. End-to-End Media Processing
+
+**Test:** After auth, upload a JPEG image via POST /media/upload; poll GET /media/:id until status changes from PROCESSING to COMPLETED; fetch the returned presigned URL and confirm the image loads at the correct dimensions
+**Expected:** All 3 variant keys (thumbnailKey, mediumKey, largeKey) are populated; presigned URLs return 200 with image/webp content type
+**Why human:** Requires Docker (MinIO + Redis), a running BullMQ worker process, and HTTP inspection
 
 ---
 
 ## Gaps Summary
 
-Two truths failed, both from the **same root cause**: `MediaProcessor` is missing the `@Processor('media-processing')` decorator from `@nestjs/bullmq` and does not extend `WorkerHost`.
+Both previously identified gaps are now closed.
 
-**Root cause:** The plan specified extending `WorkerHost` and using `@Processor`, but the implementation used only `@Injectable()`. The unit tests call `processor.process()` directly — bypassing BullMQ entirely — so the tests pass while the runtime wiring is broken.
+**Gap 1 (resolved):** `MediaProcessor` now has `@Processor('media-processing')` (line 15) and `extends WorkerHost` (line 16) with `super()` in the constructor. `Processor` and `WorkerHost` are imported from `@nestjs/bullmq`. BullMQ will discover the worker and dispatch queued jobs to `process()`.
 
-**Impact on phase goal:** The auth infrastructure goal is fully achieved. The media pipeline goal ("infrastructure operational for all subsequent phases") is partially achieved: upload validation, MinIO storage, DB record creation, job queuing, presigned URL retrieval, and Sharp image processing logic all exist and are correct. Only the BullMQ dispatch wiring is missing, which means images will never actually be processed at runtime until this is fixed.
+**Gap 2 (resolved by same fix):** Because the processor is now properly wired to BullMQ, media records will advance from PROCESSING to COMPLETED at runtime. `StorageService.getPresignedUrl()` and `MediaService.getMedia()` were already correct — the presigned URL retrieval path was never broken, only unreachable.
 
-**Fix is minimal:** Add `@Processor('media-processing')` decorator, extend `WorkerHost`, and the existing `process()` method will be picked up automatically by BullMQ.
+**Remaining warning (non-blocking):** The dynamic `require('passport-apple')` with a silent DummyStrategy fallback in apple.strategy.ts remains. This is a warning-level concern that does not block any current phase goals.
 
 ---
 
-_Verified: 2026-03-13T14:15:00Z_
+_Verified: 2026-03-13T14:45:00Z_
 _Verifier: Claude (gsd-verifier)_
