@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 2 plans verified, auto-advancing to execute
-last_updated: "2026-03-13T20:46:27.618Z"
-last_activity: 2026-03-13 -- Completed 01-03 Frontend Auth + Media Pipeline
+stopped_at: Completed 02-01 Schema & Shared Types
+last_updated: "2026-03-13T20:55:51Z"
+last_activity: 2026-03-14 -- Completed 02-01 Schema extension, shared types/validators, signup username
 progress:
   total_phases: 10
   completed_phases: 1
   total_plans: 7
-  completed_plans: 3
-  percent: 100
+  completed_plans: 4
+  percent: 25
 ---
 
 # Project State
@@ -21,33 +21,34 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-13)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 1: Foundation & Auth
+**Current focus:** Phase 2: Profiles & Social Graph
 
 ## Current Position
 
-Phase: 1 of 10 (Foundation & Auth)
-Plan: 3 of 3 in current phase (checkpoint pending)
+Phase: 2 of 10 (Profiles & Social Graph)
+Plan: 1 of 4 in current phase (complete)
 Status: Executing
-Last activity: 2026-03-13 -- Completed 01-03 Frontend Auth + Media Pipeline
+Last activity: 2026-03-14 -- Completed 02-01 Schema extension, shared types/validators, signup username
 
-Progress: [██████████] 100% (Phase 1)
+Progress: [███░░░░░░░] 25% (Phase 2: 1/4 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 3
-- Average duration: 12 min
-- Total execution time: 0.62 hours
+- Total plans completed: 4
+- Average duration: 11 min
+- Total execution time: 0.73 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation-auth | 3 | 37 min | 12 min |
+| 02-profiles-social-graph | 1 | 7 min | 7 min |
 
 **Recent Trend:**
-- Last 5 plans: 11, 15, 11 min
-- Trend: stable
+- Last 5 plans: 11, 15, 11, 7 min
+- Trend: improving
 
 *Updated after each plan completion*
 
@@ -73,6 +74,10 @@ Recent decisions affecting current work:
 - [Phase 01-03]: Removed EmailVerifiedGuard from /me so frontend can distinguish unverified from unauthenticated
 - [Phase 01-03]: /me returns full PublicUser object for frontend display
 - [Phase 01-03]: Queue pattern for concurrent 401 refresh: only one refresh in flight
+- [02-01]: Username nullable on User model to support existing OAuth users without usernames
+- [02-01]: Reserved username check in AuthService (not Zod schema) to separate validation from business logic
+- [02-01]: P2002 catch on signup for username race condition handling
+- [02-01]: avatarId @unique for Prisma one-to-one relation requirement
 
 ### Pending Todos
 
@@ -85,6 +90,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-13T20:46:27.616Z
-Stopped at: Phase 2 plans verified, auto-advancing to execute
-Resume file: .planning/phases/02-profiles-social-graph/02-01-PLAN.md
+Last session: 2026-03-13T20:55:51Z
+Stopped at: Completed 02-01 Schema & Shared Types
+Resume file: .planning/phases/02-profiles-social-graph/02-02-PLAN.md

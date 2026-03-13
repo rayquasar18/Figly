@@ -16,8 +16,8 @@
 
 ### Profiles
 
-- [ ] **PROF-01**: User can create profile with display name and avatar
-- [ ] **PROF-02**: User can write and edit bio
+- [x] **PROF-01**: User can create profile with display name and avatar
+- [x] **PROF-02**: User can write and edit bio
 - [ ] **PROF-03**: User can view other users' profiles with post grid
 - [ ] **PROF-04**: User profile has collection showcase tab showing owned items
 
@@ -129,8 +129,8 @@
 | AUTH-04 | Phase 1 | Complete |
 | AUTH-05 | Phase 1 | Complete |
 | AUTH-06 | Phase 1 | Complete |
-| PROF-01 | Phase 2 | Pending |
-| PROF-02 | Phase 2 | Pending |
+| PROF-01 | Phase 2 | Complete |
+| PROF-02 | Phase 2 | Complete |
 | PROF-03 | Phase 2 | Pending |
 | PROF-04 | Phase 4 | Pending |
 | CONT-01 | Phase 3 | Pending |
