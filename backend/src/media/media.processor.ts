@@ -1,4 +1,5 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
+import { Processor, WorkerHost } from '@nestjs/bullmq';
 import { Job } from 'bullmq';
 import * as sharp from 'sharp';
 import { PrismaService } from '../prisma/prisma.service';
@@ -11,14 +12,16 @@ interface MediaJobData {
   userId: string;
 }
 
-@Injectable()
-export class MediaProcessor {
+@Processor('media-processing')
+export class MediaProcessor extends WorkerHost {
   private readonly logger = new Logger(MediaProcessor.name);
 
   constructor(
     private prisma: PrismaService,
     private storageService: StorageService,
-  ) {}
+  ) {
+    super();
+  }
 
   async process(job: Job<MediaJobData>): Promise<void> {
     const { mediaId, originalKey } = job.data;
