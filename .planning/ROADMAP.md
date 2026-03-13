@@ -35,12 +35,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. User can reset a forgotten password by receiving an email link and setting a new password
   4. The monorepo builds and runs locally with Next.js frontend communicating with NestJS backend against a real PostgreSQL database
   5. A file uploaded through the media endpoint is processed asynchronously and retrievable via CDN URL
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: TBD
-- [ ] 01-02: TBD
-- [ ] 01-03: TBD
+- [ ] 01-01-PLAN.md — Monorepo scaffold, Docker Compose, Prisma schema, shared package, test infrastructure
+- [ ] 01-02-PLAN.md — Auth backend: email/password, JWT sessions, email verification, password reset, Google + Apple OAuth
+- [ ] 01-03-PLAN.md — Frontend auth pages, API client with silent refresh, media upload pipeline (MinIO + BullMQ + Sharp)
 
 ### Phase 2: Profiles & Social Graph
 **Goal**: Users can set up their identity and build a social network by following other collectors
@@ -182,7 +182,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Auth | 0/3 | Not started | - |
+| 1. Foundation & Auth | 0/3 | Planning complete | - |
 | 2. Profiles & Social Graph | 0/2 | Not started | - |
 | 3. Content & Feed | 0/3 | Not started | - |
 | 4. Collection System | 0/3 | Not started | - |
