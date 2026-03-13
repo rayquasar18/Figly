@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useMe } from '@/hooks/queries/auth-queries';
 
 export default function AppLayout({
@@ -10,6 +10,7 @@ export default function AppLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
   const { data: user, isLoading, isError } = useMe();
 
   useEffect(() => {
@@ -24,10 +25,23 @@ export default function AppLayout({
     }
   }, [user, isLoading, router]);
 
+  // Username gate: redirect OAuth users without username to complete-profile
+  useEffect(() => {
+    if (
+      !isLoading &&
+      user &&
+      user.emailVerified &&
+      !user.username &&
+      pathname !== '/complete-profile'
+    ) {
+      router.replace('/complete-profile');
+    }
+  }, [user, isLoading, pathname, router]);
+
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      <div className="flex min-h-dvh items-center justify-center">
+        <div className="size-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
       </div>
     );
   }
@@ -37,6 +51,11 @@ export default function AppLayout({
   }
 
   if (!user.emailVerified) {
+    return null;
+  }
+
+  // Allow complete-profile page even without username
+  if (!user.username && pathname !== '/complete-profile') {
     return null;
   }
 

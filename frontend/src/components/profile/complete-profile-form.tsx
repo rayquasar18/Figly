@@ -3,9 +3,10 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { signupSchema, type SignupDto, USERNAME_RULES } from '@figly/shared';
-import { useSignupMutation } from '@/hooks/queries/auth-queries';
-import { useCheckUsername } from '@/hooks/queries/profile-queries';
+import { z } from 'zod';
+import { usernameSchema, USERNAME_RULES } from '@figly/shared';
+import { useUpdateProfile, useCheckUsername } from '@/hooks/queries/profile-queries';
+import { useAuthStore } from '@/stores/auth-store';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -18,22 +19,31 @@ import {
   FormDescription,
 } from '@/components/ui/form';
 import { useRouter } from 'next/navigation';
-import { AxiosError } from 'axios';
+import { toast } from 'sonner';
 import { Check, X, Loader2 } from 'lucide-react';
 
-export function SignupForm() {
+const completeProfileSchema = z.object({
+  username: usernameSchema,
+  displayName: z
+    .string()
+    .min(1, { message: 'Ten hien thi khong duoc de trong' })
+    .max(50, { message: 'Ten hien thi khong duoc vuot qua 50 ky tu' })
+    .optional(),
+});
+
+type CompleteProfileForm = z.infer<typeof completeProfileSchema>;
+
+export function CompleteProfileForm() {
   const router = useRouter();
-  const signupMutation = useSignupMutation();
-  const [serverError, setServerError] = useState<string | null>(null);
+  const updateProfile = useUpdateProfile();
+  const { user } = useAuthStore();
   const [debouncedUsername, setDebouncedUsername] = useState('');
 
-  const form = useForm<SignupDto>({
-    resolver: zodResolver(signupSchema),
+  const form = useForm<CompleteProfileForm>({
+    resolver: zodResolver(completeProfileSchema),
     defaultValues: {
-      email: '',
-      password: '',
-      name: '',
       username: '',
+      displayName: user?.name ?? '',
     },
   });
 
@@ -51,53 +61,25 @@ export function SignupForm() {
   const { data: usernameCheck, isFetching: isCheckingUsername } =
     useCheckUsername(shouldCheck ? debouncedUsername : '');
 
-  async function onSubmit(data: SignupDto) {
-    setServerError(null);
+  async function onSubmit(data: CompleteProfileForm) {
     try {
-      await signupMutation.mutateAsync(data);
-      router.push('/verify-email');
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        const message = error.response?.data?.message;
-        if (typeof message === 'string') {
-          setServerError(message);
-        } else {
-          setServerError('Dang ky that bai. Vui long thu lai.');
-        }
-      } else {
-        setServerError('Dang ky that bai. Vui long thu lai.');
-      }
+      await updateProfile.mutateAsync({
+        username: data.username,
+        displayName: data.displayName || undefined,
+      });
+      toast.success('Ho so da duoc cap nhat');
+      router.replace('/');
+    } catch (error: unknown) {
+      const message =
+        (error as { response?: { data?: { message?: string } } })?.response
+          ?.data?.message ?? 'Cap nhat that bai. Vui long thu lai.';
+      toast.error(message);
     }
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        {serverError && (
-          <div className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">
-            {serverError}
-          </div>
-        )}
-
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Ten</FormLabel>
-              <FormControl>
-                <Input
-                  type="text"
-                  placeholder="Nhap ten cua ban"
-                  autoComplete="name"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         <FormField
           control={form.control}
           name="username"
@@ -139,34 +121,14 @@ export function SignupForm() {
 
         <FormField
           control={form.control}
-          name="email"
+          name="displayName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Ten hien thi</FormLabel>
               <FormControl>
                 <Input
-                  type="email"
-                  placeholder="email@example.com"
-                  autoComplete="email"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Mat khau</FormLabel>
-              <FormControl>
-                <Input
-                  type="password"
-                  placeholder="It nhat 8 ky tu, co chu va so"
-                  autoComplete="new-password"
+                  placeholder="Ten hien thi cua ban"
+                  autoComplete="name"
                   {...field}
                 />
               </FormControl>
@@ -178,9 +140,16 @@ export function SignupForm() {
         <Button
           type="submit"
           className="w-full"
-          disabled={signupMutation.isPending}
+          disabled={updateProfile.isPending}
         >
-          {signupMutation.isPending ? 'Dang dang ky...' : 'Dang ky'}
+          {updateProfile.isPending ? (
+            <>
+              <Loader2 className="mr-1.5 size-4 animate-spin" />
+              Dang luu...
+            </>
+          ) : (
+            'Tiep tuc'
+          )}
         </Button>
       </form>
     </Form>
