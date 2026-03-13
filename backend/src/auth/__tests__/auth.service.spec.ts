@@ -5,6 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import * as argon2 from 'argon2';
 import { AuthService } from '../auth.service';
 import { PrismaService } from '../../prisma/prisma.service';
+import { EmailService } from '../../email/email.service';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -41,11 +42,17 @@ describe('AuthService', () => {
     }),
   };
 
+  const mockEmailService = {
+    sendVerificationEmail: jest.fn(),
+    sendPasswordResetEmail: jest.fn(),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
         { provide: PrismaService, useValue: mockPrisma },
+        { provide: EmailService, useValue: mockEmailService },
         { provide: JwtService, useValue: mockJwtService },
         { provide: ConfigService, useValue: mockConfigService },
       ],

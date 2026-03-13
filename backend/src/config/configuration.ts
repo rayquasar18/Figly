@@ -21,4 +21,16 @@ export default () => ({
   resend: {
     apiKey: process.env.RESEND_API_KEY || '',
   },
+  google: {
+    clientId: process.env.GOOGLE_CLIENT_ID || '',
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+    callbackUrl: process.env.GOOGLE_CALLBACK_URL || 'http://localhost:4000/api/auth/google/callback',
+  },
+  apple: {
+    clientId: process.env.APPLE_CLIENT_ID || '',
+    teamId: process.env.APPLE_TEAM_ID || '',
+    keyId: process.env.APPLE_KEY_ID || '',
+    privateKey: process.env.APPLE_PRIVATE_KEY || '',
+    callbackUrl: process.env.APPLE_CALLBACK_URL || 'http://localhost:4000/api/auth/apple/callback',
+  },
 });
