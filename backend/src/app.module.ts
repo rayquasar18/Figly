@@ -1,10 +1,12 @@
 import { join } from 'path';
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
+import { BullModule } from '@nestjs/bullmq';
 import { APP_GUARD } from '@nestjs/core';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
+import { MediaModule } from './media/media.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -29,8 +31,22 @@ import configuration from './config/configuration';
         limit: 5,
       },
     ]),
+    BullModule.forRootAsync({
+      useFactory: (configService: ConfigService) => {
+        const redisUrl = configService.get<string>('redis.url') || 'redis://localhost:6379';
+        const url = new URL(redisUrl);
+        return {
+          connection: {
+            host: url.hostname,
+            port: parseInt(url.port || '6379', 10),
+          },
+        };
+      },
+      inject: [ConfigService],
+    }),
     PrismaModule,
     AuthModule,
+    MediaModule,
   ],
   controllers: [],
   providers: [
