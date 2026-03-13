@@ -1,7 +1,7 @@
 # Requirements: Figly
 
 **Defined:** 2026-03-13
-**Core Value:** Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập trong cộng đồng cùng đam mê — kết hợp social media với collection tracking.
+**Core Value:** Nguoi suu tap co the chia se, khoe va quan ly bo suu tap trong cong dong cung dam me -- ket hop social media voi collection tracking.
 
 ## v1 Requirements
 
@@ -123,63 +123,63 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01 | — | Pending |
-| AUTH-02 | — | Pending |
-| AUTH-03 | — | Pending |
-| AUTH-04 | — | Pending |
-| AUTH-05 | — | Pending |
-| AUTH-06 | — | Pending |
-| PROF-01 | — | Pending |
-| PROF-02 | — | Pending |
-| PROF-03 | — | Pending |
-| PROF-04 | — | Pending |
-| CONT-01 | — | Pending |
-| CONT-02 | — | Pending |
-| CONT-03 | — | Pending |
-| CONT-04 | — | Pending |
-| CONT-05 | — | Pending |
-| CONT-06 | — | Pending |
-| CONT-07 | — | Pending |
-| CONT-08 | — | Pending |
-| CONT-09 | — | Pending |
-| CONT-10 | — | Pending |
-| CONT-11 | — | Pending |
-| INTR-01 | — | Pending |
-| INTR-02 | — | Pending |
-| INTR-03 | — | Pending |
-| INTR-04 | — | Pending |
-| INTR-05 | — | Pending |
-| SOCL-01 | — | Pending |
-| SOCL-02 | — | Pending |
-| SOCL-03 | — | Pending |
-| SOCL-04 | — | Pending |
-| DISC-01 | — | Pending |
-| DISC-02 | — | Pending |
-| DISC-03 | — | Pending |
-| COLL-01 | — | Pending |
-| COLL-02 | — | Pending |
-| COLL-03 | — | Pending |
-| COLL-04 | — | Pending |
-| COLL-05 | — | Pending |
-| COLL-06 | — | Pending |
-| COLL-07 | — | Pending |
-| MESG-01 | — | Pending |
-| MESG-02 | — | Pending |
-| MESG-03 | — | Pending |
-| MESG-04 | — | Pending |
-| NOTF-01 | — | Pending |
-| NOTF-02 | — | Pending |
-| NOTF-03 | — | Pending |
-| MODR-01 | — | Pending |
-| MODR-02 | — | Pending |
-| MODR-03 | — | Pending |
-| MODR-04 | — | Pending |
+| AUTH-01 | Phase 1 | Pending |
+| AUTH-02 | Phase 1 | Pending |
+| AUTH-03 | Phase 1 | Pending |
+| AUTH-04 | Phase 1 | Pending |
+| AUTH-05 | Phase 1 | Pending |
+| AUTH-06 | Phase 1 | Pending |
+| PROF-01 | Phase 2 | Pending |
+| PROF-02 | Phase 2 | Pending |
+| PROF-03 | Phase 2 | Pending |
+| PROF-04 | Phase 4 | Pending |
+| CONT-01 | Phase 3 | Pending |
+| CONT-02 | Phase 3 | Pending |
+| CONT-03 | Phase 3 | Pending |
+| CONT-04 | Phase 3 | Pending |
+| CONT-05 | Phase 3 | Pending |
+| CONT-06 | Phase 3 | Pending |
+| CONT-07 | Phase 4 | Pending |
+| CONT-08 | Phase 9 | Pending |
+| CONT-09 | Phase 9 | Pending |
+| CONT-10 | Phase 10 | Pending |
+| CONT-11 | Phase 10 | Pending |
+| INTR-01 | Phase 3 | Pending |
+| INTR-02 | Phase 3 | Pending |
+| INTR-03 | Phase 3 | Pending |
+| INTR-04 | Phase 3 | Pending |
+| INTR-05 | Phase 3 | Pending |
+| SOCL-01 | Phase 2 | Pending |
+| SOCL-02 | Phase 2 | Pending |
+| SOCL-03 | Phase 3 | Pending |
+| SOCL-04 | Phase 4 | Pending |
+| DISC-01 | Phase 5 | Pending |
+| DISC-02 | Phase 5 | Pending |
+| DISC-03 | Phase 5 | Pending |
+| COLL-01 | Phase 4 | Pending |
+| COLL-02 | Phase 4 | Pending |
+| COLL-03 | Phase 4 | Pending |
+| COLL-04 | Phase 4 | Pending |
+| COLL-05 | Phase 4 | Pending |
+| COLL-06 | Phase 4 | Pending |
+| COLL-07 | Phase 4 | Pending |
+| MESG-01 | Phase 8 | Pending |
+| MESG-02 | Phase 8 | Pending |
+| MESG-03 | Phase 8 | Pending |
+| MESG-04 | Phase 8 | Pending |
+| NOTF-01 | Phase 6 | Pending |
+| NOTF-02 | Phase 6 | Pending |
+| NOTF-03 | Phase 6 | Pending |
+| MODR-01 | Phase 7 | Pending |
+| MODR-02 | Phase 7 | Pending |
+| MODR-03 | Phase 7 | Pending |
+| MODR-04 | Phase 7 | Pending |
 
 **Coverage:**
 - v1 requirements: 41 total
-- Mapped to phases: 0
-- Unmapped: 41 ⚠️
+- Mapped to phases: 41
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-13*
-*Last updated: 2026-03-13 after initial definition*
+*Last updated: 2026-03-13 after roadmap creation*
