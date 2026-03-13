@@ -4,6 +4,7 @@ node_modules/
 # Build outputs
 .next/
 dist/
+!packages/shared/dist/
 .turbo/
 
 # Environment variables
