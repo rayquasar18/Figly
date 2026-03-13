@@ -7,10 +7,10 @@
 
 ### Authentication
 
-- [ ] **AUTH-01**: User can sign up with email and password
+- [x] **AUTH-01**: User can sign up with email and password
 - [ ] **AUTH-02**: User receives email verification after signup
 - [ ] **AUTH-03**: User can reset password via email link
-- [ ] **AUTH-04**: User session persists across browser refresh
+- [x] **AUTH-04**: User session persists across browser refresh
 - [ ] **AUTH-05**: User can log in with Google OAuth
 - [ ] **AUTH-06**: User can log in with Apple Sign-In
 
@@ -123,10 +123,10 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01 | Phase 1 | Pending |
+| AUTH-01 | Phase 1 | Complete |
 | AUTH-02 | Phase 1 | Pending |
 | AUTH-03 | Phase 1 | Pending |
-| AUTH-04 | Phase 1 | Pending |
+| AUTH-04 | Phase 1 | Complete |
 | AUTH-05 | Phase 1 | Pending |
 | AUTH-06 | Phase 1 | Pending |
 | PROF-01 | Phase 2 | Pending |
