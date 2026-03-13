@@ -3,6 +3,7 @@
 import type { ProfileResponse } from '@figly/shared';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import { FollowButton } from '@/components/social/follow-button';
 import { ProfileStats } from './profile-stats';
 
 interface ProfileHeaderProps {
@@ -45,13 +46,12 @@ export function ProfileHeader({ profile, onEditClick }: ProfileHeaderProps) {
               </Button>
             ) : (
               <div className="flex items-center gap-2">
-                <Button
-                  variant={profile.isFollowing ? 'outline' : 'default'}
+                <FollowButton
+                  userId={profile.id}
+                  username={profile.username}
+                  isFollowing={profile.isFollowing}
                   size="sm"
-                  data-follow-placeholder
-                >
-                  {profile.isFollowing ? 'Dang theo doi' : 'Theo doi'}
-                </Button>
+                />
 
                 {profile.isFollowedBy && (
                   <span className="rounded-md bg-muted px-2 py-0.5 text-xs text-muted-foreground">
