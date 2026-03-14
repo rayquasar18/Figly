@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils';
 import { PostCarousel } from './post-carousel';
 import { PostActions } from './post-actions';
 import { CaptionDisplay } from './caption-display';
+import { useAuthStore } from '@/stores/auth-store';
 import { useLikeMutation } from '@/hooks/queries/interaction-queries';
 import type { PostResponse } from '@figly/shared';
 
@@ -26,6 +27,11 @@ export function PostCard({ post, onOpenDetail }: PostCardProps) {
   const likeMutation = useLikeMutation();
 
   const handleDoubleTap = useCallback(() => {
+    // Auth gate: redirect unauthenticated users to login instead of liking
+    if (!useAuthStore.getState().user) {
+      router.push('/login');
+      return;
+    }
     if (!post.isLiked) {
       likeMutation.mutate({ postId: post.id });
     }

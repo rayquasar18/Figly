@@ -1,7 +1,9 @@
 'use client';
 
 import { Heart, MessageCircle, Bookmark } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { useAuthStore } from '@/stores/auth-store';
 import {
   useLikeMutation,
   useUnlikeMutation,
@@ -24,10 +26,20 @@ export function PostActions({
   likeCount,
   onCommentClick,
 }: PostActionsProps) {
+  const isAuthenticated = !!useAuthStore((s) => s.user);
+  const router = useRouter();
   const likeMutation = useLikeMutation();
   const unlikeMutation = useUnlikeMutation();
   const bookmarkMutation = useBookmarkMutation();
   const unbookmarkMutation = useUnbookmarkMutation();
+
+  const requireAuth = (action: () => void) => {
+    if (!isAuthenticated) {
+      router.push('/login');
+      return;
+    }
+    action();
+  };
 
   const handleLikeToggle = () => {
     if (isLiked) {
@@ -50,7 +62,7 @@ export function PostActions({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <button
-            onClick={handleLikeToggle}
+            onClick={() => requireAuth(handleLikeToggle)}
             className="transition-transform active:scale-90"
             aria-label={isLiked ? 'Bo thich' : 'Thich'}
           >
@@ -64,7 +76,7 @@ export function PostActions({
             />
           </button>
           <button
-            onClick={onCommentClick}
+            onClick={() => requireAuth(() => onCommentClick?.())}
             className="transition-transform active:scale-90"
             aria-label="Binh luan"
           >
@@ -72,7 +84,7 @@ export function PostActions({
           </button>
         </div>
         <button
-          onClick={handleBookmarkToggle}
+          onClick={() => requireAuth(handleBookmarkToggle)}
           className="transition-transform active:scale-90"
           aria-label={isBookmarked ? 'Bo luu' : 'Luu'}
         >
