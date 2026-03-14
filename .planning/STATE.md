@@ -62,6 +62,7 @@ Progress: [████████░░] 84% (Phase 4: 4/6 plans)
 | Phase 03.1 P02 | 7 | 2 tasks | 14 files |
 | Phase 04 P01 | 4 | 2 tasks | 10 files |
 | Phase 04 P02 | 5 | 1 task | 6 files |
+| Phase 04 P03 | 13 | 2 tasks | 12 files |
 | Phase 04 P04 | 6 | 2 tasks | 12 files |
 
 ## Accumulated Context
@@ -127,6 +128,10 @@ Recent decisions affecting current work:
 - [04-02]: Vietnamese error messages in NotFoundException for collection endpoints consistency
 - [04-02]: Toggle endpoints return { success, isOwned/isWishlisted } for frontend state updates
 - [04-02]: Batch status check uses Promise.all for parallel owned + wishlist queries
+- [04-03]: Ownership enforcement via findFirst(id, userId) pattern for checklist write operations
+- [04-03]: Entry position managed via aggregate _max + 1 for append, $transaction for reorder
+- [04-03]: mapLinkedItems helper duplicated in PostsService and FeedService for module independence
+- [04-03]: PostResponse.linkedItems optional field to avoid breaking existing frontend code
 - [04-04]: Cross-query optimistic updates via updateItemInQueries helper for items/searchItems/itemDetail consistency
 - [04-04]: Auth-aware toggle uses useAuthStore.getState().user for synchronous auth gating before mutations
 - [04-04]: Category/series names from slug with dash-to-space since series API lacks parent name field
