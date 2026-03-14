@@ -108,13 +108,15 @@ Plans:
   4. User can link a post to one or more items from the collection database when creating or editing a post
   5. User's profile has a collection showcase tab displaying their owned items organized by category
   6. User can follow specific collection series or categories and see related content
-**Plans**: 4 plans
+**Plans**: 6 plans
 
 Plans:
 - [ ] 04-01-PLAN.md — Prisma schema extension (10 collection models), shared types/DTOs/constants, seed data script
-- [ ] 04-02-PLAN.md — Backend: CollectionModule (browse, search, owned/wishlist, follow) + ChecklistModule (CRUD, entries, progress) + PostsModule item linking
-- [ ] 04-03-PLAN.md — Frontend: Collection browsing pages (categories, series, items), item detail, search, owned/wishlist toggle
-- [ ] 04-04-PLAN.md — Frontend: Checklists (CRUD, entries, progress), post-to-item linking, profile collection tab, follow series/categories
+- [ ] 04-02-PLAN.md — Backend: CollectionModule (browse, search, owned/wishlist, follow)
+- [ ] 04-03-PLAN.md — Backend: ChecklistModule (CRUD, entries, progress) + PostsModule item linking + shared PostResponse extension
+- [ ] 04-04-PLAN.md — Frontend: Collection browsing pages (categories, series, items), item detail, search, owned/wishlist toggle, bottom nav
+- [ ] 04-05-PLAN.md — Frontend: Checklists (CRUD, entries, progress), profile collection tab, follow series/categories
+- [ ] 04-06-PLAN.md — Frontend: ItemPicker component, post-to-item linking in create post flow, linked items on post display
 
 ### Phase 5: Search & Discovery
 **Goal**: Users can find other collectors, discover content by hashtag, and explore posts organized by collection category
@@ -165,8 +167,8 @@ Plans:
 **Requirements**: MESG-01, MESG-02, MESG-03, MESG-04
 **Success Criteria** (what must be TRUE):
   1. User can start a 1-on-1 conversation with another user and send/receive text messages in real-time
-  2. User can share photos and videos within DM conversations
-  3. User can see when their messages have been read by the recipient
+  2. User can see when their messages have been read by the recipient
+  3. User can share photos and videos within DM conversations
   4. User can participate in group chats organized by collection category or interest
 **Plans**: TBD
 
@@ -209,7 +211,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 5 -> 6 -> 7 -> 8 -> 
 | 2. Profiles & Social Graph | 0/4 | Planning complete | - |
 | 3. Content & Feed | 2/4 | Complete    | 2026-03-14 |
 | 3.1 Public Viewing Mode | 0/2 | Planning complete | - |
-| 4. Collection System | 0/4 | Planning complete | - |
+| 4. Collection System | 0/6 | Planning complete | - |
 | 5. Search & Discovery | 0/2 | Not started | - |
 | 6. Notifications | 0/2 | Not started | - |
 | 7. Moderation & Safety | 0/2 | Not started | - |
