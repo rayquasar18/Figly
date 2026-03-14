@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 4 context gathered
-last_updated: "2026-03-14T22:37:14.776Z"
-last_activity: 2026-03-14 -- Completed 03.1-01 Backend Public Access
+stopped_at: Completed 04-01-PLAN.md
+last_updated: "2026-03-14T23:29:11Z"
+last_activity: 2026-03-15 -- Completed 04-01 Collection Data Foundation
 progress:
   total_phases: 11
   completed_phases: 4
-  total_plans: 13
-  completed_plans: 13
-  percent: 92
+  total_plans: 19
+  completed_plans: 14
+  percent: 74
 ---
 
 # Project State
@@ -21,23 +21,23 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-13)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 3.1 (Public Viewing Mode -- IN PROGRESS, 1/2 plans)
+**Current focus:** Phase 4 (Collection System -- IN PROGRESS, 1/6 plans)
 
 ## Current Position
 
-Phase: 3.1 of 10 (Public Viewing Mode)
-Plan: 1 of 2 in current phase
+Phase: 4 of 10 (Collection System)
+Plan: 1 of 6 in current phase
 Status: Executing
-Last activity: 2026-03-14 -- Completed 03.1-01 Backend Public Access
+Last activity: 2026-03-15 -- Completed 04-01 Collection Data Foundation
 
-Progress: [█████████░] 92% (Phase 3.1: 1/2 plans)
+Progress: [███████░░░] 74% (Phase 4: 1/6 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 12
-- Average duration: 8 min
-- Total execution time: 1.8 hours
+- Total plans completed: 14
+- Average duration: 7 min
+- Total execution time: 1.9 hours
 
 **By Phase:**
 
@@ -47,9 +47,10 @@ Progress: [█████████░] 92% (Phase 3.1: 1/2 plans)
 | 02-profiles-social-graph | 4 | 23 min | 6 min |
 | 03-content-feed | 4 | 38 min | 10 min |
 | 03.1-public-viewing-mode | 1 | 7 min | 7 min |
+| 04-collection-system | 1 | 4 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 10, 13, 12, 7 min
+- Last 5 plans: 13, 12, 7, 7, 4 min
 - Trend: improving
 
 *Updated after each plan completion*
@@ -59,6 +60,7 @@ Progress: [█████████░] 92% (Phase 3.1: 1/2 plans)
 | Phase 03 P04 | 12 | 2 tasks | 21 files |
 | Phase 03.1 P01 | 7 | 2 tasks | 13 files |
 | Phase 03.1 P02 | 7 | 2 tasks | 14 files |
+| Phase 04 P01 | 4 | 2 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -117,6 +119,9 @@ Recent decisions affecting current work:
 - [Phase 03.1]: requireAuth pattern wraps click handlers to redirect unauthenticated users to /login
 - [Phase 03.1]: API client interceptor skips redirect only for /auth/me 401 -- public endpoints never return 401
 - [Phase 03.1]: CommentInput renders login CTA link instead of form for unauthenticated users
+- [04-01]: Deterministic seed IDs using category+series+item slug pattern for idempotent upserts
+- [04-01]: 15 series across 4 categories (Gundam 4, Figurines 4, Sneakers 4, Trading Cards 3)
+- [04-01]: No imageKey/releaseDate in seed data -- placeholder icons for initial UI
 
 ### Pending Todos
 
@@ -128,11 +133,10 @@ None yet.
 
 ### Blockers/Concerns
 
-- [Research]: Seed data strategy for collection database (Gundam, figurines, sneakers) needs resolution before Phase 4
 - [Research]: Video processing cost analysis (self-hosted FFmpeg vs AWS MediaConvert) needed before Phase 10
 
 ## Session Continuity
 
-Last session: 2026-03-14T22:37:14.774Z
-Stopped at: Phase 4 context gathered
-Resume file: .planning/phases/04-collection-system/04-CONTEXT.md
+Last session: 2026-03-14T23:29:11Z
+Stopped at: Completed 04-01-PLAN.md
+Resume file: .planning/phases/04-collection-system/04-01-SUMMARY.md
