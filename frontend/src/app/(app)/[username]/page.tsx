@@ -49,7 +49,7 @@ export default function ProfilePage({
         </TabsList>
 
         <TabsContent value="posts" className="mt-2">
-          <ProfilePostGrid />
+          <ProfilePostGrid username={username} />
         </TabsContent>
       </Tabs>
 
