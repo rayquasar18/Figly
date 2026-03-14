@@ -26,3 +26,11 @@ export const PROFILE_LIMITS = {
   usernameMaxLength: 30,
   usernameCooldownDays: 14,
 } as const;
+
+export const POST_LIMITS = {
+  maxImages: 10,
+  captionMaxLength: 2200,
+  commentMaxLength: 1000,
+  feedPageSize: 10,
+  commentsPageSize: 20,
+} as const;
