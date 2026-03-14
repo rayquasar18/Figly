@@ -2,6 +2,7 @@
 
 import { useCategories } from '@/hooks/queries/collection-queries';
 import { CategoryCard } from '@/components/collection/category-card';
+import { ItemSearch } from '@/components/collection/item-search';
 import { Skeleton } from '@/components/ui/skeleton';
 
 function CategoryGridSkeleton() {
@@ -24,6 +25,18 @@ export default function CollectionPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-6">
       <h1 className="mb-6 text-xl font-bold">Bo suu tap</h1>
+
+      {/* Search bar */}
+      <div className="mb-6">
+        <ItemSearch />
+      </div>
+
+      {/* Separator */}
+      <div className="mb-4 border-t pt-4">
+        <h2 className="text-base font-semibold text-muted-foreground">
+          Danh muc
+        </h2>
+      </div>
 
       {isLoading ? (
         <CategoryGridSkeleton />
