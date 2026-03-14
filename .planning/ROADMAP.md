@@ -70,12 +70,13 @@ Plans:
   4. User can like/unlike posts, write comments, and reply to comments in threads
   5. User can bookmark posts and view all saved posts in a dedicated collection
   6. User can scroll a chronological feed showing posts from users they follow
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 03-01: TBD
-- [ ] 03-02: TBD
-- [ ] 03-03: TBD
+- [ ] 03-01-PLAN.md — Prisma schema extension (Post, PostMedia, Like, Comment, Bookmark, Hashtag models) and shared DTOs/types/constants
+- [ ] 03-02-PLAN.md — Backend: Posts, Comments, and Feed NestJS modules with like/bookmark/hashtag support and full test coverage
+- [ ] 03-03-PLAN.md — Frontend: Instagram-style multi-step post creation flow with react-easy-crop image editing and bottom navigation
+- [ ] 03-04-PLAN.md — Frontend: Chronological feed with infinite scroll, post detail modal, comment threading, interactions with optimistic UI, saved posts page
 
 ### Phase 4: Collection System
 **Goal**: Users can browse a shared item database, track what they own and want, build custom checklists, link posts to collection items, and showcase collections on their profile
@@ -186,7 +187,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 |-------|----------------|--------|-----------|
 | 1. Foundation & Auth | 0/3 | Planning complete | - |
 | 2. Profiles & Social Graph | 0/4 | Planning complete | - |
-| 3. Content & Feed | 0/3 | Not started | - |
+| 3. Content & Feed | 0/4 | Planning complete | - |
 | 4. Collection System | 0/3 | Not started | - |
 | 5. Search & Discovery | 0/2 | Not started | - |
 | 6. Notifications | 0/2 | Not started | - |
