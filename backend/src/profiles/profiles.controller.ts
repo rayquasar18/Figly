@@ -4,6 +4,7 @@ import {
   Patch,
   Param,
   Body,
+  Query,
   UseGuards,
   Req,
 } from '@nestjs/common';
@@ -21,6 +22,13 @@ export class ProfilesController {
   async checkUsername(@Param('username') username: string) {
     const available = await this.profilesService.isUsernameAvailable(username);
     return { available };
+  }
+
+  @Get('search')
+  @UseGuards(JwtAuthGuard)
+  async searchProfiles(@Query('q') query: string) {
+    if (!query) return [];
+    return this.profilesService.searchProfiles(query);
   }
 
   @Get(':username')

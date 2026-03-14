@@ -12,7 +12,7 @@ export class CreatePostDto {
   @ArrayMinSize(1, { message: 'Can it nhat 1 hinh anh' })
   @ArrayMaxSize(10, { message: 'Toi da 10 hinh anh' })
   @IsString({ each: true, message: 'Moi mediaId phai la chuoi ky tu' })
-  mediaIds: string[];
+  mediaIds!: string[];
 
   @IsOptional()
   @IsString({ message: 'Caption phai la chuoi ky tu' })
