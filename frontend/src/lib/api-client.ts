@@ -65,8 +65,12 @@ apiClient.interceptors.response.use(
     } catch (refreshError) {
       processQueue(refreshError as AxiosError);
       // Redirect to login on refresh failure (only in browser)
+      // Skip redirect for /auth/me -- public layout handles this gracefully
       if (typeof window !== 'undefined') {
-        window.location.href = '/login';
+        const isAuthCheck = originalRequest.url?.includes('/auth/me');
+        if (!isAuthCheck) {
+          window.location.href = '/login';
+        }
       }
       return Promise.reject(refreshError);
     } finally {
