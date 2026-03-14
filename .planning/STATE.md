@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03.1-01-PLAN.md
-last_updated: "2026-03-14T12:39:41Z"
+stopped_at: Completed 03.1-02-PLAN.md
+last_updated: "2026-03-14T12:52:36.517Z"
 last_activity: 2026-03-14 -- Completed 03.1-01 Backend Public Access
 progress:
-  total_phases: 10
-  completed_phases: 3
+  total_phases: 11
+  completed_phases: 4
   total_plans: 13
-  completed_plans: 12
+  completed_plans: 13
   percent: 92
 ---
 
@@ -58,6 +58,7 @@ Progress: [█████████░] 92% (Phase 3.1: 1/2 plans)
 | Phase 03 P03 | 13 | 2 tasks | 12 files |
 | Phase 03 P04 | 12 | 2 tasks | 21 files |
 | Phase 03.1 P01 | 7 | 2 tasks | 13 files |
+| Phase 03.1 P02 | 7 | 2 tasks | 14 files |
 
 ## Accumulated Context
 
@@ -112,6 +113,10 @@ Recent decisions affecting current work:
 - [03.1-01]: Skip like/bookmark/follow queries entirely when viewerId is null for performance
 - [03.1-01]: GET /feed/public has no guard -- viewer identity never used for public feed
 - [03.1-01]: Extracted mapPostResponse helper in FeedService for reuse between personal and public feed
+- [Phase 03.1]: Moved [username] and post routes from (app) to (public) to avoid Next.js route conflicts
+- [Phase 03.1]: requireAuth pattern wraps click handlers to redirect unauthenticated users to /login
+- [Phase 03.1]: API client interceptor skips redirect only for /auth/me 401 -- public endpoints never return 401
+- [Phase 03.1]: CommentInput renders login CTA link instead of form for unauthenticated users
 
 ### Pending Todos
 
@@ -128,6 +133,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-14T12:39:41Z
-Stopped at: Completed 03.1-01-PLAN.md
-Resume file: .planning/phases/03.1-public-viewing-mode/03.1-01-SUMMARY.md
+Last session: 2026-03-14T12:52:36.515Z
+Stopped at: Completed 03.1-02-PLAN.md
+Resume file: None
