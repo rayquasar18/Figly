@@ -34,3 +34,12 @@ export const POST_LIMITS = {
   feedPageSize: 10,
   commentsPageSize: 20,
 } as const;
+
+export const COLLECTION_LIMITS = {
+  itemsPageSize: 20,
+  seriesPageSize: 20,
+  searchResultsLimit: 20,
+  checklistNameMaxLength: 100,
+  freeformTextMaxLength: 200,
+  maxChecklistEntries: 100,
+} as const;
