@@ -15,6 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 1: Foundation & Auth** - Monorepo scaffold, database, media pipeline, and complete authentication system
 - [ ] **Phase 2: Profiles & Social Graph** - User profiles, follow/unfollow system, and follower/following lists
 - [x] **Phase 3: Content & Feed** - Photo posts, image editing, interactions (likes/comments/bookmarks), and chronological feed (completed 2026-03-14)
+- [ ] **Phase 3.1: Public Viewing Mode** - Public viewing mode for non-authenticated users (INSERTED)
 - [ ] **Phase 4: Collection System** - Shared item database, owned/wishlist tracking, custom checklists, post-to-item linking, and collection showcase
 - [ ] **Phase 5: Search & Discovery** - User/hashtag/item search, hashtag pages, and category-based explore page
 - [ ] **Phase 6: Notifications** - Real-time in-app notifications, notification history, and push notifications via PWA
@@ -77,6 +78,24 @@ Plans:
 - [ ] 03-02-PLAN.md — Backend: Posts, Comments, and Feed NestJS modules with like/bookmark/hashtag support and full test coverage
 - [ ] 03-03-PLAN.md — Frontend: Instagram-style multi-step post creation flow with react-easy-crop image editing and bottom navigation
 - [ ] 03-04-PLAN.md — Frontend: Chronological feed with infinite scroll, post detail modal, comment threading, interactions with optimistic UI, saved posts page
+
+### Phase 03.1: Public Viewing Mode (INSERTED)
+
+**Goal:** Non-authenticated users can view public content (profiles, posts, feeds) in read-only mode with login CTAs for interactive features, enabling social sharing and organic user acquisition
+**Requirements**: PUB-01, PUB-02, PUB-03, PUB-04, PUB-05, PUB-06
+**Depends on:** Phase 3
+**Success Criteria** (what must be TRUE):
+  1. Non-authenticated user can visit any profile page and see the profile with post grid
+  2. Non-authenticated user can view any post with its comments
+  3. Non-authenticated user can browse a public discovery feed of recent posts
+  4. Interactive elements (like, bookmark, comment, follow) redirect to login for non-authenticated users
+  5. Authenticated users see full interactive UI on all pages (no regression)
+  6. Auth-only routes (personal feed, saved posts) still require login
+**Plans**: 2 plans
+
+Plans:
+- [ ] 03.1-01-PLAN.md — Backend: OptionalJwtAuthGuard, refactor read endpoints for optional auth, public feed endpoint
+- [ ] 03.1-02-PLAN.md — Frontend: (public) route group, page migration, auth-aware components, explore page
 
 ### Phase 4: Collection System
 **Goal**: Users can browse a shared item database, track what they own and want, build custom checklists, link posts to collection items, and showcase collections on their profile
@@ -181,13 +200,14 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
+Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation & Auth | 0/3 | Planning complete | - |
 | 2. Profiles & Social Graph | 0/4 | Planning complete | - |
 | 3. Content & Feed | 2/4 | Complete    | 2026-03-14 |
+| 3.1 Public Viewing Mode | 0/2 | Planning complete | - |
 | 4. Collection System | 0/3 | Not started | - |
 | 5. Search & Discovery | 0/2 | Not started | - |
 | 6. Notifications | 0/2 | Not started | - |
