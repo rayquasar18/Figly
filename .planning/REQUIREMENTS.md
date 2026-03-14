@@ -47,7 +47,7 @@
 
 - [x] **SOCL-01**: User can follow/unfollow other users
 - [x] **SOCL-02**: User can view followers and following lists
-- [ ] **SOCL-03**: User can view chronological feed of posts from followed users
+- [x] **SOCL-03**: User can view chronological feed of posts from followed users
 - [ ] **SOCL-04**: User can follow collection series/categories
 
 ### Discovery
@@ -151,7 +151,7 @@
 | INTR-05 | Phase 3 | Complete |
 | SOCL-01 | Phase 2 | Complete |
 | SOCL-02 | Phase 2 | Complete |
-| SOCL-03 | Phase 3 | Pending |
+| SOCL-03 | Phase 3 | Complete |
 | SOCL-04 | Phase 4 | Pending |
 | DISC-01 | Phase 5 | Pending |
 | DISC-02 | Phase 5 | Pending |

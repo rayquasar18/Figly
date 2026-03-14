@@ -187,7 +187,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 |-------|----------------|--------|-----------|
 | 1. Foundation & Auth | 0/3 | Planning complete | - |
 | 2. Profiles & Social Graph | 0/4 | Planning complete | - |
-| 3. Content & Feed | 0/4 | Planning complete | - |
+| 3. Content & Feed | 2/4 | In Progress|  |
 | 4. Collection System | 0/3 | Not started | - |
 | 5. Search & Discovery | 0/2 | Not started | - |
 | 6. Notifications | 0/2 | Not started | - |

@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-01-PLAN.md
-last_updated: "2026-03-14T09:29:38Z"
-last_activity: 2026-03-14 -- Completed 03-01 Schema & shared types for content feed
+stopped_at: Completed 03-02-PLAN.md
+last_updated: "2026-03-14T09:43:44Z"
+last_activity: 2026-03-14 -- Completed 03-02 Backend API for posts, comments, feed, search
 progress:
   total_phases: 10
   completed_phases: 2
   total_plans: 11
-  completed_plans: 8
-  percent: 73
+  completed_plans: 9
+  percent: 82
 ---
 
 # Project State
@@ -21,23 +21,23 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-13)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 3 (Content & Feed -- in progress, 1/4 plans complete)
+**Current focus:** Phase 3 (Content & Feed -- in progress, 2/4 plans complete)
 
 ## Current Position
 
 Phase: 3 of 10 (Content & Feed)
-Plan: 1 of 4 in current phase (complete)
+Plan: 2 of 4 in current phase (complete)
 Status: Executing
-Last activity: 2026-03-14 -- Completed 03-01 Schema & shared types for content feed
+Last activity: 2026-03-14 -- Completed 03-02 Backend API for posts, comments, feed, search
 
-Progress: [██░░░░░░░░] 25% (Phase 3: 1/4 plans)
+Progress: [█████░░░░░] 50% (Phase 3: 2/4 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 8
+- Total plans completed: 9
 - Average duration: 8 min
-- Total execution time: 1.1 hours
+- Total execution time: 1.3 hours
 
 **By Phase:**
 
@@ -45,14 +45,15 @@ Progress: [██░░░░░░░░] 25% (Phase 3: 1/4 plans)
 |-------|-------|-------|----------|
 | 01-foundation-auth | 3 | 37 min | 12 min |
 | 02-profiles-social-graph | 4 | 23 min | 6 min |
-| 03-content-feed | 1 | 3 min | 3 min |
+| 03-content-feed | 2 | 13 min | 7 min |
 
 **Recent Trend:**
-- Last 5 plans: 6, 7, 3, 3 min
+- Last 5 plans: 7, 3, 3, 10 min
 - Trend: stable/improving
 
 *Updated after each plan completion*
 | Phase 03 P01 | 3 | 2 tasks | 8 files |
+| Phase 03 P02 | 10 | 2 tasks | 19 files |
 
 ## Accumulated Context
 
@@ -95,6 +96,9 @@ Recent decisions affecting current work:
 - [Phase 02]: ProfileEditModal uses shadcn Dialog per user decision for modal overlay
 - [Phase 02]: App layout gates all routes behind username: redirects to /complete-profile if null
 - [03-01]: ToggleResponse with single boolean success field for like/bookmark toggle simplicity
+- [03-02]: HashtagsController as separate controller in PostsModule for /hashtags route prefix
+- [03-02]: CommentsController uses no-prefix @Controller() for mixed /posts/:postId/comments and /comments/:id routes
+- [03-02]: FeedService uses read-time query with Follow subquery (not fan-out-on-write) for simplicity at current scale
 
 ### Pending Todos
 
@@ -107,6 +111,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-14T09:29:38Z
-Stopped at: Completed 03-01-PLAN.md
-Resume file: .planning/phases/03-content-feed/03-01-SUMMARY.md
+Last session: 2026-03-14T09:43:44Z
+Stopped at: Completed 03-02-PLAN.md
+Resume file: .planning/phases/03-content-feed/03-02-SUMMARY.md
