@@ -6,7 +6,7 @@ import { PrismaService } from '../../prisma/prisma.service';
 describe('CollectionService', () => {
   let service: CollectionService;
 
-  const mockPrisma = {
+  const mockPrisma: Record<string, any> = {
     category: {
       findMany: jest.fn(),
       findUnique: jest.fn(),
