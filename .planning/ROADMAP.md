@@ -211,7 +211,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 5 -> 6 -> 7 -> 8 -> 
 | 2. Profiles & Social Graph | 0/4 | Planning complete | - |
 | 3. Content & Feed | 2/4 | Complete    | 2026-03-14 |
 | 3.1 Public Viewing Mode | 0/2 | Planning complete | - |
-| 4. Collection System | 0/6 | Planning complete | - |
+| 4. Collection System | 3/6 | In Progress|  |
 | 5. Search & Discovery | 0/2 | Not started | - |
 | 6. Notifications | 0/2 | Not started | - |
 | 7. Moderation & Safety | 0/2 | Not started | - |
