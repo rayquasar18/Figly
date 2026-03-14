@@ -32,6 +32,7 @@ export class ProfilesService {
           select: {
             followers: true,
             following: true,
+            posts: true,
           },
         },
       },
@@ -81,7 +82,7 @@ export class ProfilesService {
       displayName: user.name,
       bio: user.bio,
       avatarUrl,
-      postCount: 0, // Placeholder until Phase 3
+      postCount: user._count.posts,
       followerCount: user._count.followers,
       followingCount: user._count.following,
       isOwnProfile,
