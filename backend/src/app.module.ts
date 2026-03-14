@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { MediaModule } from './media/media.module';
 import { ProfilesModule } from './profiles/profiles.module';
 import { SocialModule } from './social/social.module';
+import { PostsModule } from './posts/posts.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -51,6 +52,7 @@ import configuration from './config/configuration';
     MediaModule,
     ProfilesModule,
     SocialModule,
+    PostsModule,
   ],
   controllers: [],
   providers: [
