@@ -13,6 +13,7 @@ import { ProfilesService } from './profiles.service';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { EmailVerifiedGuard } from '../auth/guards/email-verified.guard';
+import { OptionalJwtAuthGuard } from '../auth/guards/optional-jwt-auth.guard';
 
 @Controller('profiles')
 export class ProfilesController {
@@ -32,13 +33,13 @@ export class ProfilesController {
   }
 
   @Get(':username')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(OptionalJwtAuthGuard)
   async getProfile(
     @Param('username') username: string,
     @Req() req: Request,
   ) {
-    const { userId } = req.user as any;
-    return this.profilesService.getProfile(username, userId);
+    const viewerId = (req.user as any)?.userId || null;
+    return this.profilesService.getProfile(username, viewerId);
   }
 
   @Patch('me')

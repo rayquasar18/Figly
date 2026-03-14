@@ -16,13 +16,14 @@ import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { EmailVerifiedGuard } from '../auth/guards/email-verified.guard';
+import { OptionalJwtAuthGuard } from '../auth/guards/optional-jwt-auth.guard';
 
 @Controller()
-@UseGuards(JwtAuthGuard, EmailVerifiedGuard)
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
   @Get('posts/:postId/comments')
+  @UseGuards(OptionalJwtAuthGuard)
   async getComments(
     @Param('postId') postId: string,
     @Query('cursor') cursor?: string,
@@ -36,6 +37,7 @@ export class CommentsController {
   }
 
   @Post('posts/:postId/comments')
+  @UseGuards(JwtAuthGuard, EmailVerifiedGuard)
   async createComment(
     @Param('postId') postId: string,
     @Body() dto: CreateCommentDto,
@@ -47,6 +49,7 @@ export class CommentsController {
 
   @Delete('comments/:id')
   @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard, EmailVerifiedGuard)
   async deleteComment(@Param('id') commentId: string, @Req() req: Request) {
     const { userId } = req.user as any;
     return this.commentsService.deleteComment(commentId, userId);

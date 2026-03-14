@@ -16,7 +16,7 @@ export class ProfilesService {
     private storageService: StorageService,
   ) {}
 
-  async getProfile(username: string, viewerId: string) {
+  async getProfile(username: string, viewerId: string | null) {
     const user = await this.prisma.user.findUnique({
       where: { username },
       select: {
@@ -41,25 +41,34 @@ export class ProfilesService {
       throw new NotFoundException('Nguoi dung khong ton tai');
     }
 
-    // Check follow relationships in parallel
-    const [isFollowing, isFollowedBy] = await Promise.all([
-      this.prisma.follow.findUnique({
-        where: {
-          followerId_followingId: {
-            followerId: viewerId,
-            followingId: user.id,
+    // Check follow relationships in parallel (skip when unauthenticated)
+    let isFollowing = false;
+    let isFollowedBy = false;
+    let isOwnProfile = false;
+
+    if (viewerId) {
+      const [followingRecord, followedByRecord] = await Promise.all([
+        this.prisma.follow.findUnique({
+          where: {
+            followerId_followingId: {
+              followerId: viewerId,
+              followingId: user.id,
+            },
           },
-        },
-      }),
-      this.prisma.follow.findUnique({
-        where: {
-          followerId_followingId: {
-            followerId: user.id,
-            followingId: viewerId,
+        }),
+        this.prisma.follow.findUnique({
+          where: {
+            followerId_followingId: {
+              followerId: user.id,
+              followingId: viewerId,
+            },
           },
-        },
-      }),
-    ]);
+        }),
+      ]);
+      isFollowing = !!followingRecord;
+      isFollowedBy = !!followedByRecord;
+      isOwnProfile = user.id === viewerId;
+    }
 
     // Resolve avatar presigned URL if avatar exists
     const avatarUrl = user.avatar?.mediumKey
@@ -75,9 +84,9 @@ export class ProfilesService {
       postCount: 0, // Placeholder until Phase 3
       followerCount: user._count.followers,
       followingCount: user._count.following,
-      isOwnProfile: user.id === viewerId,
-      isFollowing: !!isFollowing,
-      isFollowedBy: !!isFollowedBy,
+      isOwnProfile,
+      isFollowing,
+      isFollowedBy,
     };
   }
 
