@@ -25,7 +25,7 @@
 
 - [x] **CONT-01**: User can create single-image post with caption
 - [x] **CONT-02**: User can create multi-image carousel post (up to 10 images)
-- [ ] **CONT-03**: User can crop and rotate images before posting
+- [x] **CONT-03**: User can crop and rotate images before posting
 - [x] **CONT-04**: User can edit own post captions
 - [x] **CONT-05**: User can delete own posts
 - [x] **CONT-06**: User can include hashtags and @mentions in captions
@@ -135,7 +135,7 @@
 | PROF-04 | Phase 4 | Pending |
 | CONT-01 | Phase 3 | Complete |
 | CONT-02 | Phase 3 | Complete |
-| CONT-03 | Phase 3 | Pending |
+| CONT-03 | Phase 3 | Complete |
 | CONT-04 | Phase 3 | Complete |
 | CONT-05 | Phase 3 | Complete |
 | CONT-06 | Phase 3 | Complete |
