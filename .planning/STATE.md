@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-04-PLAN.md
-last_updated: "2026-03-14T10:16:19.334Z"
-last_activity: 2026-03-14 -- Completed 03-04 Frontend Feed & Interactions
+stopped_at: Completed 03.1-01-PLAN.md
+last_updated: "2026-03-14T12:39:41Z"
+last_activity: 2026-03-14 -- Completed 03.1-01 Backend Public Access
 progress:
   total_phases: 10
   completed_phases: 3
-  total_plans: 11
-  completed_plans: 11
-  percent: 100
+  total_plans: 13
+  completed_plans: 12
+  percent: 92
 ---
 
 # Project State
@@ -21,23 +21,23 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-13)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 3 (Content & Feed -- COMPLETE, 4/4 plans)
+**Current focus:** Phase 3.1 (Public Viewing Mode -- IN PROGRESS, 1/2 plans)
 
 ## Current Position
 
-Phase: 3 of 10 (Content & Feed)
-Plan: 4 of 4 in current phase (complete)
+Phase: 3.1 of 10 (Public Viewing Mode)
+Plan: 1 of 2 in current phase
 Status: Executing
-Last activity: 2026-03-14 -- Completed 03-04 Frontend Feed & Interactions
+Last activity: 2026-03-14 -- Completed 03.1-01 Backend Public Access
 
-Progress: [██████████] 100% (Phase 3: 4/4 plans)
+Progress: [█████████░] 92% (Phase 3.1: 1/2 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 11
+- Total plans completed: 12
 - Average duration: 8 min
-- Total execution time: 1.7 hours
+- Total execution time: 1.8 hours
 
 **By Phase:**
 
@@ -46,16 +46,18 @@ Progress: [██████████] 100% (Phase 3: 4/4 plans)
 | 01-foundation-auth | 3 | 37 min | 12 min |
 | 02-profiles-social-graph | 4 | 23 min | 6 min |
 | 03-content-feed | 4 | 38 min | 10 min |
+| 03.1-public-viewing-mode | 1 | 7 min | 7 min |
 
 **Recent Trend:**
-- Last 5 plans: 3, 10, 13, 12 min
-- Trend: stable/improving
+- Last 5 plans: 10, 13, 12, 7 min
+- Trend: improving
 
 *Updated after each plan completion*
 | Phase 03 P01 | 3 | 2 tasks | 8 files |
 | Phase 03 P02 | 10 | 2 tasks | 19 files |
 | Phase 03 P03 | 13 | 2 tasks | 12 files |
 | Phase 03 P04 | 12 | 2 tasks | 21 files |
+| Phase 03.1 P01 | 7 | 2 tasks | 13 files |
 
 ## Accumulated Context
 
@@ -106,10 +108,18 @@ Recent decisions affecting current work:
 - [03-04]: Cross-query-key optimistic updates via updatePostInQueries helper for feed/userPosts/savedPosts/post detail consistency
 - [03-04]: Desktop modal vs mobile full-page routing via window.innerWidth >= 768 check at click time
 - [03-04]: post-queries.ts created in Plan 03-04 since Plan 03-03 runs in same wave (parallel execution)
+- [03.1-01]: OptionalJwtAuthGuard overrides handleRequest to return user||null for unauthenticated access
+- [03.1-01]: Skip like/bookmark/follow queries entirely when viewerId is null for performance
+- [03.1-01]: GET /feed/public has no guard -- viewer identity never used for public feed
+- [03.1-01]: Extracted mapPostResponse helper in FeedService for reuse between personal and public feed
 
 ### Pending Todos
 
 None yet.
+
+### Roadmap Evolution
+
+- Phase 3.1 inserted after Phase 3: Public Viewing Mode (URGENT)
 
 ### Blockers/Concerns
 
@@ -118,6 +128,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-14T10:01:45Z
-Stopped at: Completed 03-04-PLAN.md
-Resume file: .planning/phases/03-content-feed/03-04-SUMMARY.md
+Last session: 2026-03-14T12:39:41Z
+Stopped at: Completed 03.1-01-PLAN.md
+Resume file: .planning/phases/03.1-public-viewing-mode/03.1-01-SUMMARY.md
