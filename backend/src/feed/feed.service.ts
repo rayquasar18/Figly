@@ -73,32 +73,86 @@ export class FeedService {
     const urlMap = await this.resolvePresignedUrls(items);
 
     return {
-      items: items.map((post: any) => ({
-        id: post.id,
-        author: {
-          id: post.user.id,
-          username: post.user.username,
-          displayName: post.user.name,
-          avatarUrl: post.user.avatar?.mediumKey
-            ? urlMap.get(post.user.avatar.mediumKey) || null
-            : null,
-        },
-        caption: post.caption,
-        media: (post.media || []).map((pm: any) => ({
-          id: pm.id,
-          mediaId: pm.mediaId,
-          position: pm.position,
-          url: pm.media?.largeKey ? urlMap.get(pm.media.largeKey) || '' : '',
-        })),
-        likeCount: post._count.likes,
-        commentCount: post._count.comments,
-        isLiked: likedSet.has(post.id),
-        isBookmarked: bookmarkedSet.has(post.id),
-        createdAt: post.createdAt.toISOString(),
-        updatedAt: post.updatedAt.toISOString(),
-      })),
+      items: items.map((post: any) => this.mapPostResponse(post, likedSet, bookmarkedSet, urlMap)),
       nextCursor,
       hasMore,
+    };
+  }
+
+  async getPublicFeed(cursor?: string, take = POST_LIMITS.feedPageSize) {
+    // Query all posts from all users, ordered chronologically
+    const posts = await this.prisma.post.findMany({
+      include: {
+        user: {
+          select: {
+            id: true,
+            username: true,
+            name: true,
+            avatar: { select: { mediumKey: true } },
+          },
+        },
+        media: {
+          include: {
+            media: { select: { id: true, largeKey: true, mediumKey: true } },
+          },
+          orderBy: { position: 'asc' as const },
+        },
+        _count: { select: { likes: true, comments: true } },
+      },
+      orderBy: { createdAt: 'desc' as const },
+      take: take + 1,
+      ...(cursor && {
+        cursor: { id: cursor },
+        skip: 1,
+      }),
+    });
+
+    const hasMore = posts.length > take;
+    const items = posts.slice(0, take);
+    const nextCursor = hasMore ? items[items.length - 1].id : null;
+
+    // No viewer = no like/bookmark status queries
+    const emptySet = new Set<string>();
+
+    // Batch resolve presigned URLs
+    const urlMap = await this.resolvePresignedUrls(items);
+
+    return {
+      items: items.map((post: any) => this.mapPostResponse(post, emptySet, emptySet, urlMap)),
+      nextCursor,
+      hasMore,
+    };
+  }
+
+  private mapPostResponse(
+    post: any,
+    likedSet: Set<string>,
+    bookmarkedSet: Set<string>,
+    urlMap: Map<string, string>,
+  ) {
+    return {
+      id: post.id,
+      author: {
+        id: post.user.id,
+        username: post.user.username,
+        displayName: post.user.name,
+        avatarUrl: post.user.avatar?.mediumKey
+          ? urlMap.get(post.user.avatar.mediumKey) || null
+          : null,
+      },
+      caption: post.caption,
+      media: (post.media || []).map((pm: any) => ({
+        id: pm.id,
+        mediaId: pm.mediaId,
+        position: pm.position,
+        url: pm.media?.largeKey ? urlMap.get(pm.media.largeKey) || '' : '',
+      })),
+      likeCount: post._count.likes,
+      commentCount: post._count.comments,
+      isLiked: likedSet.has(post.id),
+      isBookmarked: bookmarkedSet.has(post.id),
+      createdAt: post.createdAt.toISOString(),
+      updatedAt: post.updatedAt.toISOString(),
     };
   }
 

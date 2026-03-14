@@ -11,11 +11,17 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { EmailVerifiedGuard } from '../auth/guards/email-verified.guard';
 
 @Controller('feed')
-@UseGuards(JwtAuthGuard, EmailVerifiedGuard)
 export class FeedController {
   constructor(private readonly feedService: FeedService) {}
 
+  // Static route MUST be before parameterized routes
+  @Get('public')
+  async getPublicFeed(@Query('cursor') cursor?: string) {
+    return this.feedService.getPublicFeed(cursor);
+  }
+
   @Get()
+  @UseGuards(JwtAuthGuard, EmailVerifiedGuard)
   async getFeed(
     @Req() req: Request,
     @Query('cursor') cursor?: string,
