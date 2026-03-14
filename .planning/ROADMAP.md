@@ -108,12 +108,13 @@ Plans:
   4. User can link a post to one or more items from the collection database when creating or editing a post
   5. User's profile has a collection showcase tab displaying their owned items organized by category
   6. User can follow specific collection series or categories and see related content
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 04-01: TBD
-- [ ] 04-02: TBD
-- [ ] 04-03: TBD
+- [ ] 04-01-PLAN.md — Prisma schema extension (10 collection models), shared types/DTOs/constants, seed data script
+- [ ] 04-02-PLAN.md — Backend: CollectionModule (browse, search, owned/wishlist, follow) + ChecklistModule (CRUD, entries, progress) + PostsModule item linking
+- [ ] 04-03-PLAN.md — Frontend: Collection browsing pages (categories, series, items), item detail, search, owned/wishlist toggle
+- [ ] 04-04-PLAN.md — Frontend: Checklists (CRUD, entries, progress), post-to-item linking, profile collection tab, follow series/categories
 
 ### Phase 5: Search & Discovery
 **Goal**: Users can find other collectors, discover content by hashtag, and explore posts organized by collection category
@@ -208,7 +209,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 5 -> 6 -> 7 -> 8 -> 
 | 2. Profiles & Social Graph | 0/4 | Planning complete | - |
 | 3. Content & Feed | 2/4 | Complete    | 2026-03-14 |
 | 3.1 Public Viewing Mode | 0/2 | Planning complete | - |
-| 4. Collection System | 0/3 | Not started | - |
+| 4. Collection System | 0/4 | Planning complete | - |
 | 5. Search & Discovery | 0/2 | Not started | - |
 | 6. Notifications | 0/2 | Not started | - |
 | 7. Moderation & Safety | 0/2 | Not started | - |
