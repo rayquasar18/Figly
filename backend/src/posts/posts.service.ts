@@ -34,7 +34,7 @@ export class PostsService {
     // Extract hashtags from caption
     const hashtags = this.extractHashtags(dto.caption || '');
 
-    // Create post + PostMedia entries + hashtag links in transaction
+    // Create post + PostMedia entries + hashtag links + PostItem links in transaction
     const post = await this.prisma.$transaction(async (tx: any) => {
       const post = await tx.post.create({
         data: {
@@ -63,6 +63,15 @@ export class PostsService {
         }
       }
 
+      // Create PostItem links for linked collection items
+      if (dto.linkedItemIds && dto.linkedItemIds.length > 0) {
+        for (const itemId of dto.linkedItemIds) {
+          await tx.postItem.create({
+            data: { postId: post.id, itemId },
+          });
+        }
+      }
+
       return post;
     });
 
@@ -86,6 +95,23 @@ export class PostsService {
             media: { select: { id: true, largeKey: true } },
           },
           orderBy: { position: 'asc' as const },
+        },
+        items: {
+          include: {
+            item: {
+              select: {
+                id: true,
+                name: true,
+                imageKey: true,
+                series: {
+                  select: {
+                    name: true,
+                    category: { select: { name: true } },
+                  },
+                },
+              },
+            },
+          },
         },
         _count: { select: { likes: true, comments: true } },
       },
@@ -147,6 +173,7 @@ export class PostsService {
         position: pm.position,
         url: pm.media.largeKey ? urlMap.get(pm.media.largeKey) || '' : '',
       })),
+      linkedItems: this.mapLinkedItems((post as any).items),
       likeCount: post._count.likes,
       commentCount: post._count.comments,
       isLiked: likedSet.has(post.id),
@@ -290,6 +317,23 @@ export class PostsService {
               },
               orderBy: { position: 'asc' as const },
             },
+            items: {
+              include: {
+                item: {
+                  select: {
+                    id: true,
+                    name: true,
+                    imageKey: true,
+                    series: {
+                      select: {
+                        name: true,
+                        category: { select: { name: true } },
+                      },
+                    },
+                  },
+                },
+              },
+            },
             _count: { select: { likes: true, comments: true } },
           },
         },
@@ -350,6 +394,23 @@ export class PostsService {
             media: { select: { id: true, largeKey: true } },
           },
           orderBy: { position: 'asc' as const },
+        },
+        items: {
+          include: {
+            item: {
+              select: {
+                id: true,
+                name: true,
+                imageKey: true,
+                series: {
+                  select: {
+                    name: true,
+                    category: { select: { name: true } },
+                  },
+                },
+              },
+            },
+          },
         },
         _count: { select: { likes: true, comments: true } },
       },
@@ -458,6 +519,7 @@ export class PostsService {
         position: pm.position,
         url: pm.media?.largeKey ? urlMap.get(pm.media.largeKey) || '' : '',
       })),
+      linkedItems: this.mapLinkedItems(post.items),
       likeCount: post._count.likes,
       commentCount: post._count.comments,
       isLiked: likedSet.has(post.id),
@@ -465,5 +527,16 @@ export class PostsService {
       createdAt: post.createdAt.toISOString(),
       updatedAt: post.updatedAt.toISOString(),
     };
+  }
+
+  private mapLinkedItems(items?: any[]): any[] {
+    if (!items || items.length === 0) return [];
+    return items.map((pi: any) => ({
+      id: pi.item.id,
+      name: pi.item.name,
+      seriesName: pi.item.series?.name ?? '',
+      categoryName: pi.item.series?.category?.name ?? '',
+      imageUrl: pi.item.imageKey ?? null,
+    }));
   }
 }

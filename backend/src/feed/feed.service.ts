@@ -40,6 +40,23 @@ export class FeedService {
           },
           orderBy: { position: 'asc' as const },
         },
+        items: {
+          include: {
+            item: {
+              select: {
+                id: true,
+                name: true,
+                imageKey: true,
+                series: {
+                  select: {
+                    name: true,
+                    category: { select: { name: true } },
+                  },
+                },
+              },
+            },
+          },
+        },
         _count: { select: { likes: true, comments: true } },
       },
       orderBy: { createdAt: 'desc' as const },
@@ -97,6 +114,23 @@ export class FeedService {
           },
           orderBy: { position: 'asc' as const },
         },
+        items: {
+          include: {
+            item: {
+              select: {
+                id: true,
+                name: true,
+                imageKey: true,
+                series: {
+                  select: {
+                    name: true,
+                    category: { select: { name: true } },
+                  },
+                },
+              },
+            },
+          },
+        },
         _count: { select: { likes: true, comments: true } },
       },
       orderBy: { createdAt: 'desc' as const },
@@ -147,6 +181,7 @@ export class FeedService {
         position: pm.position,
         url: pm.media?.largeKey ? urlMap.get(pm.media.largeKey) || '' : '',
       })),
+      linkedItems: this.mapLinkedItems(post.items),
       likeCount: post._count.likes,
       commentCount: post._count.comments,
       isLiked: likedSet.has(post.id),
@@ -154,6 +189,17 @@ export class FeedService {
       createdAt: post.createdAt.toISOString(),
       updatedAt: post.updatedAt.toISOString(),
     };
+  }
+
+  private mapLinkedItems(items?: any[]): any[] {
+    if (!items || items.length === 0) return [];
+    return items.map((pi: any) => ({
+      id: pi.item.id,
+      name: pi.item.name,
+      seriesName: pi.item.series?.name ?? '',
+      categoryName: pi.item.series?.category?.name ?? '',
+      imageUrl: pi.item.imageKey ?? null,
+    }));
   }
 
   private async resolvePresignedUrls(posts: any[]): Promise<Map<string, string>> {
