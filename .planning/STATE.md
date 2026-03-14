@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-01-PLAN.md
-last_updated: "2026-03-14T23:29:11Z"
-last_activity: 2026-03-15 -- Completed 04-01 Collection Data Foundation
+stopped_at: Completed 04-02-PLAN.md
+last_updated: "2026-03-14T23:39:17Z"
+last_activity: 2026-03-15 -- Completed 04-02 Collection Module API
 progress:
   total_phases: 11
   completed_phases: 4
   total_plans: 19
-  completed_plans: 14
-  percent: 74
+  completed_plans: 15
+  percent: 79
 ---
 
 # Project State
@@ -21,23 +21,23 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-13)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 4 (Collection System -- IN PROGRESS, 1/6 plans)
+**Current focus:** Phase 4 (Collection System -- IN PROGRESS, 2/6 plans)
 
 ## Current Position
 
 Phase: 4 of 10 (Collection System)
-Plan: 1 of 6 in current phase
+Plan: 2 of 6 in current phase
 Status: Executing
-Last activity: 2026-03-15 -- Completed 04-01 Collection Data Foundation
+Last activity: 2026-03-15 -- Completed 04-02 Collection Module API
 
-Progress: [███████░░░] 74% (Phase 4: 1/6 plans)
+Progress: [███████░░░] 79% (Phase 4: 2/6 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 14
+- Total plans completed: 15
 - Average duration: 7 min
-- Total execution time: 1.9 hours
+- Total execution time: 2.0 hours
 
 **By Phase:**
 
@@ -47,10 +47,10 @@ Progress: [███████░░░] 74% (Phase 4: 1/6 plans)
 | 02-profiles-social-graph | 4 | 23 min | 6 min |
 | 03-content-feed | 4 | 38 min | 10 min |
 | 03.1-public-viewing-mode | 1 | 7 min | 7 min |
-| 04-collection-system | 1 | 4 min | 4 min |
+| 04-collection-system | 2 | 9 min | 5 min |
 
 **Recent Trend:**
-- Last 5 plans: 13, 12, 7, 7, 4 min
+- Last 5 plans: 12, 7, 7, 4, 5 min
 - Trend: improving
 
 *Updated after each plan completion*
@@ -61,6 +61,7 @@ Progress: [███████░░░] 74% (Phase 4: 1/6 plans)
 | Phase 03.1 P01 | 7 | 2 tasks | 13 files |
 | Phase 03.1 P02 | 7 | 2 tasks | 14 files |
 | Phase 04 P01 | 4 | 2 tasks | 10 files |
+| Phase 04 P02 | 5 | 1 task | 6 files |
 
 ## Accumulated Context
 
@@ -122,6 +123,9 @@ Recent decisions affecting current work:
 - [04-01]: Deterministic seed IDs using category+series+item slug pattern for idempotent upserts
 - [04-01]: 15 series across 4 categories (Gundam 4, Figurines 4, Sneakers 4, Trading Cards 3)
 - [04-01]: No imageKey/releaseDate in seed data -- placeholder icons for initial UI
+- [04-02]: Vietnamese error messages in NotFoundException for collection endpoints consistency
+- [04-02]: Toggle endpoints return { success, isOwned/isWishlisted } for frontend state updates
+- [04-02]: Batch status check uses Promise.all for parallel owned + wishlist queries
 
 ### Pending Todos
 
@@ -137,6 +141,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-14T23:29:11Z
-Stopped at: Completed 04-01-PLAN.md
-Resume file: .planning/phases/04-collection-system/04-01-SUMMARY.md
+Last session: 2026-03-14T23:39:17Z
+Stopped at: Completed 04-02-PLAN.md
+Resume file: .planning/phases/04-collection-system/04-02-SUMMARY.md
