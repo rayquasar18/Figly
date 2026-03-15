@@ -2,16 +2,16 @@ import { IsString, IsUrl } from 'class-validator';
 
 export class SavePushSubscriptionDto {
   @IsUrl()
-  endpoint: string;
+  endpoint!: string;
 
   @IsString()
-  p256dh: string;
+  p256dh!: string;
 
   @IsString()
-  auth: string;
+  auth!: string;
 }
 
 export class RemovePushSubscriptionDto {
   @IsUrl()
-  endpoint: string;
+  endpoint!: string;
 }
