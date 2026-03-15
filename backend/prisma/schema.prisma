@@ -92,6 +92,9 @@ model User {
   blocksReceived     Block[]   @relation("blocked")
   mutesInitiated     Mute[]    @relation("muter")
   mutesReceived      Mute[]    @relation("muted")
+  conversationsCreated       Conversation[]             @relation("conversationCreator")
+  conversationParticipants   ConversationParticipant[]
+  messagesSent               Message[]                  @relation("messageSender")
 
   @@map("users")
 }
@@ -150,6 +153,7 @@ model Media {
 
   userAvatar   User?       @relation("UserAvatar")
   postMedia    PostMedia[]
+  messageMedia MessageMedia[]
 
   @@index([userId])
   @@map("media")
@@ -278,6 +282,7 @@ model Category {
 
   series    Series[]
   followers CategoryFollow[]
+  conversations Conversation[]
 
   @@map("categories")
 }
@@ -512,4 +517,70 @@ model Mute {
   @@unique([muterId, mutedId])
   @@index([muterId])
   @@map("mutes")
+}
+
+// ─── Direct Messaging ──────────────────────────────────────────────────────────
+
+model Conversation {
+  id          String   @id @default(cuid())
+  isGroup     Boolean  @default(false)
+  name        String?  @db.VarChar(100)
+  description String?  @db.VarChar(500)
+  categoryId  String?
+  createdById String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  createdBy    User                      @relation("conversationCreator", fields: [createdById], references: [id], onDelete: Cascade)
+  category     Category?                 @relation(fields: [categoryId], references: [id])
+  participants ConversationParticipant[]
+  messages     Message[]
+
+  @@index([updatedAt])
+  @@map("conversations")
+}
+
+model ConversationParticipant {
+  id             String   @id @default(cuid())
+  conversationId String
+  userId         String
+  role           String   @default("member")
+  lastReadAt     DateTime @default(now())
+  joinedAt       DateTime @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([conversationId, userId])
+  @@index([userId])
+  @@map("conversation_participants")
+}
+
+model Message {
+  id             String   @id @default(cuid())
+  conversationId String
+  senderId       String
+  content        String?  @db.VarChar(2000)
+  createdAt      DateTime @default(now())
+
+  conversation Conversation  @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User          @relation("messageSender", fields: [senderId], references: [id], onDelete: Cascade)
+  media        MessageMedia[]
+
+  @@index([conversationId, createdAt])
+  @@map("messages")
+}
+
+model MessageMedia {
+  id        String @id @default(cuid())
+  messageId String
+  mediaId   String
+  position  Int    @default(0)
+
+  message Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  media   Media   @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+
+  @@unique([messageId, position])
+  @@index([messageId])
+  @@map("message_media")
 }

@@ -110,3 +110,22 @@ export { REPORT_REASONS, MODERATION_LIMITS } from './constants/moderation.consta
 // Moderation DTOs
 export { createReportSchema, adminActionSchema } from './dto/moderation.dto';
 export type { CreateReportDto, AdminActionDto } from './dto/moderation.dto';
+
+// Messaging Constants
+export { MESSAGING_LIMITS } from './constants/messaging.constants';
+
+// Messaging DTOs
+export { createConversationSchema, sendMessageSchema } from './dto/messaging.dto';
+export type { CreateConversationDto, SendMessageDto } from './dto/messaging.dto';
+
+// Messaging Types
+export type {
+  ConversationResponse,
+  ConversationParticipantResponse,
+  MessageResponse,
+  MessageSender,
+  MessageMediaItem,
+  ConversationListResponse,
+  MessageListResponse,
+  UnreadTotalResponse,
+} from './types/messaging.types';
