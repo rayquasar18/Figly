@@ -33,4 +33,9 @@ export default () => ({
     privateKey: process.env.APPLE_PRIVATE_KEY || '',
     callbackUrl: process.env.APPLE_CALLBACK_URL || 'http://localhost:4000/api/auth/apple/callback',
   },
+  vapid: {
+    publicKey: process.env.VAPID_PUBLIC_KEY || '',
+    privateKey: process.env.VAPID_PRIVATE_KEY || '',
+    subject: process.env.VAPID_SUBJECT || 'mailto:admin@figly.app',
+  },
 });

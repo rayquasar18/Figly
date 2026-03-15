@@ -38,6 +38,7 @@ export { USERNAME_RULES, RESERVED_USERNAMES, usernameSchema, bioSchema } from '.
 
 // Constants
 export { TOKEN_EXPIRY, FILE_LIMITS, THUMBNAIL_SIZES, PROFILE_LIMITS, POST_LIMITS, COLLECTION_LIMITS } from './constants/index';
+export { NOTIFICATION_LIMITS } from './constants/notification.constants';
 
 // Collection DTOs
 export { searchItemsSchema } from './dto/collection.dto';
@@ -79,3 +80,11 @@ export type {
   SearchHashtagResult,
   ExploreCategorySection,
 } from './types/search.types';
+
+// Notification Types
+export type {
+  NotificationType,
+  NotificationActorResponse,
+  NotificationResponse,
+  UnreadCountResponse,
+} from './types/notification.types';

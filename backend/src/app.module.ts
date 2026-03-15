@@ -15,6 +15,7 @@ import { FeedModule } from './feed/feed.module';
 import { CollectionModule } from './collection/collection.module';
 import { ChecklistModule } from './checklist/checklist.module';
 import { SearchModule } from './search/search.module';
+import { NotificationsModule } from './notifications/notifications.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -63,6 +64,7 @@ import configuration from './config/configuration';
     CollectionModule,
     ChecklistModule,
     SearchModule,
+    NotificationsModule,
   ],
   controllers: [],
   providers: [

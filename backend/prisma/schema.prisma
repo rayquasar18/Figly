@@ -13,6 +13,14 @@ enum MediaStatus {
   FAILED
 }
 
+enum NotificationType {
+  LIKE
+  COMMENT
+  REPLY
+  FOLLOW
+  MENTION
+}
+
 model User {
   id                String    @id @default(cuid())
   email             String    @unique
@@ -45,6 +53,9 @@ model User {
   checklists         Checklist[]
   categoryFollows    CategoryFollow[]
   seriesFollows      SeriesFollow[]
+  notifications      Notification[]     @relation("notificationRecipient")
+  notificationActors NotificationActor[] @relation("notificationActor")
+  pushSubscriptions  PushSubscription[]
 
   @@map("users")
 }
@@ -369,4 +380,51 @@ model SeriesFollow {
   @@unique([userId, seriesId])
   @@index([userId])
   @@map("series_follows")
+}
+
+// ─── Notification System ────────────────────────────────────────────────────────
+
+model Notification {
+  id          String           @id @default(cuid())
+  recipientId String
+  recipient   User             @relation("notificationRecipient", fields: [recipientId], references: [id], onDelete: Cascade)
+  type        NotificationType
+  groupKey    String
+  targetId    String?
+  targetType  String?
+  isRead      Boolean          @default(false)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  actors NotificationActor[]
+
+  @@index([recipientId, isRead, createdAt])
+  @@index([groupKey, updatedAt])
+  @@map("notifications")
+}
+
+model NotificationActor {
+  id             String       @id @default(cuid())
+  notificationId String
+  notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+  actorId        String
+  actor          User         @relation("notificationActor", fields: [actorId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+
+  @@unique([notificationId, actorId])
+  @@index([notificationId])
+  @@map("notification_actors")
+}
+
+model PushSubscription {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@map("push_subscriptions")
 }
