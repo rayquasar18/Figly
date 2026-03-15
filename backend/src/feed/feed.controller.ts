@@ -20,6 +20,11 @@ export class FeedController {
     return this.feedService.getPublicFeed(cursor);
   }
 
+  @Get('explore')
+  async getExploreFeed() {
+    return this.feedService.getExploreFeed();
+  }
+
   @Get()
   @UseGuards(JwtAuthGuard, EmailVerifiedGuard)
   async getFeed(

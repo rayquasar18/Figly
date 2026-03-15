@@ -462,6 +462,107 @@ export class PostsService {
     });
   }
 
+  async getPostsByHashtag(
+    hashtagName: string,
+    viewerId: string | null,
+    cursor?: string,
+    take = POST_LIMITS.feedPageSize,
+  ) {
+    const name = hashtagName.toLowerCase();
+
+    const hashtag = await this.prisma.hashtag.findUnique({
+      where: { name },
+      include: { _count: { select: { posts: true } } },
+    });
+
+    if (!hashtag) {
+      throw new NotFoundException('Hashtag khong ton tai');
+    }
+
+    const posts = await this.prisma.post.findMany({
+      where: {
+        hashtags: { some: { hashtag: { name } } },
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            username: true,
+            name: true,
+            avatar: { select: { mediumKey: true } },
+          },
+        },
+        media: {
+          include: {
+            media: { select: { id: true, largeKey: true } },
+          },
+          orderBy: { position: 'asc' as const },
+        },
+        items: {
+          include: {
+            item: {
+              select: {
+                id: true,
+                name: true,
+                imageKey: true,
+                series: {
+                  select: {
+                    name: true,
+                    category: { select: { name: true } },
+                  },
+                },
+              },
+            },
+          },
+        },
+        _count: { select: { likes: true, comments: true } },
+      },
+      orderBy: { createdAt: 'desc' as const },
+      take: take + 1,
+      ...(cursor && {
+        cursor: { id: cursor },
+        skip: 1,
+      }),
+    });
+
+    const hasMore = posts.length > take;
+    const items = posts.slice(0, take);
+    const nextCursor = hasMore ? items[items.length - 1].id : null;
+
+    // Batch check like/bookmark status (skip when unauthenticated)
+    const postIds = items.map((p: any) => p.id);
+    let likedSet = new Set<string>();
+    let bookmarkedSet = new Set<string>();
+    if (viewerId) {
+      const [likes, bookmarks] = await Promise.all([
+        this.prisma.like.findMany({
+          where: { userId: viewerId, postId: { in: postIds } },
+          select: { postId: true },
+        }),
+        this.prisma.bookmark.findMany({
+          where: { userId: viewerId, postId: { in: postIds } },
+          select: { postId: true },
+        }),
+      ]);
+      likedSet = new Set(likes.map((l: any) => l.postId));
+      bookmarkedSet = new Set(bookmarks.map((b: any) => b.postId));
+    }
+
+    // Batch resolve presigned URLs
+    const urlMap = await this.resolvePresignedUrls(items);
+
+    return {
+      hashtag: {
+        id: hashtag.id,
+        name: hashtag.name,
+        postCount: (hashtag as any)._count.posts,
+      },
+      items: items.map((post: any) => this.mapPostResponse(post, likedSet, bookmarkedSet, urlMap)),
+      nextCursor,
+      hasMore,
+    };
+  }
+
   private extractHashtags(text: string): string[] {
     const matches = text.match(/#([\p{L}\p{N}_]+)/gu);
     if (!matches) return [];

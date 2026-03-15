@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { StorageService } from '../media/storage.service';
 import { POST_LIMITS } from '@figly/shared';
+import type { ExploreCategorySection } from '@figly/shared';
 
 @Injectable()
 export class FeedService {
@@ -156,6 +157,88 @@ export class FeedService {
       nextCursor,
       hasMore,
     };
+  }
+
+  async getExploreFeed(): Promise<ExploreCategorySection[]> {
+    const categories = await this.prisma.category.findMany({
+      orderBy: { position: 'asc' },
+    });
+
+    if (categories.length === 0) return [];
+
+    const sections: ExploreCategorySection[] = [];
+    const allPosts: any[] = [];
+
+    // For each category, query up to 10 recent posts that have linked items in that category
+    for (const category of categories) {
+      const posts = await this.prisma.post.findMany({
+        where: {
+          items: { some: { item: { series: { categoryId: category.id } } } },
+        },
+        include: {
+          user: {
+            select: {
+              id: true,
+              username: true,
+              name: true,
+              avatar: { select: { mediumKey: true } },
+            },
+          },
+          media: {
+            include: {
+              media: { select: { id: true, largeKey: true, mediumKey: true } },
+            },
+            orderBy: { position: 'asc' as const },
+          },
+          items: {
+            include: {
+              item: {
+                select: {
+                  id: true,
+                  name: true,
+                  imageKey: true,
+                  series: {
+                    select: {
+                      name: true,
+                      category: { select: { name: true } },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          _count: { select: { likes: true, comments: true } },
+        },
+        orderBy: { createdAt: 'desc' as const },
+        take: 10,
+      });
+
+      if (posts.length > 0) {
+        allPosts.push(...posts);
+        sections.push({
+          category: {
+            id: category.id,
+            name: category.name,
+            slug: category.slug,
+          },
+          posts: posts as any, // Will be mapped after URL resolution
+        });
+      }
+    }
+
+    // Batch resolve presigned URLs for ALL posts across ALL sections in one call
+    const urlMap = await this.resolvePresignedUrls(allPosts);
+
+    // Explore is public -- no viewer interaction status
+    const emptySet = new Set<string>();
+
+    // Map posts with resolved URLs
+    return sections.map((section) => ({
+      ...section,
+      posts: (section.posts as any[]).map((post: any) =>
+        this.mapPostResponse(post, emptySet, emptySet, urlMap),
+      ),
+    }));
   }
 
   private mapPostResponse(

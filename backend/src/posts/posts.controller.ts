@@ -42,6 +42,17 @@ export class PostsController {
     return this.postsService.getSavedPosts(userId, cursor);
   }
 
+  @Get('hashtag/:name')
+  @UseGuards(OptionalJwtAuthGuard)
+  async getPostsByHashtag(
+    @Param('name') name: string,
+    @Req() req: Request,
+    @Query('cursor') cursor?: string,
+  ) {
+    const viewerId = (req.user as any)?.userId || null;
+    return this.postsService.getPostsByHashtag(name, viewerId, cursor);
+  }
+
   @Get('user/:username')
   @UseGuards(OptionalJwtAuthGuard)
   async getUserPosts(
