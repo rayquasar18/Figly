@@ -5,6 +5,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { NotificationsService } from './notifications.service';
 import { NotificationsGateway } from './notifications.gateway';
 import { PushService } from './push/push.service';
+import { ModerationService } from '../moderation/moderation.service';
 import { NotificationJobData } from './dto/notification-response.dto';
 
 @Processor('notification')
@@ -16,6 +17,7 @@ export class NotificationsProcessor extends WorkerHost {
     private notificationsService: NotificationsService,
     private gateway: NotificationsGateway,
     private pushService: PushService,
+    private moderationService: ModerationService,
   ) {
     super();
   }
@@ -27,6 +29,13 @@ export class NotificationsProcessor extends WorkerHost {
     // Guard: skip self-notifications
     if (actorId === recipientId) {
       this.logger.log('Skipping self-notification');
+      return;
+    }
+
+    // Guard: skip notifications if actor is blocked by recipient
+    const isBlocked = await this.moderationService.isBlocked(actorId, recipientId);
+    if (isBlocked) {
+      this.logger.log('Skipping notification: actor is blocked by recipient');
       return;
     }
 

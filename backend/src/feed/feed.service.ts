@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { StorageService } from '../media/storage.service';
+import { ModerationService } from '../moderation/moderation.service';
 import { POST_LIMITS } from '@figly/shared';
 import type { ExploreCategorySection } from '@figly/shared';
 
@@ -9,9 +10,17 @@ export class FeedService {
   constructor(
     private prisma: PrismaService,
     private storageService: StorageService,
+    private moderationService: ModerationService,
   ) {}
 
   async getFeed(userId: string, cursor?: string, take = POST_LIMITS.feedPageSize) {
+    // Fetch blocked and muted IDs once
+    const [blockedIds, mutedIds] = await Promise.all([
+      this.moderationService.getBlockedUserIds(userId),
+      this.moderationService.getMutedUserIds(userId),
+    ]);
+    const excludeFromFeed = [...new Set([...blockedIds, ...mutedIds])];
+
     // Get posts from users the viewer follows + own posts
     const posts = await this.prisma.post.findMany({
       where: {
@@ -25,6 +34,9 @@ export class FeedService {
             },
           },
         ],
+        // Exclude blocked + muted users' posts AND banned users
+        userId: excludeFromFeed.length > 0 ? { notIn: excludeFromFeed } : undefined,
+        user: { isBanned: false },
       },
       include: {
         user: {
@@ -100,6 +112,9 @@ export class FeedService {
   async getPublicFeed(cursor?: string, take = POST_LIMITS.feedPageSize) {
     // Query all posts from all users, ordered chronologically
     const posts = await this.prisma.post.findMany({
+      where: {
+        user: { isBanned: false },
+      },
       include: {
         user: {
           select: {
@@ -174,6 +189,7 @@ export class FeedService {
       const posts = await this.prisma.post.findMany({
         where: {
           items: { some: { item: { series: { categoryId: category.id } } } },
+          user: { isBanned: false },
         },
         include: {
           user: {

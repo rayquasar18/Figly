@@ -6,6 +6,7 @@ import {
 import { getQueueToken } from '@nestjs/bullmq';
 import { SocialService } from '../social.service';
 import { PrismaService } from '../../prisma/prisma.service';
+import { ModerationService } from '../../moderation/moderation.service';
 
 describe('SocialService', () => {
   let service: SocialService;
@@ -27,11 +28,18 @@ describe('SocialService', () => {
     add: jest.fn(),
   };
 
+  const mockModerationService = {
+    getBlockedUserIds: jest.fn().mockResolvedValue([]),
+    getMutedUserIds: jest.fn().mockResolvedValue([]),
+    isBlocked: jest.fn().mockResolvedValue(false),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         SocialService,
         { provide: PrismaService, useValue: mockPrisma },
+        { provide: ModerationService, useValue: mockModerationService },
         { provide: getQueueToken('notification'), useValue: mockNotificationQueue },
       ],
     }).compile();
@@ -39,6 +47,8 @@ describe('SocialService', () => {
     service = module.get<SocialService>(SocialService);
 
     jest.clearAllMocks();
+    mockModerationService.getBlockedUserIds.mockResolvedValue([]);
+    mockModerationService.isBlocked.mockResolvedValue(false);
   });
 
   describe('follow', () => {

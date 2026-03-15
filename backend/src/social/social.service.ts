@@ -6,6 +6,7 @@ import {
 import { InjectQueue } from '@nestjs/bullmq';
 import { Queue } from 'bullmq';
 import { PrismaService } from '../prisma/prisma.service';
+import { ModerationService } from '../moderation/moderation.service';
 
 interface ListOptions {
   cursor?: string;
@@ -17,12 +18,19 @@ interface ListOptions {
 export class SocialService {
   constructor(
     private prisma: PrismaService,
+    private moderationService: ModerationService,
     @InjectQueue('notification') private notificationQueue: Queue,
   ) {}
 
   async follow(userId: string, targetUserId: string) {
     if (userId === targetUserId) {
       throw new BadRequestException('Ban khong the tu theo doi chinh minh');
+    }
+
+    // Check block status before allowing follow
+    const isBlocked = await this.moderationService.isBlocked(userId, targetUserId);
+    if (isBlocked) {
+      throw new BadRequestException('Khong the theo doi nguoi dung nay');
     }
 
     try {
@@ -82,7 +90,13 @@ export class SocialService {
       throw new NotFoundException('Nguoi dung khong ton tai');
     }
 
-    const where: any = { followingId: user.id };
+    // Get blocked user IDs for filtering
+    const blockedIds = viewerId ? await this.moderationService.getBlockedUserIds(viewerId) : [];
+
+    const where: any = {
+      followingId: user.id,
+      followerId: blockedIds.length > 0 ? { notIn: blockedIds } : undefined,
+    };
 
     if (options.search) {
       where.follower = {
@@ -159,7 +173,13 @@ export class SocialService {
       throw new NotFoundException('Nguoi dung khong ton tai');
     }
 
-    const where: any = { followerId: user.id };
+    // Get blocked user IDs for filtering
+    const blockedIds = viewerId ? await this.moderationService.getBlockedUserIds(viewerId) : [];
+
+    const where: any = {
+      followerId: user.id,
+      followingId: blockedIds.length > 0 ? { notIn: blockedIds } : undefined,
+    };
 
     if (options.search) {
       where.following = {

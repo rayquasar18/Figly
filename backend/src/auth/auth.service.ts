@@ -86,6 +86,11 @@ export class AuthService {
       throw new UnauthorizedException('Email khong ton tai');
     }
 
+    // Check ban status BEFORE password check
+    if (user.isBanned) {
+      throw new ForbiddenException('Tai khoan cua ban da bi cam');
+    }
+
     // Verify password
     if (!user.passwordHash) {
       throw new UnauthorizedException('Sai mat khau');
@@ -183,11 +188,20 @@ export class AuthService {
     // Get user for new token generation
     const user = await this.prisma.user.findUnique({
       where: { id: userId },
-      select: { id: true, email: true },
+      select: { id: true, email: true, isBanned: true },
     });
 
     if (!user) {
       throw new UnauthorizedException('User khong ton tai');
+    }
+
+    // Check ban status
+    if (user.isBanned) {
+      // Delete all refresh tokens for banned user
+      await this.prisma.refreshToken.deleteMany({
+        where: { userId },
+      });
+      throw new ForbiddenException('Tai khoan cua ban da bi cam');
     }
 
     // Generate new token pair
@@ -363,6 +377,9 @@ export class AuthService {
     });
 
     if (existingByGoogleId) {
+      if (existingByGoogleId.isBanned) {
+        throw new ForbiddenException('Tai khoan cua ban da bi cam');
+      }
       return existingByGoogleId;
     }
 
@@ -372,6 +389,9 @@ export class AuthService {
     });
 
     if (existingByEmail) {
+      if (existingByEmail.isBanned) {
+        throw new ForbiddenException('Tai khoan cua ban da bi cam');
+      }
       return this.prisma.user.update({
         where: { id: existingByEmail.id },
         data: {
@@ -401,6 +421,9 @@ export class AuthService {
     });
 
     if (existingByAppleId) {
+      if (existingByAppleId.isBanned) {
+        throw new ForbiddenException('Tai khoan cua ban da bi cam');
+      }
       return existingByAppleId;
     }
 
@@ -410,6 +433,9 @@ export class AuthService {
     });
 
     if (existingByEmail) {
+      if (existingByEmail.isBanned) {
+        throw new ForbiddenException('Tai khoan cua ban da bi cam');
+      }
       return this.prisma.user.update({
         where: { id: existingByEmail.id },
         data: {

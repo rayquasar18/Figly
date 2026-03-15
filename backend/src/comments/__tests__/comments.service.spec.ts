@@ -7,6 +7,7 @@ import { getQueueToken } from '@nestjs/bullmq';
 import { CommentsService } from '../comments.service';
 import { PrismaService } from '../../prisma/prisma.service';
 import { StorageService } from '../../media/storage.service';
+import { ModerationService } from '../../moderation/moderation.service';
 
 describe('CommentsService', () => {
   let service: CommentsService;
@@ -34,12 +35,19 @@ describe('CommentsService', () => {
     add: jest.fn(),
   };
 
+  const mockModerationService = {
+    getBlockedUserIds: jest.fn().mockResolvedValue([]),
+    getMutedUserIds: jest.fn().mockResolvedValue([]),
+    isBlocked: jest.fn().mockResolvedValue(false),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         CommentsService,
         { provide: PrismaService, useValue: mockPrisma },
         { provide: StorageService, useValue: mockStorageService },
+        { provide: ModerationService, useValue: mockModerationService },
         { provide: getQueueToken('notification'), useValue: mockNotificationQueue },
       ],
     }).compile();
@@ -47,6 +55,8 @@ describe('CommentsService', () => {
     service = module.get<CommentsService>(CommentsService);
 
     jest.clearAllMocks();
+    mockModerationService.getBlockedUserIds.mockResolvedValue([]);
+    mockModerationService.isBlocked.mockResolvedValue(false);
   });
 
   describe('createComment', () => {

@@ -25,12 +25,15 @@ export class CommentsController {
   @Get('posts/:postId/comments')
   @UseGuards(OptionalJwtAuthGuard)
   async getComments(
+    @Req() req: Request,
     @Param('postId') postId: string,
     @Query('cursor') cursor?: string,
     @Query('take') take?: string,
   ) {
+    const viewerId = (req.user as any)?.userId || undefined;
     return this.commentsService.getComments(
       postId,
+      viewerId,
       cursor,
       take ? parseInt(take, 10) : undefined,
     );

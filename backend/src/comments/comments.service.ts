@@ -2,11 +2,13 @@ import {
   Injectable,
   NotFoundException,
   ForbiddenException,
+  BadRequestException,
 } from '@nestjs/common';
 import { InjectQueue } from '@nestjs/bullmq';
 import { Queue } from 'bullmq';
 import { PrismaService } from '../prisma/prisma.service';
 import { StorageService } from '../media/storage.service';
+import { ModerationService } from '../moderation/moderation.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { POST_LIMITS } from '@figly/shared';
 
@@ -15,6 +17,7 @@ export class CommentsService {
   constructor(
     private prisma: PrismaService,
     private storageService: StorageService,
+    private moderationService: ModerationService,
     @InjectQueue('notification') private notificationQueue: Queue,
   ) {}
 
@@ -22,11 +25,19 @@ export class CommentsService {
     // Verify post exists
     const post = await this.prisma.post.findUnique({
       where: { id: postId },
-      select: { id: true },
+      select: { id: true, userId: true },
     });
 
     if (!post) {
       throw new NotFoundException('Bai viet khong ton tai');
+    }
+
+    // Prevent commenting on blocked user's post
+    if (post.userId !== userId) {
+      const isBlocked = await this.moderationService.isBlocked(userId, post.userId);
+      if (isBlocked) {
+        throw new BadRequestException('Khong the binh luan bai viet nay');
+      }
     }
 
     let resolvedParentId: string | null = dto.parentId || null;
@@ -146,11 +157,15 @@ export class CommentsService {
     };
   }
 
-  async getComments(postId: string, cursor?: string, take: number = POST_LIMITS.commentsPageSize) {
+  async getComments(postId: string, viewerId?: string, cursor?: string, take: number = POST_LIMITS.commentsPageSize) {
+    // Get blocked user IDs for filtering
+    const blockedIds = viewerId ? await this.moderationService.getBlockedUserIds(viewerId) : [];
+
     const comments = await this.prisma.comment.findMany({
       where: {
         postId,
         parentId: null, // Only top-level comments
+        userId: blockedIds.length > 0 ? { notIn: blockedIds } : undefined,
       },
       include: {
         user: {

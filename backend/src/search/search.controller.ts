@@ -16,12 +16,14 @@ export class SearchController {
   @Get('users')
   @UseGuards(OptionalJwtAuthGuard)
   async searchUsers(
+    @Req() req: Request,
     @Query('q') q?: string,
     @Query('limit') limit?: string,
   ) {
     if (!q) return [];
     const parsedLimit = limit ? parseInt(limit, 10) : 10;
-    return this.searchService.searchUsers(q, parsedLimit);
+    const viewerId = (req.user as any)?.userId || undefined;
+    return this.searchService.searchUsers(q, parsedLimit, viewerId);
   }
 
   @Get('hashtags')

@@ -8,6 +8,7 @@ import { InjectQueue } from '@nestjs/bullmq';
 import { Queue } from 'bullmq';
 import { PrismaService } from '../prisma/prisma.service';
 import { StorageService } from '../media/storage.service';
+import { ModerationService } from '../moderation/moderation.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { POST_LIMITS } from '@figly/shared';
@@ -17,6 +18,7 @@ export class PostsService {
   constructor(
     private prisma: PrismaService,
     private storageService: StorageService,
+    private moderationService: ModerationService,
     @InjectQueue('notification') private notificationQueue: Queue,
   ) {}
 
@@ -90,6 +92,7 @@ export class PostsService {
             id: true,
             username: true,
             name: true,
+            isBanned: true,
             avatar: { select: { mediumKey: true } },
           },
         },
@@ -121,6 +124,17 @@ export class PostsService {
     });
 
     if (!post) {
+      throw new NotFoundException('Bai viet khong ton tai');
+    }
+
+    // Check block status and banned user
+    if (viewerId) {
+      const blockedIds = await this.moderationService.getBlockedUserIds(viewerId);
+      if (blockedIds.includes(post.user.id)) {
+        throw new NotFoundException('Bai viet khong ton tai');
+      }
+    }
+    if ((post as any).user?.isBanned) {
       throw new NotFoundException('Bai viet khong ton tai');
     }
 
@@ -316,8 +330,16 @@ export class PostsService {
   }
 
   async getSavedPosts(userId: string, cursor?: string, take = POST_LIMITS.feedPageSize) {
+    const blockedIds = await this.moderationService.getBlockedUserIds(userId);
+
     const bookmarks = await this.prisma.bookmark.findMany({
-      where: { userId },
+      where: {
+        userId,
+        post: {
+          userId: blockedIds.length > 0 ? { notIn: blockedIds } : undefined,
+          user: { isBanned: false },
+        },
+      },
       include: {
         post: {
           include: {
@@ -389,11 +411,24 @@ export class PostsService {
   async getUserPosts(username: string, viewerId: string | null, cursor?: string, take = POST_LIMITS.feedPageSize) {
     const user = await this.prisma.user.findUnique({
       where: { username },
-      select: { id: true },
+      select: { id: true, isBanned: true },
     });
 
     if (!user) {
       throw new NotFoundException('Nguoi dung khong ton tai');
+    }
+
+    // Check block status between viewer and profile owner
+    if (viewerId) {
+      const blockedIds = await this.moderationService.getBlockedUserIds(viewerId);
+      if (blockedIds.includes(user.id)) {
+        return { items: [], nextCursor: null, hasMore: false };
+      }
+    }
+
+    // Hide banned user posts
+    if (user.isBanned) {
+      return { items: [], nextCursor: null, hasMore: false };
     }
 
     const posts = await this.prisma.post.findMany({
@@ -497,9 +532,14 @@ export class PostsService {
       throw new NotFoundException('Hashtag khong ton tai');
     }
 
+    // Get blocked users for filtering
+    const blockedIds = viewerId ? await this.moderationService.getBlockedUserIds(viewerId) : [];
+
     const posts = await this.prisma.post.findMany({
       where: {
         hashtags: { some: { hashtag: { name } } },
+        userId: blockedIds.length > 0 ? { notIn: blockedIds } : undefined,
+        user: { isBanned: false },
       },
       include: {
         user: {

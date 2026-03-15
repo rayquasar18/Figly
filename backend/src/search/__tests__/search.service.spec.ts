@@ -51,7 +51,7 @@ describe('SearchService', () => {
 
       const result = await service.searchUsers('gundam');
 
-      expect(mockProfilesService.searchProfiles).toHaveBeenCalledWith('gundam', 10);
+      expect(mockProfilesService.searchProfiles).toHaveBeenCalledWith('gundam', 10, undefined);
       expect(result).toEqual(mockResults);
     });
 
@@ -67,7 +67,7 @@ describe('SearchService', () => {
 
       await service.searchUsers('test', 5);
 
-      expect(mockProfilesService.searchProfiles).toHaveBeenCalledWith('test', 5);
+      expect(mockProfilesService.searchProfiles).toHaveBeenCalledWith('test', 5, undefined);
     });
   });
 

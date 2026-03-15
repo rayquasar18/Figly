@@ -13,9 +13,9 @@ export class SearchService {
     private prisma: PrismaService,
   ) {}
 
-  async searchUsers(query: string, limit = 10) {
+  async searchUsers(query: string, limit = 10, viewerId?: string) {
     if (!query) return [];
-    return this.profilesService.searchProfiles(query, limit);
+    return this.profilesService.searchProfiles(query, limit, viewerId);
   }
 
   async searchHashtags(query: string, limit = 10) {

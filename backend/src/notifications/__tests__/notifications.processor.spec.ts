@@ -4,6 +4,7 @@ import { NotificationsService } from '../notifications.service';
 import { NotificationsGateway } from '../notifications.gateway';
 import { PushService } from '../push/push.service';
 import { PrismaService } from '../../prisma/prisma.service';
+import { ModerationService } from '../../moderation/moderation.service';
 
 describe('NotificationsProcessor', () => {
   let processor: NotificationsProcessor;
@@ -31,6 +32,12 @@ describe('NotificationsProcessor', () => {
     },
   };
 
+  const mockModerationService = {
+    getBlockedUserIds: jest.fn().mockResolvedValue([]),
+    getMutedUserIds: jest.fn().mockResolvedValue([]),
+    isBlocked: jest.fn().mockResolvedValue(false),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -39,6 +46,7 @@ describe('NotificationsProcessor', () => {
         { provide: NotificationsGateway, useValue: mockGateway },
         { provide: PushService, useValue: mockPushService },
         { provide: PrismaService, useValue: mockPrisma },
+        { provide: ModerationService, useValue: mockModerationService },
       ],
     }).compile();
 
@@ -48,6 +56,7 @@ describe('NotificationsProcessor', () => {
     prisma = module.get<PrismaService>(PrismaService);
 
     jest.clearAllMocks();
+    mockModerationService.isBlocked.mockResolvedValue(false);
   });
 
   it('should create notification for a like job', async () => {
