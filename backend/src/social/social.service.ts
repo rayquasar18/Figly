@@ -57,7 +57,7 @@ export class SocialService {
     }
   }
 
-  async getFollowers(username: string, viewerId: string, options: ListOptions) {
+  async getFollowers(username: string, viewerId: string | null, options: ListOptions) {
     const take = options.take || 20;
 
     const user = await this.prisma.user.findUnique({
@@ -107,16 +107,19 @@ export class SocialService {
     const items = follows.slice(0, take);
     const nextCursor = hasMore ? items[items.length - 1].id : null;
 
-    // Batch check follow status for viewer
-    const followerIds = items.map((f) => f.follower.id);
-    const viewerFollows = await this.prisma.follow.findMany({
-      where: {
-        followerId: viewerId,
-        followingId: { in: followerIds },
-      },
-      select: { followingId: true },
-    });
-    const followingSet = new Set(viewerFollows.map((f) => f.followingId));
+    // Batch check follow status for viewer (skip when unauthenticated)
+    let followingSet = new Set<string>();
+    if (viewerId) {
+      const followerIds = items.map((f) => f.follower.id);
+      const viewerFollows = await this.prisma.follow.findMany({
+        where: {
+          followerId: viewerId,
+          followingId: { in: followerIds },
+        },
+        select: { followingId: true },
+      });
+      followingSet = new Set(viewerFollows.map((f) => f.followingId));
+    }
 
     return {
       items: items.map((f) => ({
@@ -131,7 +134,7 @@ export class SocialService {
     };
   }
 
-  async getFollowing(username: string, viewerId: string, options: ListOptions) {
+  async getFollowing(username: string, viewerId: string | null, options: ListOptions) {
     const take = options.take || 20;
 
     const user = await this.prisma.user.findUnique({
@@ -181,16 +184,19 @@ export class SocialService {
     const items = follows.slice(0, take);
     const nextCursor = hasMore ? items[items.length - 1].id : null;
 
-    // Batch check follow status for viewer
-    const followingIds = items.map((f) => f.following.id);
-    const viewerFollows = await this.prisma.follow.findMany({
-      where: {
-        followerId: viewerId,
-        followingId: { in: followingIds },
-      },
-      select: { followingId: true },
-    });
-    const followingSet = new Set(viewerFollows.map((f) => f.followingId));
+    // Batch check follow status for viewer (skip when unauthenticated)
+    let followingSet = new Set<string>();
+    if (viewerId) {
+      const followingIds = items.map((f) => f.following.id);
+      const viewerFollows = await this.prisma.follow.findMany({
+        where: {
+          followerId: viewerId,
+          followingId: { in: followingIds },
+        },
+        select: { followingId: true },
+      });
+      followingSet = new Set(viewerFollows.map((f) => f.followingId));
+    }
 
     return {
       items: items.map((f) => ({

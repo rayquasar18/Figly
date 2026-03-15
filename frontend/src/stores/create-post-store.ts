@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { POST_LIMITS } from '@figly/shared';
+import type { LinkedItemResponse } from '@figly/shared';
 
 export interface ImageItem {
   file: File;
@@ -22,6 +23,8 @@ interface CreatePostState {
   caption: string;
   isPublishing: boolean;
   activeImageIndex: number;
+  linkedItemIds: string[];
+  linkedItems: LinkedItemResponse[];
 
   // Actions
   open: () => void;
@@ -39,6 +42,9 @@ interface CreatePostState {
   setCaption: (caption: string) => void;
   setPublishing: (publishing: boolean) => void;
   setActiveImageIndex: (index: number) => void;
+  addLinkedItem: (item: LinkedItemResponse) => void;
+  removeLinkedItem: (itemId: string) => void;
+  setLinkedItems: (ids: string[], items: LinkedItemResponse[]) => void;
   reset: () => void;
 }
 
@@ -49,6 +55,8 @@ const initialState = {
   caption: '',
   isPublishing: false,
   activeImageIndex: 0,
+  linkedItemIds: [] as string[],
+  linkedItems: [] as LinkedItemResponse[],
 };
 
 export const useCreatePostStore = create<CreatePostState>((set, get) => ({
@@ -135,6 +143,27 @@ export const useCreatePostStore = create<CreatePostState>((set, get) => ({
   setPublishing: (publishing) => set({ isPublishing: publishing }),
 
   setActiveImageIndex: (index) => set({ activeImageIndex: index }),
+
+  addLinkedItem: (item) => {
+    const { linkedItemIds, linkedItems } = get();
+    if (linkedItemIds.includes(item.id)) return;
+    set({
+      linkedItemIds: [...linkedItemIds, item.id],
+      linkedItems: [...linkedItems, item],
+    });
+  },
+
+  removeLinkedItem: (itemId) => {
+    const { linkedItemIds, linkedItems } = get();
+    set({
+      linkedItemIds: linkedItemIds.filter((id) => id !== itemId),
+      linkedItems: linkedItems.filter((item) => item.id !== itemId),
+    });
+  },
+
+  setLinkedItems: (ids, items) => {
+    set({ linkedItemIds: ids, linkedItems: items });
+  },
 
   reset: () => {
     // Revoke all preview URLs to prevent memory leaks

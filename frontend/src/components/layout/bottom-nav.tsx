@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { Home, Search, PlusSquare, User } from 'lucide-react';
+import { Home, Search, Package, PlusSquare, User } from 'lucide-react';
 import { useMe } from '@/hooks/queries/auth-queries';
 import { useCreatePostStore } from '@/stores/create-post-store';
 import { cn } from '@/lib/utils';
@@ -28,6 +28,12 @@ export function BottomNav() {
           icon={Search}
           label="Tim kiem"
           isActive={pathname.startsWith('/search')}
+        />
+        <NavLink
+          href="/collection"
+          icon={Package}
+          label="Suu tap"
+          isActive={pathname.startsWith('/collection')}
         />
         <button
           type="button"

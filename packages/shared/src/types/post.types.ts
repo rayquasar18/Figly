@@ -1,3 +1,5 @@
+import type { LinkedItemResponse } from './collection.types';
+
 export interface PostMediaItem {
   id: string;
   mediaId: string;
@@ -17,6 +19,7 @@ export interface PostResponse {
   author: PostAuthor;
   caption: string | null;
   media: PostMediaItem[];
+  linkedItems?: LinkedItemResponse[];
   likeCount: number;
   commentCount: number;
   isLiked: boolean;

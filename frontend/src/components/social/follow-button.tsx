@@ -1,7 +1,9 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useAuthStore } from '@/stores/auth-store';
 import {
   useFollowMutation,
   useUnfollowMutation,
@@ -20,12 +22,19 @@ export function FollowButton({
   isFollowing,
   size = 'sm',
 }: FollowButtonProps) {
+  const router = useRouter();
   const followMutation = useFollowMutation();
   const unfollowMutation = useUnfollowMutation();
   const isPending = followMutation.isPending || unfollowMutation.isPending;
 
   function handleClick() {
     if (isPending) return;
+
+    // Auth gate: redirect unauthenticated users to login
+    if (!useAuthStore.getState().user) {
+      router.push('/login');
+      return;
+    }
 
     if (isFollowing) {
       unfollowMutation.mutate({ userId, username });

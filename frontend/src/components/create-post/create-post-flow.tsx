@@ -99,10 +99,12 @@ export function CreatePostFlow() {
         setMediaId(i, uploadResponse.data.id);
       }
 
-      // 2. Create post with all mediaIds
+      // 2. Create post with all mediaIds and linked items
+      const currentLinkedItemIds = useCreatePostStore.getState().linkedItemIds;
       await createPostMutation.mutateAsync({
         mediaIds,
         caption: caption || undefined,
+        linkedItemIds: currentLinkedItemIds.length > 0 ? currentLinkedItemIds : undefined,
       });
 
       toast.success('Bai viet da duoc dang!');

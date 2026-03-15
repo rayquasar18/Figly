@@ -1,11 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Package } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { vi } from 'date-fns/locale';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { usePostDetail } from '@/hooks/queries/post-queries';
 import { PostCarousel } from './post-carousel';
@@ -94,6 +95,23 @@ function PostDetailContent({
                 caption={post.caption}
                 username={post.author.username}
               />
+            </div>
+          )}
+
+          {/* Linked items */}
+          {post.linkedItems && post.linkedItems.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 border-b px-4 py-2.5">
+              {post.linkedItems.map((item) => (
+                <Link key={item.id} href={`/item/${item.id}`}>
+                  <Badge
+                    variant="secondary"
+                    className="cursor-pointer gap-1 text-xs hover:bg-secondary/80"
+                  >
+                    <Package className="size-3" />
+                    {item.name}
+                  </Badge>
+                </Link>
+              ))}
             </div>
           )}
 

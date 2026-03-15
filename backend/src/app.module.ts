@@ -12,6 +12,8 @@ import { SocialModule } from './social/social.module';
 import { PostsModule } from './posts/posts.module';
 import { CommentsModule } from './comments/comments.module';
 import { FeedModule } from './feed/feed.module';
+import { CollectionModule } from './collection/collection.module';
+import { ChecklistModule } from './checklist/checklist.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -57,6 +59,8 @@ import configuration from './config/configuration';
     PostsModule,
     CommentsModule,
     FeedModule,
+    CollectionModule,
+    ChecklistModule,
   ],
   controllers: [],
   providers: [

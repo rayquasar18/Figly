@@ -2,9 +2,11 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Send } from 'lucide-react';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useCreateComment } from '@/hooks/queries/comment-queries';
+import { useAuthStore } from '@/stores/auth-store';
 import { POST_LIMITS } from '@figly/shared';
 
 interface CommentInputProps {
@@ -21,6 +23,7 @@ export function CommentInput({
   replyTarget,
   onCancelReply,
 }: CommentInputProps) {
+  const isAuthenticated = !!useAuthStore((s) => s.user);
   const [content, setContent] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const createComment = useCreateComment(postId);
@@ -57,6 +60,20 @@ export function CommentInput({
       handleSubmit();
     }
   };
+
+  // Unauthenticated: show login CTA instead of comment form
+  if (!isAuthenticated) {
+    return (
+      <div className="border-t p-3">
+        <Link
+          href="/login"
+          className="flex items-center justify-center rounded-md border p-2.5 text-sm text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"
+        >
+          Dang nhap de binh luan
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="border-t p-3">

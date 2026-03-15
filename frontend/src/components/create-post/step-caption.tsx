@@ -1,7 +1,10 @@
 'use client';
 
 import { useState, useCallback, useRef, useEffect } from 'react';
+import { Link, X } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import {
   Popover,
   PopoverContent,
@@ -9,8 +12,10 @@ import {
 } from '@/components/ui/popover';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { useCreatePostStore } from '@/stores/create-post-store';
+import { ItemPicker } from '@/components/collection/item-picker';
 import { apiClient } from '@/lib/api-client';
 import { POST_LIMITS } from '@figly/shared';
+import type { LinkedItemResponse } from '@figly/shared';
 
 interface HashtagSuggestion {
   id: string;
@@ -30,7 +35,12 @@ export function StepCaption() {
   const images = useCreatePostStore((s) => s.images);
   const caption = useCreatePostStore((s) => s.caption);
   const setCaption = useCreatePostStore((s) => s.setCaption);
+  const linkedItems = useCreatePostStore((s) => s.linkedItems);
+  const linkedItemIds = useCreatePostStore((s) => s.linkedItemIds);
+  const removeLinkedItem = useCreatePostStore((s) => s.removeLinkedItem);
+  const setLinkedItems = useCreatePostStore((s) => s.setLinkedItems);
 
+  const [itemPickerOpen, setItemPickerOpen] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [autocompleteMode, setAutocompleteMode] =
     useState<AutocompleteMode>(null);
@@ -148,6 +158,15 @@ export function StepCaption() {
     [caption, triggerStart, autocompleteMode, searchTerm, setCaption],
   );
 
+  const handleItemPickerSelect = useCallback(
+    (ids: string[], items?: LinkedItemResponse[]) => {
+      if (items) {
+        setLinkedItems(ids, items);
+      }
+    },
+    [setLinkedItems],
+  );
+
   return (
     <div className="flex h-full flex-col md:flex-row">
       {/* Image preview */}
@@ -228,6 +247,48 @@ export function StepCaption() {
               ))}
           </PopoverContent>
         </Popover>
+
+        {/* Link items section */}
+        <div className="space-y-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setItemPickerOpen(true)}
+            className="gap-1.5"
+          >
+            <Link className="size-4" />
+            Lien ket vat pham
+          </Button>
+
+          {linkedItems.length > 0 && (
+            <div className="flex flex-wrap gap-1.5">
+              {linkedItems.map((item) => (
+                <Badge
+                  key={item.id}
+                  variant="secondary"
+                  className="flex items-center gap-1"
+                >
+                  {item.name}
+                  <button
+                    type="button"
+                    onClick={() => removeLinkedItem(item.id)}
+                    className="ml-0.5 rounded-full p-0.5 hover:bg-muted"
+                  >
+                    <X className="size-3" />
+                  </button>
+                </Badge>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <ItemPicker
+          mode="multi"
+          selectedItemIds={linkedItemIds}
+          onSelect={handleItemPickerSelect}
+          open={itemPickerOpen}
+          onOpenChange={setItemPickerOpen}
+        />
 
         {/* Character counter */}
         <p className="text-right text-xs text-muted-foreground">

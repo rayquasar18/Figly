@@ -70,7 +70,7 @@ export function useCreatePost() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (data: { caption?: string; mediaIds: string[] }) => {
+    mutationFn: async (data: { caption?: string; mediaIds: string[]; linkedItemIds?: string[] }) => {
       const response = await apiClient.post<PostResponse>('/posts', data);
       return response.data;
     },
@@ -78,6 +78,27 @@ export function useCreatePost() {
       queryClient.invalidateQueries({ queryKey: ['feed'] });
       queryClient.invalidateQueries({ queryKey: ['userPosts'] });
     },
+  });
+}
+
+/** Fetch public discovery feed (chronological, no auth required) */
+export function usePublicFeed() {
+  return useInfiniteQuery({
+    queryKey: ['feed', 'public'],
+    queryFn: async ({ pageParam }) => {
+      const params = new URLSearchParams();
+      if (pageParam) params.set('cursor', pageParam);
+      const query = params.toString();
+
+      const response = await apiClient.get<PaginatedResponse<FeedPostResponse>>(
+        `/feed/public${query ? `?${query}` : ''}`,
+      );
+      return response.data;
+    },
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
+    staleTime: 2 * 60 * 1000,
+    refetchOnWindowFocus: true,
   });
 }
 

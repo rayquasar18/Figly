@@ -18,14 +18,14 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { EmailVerifiedGuard } from '../auth/guards/email-verified.guard';
+import { OptionalJwtAuthGuard } from '../auth/guards/optional-jwt-auth.guard';
 
 @Controller('posts')
-@UseGuards(JwtAuthGuard)
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Post()
-  @UseGuards(EmailVerifiedGuard)
+  @UseGuards(JwtAuthGuard, EmailVerifiedGuard)
   async createPost(@Body() dto: CreatePostDto, @Req() req: Request) {
     const { userId } = req.user as any;
     return this.postsService.createPost(userId, dto);
@@ -33,7 +33,7 @@ export class PostsController {
 
   // Static routes MUST be before :id param routes
   @Get('saved')
-  @UseGuards(EmailVerifiedGuard)
+  @UseGuards(JwtAuthGuard, EmailVerifiedGuard)
   async getSavedPosts(
     @Req() req: Request,
     @Query('cursor') cursor?: string,
@@ -43,25 +43,25 @@ export class PostsController {
   }
 
   @Get('user/:username')
-  @UseGuards(EmailVerifiedGuard)
+  @UseGuards(OptionalJwtAuthGuard)
   async getUserPosts(
     @Param('username') username: string,
     @Req() req: Request,
     @Query('cursor') cursor?: string,
   ) {
-    const { userId } = req.user as any;
-    return this.postsService.getUserPosts(username, userId, cursor);
+    const viewerId = (req.user as any)?.userId || null;
+    return this.postsService.getUserPosts(username, viewerId, cursor);
   }
 
   @Get(':id')
-  @UseGuards(EmailVerifiedGuard)
+  @UseGuards(OptionalJwtAuthGuard)
   async getPost(@Param('id') postId: string, @Req() req: Request) {
-    const { userId } = req.user as any;
-    return this.postsService.getPost(postId, userId);
+    const viewerId = (req.user as any)?.userId || null;
+    return this.postsService.getPost(postId, viewerId);
   }
 
   @Patch(':id')
-  @UseGuards(EmailVerifiedGuard)
+  @UseGuards(JwtAuthGuard, EmailVerifiedGuard)
   async updateCaption(
     @Param('id') postId: string,
     @Body() dto: UpdatePostDto,
@@ -73,7 +73,7 @@ export class PostsController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(EmailVerifiedGuard)
+  @UseGuards(JwtAuthGuard, EmailVerifiedGuard)
   async deletePost(@Param('id') postId: string, @Req() req: Request) {
     const { userId } = req.user as any;
     return this.postsService.deletePost(postId, userId);
@@ -81,7 +81,7 @@ export class PostsController {
 
   @Post(':id/like')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(EmailVerifiedGuard)
+  @UseGuards(JwtAuthGuard, EmailVerifiedGuard)
   async likePost(@Param('id') postId: string, @Req() req: Request) {
     const { userId } = req.user as any;
     return this.postsService.toggleLike(userId, postId, true);
@@ -89,7 +89,7 @@ export class PostsController {
 
   @Delete(':id/like')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(EmailVerifiedGuard)
+  @UseGuards(JwtAuthGuard, EmailVerifiedGuard)
   async unlikePost(@Param('id') postId: string, @Req() req: Request) {
     const { userId } = req.user as any;
     return this.postsService.toggleLike(userId, postId, false);
@@ -97,7 +97,7 @@ export class PostsController {
 
   @Post(':id/bookmark')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(EmailVerifiedGuard)
+  @UseGuards(JwtAuthGuard, EmailVerifiedGuard)
   async bookmarkPost(@Param('id') postId: string, @Req() req: Request) {
     const { userId } = req.user as any;
     return this.postsService.toggleBookmark(userId, postId, true);
@@ -105,7 +105,7 @@ export class PostsController {
 
   @Delete(':id/bookmark')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(EmailVerifiedGuard)
+  @UseGuards(JwtAuthGuard, EmailVerifiedGuard)
   async unbookmarkPost(@Param('id') postId: string, @Req() req: Request) {
     const { userId } = req.user as any;
     return this.postsService.toggleBookmark(userId, postId, false);

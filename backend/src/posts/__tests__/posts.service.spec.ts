@@ -39,6 +39,9 @@ describe('PostsService', () => {
       create: jest.fn(),
       deleteMany: jest.fn(),
     },
+    postItem: {
+      create: jest.fn(),
+    },
     user: {
       findUnique: jest.fn(),
     },
@@ -518,6 +521,126 @@ describe('PostsService', () => {
           where: { name: { startsWith: 'food', mode: 'insensitive' } },
         }),
       );
+    });
+  });
+
+  describe('createPost with linkedItemIds', () => {
+    it('should create PostItem records when linkedItemIds are provided', async () => {
+      const dto = {
+        mediaIds: ['media-1'],
+        caption: 'My collection',
+        linkedItemIds: ['item-1', 'item-2'],
+      };
+
+      mockPrisma.media.findMany.mockResolvedValue([
+        { id: 'media-1', userId: 'user-1', status: 'COMPLETED' },
+      ]);
+
+      const createdPost = { id: 'post-1', userId: 'user-1', caption: dto.caption };
+      mockPrisma.$transaction.mockImplementation(async (cb: any) => cb(mockPrisma));
+      mockPrisma.post.create.mockResolvedValue(createdPost);
+      mockPrisma.postItem.create.mockResolvedValue({});
+
+      await service.createPost('user-1', dto);
+
+      expect(mockPrisma.postItem.create).toHaveBeenCalledTimes(2);
+      expect(mockPrisma.postItem.create).toHaveBeenCalledWith({
+        data: { postId: 'post-1', itemId: 'item-1' },
+      });
+      expect(mockPrisma.postItem.create).toHaveBeenCalledWith({
+        data: { postId: 'post-1', itemId: 'item-2' },
+      });
+    });
+
+    it('should not create PostItem records when linkedItemIds is empty or absent', async () => {
+      const dto = { mediaIds: ['media-1'], caption: 'No items linked' };
+
+      mockPrisma.media.findMany.mockResolvedValue([
+        { id: 'media-1', userId: 'user-1', status: 'COMPLETED' },
+      ]);
+
+      const createdPost = { id: 'post-1', userId: 'user-1', caption: dto.caption };
+      mockPrisma.$transaction.mockImplementation(async (cb: any) => cb(mockPrisma));
+      mockPrisma.post.create.mockResolvedValue(createdPost);
+
+      await service.createPost('user-1', dto);
+
+      expect(mockPrisma.postItem.create).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('getPost with linkedItems', () => {
+    it('should include linkedItems array in post response', async () => {
+      const mockPostWithItems = {
+        id: 'post-1',
+        userId: 'author-1',
+        caption: 'My collection',
+        createdAt: new Date('2026-01-01'),
+        updatedAt: new Date('2026-01-01'),
+        user: {
+          id: 'author-1',
+          username: 'testuser',
+          name: 'Test User',
+          avatar: null,
+        },
+        media: [
+          {
+            id: 'pm-1',
+            mediaId: 'media-1',
+            position: 0,
+            media: { id: 'media-1', largeKey: 'posts/large/img1.jpg' },
+          },
+        ],
+        items: [
+          {
+            item: {
+              id: 'item-1',
+              name: 'RX-78-2',
+              imageKey: null,
+              series: {
+                name: 'Master Grade',
+                category: { name: 'Gundam' },
+              },
+            },
+          },
+          {
+            item: {
+              id: 'item-2',
+              name: 'Zaku II',
+              imageKey: 'items/zaku.jpg',
+              series: {
+                name: 'High Grade',
+                category: { name: 'Gundam' },
+              },
+            },
+          },
+        ],
+        _count: { likes: 1, comments: 0 },
+      };
+
+      mockPrisma.post.findUnique.mockResolvedValue(mockPostWithItems);
+      mockPrisma.like.findMany.mockResolvedValue([]);
+      mockPrisma.bookmark.findMany.mockResolvedValue([]);
+      mockStorageService.getPresignedUrl.mockResolvedValue('https://url.com/signed');
+
+      const result = await service.getPost('post-1', 'viewer-1');
+
+      expect(result.linkedItems).toBeDefined();
+      expect(result.linkedItems).toHaveLength(2);
+      expect(result.linkedItems![0]).toEqual({
+        id: 'item-1',
+        name: 'RX-78-2',
+        seriesName: 'Master Grade',
+        categoryName: 'Gundam',
+        imageUrl: null,
+      });
+      expect(result.linkedItems![1]).toEqual({
+        id: 'item-2',
+        name: 'Zaku II',
+        seriesName: 'High Grade',
+        categoryName: 'Gundam',
+        imageUrl: 'items/zaku.jpg',
+      });
     });
   });
 });

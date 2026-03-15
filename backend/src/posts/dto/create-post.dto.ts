@@ -18,4 +18,10 @@ export class CreatePostDto {
   @IsString({ message: 'Caption phai la chuoi ky tu' })
   @MaxLength(2200, { message: 'Caption toi da 2200 ky tu' })
   caption?: string | null;
+
+  @IsOptional()
+  @IsArray({ message: 'linkedItemIds phai la mang' })
+  @ArrayMaxSize(10, { message: 'Toi da 10 vat pham lien ket' })
+  @IsString({ each: true, message: 'Moi itemId phai la chuoi ky tu' })
+  linkedItemIds?: string[];
 }

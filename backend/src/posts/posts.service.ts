@@ -34,7 +34,7 @@ export class PostsService {
     // Extract hashtags from caption
     const hashtags = this.extractHashtags(dto.caption || '');
 
-    // Create post + PostMedia entries + hashtag links in transaction
+    // Create post + PostMedia entries + hashtag links + PostItem links in transaction
     const post = await this.prisma.$transaction(async (tx: any) => {
       const post = await tx.post.create({
         data: {
@@ -63,13 +63,22 @@ export class PostsService {
         }
       }
 
+      // Create PostItem links for linked collection items
+      if (dto.linkedItemIds && dto.linkedItemIds.length > 0) {
+        for (const itemId of dto.linkedItemIds) {
+          await tx.postItem.create({
+            data: { postId: post.id, itemId },
+          });
+        }
+      }
+
       return post;
     });
 
     return post;
   }
 
-  async getPost(postId: string, viewerId: string) {
+  async getPost(postId: string, viewerId: string | null) {
     const post = await this.prisma.post.findUnique({
       where: { id: postId },
       include: {
@@ -87,6 +96,23 @@ export class PostsService {
           },
           orderBy: { position: 'asc' as const },
         },
+        items: {
+          include: {
+            item: {
+              select: {
+                id: true,
+                name: true,
+                imageKey: true,
+                series: {
+                  select: {
+                    name: true,
+                    category: { select: { name: true } },
+                  },
+                },
+              },
+            },
+          },
+        },
         _count: { select: { likes: true, comments: true } },
       },
     });
@@ -95,19 +121,23 @@ export class PostsService {
       throw new NotFoundException('Bai viet khong ton tai');
     }
 
-    // Batch check isLiked/isBookmarked for viewer
-    const [likes, bookmarks] = await Promise.all([
-      this.prisma.like.findMany({
-        where: { userId: viewerId, postId: { in: [postId] } },
-        select: { postId: true },
-      }),
-      this.prisma.bookmark.findMany({
-        where: { userId: viewerId, postId: { in: [postId] } },
-        select: { postId: true },
-      }),
-    ]);
-    const likedSet = new Set(likes.map((l: any) => l.postId));
-    const bookmarkedSet = new Set(bookmarks.map((b: any) => b.postId));
+    // Batch check isLiked/isBookmarked for viewer (skip when unauthenticated)
+    let likedSet = new Set<string>();
+    let bookmarkedSet = new Set<string>();
+    if (viewerId) {
+      const [likes, bookmarks] = await Promise.all([
+        this.prisma.like.findMany({
+          where: { userId: viewerId, postId: { in: [postId] } },
+          select: { postId: true },
+        }),
+        this.prisma.bookmark.findMany({
+          where: { userId: viewerId, postId: { in: [postId] } },
+          select: { postId: true },
+        }),
+      ]);
+      likedSet = new Set(likes.map((l: any) => l.postId));
+      bookmarkedSet = new Set(bookmarks.map((b: any) => b.postId));
+    }
 
     // Resolve presigned URLs for author avatar and all media
     const storageKeys: string[] = [];
@@ -143,6 +173,7 @@ export class PostsService {
         position: pm.position,
         url: pm.media.largeKey ? urlMap.get(pm.media.largeKey) || '' : '',
       })),
+      linkedItems: this.mapLinkedItems((post as any).items),
       likeCount: post._count.likes,
       commentCount: post._count.comments,
       isLiked: likedSet.has(post.id),
@@ -286,6 +317,23 @@ export class PostsService {
               },
               orderBy: { position: 'asc' as const },
             },
+            items: {
+              include: {
+                item: {
+                  select: {
+                    id: true,
+                    name: true,
+                    imageKey: true,
+                    series: {
+                      select: {
+                        name: true,
+                        category: { select: { name: true } },
+                      },
+                    },
+                  },
+                },
+              },
+            },
             _count: { select: { likes: true, comments: true } },
           },
         },
@@ -320,7 +368,7 @@ export class PostsService {
     };
   }
 
-  async getUserPosts(username: string, viewerId: string, cursor?: string, take = POST_LIMITS.feedPageSize) {
+  async getUserPosts(username: string, viewerId: string | null, cursor?: string, take = POST_LIMITS.feedPageSize) {
     const user = await this.prisma.user.findUnique({
       where: { username },
       select: { id: true },
@@ -347,6 +395,23 @@ export class PostsService {
           },
           orderBy: { position: 'asc' as const },
         },
+        items: {
+          include: {
+            item: {
+              select: {
+                id: true,
+                name: true,
+                imageKey: true,
+                series: {
+                  select: {
+                    name: true,
+                    category: { select: { name: true } },
+                  },
+                },
+              },
+            },
+          },
+        },
         _count: { select: { likes: true, comments: true } },
       },
       orderBy: { createdAt: 'desc' as const },
@@ -361,20 +426,24 @@ export class PostsService {
     const items = posts.slice(0, take);
     const nextCursor = hasMore ? items[items.length - 1].id : null;
 
-    // Batch check like/bookmark status
+    // Batch check like/bookmark status (skip when unauthenticated)
     const postIds = items.map((p: any) => p.id);
-    const [likes, bookmarks] = await Promise.all([
-      this.prisma.like.findMany({
-        where: { userId: viewerId, postId: { in: postIds } },
-        select: { postId: true },
-      }),
-      this.prisma.bookmark.findMany({
-        where: { userId: viewerId, postId: { in: postIds } },
-        select: { postId: true },
-      }),
-    ]);
-    const likedSet = new Set(likes.map((l: any) => l.postId));
-    const bookmarkedSet = new Set(bookmarks.map((b: any) => b.postId));
+    let likedSet = new Set<string>();
+    let bookmarkedSet = new Set<string>();
+    if (viewerId) {
+      const [likes, bookmarks] = await Promise.all([
+        this.prisma.like.findMany({
+          where: { userId: viewerId, postId: { in: postIds } },
+          select: { postId: true },
+        }),
+        this.prisma.bookmark.findMany({
+          where: { userId: viewerId, postId: { in: postIds } },
+          select: { postId: true },
+        }),
+      ]);
+      likedSet = new Set(likes.map((l: any) => l.postId));
+      bookmarkedSet = new Set(bookmarks.map((b: any) => b.postId));
+    }
 
     // Batch resolve presigned URLs
     const urlMap = await this.resolvePresignedUrls(items);
@@ -450,6 +519,7 @@ export class PostsService {
         position: pm.position,
         url: pm.media?.largeKey ? urlMap.get(pm.media.largeKey) || '' : '',
       })),
+      linkedItems: this.mapLinkedItems(post.items),
       likeCount: post._count.likes,
       commentCount: post._count.comments,
       isLiked: likedSet.has(post.id),
@@ -457,5 +527,16 @@ export class PostsService {
       createdAt: post.createdAt.toISOString(),
       updatedAt: post.updatedAt.toISOString(),
     };
+  }
+
+  private mapLinkedItems(items?: any[]): any[] {
+    if (!items || items.length === 0) return [];
+    return items.map((pi: any) => ({
+      id: pi.item.id,
+      name: pi.item.name,
+      seriesName: pi.item.series?.name ?? '',
+      categoryName: pi.item.series?.category?.name ?? '',
+      imageUrl: pi.item.imageKey ?? null,
+    }));
   }
 }
