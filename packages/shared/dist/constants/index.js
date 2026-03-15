@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.THUMBNAIL_SIZES = exports.FILE_LIMITS = exports.TOKEN_EXPIRY = void 0;
+exports.COLLECTION_LIMITS = exports.POST_LIMITS = exports.PROFILE_LIMITS = exports.THUMBNAIL_SIZES = exports.FILE_LIMITS = exports.TOKEN_EXPIRY = void 0;
 exports.TOKEN_EXPIRY = {
     access: '15m',
     accessSeconds: 15 * 60,
@@ -19,4 +19,25 @@ exports.THUMBNAIL_SIZES = {
     small: 150,
     medium: 600,
     large: 1080,
+};
+exports.PROFILE_LIMITS = {
+    bioMaxLength: 150,
+    usernameMinLength: 3,
+    usernameMaxLength: 30,
+    usernameCooldownDays: 14,
+};
+exports.POST_LIMITS = {
+    maxImages: 10,
+    captionMaxLength: 2200,
+    commentMaxLength: 1000,
+    feedPageSize: 10,
+    commentsPageSize: 20,
+};
+exports.COLLECTION_LIMITS = {
+    itemsPageSize: 20,
+    seriesPageSize: 20,
+    searchResultsLimit: 20,
+    checklistNameMaxLength: 100,
+    freeformTextMaxLength: 200,
+    maxChecklistEntries: 100,
 };

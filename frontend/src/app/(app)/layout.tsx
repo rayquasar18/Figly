@@ -1,8 +1,10 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useMe } from '@/hooks/queries/auth-queries';
+import { BottomNav } from '@/components/layout/bottom-nav';
+import { CreatePostFlow } from '@/components/create-post/create-post-flow';
 
 export default function AppLayout({
   children,
@@ -10,6 +12,7 @@ export default function AppLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
   const { data: user, isLoading, isError } = useMe();
 
   useEffect(() => {
@@ -24,10 +27,23 @@ export default function AppLayout({
     }
   }, [user, isLoading, router]);
 
+  // Username gate: redirect OAuth users without username to complete-profile
+  useEffect(() => {
+    if (
+      !isLoading &&
+      user &&
+      user.emailVerified &&
+      !user.username &&
+      pathname !== '/complete-profile'
+    ) {
+      router.replace('/complete-profile');
+    }
+  }, [user, isLoading, pathname, router]);
+
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      <div className="flex min-h-dvh items-center justify-center">
+        <div className="size-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
       </div>
     );
   }
@@ -40,5 +56,16 @@ export default function AppLayout({
     return null;
   }
 
-  return <>{children}</>;
+  // Allow complete-profile page even without username
+  if (!user.username && pathname !== '/complete-profile') {
+    return null;
+  }
+
+  return (
+    <>
+      <main className="pb-14 md:pb-0">{children}</main>
+      <BottomNav />
+      <CreatePostFlow />
+    </>
+  );
 }

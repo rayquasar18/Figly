@@ -14,21 +14,37 @@ enum MediaStatus {
 }
 
 model User {
-  id              String   @id @default(cuid())
-  email           String   @unique
-  passwordHash    String?
-  name            String
-  emailVerified   Boolean  @default(false)
-  emailVerifiedAt DateTime?
-  googleId        String?  @unique
-  appleId         String?  @unique
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id                String    @id @default(cuid())
+  email             String    @unique
+  passwordHash      String?
+  name              String
+  username          String?   @unique
+  bio               String?   @db.VarChar(150)
+  avatarId          String?   @unique
+  usernameChangedAt DateTime?
+  emailVerified     Boolean   @default(false)
+  emailVerifiedAt   DateTime?
+  googleId          String?   @unique
+  appleId           String?   @unique
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 
+  avatar             Media?    @relation("UserAvatar", fields: [avatarId], references: [id])
   refreshTokens      RefreshToken[]
   verificationTokens VerificationToken[]
   passwordResetTokens PasswordResetToken[]
   media              Media[]
+  followers          Follow[]  @relation("following")
+  following          Follow[]  @relation("follower")
+  posts              Post[]
+  likes              Like[]
+  comments           Comment[]
+  bookmarks          Bookmark[]
+  ownedItems         OwnedItem[]
+  wishlistItems      WishlistItem[]
+  checklists         Checklist[]
+  categoryFollows    CategoryFollow[]
+  seriesFollows      SeriesFollow[]
 
   @@map("users")
 }
@@ -85,6 +101,272 @@ model Media {
   status       MediaStatus @default(PROCESSING)
   createdAt    DateTime    @default(now())
 
+  userAvatar   User?       @relation("UserAvatar")
+  postMedia    PostMedia[]
+
   @@index([userId])
   @@map("media")
+}
+
+model Follow {
+  id          String   @id @default(cuid())
+  followerId  String
+  followingId String
+  follower    User     @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User     @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+
+  @@unique([followerId, followingId])
+  @@index([followerId])
+  @@index([followingId])
+  @@map("follows")
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  caption   String?  @db.VarChar(2200)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  media     PostMedia[]
+  likes     Like[]
+  comments  Comment[]
+  bookmarks Bookmark[]
+  hashtags  PostHashtag[]
+  items     PostItem[]
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("posts")
+}
+
+model PostMedia {
+  id       String @id @default(cuid())
+  postId   String
+  post     Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  mediaId  String
+  media    Media  @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+  position Int
+
+  @@unique([postId, position])
+  @@index([postId])
+  @@map("post_media")
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  userId    String
+  postId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId])
+  @@index([postId])
+  @@map("likes")
+}
+
+model Comment {
+  id        String    @id @default(cuid())
+  userId    String
+  postId    String
+  parentId  String?
+  content   String    @db.VarChar(1000)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  parent    Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies   Comment[] @relation("CommentReplies")
+  createdAt DateTime  @default(now())
+
+  @@index([postId, createdAt])
+  @@index([parentId])
+  @@map("comments")
+}
+
+model Bookmark {
+  id        String   @id @default(cuid())
+  userId    String
+  postId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId])
+  @@index([userId, createdAt])
+  @@map("bookmarks")
+}
+
+model Hashtag {
+  id    String @id @default(cuid())
+  name  String @unique
+  posts PostHashtag[]
+
+  @@map("hashtags")
+}
+
+model PostHashtag {
+  id        String  @id @default(cuid())
+  postId    String
+  hashtagId String
+  post      Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  hashtag   Hashtag @relation(fields: [hashtagId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, hashtagId])
+  @@index([hashtagId])
+  @@map("post_hashtags")
+}
+
+// ─── Collection System ───────────────────────────────────────────────────────
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  coverImage  String?
+  position    Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  series    Series[]
+  followers CategoryFollow[]
+
+  @@map("categories")
+}
+
+model Series {
+  id          String   @id @default(cuid())
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  name        String
+  slug        String
+  description String?
+  coverImage  String?
+  position    Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  items     Item[]
+  followers SeriesFollow[]
+
+  @@unique([categoryId, slug])
+  @@index([categoryId])
+  @@map("series")
+}
+
+model Item {
+  id          String    @id @default(cuid())
+  seriesId    String
+  series      Series    @relation(fields: [seriesId], references: [id], onDelete: Cascade)
+  name        String
+  description String?
+  imageKey    String?
+  releaseDate DateTime?
+  createdAt   DateTime  @default(now())
+
+  ownedBy          OwnedItem[]
+  wishlistedBy     WishlistItem[]
+  checklistEntries ChecklistEntry[]
+  postItems        PostItem[]
+
+  @@index([seriesId])
+  @@index([name])
+  @@map("items")
+}
+
+model OwnedItem {
+  id        String   @id @default(cuid())
+  userId    String
+  itemId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, itemId])
+  @@index([userId])
+  @@index([itemId])
+  @@map("owned_items")
+}
+
+model WishlistItem {
+  id        String   @id @default(cuid())
+  userId    String
+  itemId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, itemId])
+  @@index([userId])
+  @@index([itemId])
+  @@map("wishlist_items")
+}
+
+model Checklist {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String   @db.VarChar(100)
+  isPublic  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  entries ChecklistEntry[]
+
+  @@index([userId])
+  @@map("checklists")
+}
+
+model ChecklistEntry {
+  id           String    @id @default(cuid())
+  checklistId  String
+  checklist    Checklist @relation(fields: [checklistId], references: [id], onDelete: Cascade)
+  itemId       String?
+  item         Item?     @relation(fields: [itemId], references: [id], onDelete: SetNull)
+  freeformText String?   @db.VarChar(200)
+  isChecked    Boolean   @default(false)
+  position     Int       @default(0)
+  createdAt    DateTime  @default(now())
+
+  @@index([checklistId, position])
+  @@map("checklist_entries")
+}
+
+model PostItem {
+  id     String @id @default(cuid())
+  postId String
+  itemId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  item   Item   @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, itemId])
+  @@index([postId])
+  @@index([itemId])
+  @@map("post_items")
+}
+
+model CategoryFollow {
+  id         String   @id @default(cuid())
+  userId     String
+  categoryId String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@unique([userId, categoryId])
+  @@index([userId])
+  @@map("category_follows")
+}
+
+model SeriesFollow {
+  id        String   @id @default(cuid())
+  userId    String
+  seriesId  String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  series    Series   @relation(fields: [seriesId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, seriesId])
+  @@index([userId])
+  @@map("series_follows")
 }

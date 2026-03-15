@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 01-03-PLAN.md tasks 1-2, checkpoint pending
-last_updated: "2026-03-13T14:30:17.078Z"
-last_activity: 2026-03-13 -- Completed 01-03 Frontend Auth + Media Pipeline
+status: completed
+stopped_at: Completed 04-06-PLAN.md
+last_updated: "2026-03-15T00:28:20.246Z"
+last_activity: 2026-03-15 -- Completed 04-06 Item Picker and Post-Item Linking Frontend
 progress:
-  total_phases: 10
-  completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
+  total_phases: 11
+  completed_phases: 5
+  total_plans: 19
+  completed_plans: 19
   percent: 100
 ---
 
@@ -21,35 +21,51 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-13)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 1: Foundation & Auth
+**Current focus:** Phase 4 (Collection System -- COMPLETE, 6/6 plans)
 
 ## Current Position
 
-Phase: 1 of 10 (Foundation & Auth)
-Plan: 3 of 3 in current phase (checkpoint pending)
-Status: Executing
-Last activity: 2026-03-13 -- Completed 01-03 Frontend Auth + Media Pipeline
+Phase: 5 of 10
+Plan: 0 of ? in current phase
+Status: Phase 4 Complete
+Last activity: 2026-03-15 -- Completed 04-06 Item Picker and Post-Item Linking Frontend
 
-Progress: [██████████] 100% (Phase 1)
+Progress: [██████████] 100% (Phase 4: 6/6 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 3
-- Average duration: 12 min
-- Total execution time: 0.62 hours
+- Total plans completed: 16
+- Average duration: 7 min
+- Total execution time: 2.1 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation-auth | 3 | 37 min | 12 min |
+| 02-profiles-social-graph | 4 | 23 min | 6 min |
+| 03-content-feed | 4 | 38 min | 10 min |
+| 03.1-public-viewing-mode | 1 | 7 min | 7 min |
+| 04-collection-system | 4 | 20 min | 5 min |
 
 **Recent Trend:**
-- Last 5 plans: 11, 15, 11 min
-- Trend: stable
+- Last 5 plans: 7, 4, 5, 6, 5 min
+- Trend: improving
 
 *Updated after each plan completion*
+| Phase 03 P01 | 3 | 2 tasks | 8 files |
+| Phase 03 P02 | 10 | 2 tasks | 19 files |
+| Phase 03 P03 | 13 | 2 tasks | 12 files |
+| Phase 03 P04 | 12 | 2 tasks | 21 files |
+| Phase 03.1 P01 | 7 | 2 tasks | 13 files |
+| Phase 03.1 P02 | 7 | 2 tasks | 14 files |
+| Phase 04 P01 | 4 | 2 tasks | 10 files |
+| Phase 04 P02 | 5 | 1 task | 6 files |
+| Phase 04 P03 | 13 | 2 tasks | 12 files |
+| Phase 04 P04 | 6 | 2 tasks | 12 files |
+| Phase 04 P05 | 9 | 2 tasks | 18 files |
+| Phase 04 P06 | 5 | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -73,18 +89,75 @@ Recent decisions affecting current work:
 - [Phase 01-03]: Removed EmailVerifiedGuard from /me so frontend can distinguish unverified from unauthenticated
 - [Phase 01-03]: /me returns full PublicUser object for frontend display
 - [Phase 01-03]: Queue pattern for concurrent 401 refresh: only one refresh in flight
+- [02-01]: Username nullable on User model to support existing OAuth users without usernames
+- [02-01]: Reserved username check in AuthService (not Zod schema) to separate validation from business logic
+- [02-01]: P2002 catch on signup for username race condition handling
+- [02-01]: avatarId @unique for Prisma one-to-one relation requirement
+- [02-02]: ProfilesModule imports MediaModule for StorageService avatar presigned URL resolution
+- [02-02]: Cursor pagination uses take+1 pattern to avoid separate COUNT query
+- [02-02]: Follow/unfollow idempotent via P2002/P2025 error catching
+- [02-02]: Batch follow-status check with IN clause + Set for O(1) lookup
+- [02-03]: ProfileEditModal uses shadcn Dialog per user decision for modal overlay
+- [02-03]: Username availability check debounced 300ms, only when differs from current
+- [02-03]: Shared signupSchema updated to include username field (was missing vs backend DTO)
+- [02-03]: App layout gates all routes behind username: redirects to /complete-profile if null
+- [02-03]: Follow button rendered as placeholder with data-follow-placeholder for Plan 02-04
+- [02-04]: FollowButton hover shows destructive styling for visual unfollow confirmation cue
+- [02-04]: IntersectionObserver infinite scroll with sentinel div for follower/following lists
+- [02-04]: Debounced search (300ms) on follower/following lists passed to query hooks
+- [Phase 02]: ProfileEditModal uses shadcn Dialog per user decision for modal overlay
+- [Phase 02]: App layout gates all routes behind username: redirects to /complete-profile if null
+- [03-01]: ToggleResponse with single boolean success field for like/bookmark toggle simplicity
+- [03-02]: HashtagsController as separate controller in PostsModule for /hashtags route prefix
+- [03-02]: CommentsController uses no-prefix @Controller() for mixed /posts/:postId/comments and /comments/:id routes
+- [03-02]: FeedService uses read-time query with Follow subquery (not fan-out-on-write) for simplicity at current scale
+- [03-03]: Upload orchestration in CreatePostFlow component for store interaction during sequential uploads
+- [03-03]: NavLink sub-component in BottomNav for type-safe route rendering
+- [03-04]: Cross-query-key optimistic updates via updatePostInQueries helper for feed/userPosts/savedPosts/post detail consistency
+- [03-04]: Desktop modal vs mobile full-page routing via window.innerWidth >= 768 check at click time
+- [03-04]: post-queries.ts created in Plan 03-04 since Plan 03-03 runs in same wave (parallel execution)
+- [03.1-01]: OptionalJwtAuthGuard overrides handleRequest to return user||null for unauthenticated access
+- [03.1-01]: Skip like/bookmark/follow queries entirely when viewerId is null for performance
+- [03.1-01]: GET /feed/public has no guard -- viewer identity never used for public feed
+- [03.1-01]: Extracted mapPostResponse helper in FeedService for reuse between personal and public feed
+- [Phase 03.1]: Moved [username] and post routes from (app) to (public) to avoid Next.js route conflicts
+- [Phase 03.1]: requireAuth pattern wraps click handlers to redirect unauthenticated users to /login
+- [Phase 03.1]: API client interceptor skips redirect only for /auth/me 401 -- public endpoints never return 401
+- [Phase 03.1]: CommentInput renders login CTA link instead of form for unauthenticated users
+- [04-01]: Deterministic seed IDs using category+series+item slug pattern for idempotent upserts
+- [04-01]: 15 series across 4 categories (Gundam 4, Figurines 4, Sneakers 4, Trading Cards 3)
+- [04-01]: No imageKey/releaseDate in seed data -- placeholder icons for initial UI
+- [04-02]: Vietnamese error messages in NotFoundException for collection endpoints consistency
+- [04-02]: Toggle endpoints return { success, isOwned/isWishlisted } for frontend state updates
+- [04-02]: Batch status check uses Promise.all for parallel owned + wishlist queries
+- [04-03]: Ownership enforcement via findFirst(id, userId) pattern for checklist write operations
+- [04-03]: Entry position managed via aggregate _max + 1 for append, $transaction for reorder
+- [04-03]: mapLinkedItems helper duplicated in PostsService and FeedService for module independence
+- [04-03]: PostResponse.linkedItems optional field to avoid breaking existing frontend code
+- [04-04]: Cross-query optimistic updates via updateItemInQueries helper for items/searchItems/itemDetail consistency
+- [04-04]: Auth-aware toggle uses useAuthStore.getState().user for synchronous auth gating before mutations
+- [04-04]: Category/series names from slug with dash-to-space since series API lacks parent name field
+- [Phase 04]: ChecklistEntry reorder uses full array swap and sends complete entryIds list
+- [Phase 04]: FollowSeriesButton reuses same auth-gate pattern as user FollowButton
+- [Phase 04]: CollectionShowcase uses inline useQuery for owned items endpoint
+- [Phase 04]: ItemPicker onSelect returns both IDs and LinkedItemResponse for store hydration without extra API calls
+- [Phase 04]: PostCard shows max 3 linked item badges with overflow count for compact feed display
+- [Phase 04]: Checklist detail replaced manual ID input with ItemPicker in single-select mode
 
 ### Pending Todos
 
 None yet.
 
+### Roadmap Evolution
+
+- Phase 3.1 inserted after Phase 3: Public Viewing Mode (URGENT)
+
 ### Blockers/Concerns
 
-- [Research]: Seed data strategy for collection database (Gundam, figurines, sneakers) needs resolution before Phase 4
 - [Research]: Video processing cost analysis (self-hosted FFmpeg vs AWS MediaConvert) needed before Phase 10
 
 ## Session Continuity
 
-Last session: 2026-03-13T13:41:53.143Z
-Stopped at: Completed 01-03-PLAN.md tasks 1-2, checkpoint pending
+Last session: 2026-03-15T00:19:51Z
+Stopped at: Completed 04-06-PLAN.md
 Resume file: None

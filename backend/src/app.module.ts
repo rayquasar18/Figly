@@ -7,6 +7,13 @@ import { APP_GUARD } from '@nestjs/core';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { MediaModule } from './media/media.module';
+import { ProfilesModule } from './profiles/profiles.module';
+import { SocialModule } from './social/social.module';
+import { PostsModule } from './posts/posts.module';
+import { CommentsModule } from './comments/comments.module';
+import { FeedModule } from './feed/feed.module';
+import { CollectionModule } from './collection/collection.module';
+import { ChecklistModule } from './checklist/checklist.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -47,6 +54,13 @@ import configuration from './config/configuration';
     PrismaModule,
     AuthModule,
     MediaModule,
+    ProfilesModule,
+    SocialModule,
+    PostsModule,
+    CommentsModule,
+    FeedModule,
+    CollectionModule,
+    ChecklistModule,
   ],
   controllers: [],
   providers: [

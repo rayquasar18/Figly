@@ -14,8 +14,9 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [ ] **Phase 1: Foundation & Auth** - Monorepo scaffold, database, media pipeline, and complete authentication system
 - [ ] **Phase 2: Profiles & Social Graph** - User profiles, follow/unfollow system, and follower/following lists
-- [ ] **Phase 3: Content & Feed** - Photo posts, image editing, interactions (likes/comments/bookmarks), and chronological feed
-- [ ] **Phase 4: Collection System** - Shared item database, owned/wishlist tracking, custom checklists, post-to-item linking, and collection showcase
+- [x] **Phase 3: Content & Feed** - Photo posts, image editing, interactions (likes/comments/bookmarks), and chronological feed (completed 2026-03-14)
+- [ ] **Phase 3.1: Public Viewing Mode** - Public viewing mode for non-authenticated users (INSERTED)
+- [x] **Phase 4: Collection System** - Shared item database, owned/wishlist tracking, custom checklists, post-to-item linking, and collection showcase (completed 2026-03-15)
 - [ ] **Phase 5: Search & Discovery** - User/hashtag/item search, hashtag pages, and category-based explore page
 - [ ] **Phase 6: Notifications** - Real-time in-app notifications, notification history, and push notifications via PWA
 - [ ] **Phase 7: Moderation & Safety** - Report, block, mute for users, and admin moderation queue
@@ -51,11 +52,13 @@ Plans:
   2. User can visit another user's profile and see their post grid
   3. User can follow/unfollow another user and see updated follower/following counts immediately
   4. User can view the full list of their followers and the users they follow
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
+- [ ] 02-01-PLAN.md — Schema extension (username, bio, avatar, Follow model), shared types/validators, signup username support
+- [ ] 02-02-PLAN.md — Backend: Profiles and Social NestJS modules with full test coverage
+- [ ] 02-03-PLAN.md — Frontend: Profile page at /[username] with Instagram-style header, edit profile modal, signup username field, complete-profile interstitial for OAuth users
+- [ ] 02-04-PLAN.md — Frontend: Follow/unfollow button with optimistic UI, follower and following list pages with search filter and cursor pagination
 
 ### Phase 3: Content & Feed
 **Goal**: Users can create photo posts, interact with content (like, comment, save), and browse a chronological feed of posts from people they follow
@@ -68,12 +71,31 @@ Plans:
   4. User can like/unlike posts, write comments, and reply to comments in threads
   5. User can bookmark posts and view all saved posts in a dedicated collection
   6. User can scroll a chronological feed showing posts from users they follow
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 03-01: TBD
-- [ ] 03-02: TBD
-- [ ] 03-03: TBD
+- [ ] 03-01-PLAN.md — Prisma schema extension (Post, PostMedia, Like, Comment, Bookmark, Hashtag models) and shared DTOs/types/constants
+- [ ] 03-02-PLAN.md — Backend: Posts, Comments, and Feed NestJS modules with like/bookmark/hashtag support and full test coverage
+- [ ] 03-03-PLAN.md — Frontend: Instagram-style multi-step post creation flow with react-easy-crop image editing and bottom navigation
+- [ ] 03-04-PLAN.md — Frontend: Chronological feed with infinite scroll, post detail modal, comment threading, interactions with optimistic UI, saved posts page
+
+### Phase 03.1: Public Viewing Mode (INSERTED)
+
+**Goal:** Non-authenticated users can view public content (profiles, posts, feeds) in read-only mode with login CTAs for interactive features, enabling social sharing and organic user acquisition
+**Requirements**: PUB-01, PUB-02, PUB-03, PUB-04, PUB-05, PUB-06
+**Depends on:** Phase 3
+**Success Criteria** (what must be TRUE):
+  1. Non-authenticated user can visit any profile page and see the profile with post grid
+  2. Non-authenticated user can view any post with its comments
+  3. Non-authenticated user can browse a public discovery feed of recent posts
+  4. Interactive elements (like, bookmark, comment, follow) redirect to login for non-authenticated users
+  5. Authenticated users see full interactive UI on all pages (no regression)
+  6. Auth-only routes (personal feed, saved posts) still require login
+**Plans**: 2 plans
+
+Plans:
+- [ ] 03.1-01-PLAN.md — Backend: OptionalJwtAuthGuard, refactor read endpoints for optional auth, public feed endpoint
+- [ ] 03.1-02-PLAN.md — Frontend: (public) route group, page migration, auth-aware components, explore page
 
 ### Phase 4: Collection System
 **Goal**: Users can browse a shared item database, track what they own and want, build custom checklists, link posts to collection items, and showcase collections on their profile
@@ -86,12 +108,15 @@ Plans:
   4. User can link a post to one or more items from the collection database when creating or editing a post
   5. User's profile has a collection showcase tab displaying their owned items organized by category
   6. User can follow specific collection series or categories and see related content
-**Plans**: TBD
+**Plans**: 6 plans
 
 Plans:
-- [ ] 04-01: TBD
-- [ ] 04-02: TBD
-- [ ] 04-03: TBD
+- [ ] 04-01-PLAN.md — Prisma schema extension (10 collection models), shared types/DTOs/constants, seed data script
+- [ ] 04-02-PLAN.md — Backend: CollectionModule (browse, search, owned/wishlist, follow)
+- [ ] 04-03-PLAN.md — Backend: ChecklistModule (CRUD, entries, progress) + PostsModule item linking + shared PostResponse extension
+- [ ] 04-04-PLAN.md — Frontend: Collection browsing pages (categories, series, items), item detail, search, owned/wishlist toggle, bottom nav
+- [ ] 04-05-PLAN.md — Frontend: Checklists (CRUD, entries, progress), profile collection tab, follow series/categories
+- [ ] 04-06-PLAN.md — Frontend: ItemPicker component, post-to-item linking in create post flow, linked items on post display
 
 ### Phase 5: Search & Discovery
 **Goal**: Users can find other collectors, discover content by hashtag, and explore posts organized by collection category
@@ -142,8 +167,8 @@ Plans:
 **Requirements**: MESG-01, MESG-02, MESG-03, MESG-04
 **Success Criteria** (what must be TRUE):
   1. User can start a 1-on-1 conversation with another user and send/receive text messages in real-time
-  2. User can share photos and videos within DM conversations
-  3. User can see when their messages have been read by the recipient
+  2. User can see when their messages have been read by the recipient
+  3. User can share photos and videos within DM conversations
   4. User can participate in group chats organized by collection category or interest
 **Plans**: TBD
 
@@ -178,14 +203,15 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
+Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation & Auth | 0/3 | Planning complete | - |
-| 2. Profiles & Social Graph | 0/2 | Not started | - |
-| 3. Content & Feed | 0/3 | Not started | - |
-| 4. Collection System | 0/3 | Not started | - |
+| 2. Profiles & Social Graph | 0/4 | Planning complete | - |
+| 3. Content & Feed | 2/4 | Complete    | 2026-03-14 |
+| 3.1 Public Viewing Mode | 0/2 | Planning complete | - |
+| 4. Collection System | 6/6 | Complete   | 2026-03-15 |
 | 5. Search & Discovery | 0/2 | Not started | - |
 | 6. Notifications | 0/2 | Not started | - |
 | 7. Moderation & Safety | 0/2 | Not started | - |
