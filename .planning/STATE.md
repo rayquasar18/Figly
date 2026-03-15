@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-13)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 4 (Collection System -- COMPLETE, 6/6 plans)
+**Current focus:** Phase 5 (Search & Discovery -- IN PROGRESS, 1/? plans)
 
 ## Current Position
 
 Phase: 5 of 10
-Plan: 0 of ? in current phase
-Status: Phase 4 Complete
-Last activity: 2026-03-15 -- Completed 04-06 Item Picker and Post-Item Linking Frontend
+Plan: 1 of ? in current phase
+Status: Executing Phase 5
+Last activity: 2026-03-15 -- Completed 05-01 Search & Discovery Backend API
 
-Progress: [██████████] 100% (Phase 4: 6/6 plans)
+Progress: [██████████] 100% (Phase 5: 1/? plans)
 
 ## Performance Metrics
 
@@ -66,6 +66,7 @@ Progress: [██████████] 100% (Phase 4: 6/6 plans)
 | Phase 04 P04 | 6 | 2 tasks | 12 files |
 | Phase 04 P05 | 9 | 2 tasks | 18 files |
 | Phase 04 P06 | 5 | 2 tasks | 9 files |
+| Phase 05 P01 | 6 | 2 tasks | 14 files |
 
 ## Accumulated Context
 
@@ -143,6 +144,9 @@ Recent decisions affecting current work:
 - [Phase 04]: ItemPicker onSelect returns both IDs and LinkedItemResponse for store hydration without extra API calls
 - [Phase 04]: PostCard shows max 3 linked item badges with overflow count for compact feed display
 - [Phase 04]: Checklist detail replaced manual ID input with ItemPicker in single-select mode
+- [05-01]: SearchService uses PrismaService directly for hashtag _count aggregation instead of PostsService.searchHashtags
+- [05-01]: Explore feed is public with no guard and empty liked/bookmarked sets
+- [05-01]: Hashtag posts endpoint placed before :id param route to avoid route conflict
 
 ### Pending Todos
 
@@ -158,6 +162,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T00:19:51Z
-Stopped at: Completed 04-06-PLAN.md
+Last session: 2026-03-15T02:08:24Z
+Stopped at: Completed 05-01-PLAN.md
 Resume file: None

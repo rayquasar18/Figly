@@ -52,9 +52,9 @@
 
 ### Discovery
 
-- [ ] **DISC-01**: User can search for users, hashtags, and items
-- [ ] **DISC-02**: User can view hashtag pages with aggregated posts
-- [ ] **DISC-03**: User can browse explore page curated by collection category
+- [x] **DISC-01**: User can search for users, hashtags, and items
+- [x] **DISC-02**: User can view hashtag pages with aggregated posts
+- [x] **DISC-03**: User can browse explore page curated by collection category
 
 ### Collection
 
@@ -153,9 +153,9 @@
 | SOCL-02 | Phase 2 | Complete |
 | SOCL-03 | Phase 3 | Complete |
 | SOCL-04 | Phase 4 | Complete |
-| DISC-01 | Phase 5 | Pending |
-| DISC-02 | Phase 5 | Pending |
-| DISC-03 | Phase 5 | Pending |
+| DISC-01 | Phase 5 | Complete |
+| DISC-02 | Phase 5 | Complete |
+| DISC-03 | Phase 5 | Complete |
 | COLL-01 | Phase 4 | Complete |
 | COLL-02 | Phase 4 | Complete |
 | COLL-03 | Phase 4 | Complete |
