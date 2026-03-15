@@ -16,6 +16,8 @@ import { CollectionModule } from './collection/collection.module';
 import { ChecklistModule } from './checklist/checklist.module';
 import { SearchModule } from './search/search.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { ModerationModule } from './moderation/moderation.module';
+import { AdminModule } from './admin/admin.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -65,6 +67,8 @@ import configuration from './config/configuration';
     ChecklistModule,
     SearchModule,
     NotificationsModule,
+    ModerationModule,
+    AdminModule,
   ],
   controllers: [],
   providers: [

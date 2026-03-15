@@ -88,3 +88,25 @@ export type {
   NotificationResponse,
   UnreadCountResponse,
 } from './types/notification.types';
+
+// Moderation Types
+export type {
+  ReportResponse,
+  BlockedUserResponse,
+  MutedUserResponse,
+  ReportQueueItem,
+  AdminActionResponse,
+} from './types/moderation.types';
+
+// Admin Types
+export type {
+  AdminReportQueueResponse,
+  AdminUserActionResponse,
+} from './types/admin.types';
+
+// Moderation Constants
+export { REPORT_REASONS, MODERATION_LIMITS } from './constants/moderation.constants';
+
+// Moderation DTOs
+export { createReportSchema, adminActionSchema } from './dto/moderation.dto';
+export type { CreateReportDto, AdminActionDto } from './dto/moderation.dto';
