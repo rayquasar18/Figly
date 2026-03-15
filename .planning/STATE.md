@@ -21,21 +21,21 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-13)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 7.1 complete, next: Phase 8 (Direct Messaging)
+**Current focus:** Phase 8: Direct Messaging (Plan 01 complete, Plan 02 next)
 
 ## Current Position
 
-Phase: 7.1 of 10
-Plan: 1 of 1 in current phase
-Status: Phase 07.1 complete
-Last activity: 2026-03-15 -- Completed 07.1 Docker Split
+Phase: 8 of 10
+Plan: 1 of 2 in current phase
+Status: Executing Phase 08
+Last activity: 2026-03-15 -- Completed 08-01 Backend Messaging Infrastructure
 
-Progress: [██████████] 100% (Phase 7.1: 1/1 plans)
+Progress: [█████-----] 50% (Phase 8: 1/2 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 19
+- Total plans completed: 20
 - Average duration: 9 min
 - Total execution time: 3.1 hours
 
@@ -53,8 +53,8 @@ Progress: [██████████] 100% (Phase 7.1: 1/1 plans)
 | 07-moderation-safety | 1 | 31 min | 31 min |
 
 **Recent Trend:**
-- Last 5 plans: 5, 6, 6, 21, 31 min
-- Trend: increasing (07-01 large scope with 12 service integrations)
+- Last 5 plans: 6, 6, 21, 31, 8 min
+- Trend: variable (08-01 moderate scope with focused messaging backend)
 
 *Updated after each plan completion*
 | Phase 03 P01 | 3 | 2 tasks | 8 files |
@@ -75,6 +75,7 @@ Progress: [██████████] 100% (Phase 7.1: 1/1 plans)
 | Phase 06 P02 | 5 | 2 tasks | 16 files |
 | Phase 07 P01 | 31 | 3 tasks | 55 files |
 | Phase 07 P02 | 14 | 2 tasks | 18 files |
+| Phase 08 P01 | 8 | 2 tasks | 22 files |
 
 ## Accumulated Context
 
@@ -176,6 +177,11 @@ Recent decisions affecting current work:
 - [07-01]: Report is unique per (reporter, target, targetType) with P2002 upsert
 - [Phase 07]: PublicUser role field pulled forward to Task 1 for admin UI gating compile-time correctness
 - [Phase 07]: Admin actions in PostMenu and UserActionMenu share admin-queries hooks for consistency
+- [08-01]: Socket.IO with NestJS 10 compat (@nestjs/websockets@^10) for peer dependency alignment
+- [08-01]: WebSocket JWT auth via cookie parsing (access_token) matching existing auth flow
+- [08-01]: userSockets Map<userId, Set<socketId>> for multi-device connection tracking
+- [08-01]: Room-based broadcast (conv:{conversationId}) for efficient message delivery
+- [08-01]: 1-on-1 duplicate prevention via findFirst with AND participant queries
 
 ### Pending Todos
 
@@ -192,6 +198,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T07:04:02.856Z
-Stopped at: Completed 07-02-PLAN.md
+Last session: 2026-03-15T15:52:50Z
+Stopped at: Completed 08-01-PLAN.md
 Resume file: None

@@ -68,10 +68,10 @@
 
 ### Messaging
 
-- [ ] **MESG-01**: User can send and receive direct messages (1-on-1)
-- [ ] **MESG-02**: User can share media in DMs
-- [ ] **MESG-03**: User can see message read status
-- [ ] **MESG-04**: User can participate in group chats by category/interest
+- [x] **MESG-01**: User can send and receive direct messages (1-on-1)
+- [x] **MESG-02**: User can share media in DMs
+- [x] **MESG-03**: User can see message read status
+- [x] **MESG-04**: User can participate in group chats by category/interest
 
 ### Notifications
 
@@ -163,10 +163,10 @@
 | COLL-05 | Phase 4 | Complete |
 | COLL-06 | Phase 4 | Complete |
 | COLL-07 | Phase 4 | Complete |
-| MESG-01 | Phase 8 | Pending |
-| MESG-02 | Phase 8 | Pending |
-| MESG-03 | Phase 8 | Pending |
-| MESG-04 | Phase 8 | Pending |
+| MESG-01 | Phase 8 | Complete |
+| MESG-02 | Phase 8 | Complete |
+| MESG-03 | Phase 8 | Complete |
+| MESG-04 | Phase 8 | Complete |
 | NOTF-01 | Phase 6 | Complete |
 | NOTF-02 | Phase 6 | Complete |
 | NOTF-03 | Phase 6 | Complete |
