@@ -36,6 +36,10 @@ model User {
   media              Media[]
   followers          Follow[]  @relation("following")
   following          Follow[]  @relation("follower")
+  posts              Post[]
+  likes              Like[]
+  comments           Comment[]
+  bookmarks          Bookmark[]
 
   @@map("users")
 }
@@ -93,6 +97,7 @@ model Media {
   createdAt    DateTime    @default(now())
 
   userAvatar   User?       @relation("UserAvatar")
+  postMedia    PostMedia[]
 
   @@index([userId])
   @@map("media")
@@ -110,4 +115,99 @@ model Follow {
   @@index([followerId])
   @@index([followingId])
   @@map("follows")
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  caption   String?  @db.VarChar(2200)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  media     PostMedia[]
+  likes     Like[]
+  comments  Comment[]
+  bookmarks Bookmark[]
+  hashtags  PostHashtag[]
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("posts")
+}
+
+model PostMedia {
+  id       String @id @default(cuid())
+  postId   String
+  post     Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  mediaId  String
+  media    Media  @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+  position Int
+
+  @@unique([postId, position])
+  @@index([postId])
+  @@map("post_media")
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  userId    String
+  postId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId])
+  @@index([postId])
+  @@map("likes")
+}
+
+model Comment {
+  id        String    @id @default(cuid())
+  userId    String
+  postId    String
+  parentId  String?
+  content   String    @db.VarChar(1000)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  parent    Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies   Comment[] @relation("CommentReplies")
+  createdAt DateTime  @default(now())
+
+  @@index([postId, createdAt])
+  @@index([parentId])
+  @@map("comments")
+}
+
+model Bookmark {
+  id        String   @id @default(cuid())
+  userId    String
+  postId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId])
+  @@index([userId, createdAt])
+  @@map("bookmarks")
+}
+
+model Hashtag {
+  id    String @id @default(cuid())
+  name  String @unique
+  posts PostHashtag[]
+
+  @@map("hashtags")
+}
+
+model PostHashtag {
+  id        String  @id @default(cuid())
+  postId    String
+  hashtagId String
+  post      Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  hashtag   Hashtag @relation(fields: [hashtagId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, hashtagId])
+  @@index([hashtagId])
+  @@map("post_hashtags")
 }

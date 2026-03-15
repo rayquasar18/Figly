@@ -143,6 +143,45 @@ export class ProfilesService {
     });
   }
 
+  async searchProfiles(query: string, limit = 10) {
+    const users = await this.prisma.user.findMany({
+      where: {
+        OR: [
+          { username: { contains: query, mode: 'insensitive' } },
+          { name: { contains: query, mode: 'insensitive' } },
+        ],
+      },
+      select: {
+        id: true,
+        username: true,
+        name: true,
+        avatar: { select: { mediumKey: true } },
+      },
+      take: limit,
+    });
+
+    // Batch resolve avatar presigned URLs
+    const avatarKeys = users
+      .filter((u: any) => u.avatar?.mediumKey)
+      .map((u: any) => u.avatar!.mediumKey);
+
+    const uniqueKeys = [...new Set(avatarKeys)];
+    const urlMap = new Map<string, string>();
+    if (uniqueKeys.length > 0) {
+      const urls = await Promise.all(
+        uniqueKeys.map((key) => this.storageService.getPresignedUrl(key)),
+      );
+      uniqueKeys.forEach((key, i) => urlMap.set(key, urls[i]));
+    }
+
+    return users.map((u: any) => ({
+      id: u.id,
+      username: u.username,
+      displayName: u.name,
+      avatarUrl: u.avatar?.mediumKey ? urlMap.get(u.avatar.mediumKey) || null : null,
+    }));
+  }
+
   async isUsernameAvailable(username: string): Promise<boolean> {
     // Check reserved list (case-insensitive)
     if ((RESERVED_USERNAMES as readonly string[]).includes(username.toLowerCase())) {

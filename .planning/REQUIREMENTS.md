@@ -23,12 +23,12 @@
 
 ### Content
 
-- [ ] **CONT-01**: User can create single-image post with caption
-- [ ] **CONT-02**: User can create multi-image carousel post (up to 10 images)
-- [ ] **CONT-03**: User can crop and rotate images before posting
-- [ ] **CONT-04**: User can edit own post captions
-- [ ] **CONT-05**: User can delete own posts
-- [ ] **CONT-06**: User can include hashtags and @mentions in captions
+- [x] **CONT-01**: User can create single-image post with caption
+- [x] **CONT-02**: User can create multi-image carousel post (up to 10 images)
+- [x] **CONT-03**: User can crop and rotate images before posting
+- [x] **CONT-04**: User can edit own post captions
+- [x] **CONT-05**: User can delete own posts
+- [x] **CONT-06**: User can include hashtags and @mentions in captions
 - [ ] **CONT-07**: User can link post to item(s) from the collection database
 - [ ] **CONT-08**: User can post stories (24h ephemeral photo/video content)
 - [ ] **CONT-09**: User can view stories from followed users
@@ -37,17 +37,17 @@
 
 ### Interactions
 
-- [ ] **INTR-01**: User can like/unlike posts
-- [ ] **INTR-02**: User can comment on posts
-- [ ] **INTR-03**: User can reply to comments (threaded)
-- [ ] **INTR-04**: User can bookmark/save posts
-- [ ] **INTR-05**: User can view saved posts collection
+- [x] **INTR-01**: User can like/unlike posts
+- [x] **INTR-02**: User can comment on posts
+- [x] **INTR-03**: User can reply to comments (threaded)
+- [x] **INTR-04**: User can bookmark/save posts
+- [x] **INTR-05**: User can view saved posts collection
 
 ### Social
 
 - [x] **SOCL-01**: User can follow/unfollow other users
 - [x] **SOCL-02**: User can view followers and following lists
-- [ ] **SOCL-03**: User can view chronological feed of posts from followed users
+- [x] **SOCL-03**: User can view chronological feed of posts from followed users
 - [ ] **SOCL-04**: User can follow collection series/categories
 
 ### Discovery
@@ -133,25 +133,25 @@
 | PROF-02 | Phase 2 | Complete |
 | PROF-03 | Phase 2 | Complete |
 | PROF-04 | Phase 4 | Pending |
-| CONT-01 | Phase 3 | Pending |
-| CONT-02 | Phase 3 | Pending |
-| CONT-03 | Phase 3 | Pending |
-| CONT-04 | Phase 3 | Pending |
-| CONT-05 | Phase 3 | Pending |
-| CONT-06 | Phase 3 | Pending |
+| CONT-01 | Phase 3 | Complete |
+| CONT-02 | Phase 3 | Complete |
+| CONT-03 | Phase 3 | Complete |
+| CONT-04 | Phase 3 | Complete |
+| CONT-05 | Phase 3 | Complete |
+| CONT-06 | Phase 3 | Complete |
 | CONT-07 | Phase 4 | Pending |
 | CONT-08 | Phase 9 | Pending |
 | CONT-09 | Phase 9 | Pending |
 | CONT-10 | Phase 10 | Pending |
 | CONT-11 | Phase 10 | Pending |
-| INTR-01 | Phase 3 | Pending |
-| INTR-02 | Phase 3 | Pending |
-| INTR-03 | Phase 3 | Pending |
-| INTR-04 | Phase 3 | Pending |
-| INTR-05 | Phase 3 | Pending |
+| INTR-01 | Phase 3 | Complete |
+| INTR-02 | Phase 3 | Complete |
+| INTR-03 | Phase 3 | Complete |
+| INTR-04 | Phase 3 | Complete |
+| INTR-05 | Phase 3 | Complete |
 | SOCL-01 | Phase 2 | Complete |
 | SOCL-02 | Phase 2 | Complete |
-| SOCL-03 | Phase 3 | Pending |
+| SOCL-03 | Phase 3 | Complete |
 | SOCL-04 | Phase 4 | Pending |
 | DISC-01 | Phase 5 | Pending |
 | DISC-02 | Phase 5 | Pending |

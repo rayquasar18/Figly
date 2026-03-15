@@ -3,6 +3,8 @@
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useMe } from '@/hooks/queries/auth-queries';
+import { BottomNav } from '@/components/layout/bottom-nav';
+import { CreatePostFlow } from '@/components/create-post/create-post-flow';
 
 export default function AppLayout({
   children,
@@ -59,5 +61,11 @@ export default function AppLayout({
     return null;
   }
 
-  return <>{children}</>;
+  return (
+    <>
+      <main className="pb-14 md:pb-0">{children}</main>
+      <BottomNav />
+      <CreatePostFlow />
+    </>
+  );
 }

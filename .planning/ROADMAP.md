@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [ ] **Phase 1: Foundation & Auth** - Monorepo scaffold, database, media pipeline, and complete authentication system
 - [ ] **Phase 2: Profiles & Social Graph** - User profiles, follow/unfollow system, and follower/following lists
-- [ ] **Phase 3: Content & Feed** - Photo posts, image editing, interactions (likes/comments/bookmarks), and chronological feed
+- [x] **Phase 3: Content & Feed** - Photo posts, image editing, interactions (likes/comments/bookmarks), and chronological feed (completed 2026-03-14)
 - [ ] **Phase 4: Collection System** - Shared item database, owned/wishlist tracking, custom checklists, post-to-item linking, and collection showcase
 - [ ] **Phase 5: Search & Discovery** - User/hashtag/item search, hashtag pages, and category-based explore page
 - [ ] **Phase 6: Notifications** - Real-time in-app notifications, notification history, and push notifications via PWA
@@ -70,12 +70,13 @@ Plans:
   4. User can like/unlike posts, write comments, and reply to comments in threads
   5. User can bookmark posts and view all saved posts in a dedicated collection
   6. User can scroll a chronological feed showing posts from users they follow
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 03-01: TBD
-- [ ] 03-02: TBD
-- [ ] 03-03: TBD
+- [ ] 03-01-PLAN.md — Prisma schema extension (Post, PostMedia, Like, Comment, Bookmark, Hashtag models) and shared DTOs/types/constants
+- [ ] 03-02-PLAN.md — Backend: Posts, Comments, and Feed NestJS modules with like/bookmark/hashtag support and full test coverage
+- [ ] 03-03-PLAN.md — Frontend: Instagram-style multi-step post creation flow with react-easy-crop image editing and bottom navigation
+- [ ] 03-04-PLAN.md — Frontend: Chronological feed with infinite scroll, post detail modal, comment threading, interactions with optimistic UI, saved posts page
 
 ### Phase 4: Collection System
 **Goal**: Users can browse a shared item database, track what they own and want, build custom checklists, link posts to collection items, and showcase collections on their profile
@@ -186,7 +187,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 |-------|----------------|--------|-----------|
 | 1. Foundation & Auth | 0/3 | Planning complete | - |
 | 2. Profiles & Social Graph | 0/4 | Planning complete | - |
-| 3. Content & Feed | 0/3 | Not started | - |
+| 3. Content & Feed | 2/4 | Complete    | 2026-03-14 |
 | 4. Collection System | 0/3 | Not started | - |
 | 5. Search & Discovery | 0/2 | Not started | - |
 | 6. Notifications | 0/2 | Not started | - |
