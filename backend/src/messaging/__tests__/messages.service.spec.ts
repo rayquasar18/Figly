@@ -11,6 +11,7 @@ describe('MessagesService', () => {
   const mockPrisma = {
     conversationParticipant: {
       findUnique: jest.fn(),
+      findMany: jest.fn(),
       update: jest.fn(),
     },
     conversation: {
@@ -231,27 +232,25 @@ describe('MessagesService', () => {
 
   describe('getUnreadTotal', () => {
     it('should sum unread across all conversations', async () => {
-      mockPrisma.conversationParticipant.findUnique.mockResolvedValue(null);
-      // Mock the participations
-      mockPrisma.conversationParticipant.findUnique
-        .mockResolvedValueOnce({
+      mockPrisma.conversationParticipant.findMany.mockResolvedValue([
+        {
           conversationId: 'conv-1',
-          userId: 'user-1',
           lastReadAt: new Date('2026-01-01'),
-        })
-        .mockResolvedValueOnce({
+        },
+        {
           conversationId: 'conv-2',
-          userId: 'user-1',
           lastReadAt: new Date('2026-01-01'),
-        });
+        },
+      ]);
 
-      // Use $queryRaw for total unread count
-      mockPrisma.$transaction.mockResolvedValue([{ total: 10 }]);
+      mockPrisma.message.count
+        .mockResolvedValueOnce(5)
+        .mockResolvedValueOnce(5);
 
       const result = await service.getUnreadTotal('user-1');
 
       expect(result).toBeDefined();
-      expect(typeof result.total).toBe('number');
+      expect(result.total).toBe(10);
     });
   });
 });
