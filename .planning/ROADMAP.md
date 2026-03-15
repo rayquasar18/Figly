@@ -140,11 +140,11 @@ Plans:
   1. User receives in-app notifications instantly when someone likes, comments on, follows, or mentions them
   2. User can view a notification history screen with clear read/unread visual state
   3. User receives push notifications via PWA service worker even when the browser tab is not active
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 06-01: TBD
-- [ ] 06-02: TBD
+- [ ] 06-01-PLAN.md — Backend: Prisma schema (Notification, NotificationActor, PushSubscription), NotificationsModule with SSE gateway, BullMQ processor, push service, notification triggers in PostsService/CommentsService/SocialService
+- [ ] 06-02-PLAN.md — Frontend: SSE connection hook, notification store, notification bell with badge, notification history page with grouped items and auto-read, PWA manifest, service worker, push permission flow
 
 ### Phase 7: Moderation & Safety
 **Goal**: Users can protect themselves from unwanted interactions, and admins can act on reported content to keep the community safe
@@ -213,7 +213,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 5 -> 6 -> 7 -> 8 -> 
 | 3.1 Public Viewing Mode | 0/2 | Planning complete | - |
 | 4. Collection System | 6/6 | Complete   | 2026-03-15 |
 | 5. Search & Discovery | 0/2 | Planning complete | - |
-| 6. Notifications | 0/2 | Not started | - |
+| 6. Notifications | 0/2 | Planning complete | - |
 | 7. Moderation & Safety | 0/2 | Not started | - |
 | 8. Direct Messaging | 0/2 | Not started | - |
 | 9. Stories | 0/1 | Not started | - |
