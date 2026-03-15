@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: completed
-stopped_at: Phase 6 context gathered
-last_updated: "2026-03-15T02:51:25.244Z"
-last_activity: 2026-03-15 -- Completed 05-02 Search & Discovery Frontend
+status: executing
+stopped_at: Completed 06-01 Notification Backend Infrastructure
+last_updated: "2026-03-15T03:41:00Z"
+last_activity: 2026-03-15 -- Completed 06-01 Notification Backend Infrastructure
 progress:
   total_phases: 11
   completed_phases: 6
-  total_plans: 21
-  completed_plans: 21
-  percent: 100
+  total_plans: 23
+  completed_plans: 22
+  percent: 96
 ---
 
 # Project State
@@ -21,23 +21,23 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-13)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 5 (Search & Discovery -- COMPLETE, 2/2 plans)
+**Current focus:** Phase 6 (Notifications -- 1/2 plans complete)
 
 ## Current Position
 
-Phase: 5 of 10
-Plan: 2 of 2 in current phase
-Status: Phase 5 Complete
-Last activity: 2026-03-15 -- Completed 05-02 Search & Discovery Frontend
+Phase: 6 of 10
+Plan: 1 of 2 in current phase
+Status: Executing Phase 6
+Last activity: 2026-03-15 -- Completed 06-01 Notification Backend Infrastructure
 
-Progress: [██████████] 100% (Phase 5: 2/2 plans)
+Progress: [█████████░] 96% (Phase 6: 1/2 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 17
-- Average duration: 7 min
-- Total execution time: 2.2 hours
+- Total plans completed: 18
+- Average duration: 8 min
+- Total execution time: 2.6 hours
 
 **By Phase:**
 
@@ -49,10 +49,11 @@ Progress: [██████████] 100% (Phase 5: 2/2 plans)
 | 03.1-public-viewing-mode | 1 | 7 min | 7 min |
 | 04-collection-system | 4 | 20 min | 5 min |
 | 05-search-discovery | 2 | 12 min | 6 min |
+| 06-notifications | 1 | 21 min | 21 min |
 
 **Recent Trend:**
-- Last 5 plans: 5, 6, 5, 6, 6 min
-- Trend: improving
+- Last 5 plans: 6, 5, 6, 6, 21 min
+- Trend: stable (06-01 larger scope plan)
 
 *Updated after each plan completion*
 | Phase 03 P01 | 3 | 2 tasks | 8 files |
@@ -69,6 +70,7 @@ Progress: [██████████] 100% (Phase 5: 2/2 plans)
 | Phase 04 P06 | 5 | 2 tasks | 9 files |
 | Phase 05 P01 | 6 | 2 tasks | 14 files |
 | Phase 05 P02 | 6 | 2 tasks | 9 files |
+| Phase 06 P01 | 21 | 2 tasks | 28 files |
 
 ## Accumulated Context
 
@@ -152,6 +154,12 @@ Recent decisions affecting current work:
 - [05-02]: useSearchItemsGlobal named to avoid collision with existing useSearchItems in collection-queries.ts
 - [05-02]: Explore page uses useExploreFeed for category sections and usePublicFeed for "Moi nhat" chronological fallback
 - [05-02]: ExploreCategorySectionComponent accesses post.media[0].url for thumbnail display with gradient placeholder
+- [06-01]: NotificationsGateway as injectable service with per-user Subject map (not WebSocket gateway) for SSE
+- [06-01]: Notification grouping via groupKey pattern (type:targetId) with 5-min window
+- [06-01]: Vietnamese notification messages composed in service with actor count-aware text
+- [06-01]: Push service graceful degradation when VAPID keys not configured
+- [06-01]: BullModule.registerQueue added to PostsModule, CommentsModule, SocialModule for notification enqueuing
+- [06-01]: @mention detection uses /@(\w+)/g regex with batch username resolution and deduplication
 
 ### Pending Todos
 
@@ -167,6 +175,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T02:51:25.241Z
-Stopped at: Phase 6 context gathered
-Resume file: .planning/phases/06-notifications/06-CONTEXT.md
+Last session: 2026-03-15T03:41:00Z
+Stopped at: Completed 06-01 Notification Backend Infrastructure
+Resume file: .planning/phases/06-notifications/06-01-SUMMARY.md

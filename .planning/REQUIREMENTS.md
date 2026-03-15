@@ -75,9 +75,9 @@
 
 ### Notifications
 
-- [ ] **NOTF-01**: User receives in-app notifications for likes, comments, follows, mentions
-- [ ] **NOTF-02**: User can view notification history with read/unread state
-- [ ] **NOTF-03**: User receives push notifications via PWA/service worker
+- [x] **NOTF-01**: User receives in-app notifications for likes, comments, follows, mentions
+- [x] **NOTF-02**: User can view notification history with read/unread state
+- [x] **NOTF-03**: User receives push notifications via PWA/service worker
 
 ### Moderation
 
@@ -167,9 +167,9 @@
 | MESG-02 | Phase 8 | Pending |
 | MESG-03 | Phase 8 | Pending |
 | MESG-04 | Phase 8 | Pending |
-| NOTF-01 | Phase 6 | Pending |
-| NOTF-02 | Phase 6 | Pending |
-| NOTF-03 | Phase 6 | Pending |
+| NOTF-01 | Phase 6 | Complete |
+| NOTF-02 | Phase 6 | Complete |
+| NOTF-03 | Phase 6 | Complete |
 | MODR-01 | Phase 7 | Pending |
 | MODR-02 | Phase 7 | Pending |
 | MODR-03 | Phase 7 | Pending |
