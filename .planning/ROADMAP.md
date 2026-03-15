@@ -21,7 +21,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 6: Notifications** - Real-time in-app notifications, notification history, and push notifications via PWA (completed 2026-03-15)
 - [x] **Phase 7: Moderation & Safety** - Report, block, mute for users, and admin moderation queue (completed 2026-03-15)
 - [x] **Phase 7.1: Docker Split** - Split figly-app into figly-frontend + figly-backend containers (INSERTED) (completed 2026-03-15)
-- [x] **Phase 8: Direct Messaging** - 1-on-1 DMs, media sharing, read receipts, and group chats (completed 2026-03-15)
+- [ ] **Phase 8: Direct Messaging** - 1-on-1 DMs, media sharing, read receipts, and group chats (gap closure in progress)
 - [ ] **Phase 9: Stories** - 24h ephemeral photo/video content with followed-user story feed
 - [ ] **Phase 10: Reels** - Short-form video upload and vertical scroll browsing feed
 
@@ -187,11 +187,12 @@ Plans:
   2. User can see when their messages have been read by the recipient
   3. User can share photos and videos within DM conversations
   4. User can participate in group chats organized by collection category or interest
-**Plans**: 2 plans
+**Plans**: 3 plans
 
 Plans:
-- [ ] 08-01-PLAN.md — Backend: Prisma schema (Conversation, Message, MessageMedia models), shared types/DTOs/constants, MessagingModule with Socket.IO WebSocket gateway, conversations REST API, block enforcement
-- [ ] 08-02-PLAN.md — Frontend: Socket.IO connection hook, messaging store, conversation list page, chat view with real-time delivery, media sharing, read receipts, new conversation/group dialogs, header DM icon with unread badge
+- [x] 08-01-PLAN.md — Backend: Prisma schema (Conversation, Message, MessageMedia models), shared types/DTOs/constants, MessagingModule with Socket.IO WebSocket gateway, conversations REST API, block enforcement
+- [x] 08-02-PLAN.md — Frontend: Socket.IO connection hook, messaging store, conversation list page, chat view with real-time delivery, media sharing, read receipts, new conversation/group dialogs, header DM icon with unread badge
+- [ ] 08-03-PLAN.md — Gap closure: Fix WebSocket new_message payload shape mismatch between backend emit and frontend handler
 
 ### Phase 9: Stories
 **Goal**: Users can share ephemeral photo/video moments that disappear after 24 hours, creating a sense of immediacy and daily engagement
@@ -233,6 +234,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 5 -> 6 -> 7 -> 7.1 -
 | 6. Notifications | 2/2 | Complete | 2026-03-15 |
 | 7. Moderation & Safety | 2/2 | Complete | 2026-03-15 |
 | 7.1 Docker Split | 1/1 | Complete | 2026-03-15 |
-| 8. Direct Messaging | 2/2 | Complete   | 2026-03-15 |
+| 8. Direct Messaging | 2/3 | Gap closure | 2026-03-15 |
 | 9. Stories | 0/1 | Not started | - |
 | 10. Reels | 0/1 | Not started | - |
