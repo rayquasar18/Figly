@@ -72,3 +72,10 @@ export type {
   ChecklistEntryResponse,
   ChecklistDetailResponse,
 } from './types/checklist.types';
+
+// Search Types
+export type {
+  SearchUserResult,
+  SearchHashtagResult,
+  ExploreCategorySection,
+} from './types/search.types';
