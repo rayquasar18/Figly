@@ -155,11 +155,11 @@ Plans:
   2. User can block another user, which hides all their content and prevents any interaction in both directions
   3. User can mute another user, which removes their content from feed without unfollowing
   4. Admin can view a queue of reported content/users and take action (dismiss, warn, remove content, ban user)
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 07-01: TBD
-- [ ] 07-02: TBD
+- [ ] 07-01-PLAN.md — Backend: Prisma schema (Report, Block, Mute models, UserRole enum, ban fields), ModerationModule + AdminModule, block/mute filter integration into all existing services, ban check in all auth paths
+- [ ] 07-02-PLAN.md — Frontend: Report dialog, block/mute in three-dot menus, admin moderation queue page, settings pages for blocked/muted user management
 
 ### Phase 8: Direct Messaging
 **Goal**: Users can communicate privately through 1-on-1 and group conversations with real-time delivery
@@ -214,7 +214,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 5 -> 6 -> 7 -> 8 -> 
 | 4. Collection System | 6/6 | Complete   | 2026-03-15 |
 | 5. Search & Discovery | 0/2 | Planning complete | - |
 | 6. Notifications | 0/2 | Planning complete | - |
-| 7. Moderation & Safety | 0/2 | Not started | - |
+| 7. Moderation & Safety | 0/2 | Planning complete | - |
 | 8. Direct Messaging | 0/2 | Not started | - |
 | 9. Stories | 0/1 | Not started | - |
 | 10. Reels | 0/1 | Not started | - |
