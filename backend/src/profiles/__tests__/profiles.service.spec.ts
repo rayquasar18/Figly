@@ -48,6 +48,7 @@ describe('ProfilesService', () => {
       avatarId: null,
       avatar: null,
       _count: {
+        posts: 0,
         followers: 10,
         following: 5,
       },
