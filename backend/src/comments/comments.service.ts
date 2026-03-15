@@ -3,6 +3,8 @@ import {
   NotFoundException,
   ForbiddenException,
 } from '@nestjs/common';
+import { InjectQueue } from '@nestjs/bullmq';
+import { Queue } from 'bullmq';
 import { PrismaService } from '../prisma/prisma.service';
 import { StorageService } from '../media/storage.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
@@ -13,6 +15,7 @@ export class CommentsService {
   constructor(
     private prisma: PrismaService,
     private storageService: StorageService,
+    @InjectQueue('notification') private notificationQueue: Queue,
   ) {}
 
   async createComment(userId: string, postId: string, dto: CreateCommentDto) {
@@ -68,6 +71,65 @@ export class CommentsService {
     const avatarUrl = comment.user.avatar?.mediumKey
       ? await this.storageService.getPresignedUrl(comment.user.avatar.mediumKey)
       : null;
+
+    // Enqueue notification for comment/reply
+    const notifiedUserIds = new Set<string>();
+
+    if (resolvedParentId) {
+      // Reply: notify parent comment author
+      const parentComment = await this.prisma.comment.findUnique({
+        where: { id: resolvedParentId },
+        select: { userId: true },
+      });
+      if (parentComment && parentComment.userId !== userId) {
+        notifiedUserIds.add(parentComment.userId);
+        await this.notificationQueue.add('notification', {
+          type: 'reply',
+          actorId: userId,
+          recipientId: parentComment.userId,
+          targetId: postId,
+          targetType: 'post',
+        });
+      }
+    } else {
+      // Top-level comment: notify post author
+      const postRecord = await this.prisma.post.findUnique({
+        where: { id: postId },
+        select: { userId: true },
+      });
+      if (postRecord && postRecord.userId !== userId) {
+        notifiedUserIds.add(postRecord.userId);
+        await this.notificationQueue.add('notification', {
+          type: 'comment',
+          actorId: userId,
+          recipientId: postRecord.userId,
+          targetId: postId,
+          targetType: 'post',
+        });
+      }
+    }
+
+    // Detect @mentions in comment body
+    const mentionMatches = dto.content.match(/@(\w+)/g);
+    if (mentionMatches) {
+      const usernames = [...new Set(mentionMatches.map((m) => m.slice(1)))];
+      const mentionedUsers = await this.prisma.user.findMany({
+        where: { username: { in: usernames } },
+        select: { id: true, username: true },
+      });
+      for (const mentioned of mentionedUsers) {
+        // Skip self, skip already notified users
+        if (mentioned.id === userId || notifiedUserIds.has(mentioned.id)) continue;
+        notifiedUserIds.add(mentioned.id);
+        await this.notificationQueue.add('notification', {
+          type: 'mention',
+          actorId: userId,
+          recipientId: mentioned.id,
+          targetId: postId,
+          targetType: 'post',
+        });
+      }
+    }
 
     return {
       id: comment.id,

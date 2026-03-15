@@ -3,6 +3,8 @@ import {
   BadRequestException,
   NotFoundException,
 } from '@nestjs/common';
+import { InjectQueue } from '@nestjs/bullmq';
+import { Queue } from 'bullmq';
 import { PrismaService } from '../prisma/prisma.service';
 
 interface ListOptions {
@@ -13,7 +15,10 @@ interface ListOptions {
 
 @Injectable()
 export class SocialService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    @InjectQueue('notification') private notificationQueue: Queue,
+  ) {}
 
   async follow(userId: string, targetUserId: string) {
     if (userId === targetUserId) {
@@ -27,6 +32,14 @@ export class SocialService {
           followingId: targetUserId,
         },
       });
+
+      // Enqueue notification for the followed user (new follow only)
+      await this.notificationQueue.add('notification', {
+        type: 'follow',
+        actorId: userId,
+        recipientId: targetUserId,
+      });
+
       return follow;
     } catch (error: any) {
       // P2002: Unique constraint violation (already following)

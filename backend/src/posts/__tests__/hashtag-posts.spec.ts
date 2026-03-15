@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { NotFoundException } from '@nestjs/common';
+import { getQueueToken } from '@nestjs/bullmq';
 import { PostsService } from '../posts.service';
 import { PrismaService } from '../../prisma/prisma.service';
 import { StorageService } from '../../media/storage.service';
@@ -50,12 +51,17 @@ describe('PostsService - getPostsByHashtag', () => {
     getPresignedUrl: jest.fn(),
   };
 
+  const mockNotificationQueue = {
+    add: jest.fn(),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         PostsService,
         { provide: PrismaService, useValue: mockPrisma },
         { provide: StorageService, useValue: mockStorageService },
+        { provide: getQueueToken('notification'), useValue: mockNotificationQueue },
       ],
     }).compile();
 

@@ -4,6 +4,8 @@ import {
   NotFoundException,
   ForbiddenException,
 } from '@nestjs/common';
+import { InjectQueue } from '@nestjs/bullmq';
+import { Queue } from 'bullmq';
 import { PrismaService } from '../prisma/prisma.service';
 import { StorageService } from '../media/storage.service';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -15,6 +17,7 @@ export class PostsService {
   constructor(
     private prisma: PrismaService,
     private storageService: StorageService,
+    @InjectQueue('notification') private notificationQueue: Queue,
   ) {}
 
   async createPost(userId: string, dto: CreatePostDto) {
@@ -257,6 +260,21 @@ export class PostsService {
         await this.prisma.like.create({
           data: { userId, postId },
         });
+
+        // Enqueue notification for post author
+        const post = await this.prisma.post.findUnique({
+          where: { id: postId },
+          select: { userId: true },
+        });
+        if (post) {
+          await this.notificationQueue.add('notification', {
+            type: 'like',
+            actorId: userId,
+            recipientId: post.userId,
+            targetId: postId,
+            targetType: 'post',
+          });
+        }
       } catch (error: any) {
         if (error.code === 'P2002') return { success: true };
         throw error;

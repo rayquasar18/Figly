@@ -3,6 +3,7 @@ import {
   BadRequestException,
   NotFoundException,
 } from '@nestjs/common';
+import { getQueueToken } from '@nestjs/bullmq';
 import { SocialService } from '../social.service';
 import { PrismaService } from '../../prisma/prisma.service';
 
@@ -22,11 +23,16 @@ describe('SocialService', () => {
     },
   };
 
+  const mockNotificationQueue = {
+    add: jest.fn(),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         SocialService,
         { provide: PrismaService, useValue: mockPrisma },
+        { provide: getQueueToken('notification'), useValue: mockNotificationQueue },
       ],
     }).compile();
 

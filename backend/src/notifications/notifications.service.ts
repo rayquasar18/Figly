@@ -15,7 +15,7 @@ export class NotificationsService {
     private storageService: StorageService,
   ) {}
 
-  async getNotifications(userId: string, cursor?: string, limit = NOTIFICATION_LIMITS.pageSize) {
+  async getNotifications(userId: string, cursor?: string, limit: number = NOTIFICATION_LIMITS.pageSize) {
     const notifications = await this.prisma.notification.findMany({
       where: { recipientId: userId },
       include: {
