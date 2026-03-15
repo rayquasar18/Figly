@@ -2,9 +2,13 @@
 
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import Link from 'next/link';
 import { useMe } from '@/hooks/queries/auth-queries';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { CreatePostFlow } from '@/components/create-post/create-post-flow';
+import { NotificationBell } from '@/components/notification/notification-bell';
+import { useSSE } from '@/hooks/use-sse';
+import { usePushPermission } from '@/hooks/use-push-permission';
 
 export default function AppLayout({
   children,
@@ -14,6 +18,12 @@ export default function AppLayout({
   const router = useRouter();
   const pathname = usePathname();
   const { data: user, isLoading, isError } = useMe();
+
+  // SSE connection for real-time notifications
+  useSSE(!!user);
+
+  // Push subscription management
+  usePushPermission();
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -63,6 +73,28 @@ export default function AppLayout({
 
   return (
     <>
+      {/* Top header bar - Instagram style */}
+      <header className="sticky top-0 z-50 border-b bg-background">
+        <div className="mx-auto flex h-12 max-w-lg items-center justify-between px-4">
+          <Link href="/" className="text-lg font-bold tracking-tight">
+            Figly
+          </Link>
+          <div className="flex items-center gap-2">
+            <NotificationBell />
+            {user.username && (
+              <Link
+                href={`/${user.username}`}
+                className="flex size-7 items-center justify-center overflow-hidden rounded-full bg-muted"
+              >
+                <span className="text-xs font-medium text-muted-foreground">
+                  {user.name?.charAt(0).toUpperCase() || 'U'}
+                </span>
+              </Link>
+            )}
+          </div>
+        </div>
+      </header>
+
       <main className="pb-14 md:pb-0">{children}</main>
       <BottomNav />
       <CreatePostFlow />
