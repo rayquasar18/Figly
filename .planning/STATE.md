@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 06-01 Notification Backend Infrastructure
-last_updated: "2026-03-15T03:41:00Z"
+stopped_at: Completed 06-02 Notification Frontend UI
+last_updated: "2026-03-15T03:51:30.296Z"
 last_activity: 2026-03-15 -- Completed 06-01 Notification Backend Infrastructure
 progress:
   total_phases: 11
-  completed_phases: 6
+  completed_phases: 7
   total_plans: 23
-  completed_plans: 22
+  completed_plans: 23
   percent: 96
 ---
 
@@ -71,6 +71,7 @@ Progress: [█████████░] 96% (Phase 6: 1/2 plans)
 | Phase 05 P01 | 6 | 2 tasks | 14 files |
 | Phase 05 P02 | 6 | 2 tasks | 9 files |
 | Phase 06 P01 | 21 | 2 tasks | 28 files |
+| Phase 06 P02 | 5 | 2 tasks | 16 files |
 
 ## Accumulated Context
 
@@ -160,6 +161,10 @@ Recent decisions affecting current work:
 - [06-01]: Push service graceful degradation when VAPID keys not configured
 - [06-01]: BullModule.registerQueue added to PostsModule, CommentsModule, SocialModule for notification enqueuing
 - [06-01]: @mention detection uses /@(\w+)/g regex with batch username resolution and deduplication
+- [Phase 06]: Instagram 5-tab BottomNav: Home, Search, Create, Heart (notifications), Profile
+- [Phase 06]: Top header bar with Figly logo, notification bell, and user avatar
+- [Phase 06]: Auto-mark-as-read via IntersectionObserver on NotificationItem
+- [Phase 06]: Push permission gated behind 2+ sessions via localStorage counter
 
 ### Pending Todos
 
@@ -175,6 +180,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T03:41:00Z
-Stopped at: Completed 06-01 Notification Backend Infrastructure
-Resume file: .planning/phases/06-notifications/06-01-SUMMARY.md
+Last session: 2026-03-15T03:51:30.294Z
+Stopped at: Completed 06-02 Notification Frontend UI
+Resume file: None
