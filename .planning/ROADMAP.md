@@ -161,6 +161,22 @@ Plans:
 - [ ] 07-01-PLAN.md — Backend: Prisma schema (Report, Block, Mute models, UserRole enum, ban fields), ModerationModule + AdminModule, block/mute filter integration into all existing services, ban check in all auth paths
 - [ ] 07-02-PLAN.md — Frontend: Report dialog, block/mute in three-dot menus, admin moderation queue page, settings pages for blocked/muted user management
 
+### Phase 07.1: Docker Split: Tách figly-app thành 2 container riêng (figly-frontend + figly-backend) (INSERTED)
+
+**Goal:** Tách single Docker container (figly-app) thành 2 container riêng: figly-frontend (Next.js standalone) và figly-backend (NestJS), cả hai vẫn trong cùng docker-compose.yml
+**Requirements**: INFRA
+**Depends on:** Phase 7
+**Success Criteria** (what must be TRUE):
+  1. Frontend chạy trong container figly-frontend với Next.js standalone output trên port 3000
+  2. Backend chạy trong container figly-backend với NestJS trên port 4000, tự chạy Prisma migrate/seed khi startup
+  3. docker-compose.yml có 2 service frontend + backend thay vì 1 service app
+  4. Cả 2 container có thể giao tiếp với nhau và với postgres/redis/minio
+  5. docker compose build && docker compose up chạy thành công
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 07.1 to break down)
+
 ### Phase 8: Direct Messaging
 **Goal**: Users can communicate privately through 1-on-1 and group conversations with real-time delivery
 **Depends on**: Phase 7
@@ -203,7 +219,7 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
+Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 5 -> 6 -> 7 -> 7.1 -> 8 -> 9 -> 10
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -215,6 +231,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 5 -> 6 -> 7 -> 8 -> 
 | 5. Search & Discovery | 0/2 | Planning complete | - |
 | 6. Notifications | 0/2 | Planning complete | - |
 | 7. Moderation & Safety | 1/2 | Complete    | 2026-03-15 |
+| 7.1 Docker Split | 0/0 | Not planned | - |
 | 8. Direct Messaging | 0/2 | Not started | - |
 | 9. Stories | 0/1 | Not started | - |
 | 10. Reels | 0/1 | Not started | - |

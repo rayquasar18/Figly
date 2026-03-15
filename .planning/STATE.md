@@ -184,6 +184,7 @@ None yet.
 ### Roadmap Evolution
 
 - Phase 3.1 inserted after Phase 3: Public Viewing Mode (URGENT)
+- Phase 7.1 inserted after Phase 7: Docker Split — tách figly-app thành 2 container riêng figly-frontend + figly-backend (URGENT)
 
 ### Blockers/Concerns
 
