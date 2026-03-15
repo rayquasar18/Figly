@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 7 context gathered
-last_updated: "2026-03-15T05:13:15.825Z"
-last_activity: 2026-03-15 -- Completed 06-01 Notification Backend Infrastructure
+stopped_at: Completed 07-01 Moderation & Safety Infrastructure
+last_updated: "2026-03-15T06:45:00.000Z"
+last_activity: 2026-03-15 -- Completed 07-01 Moderation & Safety Infrastructure
 progress:
   total_phases: 11
   completed_phases: 7
-  total_plans: 23
-  completed_plans: 23
+  total_plans: 25
+  completed_plans: 24
   percent: 96
 ---
 
@@ -21,23 +21,23 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-13)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 6 (Notifications -- 1/2 plans complete)
+**Current focus:** Phase 7 (Moderation & Safety -- 1/2 plans complete)
 
 ## Current Position
 
-Phase: 6 of 10
+Phase: 7 of 10
 Plan: 1 of 2 in current phase
-Status: Executing Phase 6
-Last activity: 2026-03-15 -- Completed 06-01 Notification Backend Infrastructure
+Status: Completed 07-01, ready for 07-02
+Last activity: 2026-03-15 -- Completed 07-01 Moderation & Safety Infrastructure
 
-Progress: [█████████░] 96% (Phase 6: 1/2 plans)
+Progress: [██████████] 96% (Phase 7: 1/2 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 18
-- Average duration: 8 min
-- Total execution time: 2.6 hours
+- Total plans completed: 19
+- Average duration: 9 min
+- Total execution time: 3.1 hours
 
 **By Phase:**
 
@@ -50,10 +50,11 @@ Progress: [█████████░] 96% (Phase 6: 1/2 plans)
 | 04-collection-system | 4 | 20 min | 5 min |
 | 05-search-discovery | 2 | 12 min | 6 min |
 | 06-notifications | 1 | 21 min | 21 min |
+| 07-moderation-safety | 1 | 31 min | 31 min |
 
 **Recent Trend:**
-- Last 5 plans: 6, 5, 6, 6, 21 min
-- Trend: stable (06-01 larger scope plan)
+- Last 5 plans: 5, 6, 6, 21, 31 min
+- Trend: increasing (07-01 large scope with 12 service integrations)
 
 *Updated after each plan completion*
 | Phase 03 P01 | 3 | 2 tasks | 8 files |
@@ -72,6 +73,7 @@ Progress: [█████████░] 96% (Phase 6: 1/2 plans)
 | Phase 05 P02 | 6 | 2 tasks | 9 files |
 | Phase 06 P01 | 21 | 2 tasks | 28 files |
 | Phase 06 P02 | 5 | 2 tasks | 16 files |
+| Phase 07 P01 | 31 | 3 tasks | 55 files |
 
 ## Accumulated Context
 
@@ -165,6 +167,12 @@ Recent decisions affecting current work:
 - [Phase 06]: Top header bar with Figly logo, notification bell, and user avatar
 - [Phase 06]: Auto-mark-as-read via IntersectionObserver on NotificationItem
 - [Phase 06]: Push permission gated behind 2+ sessions via localStorage counter
+- [07-01]: Block is bidirectional: both blocker and blocked are hidden from each other
+- [07-01]: Ban check added to JwtStrategy validate for per-request enforcement
+- [07-01]: Block transaction includes follow cleanup in both directions
+- [07-01]: Banned user content hidden globally (feed, search, profiles) not just per-viewer
+- [07-01]: Mute is one-directional: only affects muter's feed/notifications
+- [07-01]: Report is unique per (reporter, target, targetType) with P2002 upsert
 
 ### Pending Todos
 
@@ -180,6 +188,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T05:13:15.823Z
-Stopped at: Phase 7 context gathered
-Resume file: .planning/phases/07-moderation-safety/07-CONTEXT.md
+Last session: 2026-03-15T06:45:00.000Z
+Stopped at: Completed 07-01 Moderation & Safety Infrastructure
+Resume file: .planning/phases/07-moderation-safety/07-02-PLAN.md

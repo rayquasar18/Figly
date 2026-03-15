@@ -81,10 +81,10 @@
 
 ### Moderation
 
-- [ ] **MODR-01**: User can report posts or users
-- [ ] **MODR-02**: User can block other users
-- [ ] **MODR-03**: User can mute other users
-- [ ] **MODR-04**: Admin can view and act on reported content queue
+- [x] **MODR-01**: User can report posts or users
+- [x] **MODR-02**: User can block other users
+- [x] **MODR-03**: User can mute other users
+- [x] **MODR-04**: Admin can view and act on reported content queue
 
 ## v2 Requirements
 
@@ -170,10 +170,10 @@
 | NOTF-01 | Phase 6 | Complete |
 | NOTF-02 | Phase 6 | Complete |
 | NOTF-03 | Phase 6 | Complete |
-| MODR-01 | Phase 7 | Pending |
-| MODR-02 | Phase 7 | Pending |
-| MODR-03 | Phase 7 | Pending |
-| MODR-04 | Phase 7 | Pending |
+| MODR-01 | Phase 7 | Complete |
+| MODR-02 | Phase 7 | Complete |
+| MODR-03 | Phase 7 | Complete |
+| MODR-04 | Phase 7 | Complete |
 
 **Coverage:**
 - v1 requirements: 41 total
