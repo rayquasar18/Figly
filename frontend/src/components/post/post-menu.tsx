@@ -22,7 +22,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useUpdateCaption, useDeletePost } from '@/hooks/queries/interaction-queries';
-import { useWarnUser, useBanUser, useRemoveContent } from '@/hooks/queries/admin-queries';
+import { useWarnUser, useBanUser } from '@/hooks/queries/admin-queries';
 import { ReportDialog } from '@/components/moderation/report-dialog';
 import { useAuthStore } from '@/stores/auth-store';
 import { POST_LIMITS } from '@figly/shared';
@@ -45,7 +45,6 @@ export function PostMenu({ post, onDeleted }: PostMenuProps) {
 
   const warnUser = useWarnUser();
   const banUser = useBanUser();
-  const removeContent = useRemoveContent();
 
   if (!currentUser) return null;
 
@@ -76,7 +75,7 @@ export function PostMenu({ post, onDeleted }: PostMenuProps) {
   };
 
   const handleAdminRemove = () => {
-    removeContent.mutate({ reportId: post.id });
+    deletePost.mutate({ postId: post.id });
   };
 
   const handleWarnAuthor = () => {
