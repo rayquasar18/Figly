@@ -3,8 +3,9 @@
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
-import { useSeriesByCategory } from '@/hooks/queries/collection-queries';
+import { useSeriesByCategory, useCategories } from '@/hooks/queries/collection-queries';
 import { SeriesCard } from '@/components/collection/series-card';
+import { FollowSeriesButton } from '@/components/collection/follow-series-button';
 import { Skeleton } from '@/components/ui/skeleton';
 
 function SeriesGridSkeleton() {
@@ -25,12 +26,10 @@ export default function CategorySeriesPage() {
   const params = useParams<{ categorySlug: string }>();
   const categorySlug = params.categorySlug;
   const { data: seriesList, isLoading } = useSeriesByCategory(categorySlug);
+  const { data: categories } = useCategories();
 
-  // Derive category name from first series item or slug
-  const categoryName =
-    seriesList && seriesList.length > 0
-      ? undefined // We don't have category name from series response, use slug as fallback
-      : undefined;
+  // Find current category for follow button
+  const currentCategory = categories?.find((c) => c.slug === categorySlug);
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-6">
@@ -43,9 +42,18 @@ export default function CategorySeriesPage() {
         <span className="font-medium text-foreground">{categorySlug}</span>
       </nav>
 
-      <h1 className="mb-6 text-xl font-bold capitalize">
-        {categorySlug.replace(/-/g, ' ')}
-      </h1>
+      <div className="mb-6 flex items-center justify-between gap-3">
+        <h1 className="text-xl font-bold capitalize">
+          {categorySlug.replace(/-/g, ' ')}
+        </h1>
+        {currentCategory && (
+          <FollowSeriesButton
+            type="category"
+            id={currentCategory.id}
+            isFollowed={false}
+          />
+        )}
+      </div>
 
       {isLoading ? (
         <SeriesGridSkeleton />

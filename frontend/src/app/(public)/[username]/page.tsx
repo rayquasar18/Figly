@@ -7,7 +7,8 @@ import { ProfilePostGrid } from '@/components/profile/profile-post-grid';
 import { ProfileSkeleton } from '@/components/profile/profile-skeleton';
 import { ProfileEditModal } from '@/components/profile/profile-edit-modal';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Grid3X3 } from 'lucide-react';
+import { Grid3X3, Package } from 'lucide-react';
+import { CollectionShowcase } from '@/components/collection/collection-showcase';
 
 export default function ProfilePage({
   params,
@@ -46,10 +47,17 @@ export default function ProfilePage({
             <Grid3X3 className="size-4" />
             <span className="text-xs uppercase tracking-wide">Bai viet</span>
           </TabsTrigger>
+          <TabsTrigger value="collection" className="flex items-center gap-1.5">
+            <Package className="size-4" />
+            <span className="text-xs uppercase tracking-wide">Bo suu tap</span>
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="posts" className="mt-2">
           <ProfilePostGrid username={username} />
+        </TabsContent>
+        <TabsContent value="collection" className="mt-2">
+          <CollectionShowcase username={username} />
         </TabsContent>
       </Tabs>
 

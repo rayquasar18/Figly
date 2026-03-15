@@ -327,3 +327,52 @@ export function useToggleWishlist() {
     },
   });
 }
+
+// ---------- Follow mutations ----------
+
+/** Follow/unfollow a series with optimistic toggle */
+export function useFollowSeries() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ id }: { id: string }) => {
+      const response = await apiClient.post<{ success: boolean; isFollowed: boolean }>(
+        `/collection/series/${id}/follow`,
+      );
+      return response.data;
+    },
+    onMutate: async ({ id }) => {
+      await queryClient.cancelQueries({ queryKey: ['series'] });
+
+      queryClient.setQueriesData<SeriesResponse[]>(
+        { queryKey: ['series'] },
+        (old) => {
+          if (!old) return old;
+          return old.map((s) =>
+            s.id === id ? { ...s, isFollowed: !s.isFollowed } : s,
+          );
+        },
+      );
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['series'] });
+    },
+  });
+}
+
+/** Follow/unfollow a category with optimistic toggle */
+export function useFollowCategory() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ id }: { id: string }) => {
+      const response = await apiClient.post<{ success: boolean; isFollowed: boolean }>(
+        `/collection/categories/${id}/follow`,
+      );
+      return response.data;
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
+    },
+  });
+}

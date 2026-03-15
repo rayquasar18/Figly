@@ -4,8 +4,9 @@ import { useParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ChevronRight, Loader2 } from 'lucide-react';
-import { useItemsBySeries } from '@/hooks/queries/collection-queries';
+import { useItemsBySeries, useSeriesByCategory } from '@/hooks/queries/collection-queries';
 import { ItemCard } from '@/components/collection/item-card';
+import { FollowSeriesButton } from '@/components/collection/follow-series-button';
 import { Skeleton } from '@/components/ui/skeleton';
 
 function ItemGridSkeleton() {
@@ -27,7 +28,11 @@ export default function SeriesItemsPage() {
   const { categorySlug, seriesSlug } = params;
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useItemsBySeries(categorySlug, seriesSlug);
+  const { data: seriesList } = useSeriesByCategory(categorySlug);
   const sentinelRef = useRef<HTMLDivElement>(null);
+
+  // Find current series from the category's series list for follow button
+  const currentSeries = seriesList?.find((s) => s.slug === seriesSlug);
 
   // Infinite scroll via IntersectionObserver
   useEffect(() => {
@@ -69,9 +74,18 @@ export default function SeriesItemsPage() {
         </span>
       </nav>
 
-      <h1 className="mb-6 text-xl font-bold capitalize">
-        {seriesSlug.replace(/-/g, ' ')}
-      </h1>
+      <div className="mb-6 flex items-center justify-between gap-3">
+        <h1 className="text-xl font-bold capitalize">
+          {seriesSlug.replace(/-/g, ' ')}
+        </h1>
+        {currentSeries && (
+          <FollowSeriesButton
+            type="series"
+            id={currentSeries.id}
+            isFollowed={currentSeries.isFollowed ?? false}
+          />
+        )}
+      </div>
 
       {isLoading ? (
         <ItemGridSkeleton />
