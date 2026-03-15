@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: completed
-stopped_at: Completed 04-06-PLAN.md
-last_updated: "2026-03-15T00:28:20.246Z"
-last_activity: 2026-03-15 -- Completed 04-06 Item Picker and Post-Item Linking Frontend
+status: executing
+stopped_at: Completed 05-02-PLAN.md
+last_updated: "2026-03-15T02:18:45Z"
+last_activity: 2026-03-15 -- Completed 05-02 Search & Discovery Frontend
 progress:
   total_phases: 11
   completed_phases: 5
-  total_plans: 19
-  completed_plans: 19
+  total_plans: 21
+  completed_plans: 21
   percent: 100
 ---
 
@@ -21,23 +21,23 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-13)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 5 (Search & Discovery -- IN PROGRESS, 1/? plans)
+**Current focus:** Phase 5 (Search & Discovery -- COMPLETE, 2/2 plans)
 
 ## Current Position
 
 Phase: 5 of 10
-Plan: 1 of ? in current phase
-Status: Executing Phase 5
-Last activity: 2026-03-15 -- Completed 05-01 Search & Discovery Backend API
+Plan: 2 of 2 in current phase
+Status: Phase 5 Complete
+Last activity: 2026-03-15 -- Completed 05-02 Search & Discovery Frontend
 
-Progress: [██████████] 100% (Phase 5: 1/? plans)
+Progress: [██████████] 100% (Phase 5: 2/2 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 16
+- Total plans completed: 17
 - Average duration: 7 min
-- Total execution time: 2.1 hours
+- Total execution time: 2.2 hours
 
 **By Phase:**
 
@@ -48,9 +48,10 @@ Progress: [██████████] 100% (Phase 5: 1/? plans)
 | 03-content-feed | 4 | 38 min | 10 min |
 | 03.1-public-viewing-mode | 1 | 7 min | 7 min |
 | 04-collection-system | 4 | 20 min | 5 min |
+| 05-search-discovery | 2 | 12 min | 6 min |
 
 **Recent Trend:**
-- Last 5 plans: 7, 4, 5, 6, 5 min
+- Last 5 plans: 5, 6, 5, 6, 6 min
 - Trend: improving
 
 *Updated after each plan completion*
@@ -67,6 +68,7 @@ Progress: [██████████] 100% (Phase 5: 1/? plans)
 | Phase 04 P05 | 9 | 2 tasks | 18 files |
 | Phase 04 P06 | 5 | 2 tasks | 9 files |
 | Phase 05 P01 | 6 | 2 tasks | 14 files |
+| Phase 05 P02 | 6 | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -147,6 +149,9 @@ Recent decisions affecting current work:
 - [05-01]: SearchService uses PrismaService directly for hashtag _count aggregation instead of PostsService.searchHashtags
 - [05-01]: Explore feed is public with no guard and empty liked/bookmarked sets
 - [05-01]: Hashtag posts endpoint placed before :id param route to avoid route conflict
+- [05-02]: useSearchItemsGlobal named to avoid collision with existing useSearchItems in collection-queries.ts
+- [05-02]: Explore page uses useExploreFeed for category sections and usePublicFeed for "Moi nhat" chronological fallback
+- [05-02]: ExploreCategorySectionComponent accesses post.media[0].url for thumbnail display with gradient placeholder
 
 ### Pending Todos
 
@@ -162,6 +167,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T02:08:24Z
-Stopped at: Completed 05-01-PLAN.md
+Last session: 2026-03-15T02:18:45Z
+Stopped at: Completed 05-02-PLAN.md
 Resume file: None
