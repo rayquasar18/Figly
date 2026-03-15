@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-04-PLAN.md
-last_updated: "2026-03-14T23:50:56Z"
-last_activity: 2026-03-15 -- Completed 04-04 Collection Frontend Pages
+stopped_at: Completed 04-05-PLAN.md
+last_updated: "2026-03-15T00:12:23.389Z"
+last_activity: 2026-03-15 -- Completed 04-05 Checklist Frontend and Collection Showcase
 progress:
   total_phases: 11
   completed_phases: 4
   total_plans: 19
-  completed_plans: 16
-  percent: 84
+  completed_plans: 18
+  percent: 95
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-13)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 4 (Collection System -- IN PROGRESS, 4/6 plans)
+**Current focus:** Phase 4 (Collection System -- IN PROGRESS, 5/6 plans)
 
 ## Current Position
 
 Phase: 4 of 10 (Collection System)
-Plan: 4 of 6 in current phase
+Plan: 5 of 6 in current phase
 Status: Executing
-Last activity: 2026-03-15 -- Completed 04-04 Collection Frontend Pages
+Last activity: 2026-03-15 -- Completed 04-05 Checklist Frontend and Collection Showcase
 
-Progress: [████████░░] 84% (Phase 4: 4/6 plans)
+Progress: [██████████] 95% (Phase 4: 5/6 plans)
 
 ## Performance Metrics
 
@@ -64,6 +64,7 @@ Progress: [████████░░] 84% (Phase 4: 4/6 plans)
 | Phase 04 P02 | 5 | 1 task | 6 files |
 | Phase 04 P03 | 13 | 2 tasks | 12 files |
 | Phase 04 P04 | 6 | 2 tasks | 12 files |
+| Phase 04 P05 | 9 | 2 tasks | 18 files |
 
 ## Accumulated Context
 
@@ -135,6 +136,9 @@ Recent decisions affecting current work:
 - [04-04]: Cross-query optimistic updates via updateItemInQueries helper for items/searchItems/itemDetail consistency
 - [04-04]: Auth-aware toggle uses useAuthStore.getState().user for synchronous auth gating before mutations
 - [04-04]: Category/series names from slug with dash-to-space since series API lacks parent name field
+- [Phase 04]: ChecklistEntry reorder uses full array swap and sends complete entryIds list
+- [Phase 04]: FollowSeriesButton reuses same auth-gate pattern as user FollowButton
+- [Phase 04]: CollectionShowcase uses inline useQuery for owned items endpoint
 
 ### Pending Todos
 
@@ -150,6 +154,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-14T23:50:56Z
-Stopped at: Completed 04-04-PLAN.md
-Resume file: .planning/phases/04-collection-system/04-04-SUMMARY.md
+Last session: 2026-03-15T00:12:23.387Z
+Stopped at: Completed 04-05-PLAN.md
+Resume file: None

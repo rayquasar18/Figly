@@ -19,7 +19,7 @@
 - [x] **PROF-01**: User can create profile with display name and avatar
 - [x] **PROF-02**: User can write and edit bio
 - [x] **PROF-03**: User can view other users' profiles with post grid
-- [ ] **PROF-04**: User profile has collection showcase tab showing owned items
+- [x] **PROF-04**: User profile has collection showcase tab showing owned items
 
 ### Content
 
@@ -132,7 +132,7 @@
 | PROF-01 | Phase 2 | Complete |
 | PROF-02 | Phase 2 | Complete |
 | PROF-03 | Phase 2 | Complete |
-| PROF-04 | Phase 4 | Pending |
+| PROF-04 | Phase 4 | Complete |
 | CONT-01 | Phase 3 | Complete |
 | CONT-02 | Phase 3 | Complete |
 | CONT-03 | Phase 3 | Complete |
