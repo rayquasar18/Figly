@@ -16,9 +16,9 @@
 
 ### Profiles
 
-- [ ] **PROF-01**: User can create profile with display name and avatar
-- [ ] **PROF-02**: User can write and edit bio
-- [ ] **PROF-03**: User can view other users' profiles with post grid
+- [x] **PROF-01**: User can create profile with display name and avatar
+- [x] **PROF-02**: User can write and edit bio
+- [x] **PROF-03**: User can view other users' profiles with post grid
 - [ ] **PROF-04**: User profile has collection showcase tab showing owned items
 
 ### Content
@@ -45,8 +45,8 @@
 
 ### Social
 
-- [ ] **SOCL-01**: User can follow/unfollow other users
-- [ ] **SOCL-02**: User can view followers and following lists
+- [x] **SOCL-01**: User can follow/unfollow other users
+- [x] **SOCL-02**: User can view followers and following lists
 - [ ] **SOCL-03**: User can view chronological feed of posts from followed users
 - [ ] **SOCL-04**: User can follow collection series/categories
 
@@ -129,9 +129,9 @@
 | AUTH-04 | Phase 1 | Complete |
 | AUTH-05 | Phase 1 | Complete |
 | AUTH-06 | Phase 1 | Complete |
-| PROF-01 | Phase 2 | Pending |
-| PROF-02 | Phase 2 | Pending |
-| PROF-03 | Phase 2 | Pending |
+| PROF-01 | Phase 2 | Complete |
+| PROF-02 | Phase 2 | Complete |
+| PROF-03 | Phase 2 | Complete |
 | PROF-04 | Phase 4 | Pending |
 | CONT-01 | Phase 3 | Pending |
 | CONT-02 | Phase 3 | Pending |
@@ -149,8 +149,8 @@
 | INTR-03 | Phase 3 | Pending |
 | INTR-04 | Phase 3 | Pending |
 | INTR-05 | Phase 3 | Pending |
-| SOCL-01 | Phase 2 | Pending |
-| SOCL-02 | Phase 2 | Pending |
+| SOCL-01 | Phase 2 | Complete |
+| SOCL-02 | Phase 2 | Complete |
 | SOCL-03 | Phase 3 | Pending |
 | SOCL-04 | Phase 4 | Pending |
 | DISC-01 | Phase 5 | Pending |

@@ -14,21 +14,28 @@ enum MediaStatus {
 }
 
 model User {
-  id              String   @id @default(cuid())
-  email           String   @unique
-  passwordHash    String?
-  name            String
-  emailVerified   Boolean  @default(false)
-  emailVerifiedAt DateTime?
-  googleId        String?  @unique
-  appleId         String?  @unique
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id                String    @id @default(cuid())
+  email             String    @unique
+  passwordHash      String?
+  name              String
+  username          String?   @unique
+  bio               String?   @db.VarChar(150)
+  avatarId          String?   @unique
+  usernameChangedAt DateTime?
+  emailVerified     Boolean   @default(false)
+  emailVerifiedAt   DateTime?
+  googleId          String?   @unique
+  appleId           String?   @unique
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 
+  avatar             Media?    @relation("UserAvatar", fields: [avatarId], references: [id])
   refreshTokens      RefreshToken[]
   verificationTokens VerificationToken[]
   passwordResetTokens PasswordResetToken[]
   media              Media[]
+  followers          Follow[]  @relation("following")
+  following          Follow[]  @relation("follower")
 
   @@map("users")
 }
@@ -85,6 +92,22 @@ model Media {
   status       MediaStatus @default(PROCESSING)
   createdAt    DateTime    @default(now())
 
+  userAvatar   User?       @relation("UserAvatar")
+
   @@index([userId])
   @@map("media")
+}
+
+model Follow {
+  id          String   @id @default(cuid())
+  followerId  String
+  followingId String
+  follower    User     @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User     @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+
+  @@unique([followerId, followingId])
+  @@index([followerId])
+  @@index([followingId])
+  @@map("follows")
 }

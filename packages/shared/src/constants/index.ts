@@ -19,3 +19,10 @@ export const THUMBNAIL_SIZES = {
   medium: 600,
   large: 1080,
 } as const;
+
+export const PROFILE_LIMITS = {
+  bioMaxLength: 150,
+  usernameMinLength: 3,
+  usernameMaxLength: 30,
+  usernameCooldownDays: 14,
+} as const;

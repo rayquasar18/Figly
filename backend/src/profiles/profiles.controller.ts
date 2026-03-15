@@ -1,0 +1,45 @@
+import {
+  Controller,
+  Get,
+  Patch,
+  Param,
+  Body,
+  UseGuards,
+  Req,
+} from '@nestjs/common';
+import { Request } from 'express';
+import { ProfilesService } from './profiles.service';
+import { UpdateProfileDto } from './dto/update-profile.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { EmailVerifiedGuard } from '../auth/guards/email-verified.guard';
+
+@Controller('profiles')
+export class ProfilesController {
+  constructor(private readonly profilesService: ProfilesService) {}
+
+  @Get('check/:username')
+  async checkUsername(@Param('username') username: string) {
+    const available = await this.profilesService.isUsernameAvailable(username);
+    return { available };
+  }
+
+  @Get(':username')
+  @UseGuards(JwtAuthGuard)
+  async getProfile(
+    @Param('username') username: string,
+    @Req() req: Request,
+  ) {
+    const { userId } = req.user as any;
+    return this.profilesService.getProfile(username, userId);
+  }
+
+  @Patch('me')
+  @UseGuards(JwtAuthGuard, EmailVerifiedGuard)
+  async updateProfile(
+    @Body() dto: UpdateProfileDto,
+    @Req() req: Request,
+  ) {
+    const { userId } = req.user as any;
+    return this.profilesService.updateProfile(userId, dto);
+  }
+}

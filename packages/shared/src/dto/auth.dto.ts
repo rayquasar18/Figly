@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { usernameSchema } from '../validators/username';
 
 // Password validation helpers
 const passwordSchema = z
@@ -11,6 +12,7 @@ export const signupSchema = z.object({
   email: z.string().email({ message: 'Email khong hop le' }),
   password: passwordSchema,
   name: z.string().min(1, { message: 'Ten khong duoc de trong' }),
+  username: usernameSchema,
 });
 
 export const loginSchema = z.object({

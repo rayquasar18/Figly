@@ -7,6 +7,8 @@ import { APP_GUARD } from '@nestjs/core';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { MediaModule } from './media/media.module';
+import { ProfilesModule } from './profiles/profiles.module';
+import { SocialModule } from './social/social.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -47,6 +49,8 @@ import configuration from './config/configuration';
     PrismaModule,
     AuthModule,
     MediaModule,
+    ProfilesModule,
+    SocialModule,
   ],
   controllers: [],
   providers: [

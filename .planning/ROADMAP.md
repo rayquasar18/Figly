@@ -51,11 +51,13 @@ Plans:
   2. User can visit another user's profile and see their post grid
   3. User can follow/unfollow another user and see updated follower/following counts immediately
   4. User can view the full list of their followers and the users they follow
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
+- [ ] 02-01-PLAN.md — Schema extension (username, bio, avatar, Follow model), shared types/validators, signup username support
+- [ ] 02-02-PLAN.md — Backend: Profiles and Social NestJS modules with full test coverage
+- [ ] 02-03-PLAN.md — Frontend: Profile page at /[username] with Instagram-style header, edit profile modal, signup username field, complete-profile interstitial for OAuth users
+- [ ] 02-04-PLAN.md — Frontend: Follow/unfollow button with optimistic UI, follower and following list pages with search filter and cursor pagination
 
 ### Phase 3: Content & Feed
 **Goal**: Users can create photo posts, interact with content (like, comment, save), and browse a chronological feed of posts from people they follow
@@ -183,7 +185,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation & Auth | 0/3 | Planning complete | - |
-| 2. Profiles & Social Graph | 0/2 | Not started | - |
+| 2. Profiles & Social Graph | 0/4 | Planning complete | - |
 | 3. Content & Feed | 0/3 | Not started | - |
 | 4. Collection System | 0/3 | Not started | - |
 | 5. Search & Discovery | 0/2 | Not started | - |
