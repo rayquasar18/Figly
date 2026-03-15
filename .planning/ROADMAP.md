@@ -187,11 +187,11 @@ Plans:
   2. User can see when their messages have been read by the recipient
   3. User can share photos and videos within DM conversations
   4. User can participate in group chats organized by collection category or interest
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 08-01: TBD
-- [ ] 08-02: TBD
+- [ ] 08-01-PLAN.md — Backend: Prisma schema (Conversation, Message, MessageMedia models), shared types/DTOs/constants, MessagingModule with Socket.IO WebSocket gateway, conversations REST API, block enforcement
+- [ ] 08-02-PLAN.md — Frontend: Socket.IO connection hook, messaging store, conversation list page, chat view with real-time delivery, media sharing, read receipts, new conversation/group dialogs, header DM icon with unread badge
 
 ### Phase 9: Stories
 **Goal**: Users can share ephemeral photo/video moments that disappear after 24 hours, creating a sense of immediacy and daily engagement
