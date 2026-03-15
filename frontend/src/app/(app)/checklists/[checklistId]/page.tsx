@@ -2,7 +2,7 @@
 
 import { use, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Plus, Pencil, Trash2 } from 'lucide-react';
+import { Plus, Pencil, Trash2, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Progress } from '@/components/ui/progress';
@@ -28,6 +28,8 @@ import {
   useReorderEntries,
 } from '@/hooks/queries/checklist-queries';
 import { ChecklistEntry } from '@/components/checklist/checklist-entry';
+import { ItemPicker } from '@/components/collection/item-picker';
+import type { LinkedItemResponse } from '@figly/shared';
 
 function DetailSkeleton() {
   return (
@@ -62,7 +64,7 @@ export default function ChecklistDetailPage({
   const [isEditing, setIsEditing] = useState(false);
   const [editName, setEditName] = useState('');
   const [freeformText, setFreeformText] = useState('');
-  const [itemIdInput, setItemIdInput] = useState('');
+  const [itemPickerOpen, setItemPickerOpen] = useState(false);
 
   if (isLoading) {
     return (
@@ -121,12 +123,10 @@ export default function ChecklistDetailPage({
     );
   }
 
-  function handleAddItem() {
-    const id = itemIdInput.trim();
-    if (!id) return;
+  function handleAddItem(ids: string[], _items?: LinkedItemResponse[]) {
+    if (ids.length === 0) return;
     addEntry.mutate(
-      { checklistId, data: { itemId: id } },
-      { onSuccess: () => setItemIdInput('') },
+      { checklistId, data: { itemId: ids[0] } },
     );
   }
 
@@ -253,26 +253,25 @@ export default function ChecklistDetailPage({
       <div className="mt-6 space-y-3 rounded-lg border p-4">
         <h3 className="text-sm font-semibold">Them muc</h3>
 
-        {/* Add from database (simple itemId input until ItemPicker available) */}
-        <div className="flex items-center gap-2">
-          <Input
-            placeholder="Nhap ID vat pham (them tu database)"
-            value={itemIdInput}
-            onChange={(e) => setItemIdInput(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') handleAddItem();
-            }}
-          />
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={handleAddItem}
-            disabled={!itemIdInput.trim() || addEntry.isPending}
-          >
-            <Plus className="mr-1 size-4" />
-            Them tu database
-          </Button>
-        </div>
+        {/* Add from database via ItemPicker */}
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => setItemPickerOpen(true)}
+          disabled={addEntry.isPending}
+          className="gap-1.5"
+        >
+          <Search className="size-4" />
+          Them tu database
+        </Button>
+
+        <ItemPicker
+          mode="single"
+          selectedItemIds={[]}
+          onSelect={handleAddItem}
+          open={itemPickerOpen}
+          onOpenChange={setItemPickerOpen}
+        />
 
         {/* Add freeform */}
         <div className="flex items-center gap-2">

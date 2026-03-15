@@ -70,7 +70,7 @@ export function useCreatePost() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (data: { caption?: string; mediaIds: string[] }) => {
+    mutationFn: async (data: { caption?: string; mediaIds: string[]; linkedItemIds?: string[] }) => {
       const response = await apiClient.post<PostResponse>('/posts', data);
       return response.data;
     },

@@ -5,8 +5,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { formatDistanceToNow } from 'date-fns';
 import { vi } from 'date-fns/locale';
-import { Heart } from 'lucide-react';
+import { Heart, Package } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { PostCarousel } from './post-carousel';
 import { PostActions } from './post-actions';
@@ -123,6 +124,28 @@ export function PostCard({ post, onOpenDetail }: PostCardProps) {
           truncate
         />
       </div>
+
+      {/* Linked items badges */}
+      {post.linkedItems && post.linkedItems.length > 0 && (
+        <div className="flex flex-wrap items-center gap-1.5 px-3 mt-1.5">
+          {post.linkedItems.slice(0, 3).map((item) => (
+            <Link key={item.id} href={`/item/${item.id}`}>
+              <Badge
+                variant="secondary"
+                className="cursor-pointer gap-1 text-xs hover:bg-secondary/80"
+              >
+                <Package className="size-3" />
+                {item.name}
+              </Badge>
+            </Link>
+          ))}
+          {post.linkedItems.length > 3 && (
+            <span className="text-xs text-muted-foreground">
+              +{post.linkedItems.length - 3} khac
+            </span>
+          )}
+        </div>
+      )}
 
       {/* View all comments link */}
       {post.commentCount > 0 && (
