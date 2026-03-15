@@ -4,4 +4,5 @@ export interface PublicUser {
   name: string;
   username: string | null;
   emailVerified: boolean;
+  role?: 'USER' | 'ADMIN';
 }
