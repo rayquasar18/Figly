@@ -472,6 +472,7 @@ export class AuthService {
         name: true,
         username: true,
         emailVerified: true,
+        role: true,
       },
     });
 

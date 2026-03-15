@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { Settings, Shield } from 'lucide-react';
 import { useMe } from '@/hooks/queries/auth-queries';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { CreatePostFlow } from '@/components/create-post/create-post-flow';
@@ -80,6 +81,22 @@ export default function AppLayout({
             Figly
           </Link>
           <div className="flex items-center gap-2">
+            {user.role === 'ADMIN' && (
+              <Link
+                href="/admin"
+                className="flex size-7 items-center justify-center rounded-full hover:bg-muted"
+                aria-label="Quan ly"
+              >
+                <Shield className="size-4 text-muted-foreground" />
+              </Link>
+            )}
+            <Link
+              href="/settings"
+              className="flex size-7 items-center justify-center rounded-full hover:bg-muted"
+              aria-label="Cai dat"
+            >
+              <Settings className="size-4 text-muted-foreground" />
+            </Link>
             <NotificationBell />
             {user.username && (
               <Link
