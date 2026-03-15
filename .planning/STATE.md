@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-05-PLAN.md
-last_updated: "2026-03-15T00:12:23.389Z"
-last_activity: 2026-03-15 -- Completed 04-05 Checklist Frontend and Collection Showcase
+stopped_at: Completed 04-06-PLAN.md
+last_updated: "2026-03-15T00:19:51Z"
+last_activity: 2026-03-15 -- Completed 04-06 Item Picker and Post-Item Linking Frontend
 progress:
   total_phases: 11
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 19
-  completed_plans: 18
-  percent: 95
+  completed_plans: 19
+  percent: 100
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-13)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 4 (Collection System -- IN PROGRESS, 5/6 plans)
+**Current focus:** Phase 4 (Collection System -- COMPLETE, 6/6 plans)
 
 ## Current Position
 
-Phase: 4 of 10 (Collection System)
-Plan: 5 of 6 in current phase
-Status: Executing
-Last activity: 2026-03-15 -- Completed 04-05 Checklist Frontend and Collection Showcase
+Phase: 5 of 10
+Plan: 0 of ? in current phase
+Status: Phase 4 Complete
+Last activity: 2026-03-15 -- Completed 04-06 Item Picker and Post-Item Linking Frontend
 
-Progress: [██████████] 95% (Phase 4: 5/6 plans)
+Progress: [██████████] 100% (Phase 4: 6/6 plans)
 
 ## Performance Metrics
 
@@ -47,10 +47,10 @@ Progress: [██████████] 95% (Phase 4: 5/6 plans)
 | 02-profiles-social-graph | 4 | 23 min | 6 min |
 | 03-content-feed | 4 | 38 min | 10 min |
 | 03.1-public-viewing-mode | 1 | 7 min | 7 min |
-| 04-collection-system | 3 | 15 min | 5 min |
+| 04-collection-system | 4 | 20 min | 5 min |
 
 **Recent Trend:**
-- Last 5 plans: 7, 7, 4, 5, 6 min
+- Last 5 plans: 7, 4, 5, 6, 5 min
 - Trend: improving
 
 *Updated after each plan completion*
@@ -65,6 +65,7 @@ Progress: [██████████] 95% (Phase 4: 5/6 plans)
 | Phase 04 P03 | 13 | 2 tasks | 12 files |
 | Phase 04 P04 | 6 | 2 tasks | 12 files |
 | Phase 04 P05 | 9 | 2 tasks | 18 files |
+| Phase 04 P06 | 5 | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -139,6 +140,9 @@ Recent decisions affecting current work:
 - [Phase 04]: ChecklistEntry reorder uses full array swap and sends complete entryIds list
 - [Phase 04]: FollowSeriesButton reuses same auth-gate pattern as user FollowButton
 - [Phase 04]: CollectionShowcase uses inline useQuery for owned items endpoint
+- [Phase 04]: ItemPicker onSelect returns both IDs and LinkedItemResponse for store hydration without extra API calls
+- [Phase 04]: PostCard shows max 3 linked item badges with overflow count for compact feed display
+- [Phase 04]: Checklist detail replaced manual ID input with ItemPicker in single-select mode
 
 ### Pending Todos
 
@@ -154,6 +158,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T00:12:23.387Z
-Stopped at: Completed 04-05-PLAN.md
+Last session: 2026-03-15T00:19:51Z
+Stopped at: Completed 04-06-PLAN.md
 Resume file: None

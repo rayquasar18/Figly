@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 2: Profiles & Social Graph** - User profiles, follow/unfollow system, and follower/following lists
 - [x] **Phase 3: Content & Feed** - Photo posts, image editing, interactions (likes/comments/bookmarks), and chronological feed (completed 2026-03-14)
 - [ ] **Phase 3.1: Public Viewing Mode** - Public viewing mode for non-authenticated users (INSERTED)
-- [ ] **Phase 4: Collection System** - Shared item database, owned/wishlist tracking, custom checklists, post-to-item linking, and collection showcase
+- [x] **Phase 4: Collection System** - Shared item database, owned/wishlist tracking, custom checklists, post-to-item linking, and collection showcase (completed 2026-03-15)
 - [ ] **Phase 5: Search & Discovery** - User/hashtag/item search, hashtag pages, and category-based explore page
 - [ ] **Phase 6: Notifications** - Real-time in-app notifications, notification history, and push notifications via PWA
 - [ ] **Phase 7: Moderation & Safety** - Report, block, mute for users, and admin moderation queue
@@ -211,7 +211,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 5 -> 6 -> 7 -> 8 -> 
 | 2. Profiles & Social Graph | 0/4 | Planning complete | - |
 | 3. Content & Feed | 2/4 | Complete    | 2026-03-14 |
 | 3.1 Public Viewing Mode | 0/2 | Planning complete | - |
-| 4. Collection System | 3/6 | In Progress|  |
+| 4. Collection System | 6/6 | Complete   | 2026-03-15 |
 | 5. Search & Discovery | 0/2 | Not started | - |
 | 6. Notifications | 0/2 | Not started | - |
 | 7. Moderation & Safety | 0/2 | Not started | - |
