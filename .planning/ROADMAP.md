@@ -126,11 +126,11 @@ Plans:
   1. User can search for users, hashtags, and collection items from a single search interface and see relevant results
   2. User can tap a hashtag anywhere in the app and see an aggregated page of all posts using that hashtag
   3. User can browse an explore page with content curated and organized by collection category
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 05-01: TBD
-- [ ] 05-02: TBD
+- [ ] 05-01-PLAN.md — Backend: SearchModule (unified search delegation), hashtag posts endpoint, category-curated explore feed endpoint
+- [ ] 05-02-PLAN.md — Frontend: Unified search page with tabbed results, hashtag aggregation page, enhanced explore page with category sections
 
 ### Phase 6: Notifications
 **Goal**: Users are informed in real-time about activity relevant to them (likes, comments, follows, mentions) and can receive push notifications
@@ -212,7 +212,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 5 -> 6 -> 7 -> 8 -> 
 | 3. Content & Feed | 2/4 | Complete    | 2026-03-14 |
 | 3.1 Public Viewing Mode | 0/2 | Planning complete | - |
 | 4. Collection System | 6/6 | Complete   | 2026-03-15 |
-| 5. Search & Discovery | 0/2 | Not started | - |
+| 5. Search & Discovery | 0/2 | Planning complete | - |
 | 6. Notifications | 0/2 | Not started | - |
 | 7. Moderation & Safety | 0/2 | Not started | - |
 | 8. Direct Messaging | 0/2 | Not started | - |
