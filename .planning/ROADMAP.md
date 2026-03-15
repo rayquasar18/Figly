@@ -12,14 +12,15 @@ Figly delivers an Instagram-like social platform purpose-built for collectors. T
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation & Auth** - Monorepo scaffold, database, media pipeline, and complete authentication system
-- [ ] **Phase 2: Profiles & Social Graph** - User profiles, follow/unfollow system, and follower/following lists
+- [x] **Phase 1: Foundation & Auth** - Monorepo scaffold, database, media pipeline, and complete authentication system (completed 2026-03-13)
+- [x] **Phase 2: Profiles & Social Graph** - User profiles, follow/unfollow system, and follower/following lists (completed 2026-03-13)
 - [x] **Phase 3: Content & Feed** - Photo posts, image editing, interactions (likes/comments/bookmarks), and chronological feed (completed 2026-03-14)
-- [ ] **Phase 3.1: Public Viewing Mode** - Public viewing mode for non-authenticated users (INSERTED)
+- [x] **Phase 3.1: Public Viewing Mode** - Public viewing mode for non-authenticated users (INSERTED) (completed 2026-03-14)
 - [x] **Phase 4: Collection System** - Shared item database, owned/wishlist tracking, custom checklists, post-to-item linking, and collection showcase (completed 2026-03-15)
-- [ ] **Phase 5: Search & Discovery** - User/hashtag/item search, hashtag pages, and category-based explore page
-- [ ] **Phase 6: Notifications** - Real-time in-app notifications, notification history, and push notifications via PWA
+- [x] **Phase 5: Search & Discovery** - User/hashtag/item search, hashtag pages, and category-based explore page (completed 2026-03-15)
+- [x] **Phase 6: Notifications** - Real-time in-app notifications, notification history, and push notifications via PWA (completed 2026-03-15)
 - [x] **Phase 7: Moderation & Safety** - Report, block, mute for users, and admin moderation queue (completed 2026-03-15)
+- [x] **Phase 7.1: Docker Split** - Split figly-app into figly-frontend + figly-backend containers (INSERTED) (completed 2026-03-15)
 - [ ] **Phase 8: Direct Messaging** - 1-on-1 DMs, media sharing, read receipts, and group chats
 - [ ] **Phase 9: Stories** - 24h ephemeral photo/video content with followed-user story feed
 - [ ] **Phase 10: Reels** - Short-form video upload and vertical scroll browsing feed
@@ -39,9 +40,9 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 3 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Monorepo scaffold, Docker Compose, Prisma schema, shared package, test infrastructure
-- [ ] 01-02-PLAN.md — Auth backend: email/password, JWT sessions, email verification, password reset, Google + Apple OAuth
-- [ ] 01-03-PLAN.md — Frontend auth pages, API client with silent refresh, media upload pipeline (MinIO + BullMQ + Sharp)
+- [x] 01-01-PLAN.md — Monorepo scaffold, Docker Compose, Prisma schema, shared package, test infrastructure
+- [x] 01-02-PLAN.md — Auth backend: email/password, JWT sessions, email verification, password reset, Google + Apple OAuth
+- [x] 01-03-PLAN.md — Frontend auth pages, API client with silent refresh, media upload pipeline (MinIO + BullMQ + Sharp)
 
 ### Phase 2: Profiles & Social Graph
 **Goal**: Users can set up their identity and build a social network by following other collectors
@@ -55,10 +56,10 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Schema extension (username, bio, avatar, Follow model), shared types/validators, signup username support
-- [ ] 02-02-PLAN.md — Backend: Profiles and Social NestJS modules with full test coverage
-- [ ] 02-03-PLAN.md — Frontend: Profile page at /[username] with Instagram-style header, edit profile modal, signup username field, complete-profile interstitial for OAuth users
-- [ ] 02-04-PLAN.md — Frontend: Follow/unfollow button with optimistic UI, follower and following list pages with search filter and cursor pagination
+- [x] 02-01-PLAN.md — Schema extension (username, bio, avatar, Follow model), shared types/validators, signup username support
+- [x] 02-02-PLAN.md — Backend: Profiles and Social NestJS modules with full test coverage
+- [x] 02-03-PLAN.md — Frontend: Profile page at /[username] with Instagram-style header, edit profile modal, signup username field, complete-profile interstitial for OAuth users
+- [x] 02-04-PLAN.md — Frontend: Follow/unfollow button with optimistic UI, follower and following list pages with search filter and cursor pagination
 
 ### Phase 3: Content & Feed
 **Goal**: Users can create photo posts, interact with content (like, comment, save), and browse a chronological feed of posts from people they follow
@@ -74,10 +75,10 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 03-01-PLAN.md — Prisma schema extension (Post, PostMedia, Like, Comment, Bookmark, Hashtag models) and shared DTOs/types/constants
-- [ ] 03-02-PLAN.md — Backend: Posts, Comments, and Feed NestJS modules with like/bookmark/hashtag support and full test coverage
-- [ ] 03-03-PLAN.md — Frontend: Instagram-style multi-step post creation flow with react-easy-crop image editing and bottom navigation
-- [ ] 03-04-PLAN.md — Frontend: Chronological feed with infinite scroll, post detail modal, comment threading, interactions with optimistic UI, saved posts page
+- [x] 03-01-PLAN.md — Prisma schema extension (Post, PostMedia, Like, Comment, Bookmark, Hashtag models) and shared DTOs/types/constants
+- [x] 03-02-PLAN.md — Backend: Posts, Comments, and Feed NestJS modules with like/bookmark/hashtag support and full test coverage
+- [x] 03-03-PLAN.md — Frontend: Instagram-style multi-step post creation flow with react-easy-crop image editing and bottom navigation
+- [x] 03-04-PLAN.md — Frontend: Chronological feed with infinite scroll, post detail modal, comment threading, interactions with optimistic UI, saved posts page
 
 ### Phase 03.1: Public Viewing Mode (INSERTED)
 
@@ -94,8 +95,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 03.1-01-PLAN.md — Backend: OptionalJwtAuthGuard, refactor read endpoints for optional auth, public feed endpoint
-- [ ] 03.1-02-PLAN.md — Frontend: (public) route group, page migration, auth-aware components, explore page
+- [x] 03.1-01-PLAN.md — Backend: OptionalJwtAuthGuard, refactor read endpoints for optional auth, public feed endpoint
+- [x] 03.1-02-PLAN.md — Frontend: (public) route group, page migration, auth-aware components, explore page
 
 ### Phase 4: Collection System
 **Goal**: Users can browse a shared item database, track what they own and want, build custom checklists, link posts to collection items, and showcase collections on their profile
@@ -111,12 +112,12 @@ Plans:
 **Plans**: 6 plans
 
 Plans:
-- [ ] 04-01-PLAN.md — Prisma schema extension (10 collection models), shared types/DTOs/constants, seed data script
-- [ ] 04-02-PLAN.md — Backend: CollectionModule (browse, search, owned/wishlist, follow)
-- [ ] 04-03-PLAN.md — Backend: ChecklistModule (CRUD, entries, progress) + PostsModule item linking + shared PostResponse extension
-- [ ] 04-04-PLAN.md — Frontend: Collection browsing pages (categories, series, items), item detail, search, owned/wishlist toggle, bottom nav
-- [ ] 04-05-PLAN.md — Frontend: Checklists (CRUD, entries, progress), profile collection tab, follow series/categories
-- [ ] 04-06-PLAN.md — Frontend: ItemPicker component, post-to-item linking in create post flow, linked items on post display
+- [x] 04-01-PLAN.md — Prisma schema extension (10 collection models), shared types/DTOs/constants, seed data script
+- [x] 04-02-PLAN.md — Backend: CollectionModule (browse, search, owned/wishlist, follow)
+- [x] 04-03-PLAN.md — Backend: ChecklistModule (CRUD, entries, progress) + PostsModule item linking + shared PostResponse extension
+- [x] 04-04-PLAN.md — Frontend: Collection browsing pages (categories, series, items), item detail, search, owned/wishlist toggle, bottom nav
+- [x] 04-05-PLAN.md — Frontend: Checklists (CRUD, entries, progress), profile collection tab, follow series/categories
+- [x] 04-06-PLAN.md — Frontend: ItemPicker component, post-to-item linking in create post flow, linked items on post display
 
 ### Phase 5: Search & Discovery
 **Goal**: Users can find other collectors, discover content by hashtag, and explore posts organized by collection category
@@ -129,8 +130,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 05-01-PLAN.md — Backend: SearchModule (unified search delegation), hashtag posts endpoint, category-curated explore feed endpoint
-- [ ] 05-02-PLAN.md — Frontend: Unified search page with tabbed results, hashtag aggregation page, enhanced explore page with category sections
+- [x] 05-01-PLAN.md — Backend: SearchModule (unified search delegation), hashtag posts endpoint, category-curated explore feed endpoint
+- [x] 05-02-PLAN.md — Frontend: Unified search page with tabbed results, hashtag aggregation page, enhanced explore page with category sections
 
 ### Phase 6: Notifications
 **Goal**: Users are informed in real-time about activity relevant to them (likes, comments, follows, mentions) and can receive push notifications
@@ -143,8 +144,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 06-01-PLAN.md — Backend: Prisma schema (Notification, NotificationActor, PushSubscription), NotificationsModule with SSE gateway, BullMQ processor, push service, notification triggers in PostsService/CommentsService/SocialService
-- [ ] 06-02-PLAN.md — Frontend: SSE connection hook, notification store, notification bell with badge, notification history page with grouped items and auto-read, PWA manifest, service worker, push permission flow
+- [x] 06-01-PLAN.md — Backend: Prisma schema (Notification, NotificationActor, PushSubscription), NotificationsModule with SSE gateway, BullMQ processor, push service, notification triggers in PostsService/CommentsService/SocialService
+- [x] 06-02-PLAN.md — Frontend: SSE connection hook, notification store, notification bell with badge, notification history page with grouped items and auto-read, PWA manifest, service worker, push permission flow
 
 ### Phase 7: Moderation & Safety
 **Goal**: Users can protect themselves from unwanted interactions, and admins can act on reported content to keep the community safe
@@ -158,8 +159,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 07-01-PLAN.md — Backend: Prisma schema (Report, Block, Mute models, UserRole enum, ban fields), ModerationModule + AdminModule, block/mute filter integration into all existing services, ban check in all auth paths
-- [ ] 07-02-PLAN.md — Frontend: Report dialog, block/mute in three-dot menus, admin moderation queue page, settings pages for blocked/muted user management
+- [x] 07-01-PLAN.md — Backend: Prisma schema (Report, Block, Mute models, UserRole enum, ban fields), ModerationModule + AdminModule, block/mute filter integration into all existing services, ban check in all auth paths
+- [x] 07-02-PLAN.md — Frontend: Report dialog, block/mute in three-dot menus, admin moderation queue page, settings pages for blocked/muted user management
 
 ### Phase 07.1: Docker Split: Tách figly-app thành 2 container riêng (figly-frontend + figly-backend) (INSERTED)
 
@@ -172,10 +173,10 @@ Plans:
   3. docker-compose.yml có 2 service frontend + backend thay vì 1 service app
   4. Cả 2 container có thể giao tiếp với nhau và với postgres/redis/minio
   5. docker compose build && docker compose up chạy thành công
-**Plans:** 0 plans
+**Plans:** 1 plan
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 07.1 to break down)
+- [x] 07.1-01-PLAN.md — Dockerfile.frontend, Dockerfile.backend, docker-compose.yml split, backend-entrypoint.sh, .dockerignore
 
 ### Phase 8: Direct Messaging
 **Goal**: Users can communicate privately through 1-on-1 and group conversations with real-time delivery
@@ -223,15 +224,15 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 5 -> 6 -> 7 -> 7.1 -
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Auth | 0/3 | Planning complete | - |
-| 2. Profiles & Social Graph | 0/4 | Planning complete | - |
-| 3. Content & Feed | 2/4 | Complete    | 2026-03-14 |
-| 3.1 Public Viewing Mode | 0/2 | Planning complete | - |
-| 4. Collection System | 6/6 | Complete   | 2026-03-15 |
-| 5. Search & Discovery | 0/2 | Planning complete | - |
-| 6. Notifications | 0/2 | Planning complete | - |
-| 7. Moderation & Safety | 1/2 | Complete    | 2026-03-15 |
-| 7.1 Docker Split | 0/0 | Not planned | - |
+| 1. Foundation & Auth | 3/3 | Complete | 2026-03-13 |
+| 2. Profiles & Social Graph | 4/4 | Complete | 2026-03-13 |
+| 3. Content & Feed | 4/4 | Complete | 2026-03-14 |
+| 3.1 Public Viewing Mode | 2/2 | Complete | 2026-03-14 |
+| 4. Collection System | 6/6 | Complete | 2026-03-15 |
+| 5. Search & Discovery | 2/2 | Complete | 2026-03-15 |
+| 6. Notifications | 2/2 | Complete | 2026-03-15 |
+| 7. Moderation & Safety | 2/2 | Complete | 2026-03-15 |
+| 7.1 Docker Split | 1/1 | Complete | 2026-03-15 |
 | 8. Direct Messaging | 0/2 | Not started | - |
 | 9. Stories | 0/1 | Not started | - |
 | 10. Reels | 0/1 | Not started | - |
