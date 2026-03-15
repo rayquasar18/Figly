@@ -21,7 +21,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 6: Notifications** - Real-time in-app notifications, notification history, and push notifications via PWA (completed 2026-03-15)
 - [x] **Phase 7: Moderation & Safety** - Report, block, mute for users, and admin moderation queue (completed 2026-03-15)
 - [x] **Phase 7.1: Docker Split** - Split figly-app into figly-frontend + figly-backend containers (INSERTED) (completed 2026-03-15)
-- [ ] **Phase 8: Direct Messaging** - 1-on-1 DMs, media sharing, read receipts, and group chats
+- [x] **Phase 8: Direct Messaging** - 1-on-1 DMs, media sharing, read receipts, and group chats (completed 2026-03-15)
 - [ ] **Phase 9: Stories** - 24h ephemeral photo/video content with followed-user story feed
 - [ ] **Phase 10: Reels** - Short-form video upload and vertical scroll browsing feed
 
@@ -233,6 +233,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 5 -> 6 -> 7 -> 7.1 -
 | 6. Notifications | 2/2 | Complete | 2026-03-15 |
 | 7. Moderation & Safety | 2/2 | Complete | 2026-03-15 |
 | 7.1 Docker Split | 1/1 | Complete | 2026-03-15 |
-| 8. Direct Messaging | 0/2 | Not started | - |
+| 8. Direct Messaging | 2/2 | Complete   | 2026-03-15 |
 | 9. Stories | 0/1 | Not started | - |
 | 10. Reels | 0/1 | Not started | - |

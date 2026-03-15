@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 07.1 Docker Split
-last_updated: "2026-03-15T10:50:00.000Z"
-last_activity: 2026-03-15 -- Completed 07.1 Docker Split (figly-frontend + figly-backend)
+stopped_at: Completed 08-02-PLAN.md
+last_updated: "2026-03-15T16:06:00.000Z"
+last_activity: 2026-03-15 -- Completed 08-02 Frontend Messaging UI
 progress:
   total_phases: 12
   completed_phases: 9
@@ -21,23 +21,23 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-13)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 8: Direct Messaging (Plan 01 complete, Plan 02 next)
+**Current focus:** Phase 8: Direct Messaging (Complete -- both plans done)
 
 ## Current Position
 
 Phase: 8 of 10
-Plan: 1 of 2 in current phase
-Status: Executing Phase 08
-Last activity: 2026-03-15 -- Completed 08-01 Backend Messaging Infrastructure
+Plan: 2 of 2 in current phase
+Status: Phase 08 Complete
+Last activity: 2026-03-15 -- Completed 08-02 Frontend Messaging UI
 
-Progress: [█████-----] 50% (Phase 8: 1/2 plans)
+Progress: [██████████] 100% (Phase 8: 2/2 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 20
+- Total plans completed: 21
 - Average duration: 9 min
-- Total execution time: 3.1 hours
+- Total execution time: 3.2 hours
 
 **By Phase:**
 
@@ -52,9 +52,11 @@ Progress: [█████-----] 50% (Phase 8: 1/2 plans)
 | 06-notifications | 1 | 21 min | 21 min |
 | 07-moderation-safety | 1 | 31 min | 31 min |
 
+| 08-direct-messaging | 2 | 16 min | 8 min |
+
 **Recent Trend:**
-- Last 5 plans: 6, 6, 21, 31, 8 min
-- Trend: variable (08-01 moderate scope with focused messaging backend)
+- Last 5 plans: 6, 21, 31, 8, 8 min
+- Trend: stable (08-02 frontend messaging UI with matching scope to 08-01)
 
 *Updated after each plan completion*
 | Phase 03 P01 | 3 | 2 tasks | 8 files |
@@ -76,6 +78,7 @@ Progress: [█████-----] 50% (Phase 8: 1/2 plans)
 | Phase 07 P01 | 31 | 3 tasks | 55 files |
 | Phase 07 P02 | 14 | 2 tasks | 18 files |
 | Phase 08 P01 | 8 | 2 tasks | 22 files |
+| Phase 08 P02 | 8 | 3 tasks | 14 files |
 
 ## Accumulated Context
 
@@ -182,6 +185,11 @@ Recent decisions affecting current work:
 - [08-01]: userSockets Map<userId, Set<socketId>> for multi-device connection tracking
 - [08-01]: Room-based broadcast (conv:{conversationId}) for efficient message delivery
 - [08-01]: 1-on-1 duplicate prevention via findFirst with AND participant queries
+- [08-02]: Socket.IO connection at app layout level for app-wide real-time messaging
+- [08-02]: DM icon (MessageCircle) before NotificationBell in header per Instagram pattern
+- [08-02]: Bottom nav unchanged at 5 tabs -- DMs from header only
+- [08-02]: Read receipts via lastReadAt with Check/CheckCheck icons
+- [08-02]: Media upload via existing /media/upload before socket sendMessage
 
 ### Pending Todos
 
@@ -198,6 +206,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T15:52:50Z
-Stopped at: Completed 08-01-PLAN.md
+Last session: 2026-03-15T16:06:00Z
+Stopped at: Completed 08-02-PLAN.md
 Resume file: None
