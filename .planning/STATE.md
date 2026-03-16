@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 08-03-PLAN.md
-last_updated: "2026-03-16T02:11:28.424Z"
-last_activity: 2026-03-16 -- Completed 08-03 WebSocket payload gap closure
+stopped_at: Completed 07.1-01-PLAN.md
+last_updated: "2026-03-16T02:56:47Z"
+last_activity: 2026-03-16 -- Completed 07.1-01 Docker split cleanup and validation
 progress:
   total_phases: 12
-  completed_phases: 9
-  total_plans: 28
-  completed_plans: 28
+  completed_phases: 10
+  total_plans: 29
+  completed_plans: 29
   percent: 100
 ---
 
@@ -21,23 +21,23 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-13)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 8: Direct Messaging (Complete -- all 3 plans done including gap closure)
+**Current focus:** Phase 7.1: Docker Split (Complete -- cleanup and validation done)
 
 ## Current Position
 
-Phase: 8 of 10
-Plan: 3 of 3 in current phase
-Status: Phase 08 Complete
-Last activity: 2026-03-16 -- Completed 08-03 WebSocket payload gap closure
+Phase: 7.1 (inserted)
+Plan: 1 of 1 in current phase
+Status: Phase 07.1 Complete
+Last activity: 2026-03-16 -- Completed 07.1-01 Docker split cleanup and validation
 
-Progress: [██████████] 100% (Phase 8: 3/3 plans)
+Progress: [██████████] 100% (Phase 7.1: 1/1 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 21
+- Total plans completed: 22
 - Average duration: 9 min
-- Total execution time: 3.2 hours
+- Total execution time: 3.3 hours
 
 **By Phase:**
 
@@ -53,10 +53,11 @@ Progress: [██████████] 100% (Phase 8: 3/3 plans)
 | 07-moderation-safety | 1 | 31 min | 31 min |
 
 | 08-direct-messaging | 3 | 17 min | 6 min |
+| 07.1-docker-split | 1 | 6 min | 6 min |
 
 **Recent Trend:**
-- Last 5 plans: 6, 21, 31, 8, 8 min
-- Trend: stable (08-02 frontend messaging UI with matching scope to 08-01)
+- Last 5 plans: 21, 31, 8, 8, 6 min
+- Trend: stable (07.1-01 Docker validation lightweight task)
 
 *Updated after each plan completion*
 | Phase 03 P01 | 3 | 2 tasks | 8 files |
@@ -80,6 +81,7 @@ Progress: [██████████] 100% (Phase 8: 3/3 plans)
 | Phase 08 P01 | 8 | 2 tasks | 22 files |
 | Phase 08 P02 | 8 | 3 tasks | 14 files |
 | Phase 08 P03 | 1 | 1 tasks | 2 files |
+| Phase 07.1 P01 | 6 | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -192,6 +194,8 @@ Recent decisions affecting current work:
 - [08-02]: Read receipts via lastReadAt with Check/CheckCheck icons
 - [08-02]: Media upload via existing /media/upload before socket sendMessage
 - [Phase 08-03]: No frontend changes needed -- frontend already expects wrapped { message, conversationId } payload shape
+- [07.1-01]: Removed legacy single-container Dockerfile to prevent confusion with split setup
+- [07.1-01]: Backend entrypoint made executable locally for developer consistency
 
 ### Pending Todos
 
@@ -208,6 +212,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-16T02:11:28.421Z
-Stopped at: Completed 08-03-PLAN.md
+Last session: 2026-03-16T02:56:47Z
+Stopped at: Completed 07.1-01-PLAN.md
 Resume file: None

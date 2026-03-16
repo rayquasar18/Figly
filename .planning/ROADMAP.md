@@ -173,7 +173,7 @@ Plans:
   3. docker-compose.yml có 2 service frontend + backend thay vì 1 service app
   4. Cả 2 container có thể giao tiếp với nhau và với postgres/redis/minio
   5. docker compose build && docker compose up chạy thành công
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 
 Plans:
 - [ ] 07.1-01-PLAN.md — Remove legacy Dockerfile, validate Docker split end-to-end (build + up + verify all services)
