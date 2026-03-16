@@ -20,7 +20,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 5: Search & Discovery** - User/hashtag/item search, hashtag pages, and category-based explore page (completed 2026-03-15)
 - [x] **Phase 6: Notifications** - Real-time in-app notifications, notification history, and push notifications via PWA (completed 2026-03-15)
 - [x] **Phase 7: Moderation & Safety** - Report, block, mute for users, and admin moderation queue (completed 2026-03-15)
-- [x] **Phase 7.1: Docker Split** - Split figly-app into figly-frontend + figly-backend containers (INSERTED) (completed 2026-03-15)
+- [ ] **Phase 7.1: Docker Split** - Split figly-app into figly-frontend + figly-backend containers (INSERTED)
 - [ ] **Phase 8: Direct Messaging** - 1-on-1 DMs, media sharing, read receipts, and group chats (gap closure in progress)
 - [ ] **Phase 9: Stories** - 24h ephemeral photo/video content with followed-user story feed
 - [ ] **Phase 10: Reels** - Short-form video upload and vertical scroll browsing feed
@@ -176,7 +176,7 @@ Plans:
 **Plans:** 1 plan
 
 Plans:
-- [x] 07.1-01-PLAN.md — Dockerfile.frontend, Dockerfile.backend, docker-compose.yml split, backend-entrypoint.sh, .dockerignore
+- [ ] 07.1-01-PLAN.md — Remove legacy Dockerfile, validate Docker split end-to-end (build + up + verify all services)
 
 ### Phase 8: Direct Messaging
 **Goal**: Users can communicate privately through 1-on-1 and group conversations with real-time delivery
@@ -233,7 +233,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 5 -> 6 -> 7 -> 7.1 -
 | 5. Search & Discovery | 2/2 | Complete | 2026-03-15 |
 | 6. Notifications | 2/2 | Complete | 2026-03-15 |
 | 7. Moderation & Safety | 2/2 | Complete | 2026-03-15 |
-| 7.1 Docker Split | 1/1 | Complete | 2026-03-15 |
-| 8. Direct Messaging | 2/3 | Gap closure | 2026-03-15 |
+| 7.1 Docker Split | 0/1 | In progress | - |
+| 8. Direct Messaging | 3/3 | Complete | 2026-03-16 |
 | 9. Stories | 0/1 | Not started | - |
 | 10. Reels | 0/1 | Not started | - |
