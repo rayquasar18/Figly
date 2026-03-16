@@ -94,7 +94,7 @@ export class ConversationsController {
 
     // Broadcast via WebSocket
     if (this.messagingGateway.server) {
-      this.messagingGateway.server.to(`conv:${id}`).emit('new_message', message);
+      this.messagingGateway.server.to(`conv:${id}`).emit('new_message', { message, conversationId: id });
     }
 
     return message;

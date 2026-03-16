@@ -105,7 +105,7 @@ export class MessagingGateway implements OnGatewayConnection, OnGatewayDisconnec
       );
 
       // Broadcast to conversation room
-      this.server.to(`conv:${data.conversationId}`).emit('new_message', message);
+      this.server.to(`conv:${data.conversationId}`).emit('new_message', { message, conversationId: data.conversationId });
 
       return message;
     } catch (error: any) {
