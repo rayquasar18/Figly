@@ -54,15 +54,15 @@ Exceptions:
 
 | Role | Size | Weight | Line Height | Tailwind Class |
 |------|------|--------|-------------|----------------|
+| Label | 12px | 400 (regular) | 1.3 | `text-xs` |
 | Body | 14px | 400 (regular) | 1.5 | `text-sm` |
-| Label | 10px | 400 (regular) | 1.3 | `text-[10px]` |
-| Heading | 18px | 700 (bold) | 1.2 | `text-lg font-bold` |
+| Heading | 18px | 600 (semibold) | 1.2 | `text-lg font-semibold` |
 | Display | 20px | 600 (semibold) | 1.2 | `text-xl font-semibold` |
 
 **Phase-specific usage:**
-- Story username below avatar: `text-[10px]` truncated to 64px max-width — matches existing badge/label pattern from messaging
+- Story username below avatar: `text-xs` truncated to 64px max-width — matches existing badge/label pattern from messaging
 - Story timestamp overlay: `text-xs text-white/80` (12px) — readable on dark overlay
-- "Your story" add label: `text-[10px] text-muted-foreground`
+- "Your story" add label: `text-xs text-muted-foreground`
 - Story viewer username: `text-sm font-semibold text-white` — readable on dark background
 - Story viewer timestamp: `text-xs text-white/70` — secondary info on dark background
 
