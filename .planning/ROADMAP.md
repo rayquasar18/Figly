@@ -192,7 +192,7 @@ Plans:
 Plans:
 - [x] 08-01-PLAN.md — Backend: Prisma schema (Conversation, Message, MessageMedia models), shared types/DTOs/constants, MessagingModule with Socket.IO WebSocket gateway, conversations REST API, block enforcement
 - [x] 08-02-PLAN.md — Frontend: Socket.IO connection hook, messaging store, conversation list page, chat view with real-time delivery, media sharing, read receipts, new conversation/group dialogs, header DM icon with unread badge
-- [ ] 08-03-PLAN.md — Gap closure: Fix WebSocket new_message payload shape mismatch between backend emit and frontend handler
+- [x] 08-03-PLAN.md — Gap closure: Fix WebSocket new_message payload shape mismatch between backend emit and frontend handler
 
 ### Phase 9: Stories
 **Goal**: Users can share ephemeral photo/video moments that disappear after 24 hours, creating a sense of immediacy and daily engagement
