@@ -95,6 +95,8 @@ model User {
   conversationsCreated       Conversation[]             @relation("conversationCreator")
   conversationParticipants   ConversationParticipant[]
   messagesSent               Message[]                  @relation("messageSender")
+  stories                    Story[]
+  storyViews                 StoryView[]
 
   @@map("users")
 }
@@ -154,6 +156,7 @@ model Media {
   userAvatar   User?       @relation("UserAvatar")
   postMedia    PostMedia[]
   messageMedia MessageMedia[]
+  storyMedia   StoryMedia[]
 
   @@index([userId])
   @@map("media")
@@ -583,4 +586,48 @@ model MessageMedia {
   @@unique([messageId, position])
   @@index([messageId])
   @@map("message_media")
+}
+
+// ─── Stories ──────────────────────────────────────────────────────────────────
+
+model Story {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  media  StoryMedia[]
+  views  StoryView[]
+
+  @@index([userId, expiresAt])
+  @@index([expiresAt])
+  @@map("stories")
+}
+
+model StoryMedia {
+  id       String @id @default(cuid())
+  storyId  String
+  story    Story  @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  mediaId  String
+  media    Media  @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+  position Int    @default(0)
+
+  @@unique([storyId, position])
+  @@index([storyId])
+  @@map("story_media")
+}
+
+model StoryView {
+  id       String   @id @default(cuid())
+  storyId  String
+  story    Story    @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  viewerId String
+  viewer   User     @relation(fields: [viewerId], references: [id], onDelete: Cascade)
+  viewedAt DateTime @default(now())
+
+  @@unique([storyId, viewerId])
+  @@index([storyId])
+  @@index([viewerId])
+  @@map("story_views")
 }
