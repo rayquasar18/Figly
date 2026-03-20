@@ -162,17 +162,17 @@ Plans:
 - [x] 07-01-PLAN.md — Backend: Prisma schema (Report, Block, Mute models, UserRole enum, ban fields), ModerationModule + AdminModule, block/mute filter integration into all existing services, ban check in all auth paths
 - [x] 07-02-PLAN.md — Frontend: Report dialog, block/mute in three-dot menus, admin moderation queue page, settings pages for blocked/muted user management
 
-### Phase 07.1: Docker Split: Tách figly-app thành 2 container riêng (figly-frontend + figly-backend) (INSERTED)
+### Phase 07.1: Docker Split: Tach figly-app thanh 2 container rieng (figly-frontend + figly-backend) (INSERTED)
 
-**Goal:** Tách single Docker container (figly-app) thành 2 container riêng: figly-frontend (Next.js standalone) và figly-backend (NestJS), cả hai vẫn trong cùng docker-compose.yml
+**Goal:** Tach single Docker container (figly-app) thanh 2 container rieng: figly-frontend (Next.js standalone) va figly-backend (NestJS), ca hai van trong cung docker-compose.yml
 **Requirements**: INFRA
 **Depends on:** Phase 7
 **Success Criteria** (what must be TRUE):
-  1. Frontend chạy trong container figly-frontend với Next.js standalone output trên port 3000
-  2. Backend chạy trong container figly-backend với NestJS trên port 4000, tự chạy Prisma migrate/seed khi startup
-  3. docker-compose.yml có 2 service frontend + backend thay vì 1 service app
-  4. Cả 2 container có thể giao tiếp với nhau và với postgres/redis/minio
-  5. docker compose build && docker compose up chạy thành công
+  1. Frontend chay trong container figly-frontend voi Next.js standalone output tren port 3000
+  2. Backend chay trong container figly-backend voi NestJS tren port 4000, tu chay Prisma migrate/seed khi startup
+  3. docker-compose.yml co 2 service frontend + backend thay vi 1 service app
+  4. Ca 2 container co the giao tiep voi nhau va voi postgres/redis/minio
+  5. docker compose build && docker compose up chay thanh cong
 **Plans:** 1/1 plans complete
 
 Plans:
@@ -201,10 +201,11 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. User can post a story (photo or short video) that is visible for 24 hours and then automatically removed
   2. User can view stories from users they follow in a horizontal scroll bar at the top of their feed, with visual indicators for unviewed stories
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 09-01: TBD
+- [ ] 09-01-PLAN.md — Backend: Prisma schema (Story, StoryMedia, StoryView models), shared types/DTOs/constants, StoriesModule with CRUD/feed/view endpoints, BullMQ cleanup job, video upload support in media pipeline
+- [ ] 09-02-PLAN.md — Frontend: StoryBar with avatars and gradient rings, full-screen StoryViewer with progress bars and tap navigation, CreateStoryFlow with image/video upload, story query hooks and Zustand store
 
 ### Phase 10: Reels
 **Goal**: Users can create and consume short-form video content in a dedicated vertical scroll experience
@@ -235,5 +236,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 5 -> 6 -> 7 -> 7.1 -
 | 7. Moderation & Safety | 2/2 | Complete | 2026-03-15 |
 | 7.1 Docker Split | 0/1 | In progress | - |
 | 8. Direct Messaging | 3/3 | Complete | 2026-03-16 |
-| 9. Stories | 0/1 | Not started | - |
+| 9. Stories | 0/2 | Not started | - |
 | 10. Reels | 0/1 | Not started | - |
