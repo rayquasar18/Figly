@@ -30,6 +30,18 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 
 ### Active
 
+**v2.0 — Architecture & Production Hardening:**
+- [ ] Tai cau truc thu muc frontend/backend theo chuan best practice
+- [ ] Cap nhat framework len phien ban moi nhat (React 19, Next.js 15, NestJS 11)
+- [ ] Don file thua, tai cau truc shared package
+- [ ] Env validation, global exception filter, structured logging
+- [ ] Next.js middleware, SSR/SEO cho trang cong khai
+- [ ] Swagger/OpenAPI, ESLint/Prettier/Husky, CI/CD
+- [ ] Docker split 2 container, Redis-backed rate limiter
+- [ ] Thong nhat DTO validation, response serialization, health check
+- [ ] ThemeProvider dark mode
+
+**Deferred features (v2.1+):**
 - [ ] Search for users, hashtags, and collection items (DISC-01, DISC-02, DISC-03)
 - [ ] Real-time in-app notifications + push notifications via PWA (NOTF-01, NOTF-02, NOTF-03)
 - [ ] Report/block/mute users + admin moderation queue (MODR-01, MODR-02, MODR-03, MODR-04)
@@ -45,6 +57,27 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 - Auction system — full auction logic is an entire product
 - Offline mode — real-time is core value
 
+## Current Milestone: v2.0 Architecture & Production Hardening
+
+**Goal:** Nang cap kien truc, cau truc thu muc, cap nhat framework len phien ban moi nhat, bo sung cac thanh phan production-ready, va don dep code thua — truoc khi xay tinh nang moi.
+
+**Target features:**
+- Tai cau truc thu muc frontend va backend theo chuan best practice
+- Cap nhat Next.js, React, NestJS len phien ban moi nhat (React 19, Next.js 15, NestJS 11)
+- Don file thua, sua shared package cho kien truc doc lap
+- Env validation, global exception filter, structured logging (Pino)
+- Next.js middleware cho auth redirect (xoa flash of content)
+- SSR/SEO cho cac trang cong khai voi generateMetadata()
+- Swagger/OpenAPI documentation
+- ESLint + Prettier + Husky/lint-staged
+- CI/CD pipeline (GitHub Actions)
+- Docker split thanh 2 container rieng biet
+- Thong nhat DTO validation (nestjs-zod thay class-validator trung lap)
+- Health check endpoint
+- Redis-backed rate limiter
+- Response serialization layer
+- ThemeProvider cho dark mode
+
 ## Current State
 
 **v1.0 MVP shipped 2026-03-20**
@@ -57,6 +90,22 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 **Known gaps from v1.0:**
 - Phases 5-9 (Search, Notifications, Moderation, DM, Stories) not yet built
 - Docker dual-container setup incomplete (Phase 7.1)
+
+**Architecture audit findings (v2.0 trigger):**
+- Tat ca trang frontend la 'use client' — khong SSR, khong SEO
+- Khong co env validation — JWT secret fallback ve gia tri mac dinh (lo hong bao mat)
+- Khong co global exception filter — lo Prisma error ra client
+- Khong co structured logging — chi NestJS Logger co ban
+- Khong co middleware.ts — auth redirect phia client gay nhap nhay
+- Khong co Swagger/OpenAPI
+- Khong co ESLint/Prettier/Husky config
+- Khong co CI/CD
+- Docker la 1 container ket hop (can tach 2)
+- DTO validation trung lap giua class-validator va Zod
+- Rate limiter dung bo nho trong tien trinh (khong Redis)
+- ThemeProvider thieu (dark mode la ma chet)
+- Thu muc frontend/backend chua theo chuan best practice
+- Shared package can tai cau truc cho doc lap hon
 
 ## Constraints
 
@@ -86,5 +135,7 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 | Reels before Stories | Reels infrastructure enables Stories implementation | ✓ Good |
 | ffmpeg self-hosted | Cost-effective for MVP, consider MediaConvert later | ⚠ Revisit at scale |
 
+| v2.0 Architecture milestone | Audit revealed 15+ production gaps; fix before adding features | — Pending |
+
 ---
-*Last updated: 2026-03-20 after v1.0 milestone*
+*Last updated: 2026-03-20 after v2.0 milestone start*
