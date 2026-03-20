@@ -32,8 +32,8 @@
 - [x] **CONT-07**: User can link post to item(s) from the collection database
 - [ ] **CONT-08**: User can post stories (24h ephemeral photo/video content)
 - [ ] **CONT-09**: User can view stories from followed users
-- [ ] **CONT-10**: User can upload and post short-form video (reels)
-- [ ] **CONT-11**: User can browse reels in dedicated vertical scroll feed
+- [x] **CONT-10**: User can upload and post short-form video (reels)
+- [x] **CONT-11**: User can browse reels in dedicated vertical scroll feed
 
 ### Interactions
 
@@ -142,8 +142,8 @@
 | CONT-07 | Phase 4 | Complete |
 | CONT-08 | Phase 9 | Pending |
 | CONT-09 | Phase 9 | Pending |
-| CONT-10 | Phase 10 | Pending |
-| CONT-11 | Phase 10 | Pending |
+| CONT-10 | Phase 10 | Complete |
+| CONT-11 | Phase 10 | Complete |
 | INTR-01 | Phase 3 | Complete |
 | INTR-02 | Phase 3 | Complete |
 | INTR-03 | Phase 3 | Complete |
