@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Figly là một mạng xã hội dành cho người sưu tập (collectors), lấy cảm hứng từ Instagram với đầy đủ tính năng tương tự (feed, stories, reels, DM, explore, notifications). Điểm khác biệt là tích hợp hệ thống checklist sưu tập — cho phép người dùng track bộ sưu tập từ database chung và tạo custom checklist riêng. Hỗ trợ nhiều loại sưu tập: Gundam, figurine, sneakers, trading cards, và nhiều hơn nữa.
+Figly là một mạng xã hội dành cho người sưu tập (collectors), lấy cảm hứng từ Instagram. Hiện tại đã ship v1.0 MVP với core social features (feed, posts, profiles, follow, likes/comments/bookmarks), collection system (shared database, owned/wishlist tracking, custom checklists), public viewing mode, và reels. Hỗ trợ nhiều loại sưu tập: Gundam, figurine, sneakers, trading cards.
 
 ## Core Value
 
@@ -12,59 +12,79 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 
 ### Validated
 
-<!-- Shipped and confirmed valuable. -->
-
-- [x] Full Instagram-like social features (feed, stories, reels, DM, explore, notifications) — Validated across Phases 1-10
-- [x] User authentication (email/password + social login) — Validated in Phase 1
-- [x] User profiles with collection showcase — Validated in Phase 2
-- [x] Follow/unfollow system — Validated in Phase 2
-- [x] Like, comment, share interactions — Validated in Phase 3
-- [x] Media upload (photos/videos) — Validated in Phase 4
-- [x] Search & explore functionality — Validated in Phase 5
-- [x] Real-time notifications & messaging — Validated in Phases 6, 8
-- [x] Short-form video reels with vertical scroll feed — Validated in Phase 10
+- ✓ User authentication (email/password + Google/Apple OAuth) — v1.0
+- ✓ User profiles with display name, avatar, bio, post grid — v1.0
+- ✓ Follow/unfollow system with follower/following lists — v1.0
+- ✓ Single/multi-image posts with captions, hashtags, @mentions — v1.0
+- ✓ Image crop/rotate before posting — v1.0
+- ✓ Like, comment (threaded), bookmark interactions — v1.0
+- ✓ Chronological feed from followed users — v1.0
+- ✓ Public viewing mode for non-authenticated users — v1.0
+- ✓ Collection database browsing by category — v1.0
+- ✓ Owned/wishlist tracking — v1.0
+- ✓ Custom checklists with progress tracking — v1.0
+- ✓ Post-to-item linking — v1.0
+- ✓ Collection showcase on profile — v1.0
+- ✓ Short-form video reels with vertical scroll feed — v1.0
+- ✓ Media upload (photos/videos) with async processing — v1.0
 
 ### Active
 
-<!-- Current scope. Building toward these. -->
-
-- [ ] Collection checklist system (shared database + custom lists)
-- [ ] Multi-category support (Gundam, figurine, sneakers, cards, etc.)
+- [ ] Search for users, hashtags, and collection items (DISC-01, DISC-02, DISC-03)
+- [ ] Real-time in-app notifications + push notifications via PWA (NOTF-01, NOTF-02, NOTF-03)
+- [ ] Report/block/mute users + admin moderation queue (MODR-01, MODR-02, MODR-03, MODR-04)
+- [ ] Direct messaging — 1-on-1 + group chats (MESG-01, MESG-02, MESG-03, MESG-04)
+- [ ] Stories — 24h ephemeral photo/video content (CONT-08, CONT-09)
 
 ### Out of Scope
 
-- Mobile native app — web-first approach, responsive design only
+- Mobile native app — web-first approach, PWA covers mobile needs
 - E-commerce/marketplace — không bán hàng, chỉ chia sẻ và track
-- AI-powered recommendations — defer to future version
+- AI-powered recommendations — insufficient data at launch
+- NFT / digital collectibles — market crashed, alienates users
+- Auction system — full auction logic is an entire product
+- Offline mode — real-time is core value
 
-## Context
+## Current State
 
-- Dự án production-ready, hướng tới người dùng thật
-- Target audience: collectors ở mọi lĩnh vực sưu tập
-- Collection database cần data ban đầu cho nhiều categories (Gundam series, figurine lines, sneaker models, trading card sets...)
-- Instagram-level UX là benchmark — UI/UX cần polish, không phải prototype
+**v1.0 MVP shipped 2026-03-20**
+- 23,289 LOC TypeScript + 782 LOC Prisma
+- 6 phases completed (1, 2, 3, 3.1, 4, 10), 21 plans executed
+- NestJS backend + Next.js frontend monorepo
+- PostgreSQL (Prisma), MinIO media storage, BullMQ async processing
+- ffmpeg video transcoding for reels
+
+**Known gaps from v1.0:**
+- Phases 5-9 (Search, Notifications, Moderation, DM, Stories) not yet built
+- Docker dual-container setup incomplete (Phase 7.1)
 
 ## Constraints
 
-- **Tech stack**: Next.js (frontend) + NestJS (backend) — đã quyết định
+- **Tech stack**: Next.js (frontend) + NestJS (backend) — validated
 - **Platform**: Web only, responsive design
-- **Monorepo**: 2 phần riêng biệt — frontend và backend
-- **Media storage**: Cần research (S3, Cloudinary, hoặc tương tự)
-- **Database**: Cần research (PostgreSQL hoặc MongoDB)
-- **Realtime**: Cần research (WebSocket hoặc polling)
+- **Monorepo**: frontend + backend + shared packages
+- **Media storage**: MinIO (S3-compatible) — decided
+- **Database**: PostgreSQL with Prisma ORM — decided
+- **Async processing**: BullMQ with Redis — decided
+- **Video transcoding**: ffmpeg via BullMQ workers — decided
 
 ## Key Decisions
 
-<!-- Decisions that constrain future work. Add throughout project lifecycle. -->
-
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Next.js frontend | User choice — SSR, routing, React ecosystem | — Pending |
-| NestJS backend | User choice — TypeScript, modular architecture, scalable | — Pending |
-| Web only | Focus resources, mobile later | — Pending |
-| Shared + custom checklists | Flexibility — users get curated data AND personal tracking | — Pending |
-| Multi-category from start | Broader appeal, not niche to one hobby | — Pending |
-| Email + Social login | Lower friction for signups, both auth paths | — Pending |
+| Next.js frontend | SSR, routing, React ecosystem | ✓ Good |
+| NestJS backend | TypeScript, modular architecture, scalable | ✓ Good |
+| Web only | Focus resources, mobile later | ✓ Good |
+| PostgreSQL + Prisma | Relational data, type-safe ORM | ✓ Good |
+| MinIO for media | S3-compatible, self-hosted, cost-effective | ✓ Good |
+| BullMQ + Redis | Async media processing, job queues | ✓ Good |
+| Source-only shared package | TypeScript source imported directly by workspace tooling | ✓ Good |
+| Fan-out-on-read feed | Simple query with Follow subquery, sufficient at current scale | ⚠ Revisit at scale |
+| Argon2 for passwords | Strongest password hashing | ✓ Good |
+| Vietnamese UI messages | User preference for Vietnamese error/validation messages | ✓ Good |
+| Collection system early (Phase 4) | Core differentiator validated early | ✓ Good |
+| Reels before Stories | Reels infrastructure enables Stories implementation | ✓ Good |
+| ffmpeg self-hosted | Cost-effective for MVP, consider MediaConvert later | ⚠ Revisit at scale |
 
 ---
-*Last updated: 2026-03-20 after Phase 10 (Reels) completion — all social features validated*
+*Last updated: 2026-03-20 after v1.0 milestone*
