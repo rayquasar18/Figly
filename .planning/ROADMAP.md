@@ -198,8 +198,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 10-01-PLAN.md — Backend: Prisma schema (PostType enum, ReelMeta model), shared types/constants/DTOs, ffmpeg video transcoding in media processor, create reel endpoint, reels feed endpoint, postType filter on all existing feeds
-- [ ] 10-02-PLAN.md — Frontend: Reel vertical scroll feed with scroll-snap and IntersectionObserver auto-play, reel components (card, actions, author, comments sheet), create reel flow, navigation restructure (Reels tab, Search in header), profile reels tab
+- [x] 10-01-PLAN.md — Backend: Prisma schema (PostType enum, ReelMeta model), shared types/constants/DTOs, ffmpeg video transcoding in media processor, create reel endpoint, reels feed endpoint, postType filter on all existing feeds
+- [x] 10-02-PLAN.md — Frontend: Reel vertical scroll feed with scroll-snap and IntersectionObserver auto-play, reel components (card, actions, author, comments sheet), create reel flow, navigation restructure (Reels tab, Search in header), profile reels tab
 
 ## Progress
 
@@ -219,4 +219,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 5 -> 6 -> 7 -> 8 -> 
 | 7.1 Docker Split | 0/1 | In progress | - |
 | 8. Direct Messaging | 3/3 | Complete | 2026-03-16 |
 | 9. Stories | 1/2 | In progress | - |
-| 10. Reels | 1/2 | In Progress|  |
+| 10. Reels | 2/2 | Complete | 2026-03-20 |
