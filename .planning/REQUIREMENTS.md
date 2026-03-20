@@ -30,8 +30,8 @@
 - [x] **CONT-05**: User can delete own posts
 - [x] **CONT-06**: User can include hashtags and @mentions in captions
 - [x] **CONT-07**: User can link post to item(s) from the collection database
-- [ ] **CONT-08**: User can post stories (24h ephemeral photo/video content)
-- [ ] **CONT-09**: User can view stories from followed users
+- [x] **CONT-08**: User can post stories (24h ephemeral photo/video content)
+- [x] **CONT-09**: User can view stories from followed users
 - [ ] **CONT-10**: User can upload and post short-form video (reels)
 - [ ] **CONT-11**: User can browse reels in dedicated vertical scroll feed
 
@@ -140,8 +140,8 @@
 | CONT-05 | Phase 3 | Complete |
 | CONT-06 | Phase 3 | Complete |
 | CONT-07 | Phase 4 | Complete |
-| CONT-08 | Phase 9 | Pending |
-| CONT-09 | Phase 9 | Pending |
+| CONT-08 | Phase 9 | Complete |
+| CONT-09 | Phase 9 | Complete |
 | CONT-10 | Phase 10 | Pending |
 | CONT-11 | Phase 10 | Pending |
 | INTR-01 | Phase 3 | Complete |

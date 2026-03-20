@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: completed
-stopped_at: Completed 07.1-01-PLAN.md
-last_updated: "2026-03-16T03:06:06.931Z"
-last_activity: 2026-03-16 -- Completed 07.1-01 Docker split cleanup and validation
+status: in-progress
+stopped_at: Completed 09-01 Stories Backend
+last_updated: "2026-03-20T09:51:00Z"
+last_activity: 2026-03-20 -- Completed 09-01 Stories Backend
 progress:
   total_phases: 12
   completed_phases: 10
   total_plans: 29
-  completed_plans: 29
-  percent: 100
+  completed_plans: 30
+  percent: 97
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-13)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 7.1: Docker Split (Complete -- cleanup and validation done)
+**Current focus:** Phase 9: Stories (Plan 01 complete, Plan 02 next)
 
 ## Current Position
 
-Phase: 7.1 (inserted)
-Plan: 1 of 1 in current phase
-Status: Phase 07.1 Complete
-Last activity: 2026-03-16 -- Completed 07.1-01 Docker split cleanup and validation
+Phase: 9
+Plan: 1 of 2 in current phase
+Status: Phase 09 Plan 01 Complete
+Last activity: 2026-03-20 -- Completed 09-01 Stories Backend
 
-Progress: [██████████] 100% (Phase 7.1: 1/1 plans)
+Progress: [█████████░] 97% (Phase 9: 1/2 plans)
 
 ## Performance Metrics
 
@@ -82,6 +82,7 @@ Progress: [██████████] 100% (Phase 7.1: 1/1 plans)
 | Phase 08 P02 | 8 | 3 tasks | 14 files |
 | Phase 08 P03 | 1 | 1 tasks | 2 files |
 | Phase 07.1 P01 | 6 | 2 tasks | 1 files |
+| Phase 09 P01 | 8 | 2 tasks | 14 files |
 
 ## Accumulated Context
 
@@ -196,6 +197,12 @@ Recent decisions affecting current work:
 - [Phase 08-03]: No frontend changes needed -- frontend already expects wrapped { message, conversationId } payload shape
 - [07.1-01]: Removed legacy single-container Dockerfile to prevent confusion with split setup
 - [07.1-01]: Backend entrypoint made executable locally for developer consistency
+- [09-01]: Video upload marks COMPLETED immediately (no Sharp processing); ffmpeg thumbnail generation deferred
+- [09-01]: Story cleanup via BullMQ repeatable job every 15 min (not cron)
+- [09-01]: Story feed grouped by user with unviewed-first sort, own stories separated as myStories
+- [09-01]: Self-views not tracked to avoid inflating view counts
+- [09-01]: Presigned URLs for story media use 24h expiry matching story TTL
+- [09-01]: class-validator DTO pattern (not nestjs-zod) following existing project convention
 
 ### Pending Todos
 
@@ -212,6 +219,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-16T02:56:47Z
-Stopped at: Completed 07.1-01-PLAN.md
-Resume file: None
+Last session: 2026-03-20T09:51:00Z
+Stopped at: Completed 09-01 Stories Backend
+Resume file: .planning/phases/09-stories/09-02-PLAN.md

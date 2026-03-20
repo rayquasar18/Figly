@@ -204,7 +204,7 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 09-01-PLAN.md — Backend: Prisma schema (Story, StoryMedia, StoryView models), shared types/DTOs/constants, StoriesModule with CRUD/feed/view endpoints, BullMQ cleanup job, video upload support in media pipeline
+- [x] 09-01-PLAN.md — Backend: Prisma schema (Story, StoryMedia, StoryView models), shared types/DTOs/constants, StoriesModule with CRUD/feed/view endpoints, BullMQ cleanup job, video upload support in media pipeline
 - [ ] 09-02-PLAN.md — Frontend: StoryBar with avatars and gradient rings, full-screen StoryViewer with progress bars and tap navigation, CreateStoryFlow with image/video upload, story query hooks and Zustand store
 
 ### Phase 10: Reels
@@ -236,5 +236,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 5 -> 6 -> 7 -> 7.1 -
 | 7. Moderation & Safety | 2/2 | Complete | 2026-03-15 |
 | 7.1 Docker Split | 0/1 | In progress | - |
 | 8. Direct Messaging | 3/3 | Complete | 2026-03-16 |
-| 9. Stories | 0/2 | Not started | - |
+| 9. Stories | 1/2 | In progress | - |
 | 10. Reels | 0/1 | Not started | - |
