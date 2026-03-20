@@ -2,9 +2,12 @@
 
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import Link from 'next/link';
+import { Search } from 'lucide-react';
 import { useMe } from '@/hooks/queries/auth-queries';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { CreatePostFlow } from '@/components/create-post/create-post-flow';
+import { CreateReelFlow } from '@/components/reel/create-reel-flow';
 
 export default function AppLayout({
   children,
@@ -61,11 +64,33 @@ export default function AppLayout({
     return null;
   }
 
+  // Hide header on full-screen pages like /reels
+  const hideHeader = pathname.startsWith('/reels');
+
   return (
     <>
+      {!hideHeader && (
+        <header className="sticky top-0 z-40 border-b bg-background">
+          <div className="mx-auto flex h-14 max-w-4xl items-center justify-between px-4">
+            <Link href="/" className="text-xl font-bold">
+              Figly
+            </Link>
+            <div className="flex items-center gap-2">
+              <Link
+                href="/search"
+                className="flex size-9 items-center justify-center rounded-full hover:bg-muted"
+                aria-label="Tim kiem"
+              >
+                <Search className="size-5 text-muted-foreground" />
+              </Link>
+            </div>
+          </div>
+        </header>
+      )}
       <main className="pb-14 md:pb-0">{children}</main>
       <BottomNav />
       <CreatePostFlow />
+      <CreateReelFlow />
     </>
   );
 }

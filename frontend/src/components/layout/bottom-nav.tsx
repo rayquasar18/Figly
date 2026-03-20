@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { Home, Search, Package, PlusSquare, User } from 'lucide-react';
+import { Home, Clapperboard, Package, PlusSquare, User } from 'lucide-react';
 import { useMe } from '@/hooks/queries/auth-queries';
 import { useCreatePostStore } from '@/stores/create-post-store';
 import { cn } from '@/lib/utils';
@@ -24,10 +24,10 @@ export function BottomNav() {
           isActive={pathname === '/'}
         />
         <NavLink
-          href="/search"
-          icon={Search}
-          label="Tim kiem"
-          isActive={pathname.startsWith('/search')}
+          href="/reels"
+          icon={Clapperboard}
+          label="Reels"
+          isActive={pathname.startsWith('/reels')}
         />
         <NavLink
           href="/collection"
