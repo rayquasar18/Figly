@@ -9,7 +9,7 @@ import { Queue } from 'bullmq';
 import { randomUUID } from 'crypto';
 import { PrismaService } from '../prisma/prisma.service';
 import { StorageService } from './storage.service';
-import { FILE_LIMITS } from '@figly/shared';
+import { FILE_LIMITS, STORY_LIMITS } from '@figly/shared';
 
 @Injectable()
 export class MediaService {
@@ -20,15 +20,19 @@ export class MediaService {
   ) {}
 
   async upload(file: Express.Multer.File, userId: string) {
-    // Validate mimetype is image
-    if (!file.mimetype.startsWith('image/')) {
-      throw new BadRequestException('Chi chap nhan file hinh anh');
+    // Validate mimetype is image or video
+    const isImage = file.mimetype.startsWith('image/');
+    const isVideo = file.mimetype.startsWith('video/');
+
+    if (!isImage && !isVideo) {
+      throw new BadRequestException('Chi chap nhan file hinh anh hoac video');
     }
 
-    // Validate size
-    if (file.size > FILE_LIMITS.image) {
+    // Validate size (video uses story limit, image uses standard limit)
+    const sizeLimit = isVideo ? STORY_LIMITS.maxVideoSize : FILE_LIMITS.image;
+    if (file.size > sizeLimit) {
       throw new PayloadTooLargeException(
-        `File khong duoc vuot qua ${FILE_LIMITS.image / (1024 * 1024)}MB`,
+        `File khong duoc vuot qua ${sizeLimit / (1024 * 1024)}MB`,
       );
     }
 
@@ -49,12 +53,21 @@ export class MediaService {
       },
     });
 
-    // Queue processing job
-    await this.mediaQueue.add('process-media', {
-      mediaId: media.id,
-      originalKey: key,
-      userId,
-    });
+    if (isVideo) {
+      // For video: mark as COMPLETED immediately (no Sharp processing needed)
+      // Video thumbnail generation can be added later with ffmpeg
+      await this.prisma.media.update({
+        where: { id: media.id },
+        data: { status: 'COMPLETED' },
+      });
+    } else {
+      // Queue image processing (existing Sharp pipeline)
+      await this.mediaQueue.add('process-media', {
+        mediaId: media.id,
+        originalKey: key,
+        userId,
+      });
+    }
 
     return media;
   }

@@ -19,6 +19,7 @@ import { NotificationsModule } from './notifications/notifications.module';
 import { ModerationModule } from './moderation/moderation.module';
 import { AdminModule } from './admin/admin.module';
 import { MessagingModule } from './messaging/messaging.module';
+import { StoriesModule } from './stories/stories.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -71,6 +72,7 @@ import configuration from './config/configuration';
     ModerationModule,
     AdminModule,
     MessagingModule,
+    StoriesModule,
   ],
   controllers: [],
   providers: [
