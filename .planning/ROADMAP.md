@@ -22,7 +22,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 7: Moderation & Safety** - Report, block, mute for users, and admin moderation queue
 - [ ] **Phase 8: Direct Messaging** - 1-on-1 DMs, media sharing, read receipts, and group chats
 - [ ] **Phase 9: Stories** - 24h ephemeral photo/video content with followed-user story feed
-- [ ] **Phase 10: Reels** - Short-form video upload and vertical scroll browsing feed
+- [x] **Phase 10: Reels** - Short-form video upload and vertical scroll browsing feed (completed 2026-03-20)
 
 ## Phase Details
 
@@ -219,4 +219,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 5 -> 6 -> 7 -> 8 -> 
 | 7.1 Docker Split | 0/1 | In progress | - |
 | 8. Direct Messaging | 3/3 | Complete | 2026-03-16 |
 | 9. Stories | 1/2 | In progress | - |
-| 10. Reels | 2/2 | Complete | 2026-03-20 |
+| 10. Reels | 2/2 | Complete    | 2026-03-20 |
