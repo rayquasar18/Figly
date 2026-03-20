@@ -7,6 +7,7 @@ import {
 import { PrismaService } from '../prisma/prisma.service';
 import { StorageService } from '../media/storage.service';
 import { CreatePostDto } from './dto/create-post.dto';
+import { CreateReelDto } from './dto/create-reel.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { POST_LIMITS } from '@figly/shared';
 
@@ -78,6 +79,71 @@ export class PostsService {
     return post;
   }
 
+  async createReel(userId: string, dto: CreateReelDto) {
+    // Validate mediaId belongs to user and is COMPLETED
+    const media = await this.prisma.media.findFirst({
+      where: { id: dto.mediaId, userId, status: 'COMPLETED' },
+    });
+
+    if (!media) {
+      throw new BadRequestException('Video khong hop le hoac dang xu ly');
+    }
+
+    // Extract hashtags from caption
+    const hashtags = this.extractHashtags(dto.caption || '');
+
+    const post = await this.prisma.$transaction(async (tx: any) => {
+      const post = await tx.post.create({
+        data: {
+          userId,
+          caption: dto.caption,
+          postType: 'REEL',
+          media: {
+            create: {
+              mediaId: dto.mediaId,
+              position: 0,
+            },
+          },
+          reelMeta: {
+            create: {
+              duration: dto.duration,
+              thumbnailKey: media.thumbnailKey,
+              width: dto.width,
+              height: dto.height,
+            },
+          },
+        },
+      });
+
+      // Upsert hashtags and create links
+      if (hashtags.length > 0) {
+        for (const tag of hashtags) {
+          const hashtag = await tx.hashtag.upsert({
+            where: { name: tag },
+            update: {},
+            create: { name: tag },
+          });
+          await tx.postHashtag.create({
+            data: { postId: post.id, hashtagId: hashtag.id },
+          });
+        }
+      }
+
+      // Create PostItem links for linked collection items
+      if (dto.linkedItemIds && dto.linkedItemIds.length > 0) {
+        for (const itemId of dto.linkedItemIds) {
+          await tx.postItem.create({
+            data: { postId: post.id, itemId },
+          });
+        }
+      }
+
+      return post;
+    });
+
+    return post;
+  }
+
   async getPost(postId: string, viewerId: string | null) {
     const post = await this.prisma.post.findUnique({
       where: { id: postId },
@@ -92,10 +158,19 @@ export class PostsService {
         },
         media: {
           include: {
-            media: { select: { id: true, largeKey: true } },
+            media: {
+              select: {
+                id: true,
+                originalKey: true,
+                largeKey: true,
+                thumbnailKey: true,
+                mimeType: true,
+              },
+            },
           },
           orderBy: { position: 'asc' as const },
         },
+        reelMeta: true,
         items: {
           include: {
             item: {
@@ -139,48 +214,10 @@ export class PostsService {
       bookmarkedSet = new Set(bookmarks.map((b: any) => b.postId));
     }
 
-    // Resolve presigned URLs for author avatar and all media
-    const storageKeys: string[] = [];
-    if (post.user.avatar?.mediumKey) {
-      storageKeys.push(post.user.avatar.mediumKey);
-    }
-    for (const pm of post.media) {
-      if (pm.media.largeKey) {
-        storageKeys.push(pm.media.largeKey);
-      }
-    }
+    // Resolve presigned URLs
+    const urlMap = await this.resolvePresignedUrls([post]);
 
-    const urlMap = new Map<string, string>();
-    const urls = await Promise.all(
-      storageKeys.map((key) => this.storageService.getPresignedUrl(key)),
-    );
-    storageKeys.forEach((key, i) => urlMap.set(key, urls[i]));
-
-    return {
-      id: post.id,
-      author: {
-        id: post.user.id,
-        username: post.user.username,
-        displayName: post.user.name,
-        avatarUrl: post.user.avatar?.mediumKey
-          ? urlMap.get(post.user.avatar.mediumKey) || null
-          : null,
-      },
-      caption: post.caption,
-      media: post.media.map((pm: any) => ({
-        id: pm.id,
-        mediaId: pm.mediaId,
-        position: pm.position,
-        url: pm.media.largeKey ? urlMap.get(pm.media.largeKey) || '' : '',
-      })),
-      linkedItems: this.mapLinkedItems((post as any).items),
-      likeCount: post._count.likes,
-      commentCount: post._count.comments,
-      isLiked: likedSet.has(post.id),
-      isBookmarked: bookmarkedSet.has(post.id),
-      createdAt: post.createdAt.toISOString(),
-      updatedAt: post.updatedAt.toISOString(),
-    };
+    return this.mapPostResponse(post, likedSet, bookmarkedSet, urlMap);
   }
 
   async updateCaption(postId: string, userId: string, dto: UpdatePostDto) {
@@ -299,7 +336,10 @@ export class PostsService {
 
   async getSavedPosts(userId: string, cursor?: string, take = POST_LIMITS.feedPageSize) {
     const bookmarks = await this.prisma.bookmark.findMany({
-      where: { userId },
+      where: {
+        userId,
+        post: { postType: 'POST' },
+      },
       include: {
         post: {
           include: {
@@ -313,10 +353,19 @@ export class PostsService {
             },
             media: {
               include: {
-                media: { select: { id: true, largeKey: true } },
+                media: {
+                  select: {
+                    id: true,
+                    originalKey: true,
+                    largeKey: true,
+                    thumbnailKey: true,
+                    mimeType: true,
+                  },
+                },
               },
               orderBy: { position: 'asc' as const },
             },
+            reelMeta: true,
             items: {
               include: {
                 item: {
@@ -379,7 +428,7 @@ export class PostsService {
     }
 
     const posts = await this.prisma.post.findMany({
-      where: { userId: user.id },
+      where: { userId: user.id, postType: 'POST' },
       include: {
         user: {
           select: {
@@ -391,10 +440,19 @@ export class PostsService {
         },
         media: {
           include: {
-            media: { select: { id: true, largeKey: true } },
+            media: {
+              select: {
+                id: true,
+                originalKey: true,
+                largeKey: true,
+                thumbnailKey: true,
+                mimeType: true,
+              },
+            },
           },
           orderBy: { position: 'asc' as const },
         },
+        reelMeta: true,
         items: {
           include: {
             item: {
@@ -455,6 +513,97 @@ export class PostsService {
     };
   }
 
+  async getUserReels(username: string, viewerId: string | null, cursor?: string, take = 5) {
+    const user = await this.prisma.user.findUnique({
+      where: { username },
+      select: { id: true },
+    });
+
+    if (!user) {
+      throw new NotFoundException('Nguoi dung khong ton tai');
+    }
+
+    const posts = await this.prisma.post.findMany({
+      where: { userId: user.id, postType: 'REEL' },
+      include: {
+        user: {
+          select: {
+            id: true,
+            username: true,
+            name: true,
+            avatar: { select: { mediumKey: true } },
+          },
+        },
+        media: {
+          include: {
+            media: {
+              select: {
+                id: true,
+                originalKey: true,
+                largeKey: true,
+                thumbnailKey: true,
+                mimeType: true,
+              },
+            },
+          },
+          orderBy: { position: 'asc' as const },
+        },
+        reelMeta: true,
+        items: {
+          include: {
+            item: {
+              select: {
+                id: true,
+                name: true,
+                imageKey: true,
+                series: {
+                  select: {
+                    name: true,
+                    category: { select: { name: true } },
+                  },
+                },
+              },
+            },
+          },
+        },
+        _count: { select: { likes: true, comments: true } },
+      },
+      orderBy: { createdAt: 'desc' as const },
+      take: take + 1,
+      ...(cursor && { cursor: { id: cursor }, skip: 1 }),
+    });
+
+    const hasMore = posts.length > take;
+    const items = posts.slice(0, take);
+    const nextCursor = hasMore ? items[items.length - 1].id : null;
+
+    let likedSet = new Set<string>();
+    let bookmarkedSet = new Set<string>();
+    if (viewerId) {
+      const postIds = items.map((p: any) => p.id);
+      const [likes, bookmarks] = await Promise.all([
+        this.prisma.like.findMany({
+          where: { userId: viewerId, postId: { in: postIds } },
+          select: { postId: true },
+        }),
+        this.prisma.bookmark.findMany({
+          where: { userId: viewerId, postId: { in: postIds } },
+          select: { postId: true },
+        }),
+      ]);
+      likedSet = new Set(likes.map((l: any) => l.postId));
+      bookmarkedSet = new Set(bookmarks.map((b: any) => b.postId));
+    }
+
+    const urlMap = await this.resolvePresignedUrls(items);
+
+    return {
+      items: items.map((post: any) => this.mapPostResponse(post, likedSet, bookmarkedSet, urlMap)),
+      nextCursor,
+      hasMore,
+    };
+  }
+
   async searchHashtags(query: string, limit = 10) {
     return this.prisma.hashtag.findMany({
       where: { name: { startsWith: query.toLowerCase(), mode: 'insensitive' } },
@@ -479,6 +628,15 @@ export class PostsService {
         if (pm.media?.largeKey) {
           storageKeys.push(pm.media.largeKey);
         }
+        if (pm.media?.originalKey) {
+          storageKeys.push(pm.media.originalKey);
+        }
+        if (pm.media?.thumbnailKey) {
+          storageKeys.push(pm.media.thumbnailKey);
+        }
+      }
+      if (post.reelMeta?.thumbnailKey) {
+        storageKeys.push(post.reelMeta.thumbnailKey);
       }
     }
 
@@ -517,7 +675,11 @@ export class PostsService {
         id: pm.id,
         mediaId: pm.mediaId,
         position: pm.position,
-        url: pm.media?.largeKey ? urlMap.get(pm.media.largeKey) || '' : '',
+        url: pm.media?.largeKey
+          ? urlMap.get(pm.media.largeKey) || ''
+          : pm.media?.originalKey
+            ? urlMap.get(pm.media.originalKey) || ''
+            : '',
       })),
       linkedItems: this.mapLinkedItems(post.items),
       likeCount: post._count.likes,
@@ -526,6 +688,17 @@ export class PostsService {
       isBookmarked: bookmarkedSet.has(post.id),
       createdAt: post.createdAt.toISOString(),
       updatedAt: post.updatedAt.toISOString(),
+      postType: post.postType || 'POST',
+      reelMeta: post.reelMeta
+        ? {
+            duration: post.reelMeta.duration,
+            thumbnailUrl: post.reelMeta.thumbnailKey
+              ? urlMap.get(post.reelMeta.thumbnailKey) || null
+              : null,
+            width: post.reelMeta.width,
+            height: post.reelMeta.height,
+          }
+        : null,
     };
   }
 

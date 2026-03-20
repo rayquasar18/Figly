@@ -9,7 +9,7 @@ import { Queue } from 'bullmq';
 import { randomUUID } from 'crypto';
 import { PrismaService } from '../prisma/prisma.service';
 import { StorageService } from './storage.service';
-import { FILE_LIMITS } from '@figly/shared';
+import { FILE_LIMITS, REEL_LIMITS } from '@figly/shared';
 
 @Injectable()
 export class MediaService {
@@ -19,16 +19,25 @@ export class MediaService {
     @Inject('BullQueue_media-processing') private mediaQueue: Queue,
   ) {}
 
-  async upload(file: Express.Multer.File, userId: string) {
-    // Validate mimetype is image
-    if (!file.mimetype.startsWith('image/')) {
-      throw new BadRequestException('Chi chap nhan file hinh anh');
+  async upload(file: Express.Multer.File, userId: string, purpose: 'post' | 'story' | 'reel' = 'post') {
+    const isVideo = file.mimetype.startsWith('video/');
+
+    // Validate mimetype: images always allowed, video only for reel/story
+    if (!isVideo && !file.mimetype.startsWith('image/')) {
+      throw new BadRequestException('Chi chap nhan file hinh anh hoac video');
     }
 
-    // Validate size
-    if (file.size > FILE_LIMITS.image) {
+    if (isVideo && purpose === 'post') {
+      throw new BadRequestException('Bai viet chi chap nhan hinh anh');
+    }
+
+    // Validate size based on purpose
+    const videoSizeLimit = purpose === 'reel' ? REEL_LIMITS.maxVideoSize : FILE_LIMITS.image;
+    const sizeLimit = isVideo ? videoSizeLimit : FILE_LIMITS.image;
+
+    if (file.size > sizeLimit) {
       throw new PayloadTooLargeException(
-        `File khong duoc vuot qua ${FILE_LIMITS.image / (1024 * 1024)}MB`,
+        `File khong duoc vuot qua ${Math.round(sizeLimit / (1024 * 1024))}MB`,
       );
     }
 
@@ -49,12 +58,23 @@ export class MediaService {
       },
     });
 
-    // Queue processing job
-    await this.mediaQueue.add('process-media', {
-      mediaId: media.id,
-      originalKey: key,
-      userId,
-    });
+    if (isVideo) {
+      // Queue video transcoding (ffmpeg pipeline)
+      await this.mediaQueue.add('process-media', {
+        mediaId: media.id,
+        originalKey: key,
+        userId,
+        type: 'video',
+      });
+    } else {
+      // Queue image processing (existing Sharp pipeline)
+      await this.mediaQueue.add('process-media', {
+        mediaId: media.id,
+        originalKey: key,
+        userId,
+        type: 'image',
+      });
+    }
 
     return media;
   }
