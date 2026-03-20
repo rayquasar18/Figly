@@ -195,10 +195,11 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. User can upload a short-form video that is transcoded and playable as a reel
   2. User can browse reels in a dedicated full-screen vertical scroll feed with auto-play behavior
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 10-01: TBD
+- [ ] 10-01-PLAN.md — Backend: Prisma schema (PostType enum, ReelMeta model), shared types/constants/DTOs, ffmpeg video transcoding in media processor, create reel endpoint, reels feed endpoint, postType filter on all existing feeds
+- [ ] 10-02-PLAN.md — Frontend: Reel vertical scroll feed with scroll-snap and IntersectionObserver auto-play, reel components (card, actions, author, comments sheet), create reel flow, navigation restructure (Reels tab, Search in header), profile reels tab
 
 ## Progress
 
@@ -207,14 +208,15 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 3.1 -> 4 -> 5 -> 6 -> 7 -> 8 -> 
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Auth | 0/3 | Planning complete | - |
-| 2. Profiles & Social Graph | 0/4 | Planning complete | - |
-| 3. Content & Feed | 2/4 | Complete    | 2026-03-14 |
-| 3.1 Public Viewing Mode | 0/2 | Planning complete | - |
-| 4. Collection System | 6/6 | Complete   | 2026-03-15 |
-| 5. Search & Discovery | 0/2 | Not started | - |
-| 6. Notifications | 0/2 | Not started | - |
-| 7. Moderation & Safety | 0/2 | Not started | - |
-| 8. Direct Messaging | 0/2 | Not started | - |
-| 9. Stories | 0/1 | Not started | - |
-| 10. Reels | 0/1 | Not started | - |
+| 1. Foundation & Auth | 3/3 | Complete | 2026-03-13 |
+| 2. Profiles & Social Graph | 4/4 | Complete | 2026-03-13 |
+| 3. Content & Feed | 4/4 | Complete | 2026-03-14 |
+| 3.1 Public Viewing Mode | 2/2 | Complete | 2026-03-14 |
+| 4. Collection System | 6/6 | Complete | 2026-03-15 |
+| 5. Search & Discovery | 2/2 | Complete | 2026-03-15 |
+| 6. Notifications | 2/2 | Complete | 2026-03-15 |
+| 7. Moderation & Safety | 2/2 | Complete | 2026-03-15 |
+| 7.1 Docker Split | 0/1 | In progress | - |
+| 8. Direct Messaging | 3/3 | Complete | 2026-03-16 |
+| 9. Stories | 1/2 | In progress | - |
+| 10. Reels | 0/2 | Not started | - |
