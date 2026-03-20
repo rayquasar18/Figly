@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in-progress
-stopped_at: Completed 09-01 Stories Backend
-last_updated: "2026-03-20T09:51:00Z"
-last_activity: 2026-03-20 -- Completed 09-01 Stories Backend
+stopped_at: Completed 09-02 Stories Frontend
+last_updated: "2026-03-20T09:55:00Z"
+last_activity: 2026-03-20 -- Completed 09-02 Stories Frontend
 progress:
   total_phases: 12
   completed_phases: 10
   total_plans: 29
-  completed_plans: 30
+  completed_plans: 31
   percent: 97
 ---
 
@@ -21,21 +21,21 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-13)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 9: Stories (Plan 01 complete, Plan 02 next)
+**Current focus:** Phase 9: Stories (Complete)
 
 ## Current Position
 
 Phase: 9
-Plan: 1 of 2 in current phase
-Status: Phase 09 Plan 01 Complete
-Last activity: 2026-03-20 -- Completed 09-01 Stories Backend
+Plan: 2 of 2 in current phase
+Status: Phase 09 Complete
+Last activity: 2026-03-20 -- Completed 09-02 Stories Frontend
 
-Progress: [█████████░] 97% (Phase 9: 1/2 plans)
+Progress: [██████████] 100% (Phase 9: 2/2 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 22
+- Total plans completed: 23
 - Average duration: 9 min
 - Total execution time: 3.3 hours
 
@@ -56,8 +56,8 @@ Progress: [█████████░] 97% (Phase 9: 1/2 plans)
 | 07.1-docker-split | 1 | 6 min | 6 min |
 
 **Recent Trend:**
-- Last 5 plans: 21, 31, 8, 8, 6 min
-- Trend: stable (07.1-01 Docker validation lightweight task)
+- Last 5 plans: 31, 8, 8, 6, 4 min
+- Trend: improving
 
 *Updated after each plan completion*
 | Phase 03 P01 | 3 | 2 tasks | 8 files |
@@ -83,6 +83,7 @@ Progress: [█████████░] 97% (Phase 9: 1/2 plans)
 | Phase 08 P03 | 1 | 1 tasks | 2 files |
 | Phase 07.1 P01 | 6 | 2 tasks | 1 files |
 | Phase 09 P01 | 8 | 2 tasks | 14 files |
+| Phase 09 P02 | 4 | 2 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -203,6 +204,10 @@ Recent decisions affecting current work:
 - [09-01]: Self-views not tracked to avoid inflating view counts
 - [09-01]: Presigned URLs for story media use 24h expiry matching story TTL
 - [09-01]: class-validator DTO pattern (not nestjs-zod) following existing project convention
+- [09-02]: apiClient from @/lib/api-client used instead of plan's api from @/lib/api to match project convention
+- [09-02]: Progress bar auto-advance via CSS animation onAnimationEnd for images, onEnded for video
+- [09-02]: Touch zone split: left 40% previous, right 60% next for story viewer navigation
+- [09-02]: Delete confirmation uses shadcn AlertDialog with Vietnamese copy
 
 ### Pending Todos
 
@@ -219,6 +224,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-20T09:51:00Z
-Stopped at: Completed 09-01 Stories Backend
-Resume file: .planning/phases/09-stories/09-02-PLAN.md
+Last session: 2026-03-20T09:55:00Z
+Stopped at: Completed 09-02 Stories Frontend
+Resume file: Next phase
