@@ -13,6 +13,11 @@ enum MediaStatus {
   FAILED
 }
 
+enum PostType {
+  POST
+  REEL
+}
+
 model User {
   id                String    @id @default(cuid())
   email             String    @unique
@@ -129,8 +134,10 @@ model Post {
   caption   String?  @db.VarChar(2200)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  postType  PostType @default(POST)
 
   media     PostMedia[]
+  reelMeta  ReelMeta?
   likes     Like[]
   comments  Comment[]
   bookmarks Bookmark[]
@@ -140,6 +147,18 @@ model Post {
   @@index([userId])
   @@index([createdAt])
   @@map("posts")
+}
+
+model ReelMeta {
+  id           String  @id @default(cuid())
+  postId       String  @unique
+  post         Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  duration     Float
+  thumbnailKey String?
+  width        Int
+  height       Int
+
+  @@map("reel_meta")
 }
 
 model PostMedia {

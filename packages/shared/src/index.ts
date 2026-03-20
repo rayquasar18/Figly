@@ -28,7 +28,7 @@ export type { CreateCommentDto } from './dto/comment.dto';
 export type { TokenPair, JwtPayload, AuthResponse } from './types/auth.types';
 export type { PublicUser } from './types/user.types';
 export type { ProfileResponse, UserListItem, PaginatedResponse } from './types/profile.types';
-export type { PostResponse, PostMediaItem, PostAuthor, FeedPostResponse } from './types/post.types';
+export type { PostResponse, PostMediaItem, PostAuthor, FeedPostResponse, ReelMetaResponse } from './types/post.types';
 export type { CommentResponse, CommentAuthor } from './types/comment.types';
 export type { ToggleResponse } from './types/interaction.types';
 
@@ -38,6 +38,7 @@ export { USERNAME_RULES, RESERVED_USERNAMES, usernameSchema, bioSchema } from '.
 
 // Constants
 export { TOKEN_EXPIRY, FILE_LIMITS, THUMBNAIL_SIZES, PROFILE_LIMITS, POST_LIMITS, COLLECTION_LIMITS } from './constants/index';
+export { REEL_LIMITS } from './constants/reel.constants';
 
 // Collection DTOs
 export { searchItemsSchema } from './dto/collection.dto';
@@ -72,3 +73,7 @@ export type {
   ChecklistEntryResponse,
   ChecklistDetailResponse,
 } from './types/checklist.types';
+
+// Reel DTOs
+export { createReelSchema } from './dto/reel.dto';
+export type { CreateReelInput } from './dto/reel.dto';
