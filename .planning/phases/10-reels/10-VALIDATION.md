@@ -17,9 +17,9 @@ created: 2026-03-20
 
 | Property | Value |
 |----------|-------|
-| **Framework** | jest 29.x (backend), vitest (frontend — if configured) |
+| **Framework** | jest 29.x (backend) |
 | **Config file** | `backend/jest.config.ts` |
-| **Quick run command** | `cd backend && npx jest --testPathPattern="reels\|media" --no-coverage` |
+| **Quick run command** | `cd backend && npx jest --testPathPattern="posts\|feed\|media" --no-coverage` |
 | **Full suite command** | `cd backend && npx jest --no-coverage` |
 | **Estimated runtime** | ~15 seconds |
 
@@ -27,7 +27,7 @@ created: 2026-03-20
 
 ## Sampling Rate
 
-- **After every task commit:** Run `cd backend && npx jest --testPathPattern="reels\|media" --no-coverage`
+- **After every task commit:** Run `cd backend && npx jest --testPathPattern="posts\|feed\|media" --no-coverage`
 - **After every plan wave:** Run `cd backend && npx jest --no-coverage`
 - **Before `/gsd:verify-work`:** Full suite must be green
 - **Max feedback latency:** 15 seconds
@@ -38,8 +38,8 @@ created: 2026-03-20
 
 | Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
-| 10-01-01 | 01 | 1 | CONT-10 | unit | `npx jest --testPathPattern="reels.service"` | ❌ W0 | ⬜ pending |
-| 10-01-02 | 01 | 1 | CONT-10 | unit | `npx jest --testPathPattern="reels.controller"` | ❌ W0 | ⬜ pending |
+| 10-01-01 | 01 | 1 | CONT-10 | unit | `npx jest --testPathPattern="posts.service"` | ❌ W0 | ⬜ pending |
+| 10-01-02 | 01 | 1 | CONT-10, CONT-11 | unit | `npx jest --testPathPattern="feed.service"` | ❌ W0 | ⬜ pending |
 | 10-01-03 | 01 | 1 | CONT-10 | unit | `npx jest --testPathPattern="media.processor"` | ✅ | ⬜ pending |
 | 10-02-01 | 02 | 2 | CONT-11 | manual | Browser scroll behavior | N/A | ⬜ pending |
 | 10-02-02 | 02 | 2 | CONT-11 | manual | Browser video autoplay | N/A | ⬜ pending |
@@ -50,8 +50,8 @@ created: 2026-03-20
 
 ## Wave 0 Requirements
 
-- [ ] `backend/src/reels/__tests__/reels.service.spec.ts` — stubs for CONT-10
-- [ ] `backend/src/reels/__tests__/reels.controller.spec.ts` — stubs for CONT-10
+- [ ] `backend/src/posts/__tests__/posts.service.spec.ts` — stubs for createReel (CONT-10)
+- [ ] `backend/src/feed/__tests__/feed.service.spec.ts` — stubs for getReelsFeed + postType filters (CONT-10, CONT-11)
 
 *Existing media processor tests cover transcoding pipeline.*
 
