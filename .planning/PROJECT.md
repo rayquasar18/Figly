@@ -14,22 +14,22 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 
 <!-- Shipped and confirmed valuable. -->
 
-(None yet — ship to validate)
+- [x] Full Instagram-like social features (feed, stories, reels, DM, explore, notifications) — Validated across Phases 1-10
+- [x] User authentication (email/password + social login) — Validated in Phase 1
+- [x] User profiles with collection showcase — Validated in Phase 2
+- [x] Follow/unfollow system — Validated in Phase 2
+- [x] Like, comment, share interactions — Validated in Phase 3
+- [x] Media upload (photos/videos) — Validated in Phase 4
+- [x] Search & explore functionality — Validated in Phase 5
+- [x] Real-time notifications & messaging — Validated in Phases 6, 8
+- [x] Short-form video reels with vertical scroll feed — Validated in Phase 10
 
 ### Active
 
 <!-- Current scope. Building toward these. -->
 
-- [ ] Full Instagram-like social features (feed, stories, reels, DM, explore, notifications)
 - [ ] Collection checklist system (shared database + custom lists)
 - [ ] Multi-category support (Gundam, figurine, sneakers, cards, etc.)
-- [ ] User authentication (email/password + social login)
-- [ ] User profiles with collection showcase
-- [ ] Follow/unfollow system
-- [ ] Like, comment, share interactions
-- [ ] Media upload (photos/videos)
-- [ ] Search & explore functionality
-- [ ] Real-time notifications & messaging
 
 ### Out of Scope
 
@@ -67,4 +67,4 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 | Email + Social login | Lower friction for signups, both auth paths | — Pending |
 
 ---
-*Last updated: 2026-03-13 after initialization*
+*Last updated: 2026-03-20 after Phase 10 (Reels) completion — all social features validated*
