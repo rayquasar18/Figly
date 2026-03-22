@@ -43,7 +43,11 @@
   2. After signup, user is directed to a complete-profile page where they set a username, and upon completion they land on the homepage without redirect loops
   3. Explore page loads and displays content (posts/reels) without errors
   4. Desktop viewport shows an Instagram-style left sidebar with navigation links (Home, Search, Explore, Reels, Create, Profile)
-**Plans**: TBD
+**Plans:** 3 plans
+Plans:
+- [ ] 11-01-PLAN.md — Simplify signup to email+password only (Prisma migration, shared/backend/frontend DTOs, email template)
+- [ ] 11-02-PLAN.md — Fix complete-profile redirect loop and explore page null-username issue
+- [ ] 11-03-PLAN.md — Add Instagram-style desktop sidebar navigation
 
 ### Phase 12: Framework Upgrades
 **Goal**: All frameworks are on latest major versions with zero runtime regressions
@@ -111,7 +115,7 @@
 | 3.1 Public Viewing Mode | v1.0 | 2/2 | Complete | 2026-03-14 |
 | 4. Collection System | v1.0 | 6/6 | Complete | 2026-03-15 |
 | 10. Reels | v1.0 | 2/2 | Complete | 2026-03-20 |
-| 11. Bugfixes & UX Flow | v2.0 | 0/? | Not started | - |
+| 11. Bugfixes & UX Flow | v2.0 | 0/3 | Planning | - |
 | 12. Framework Upgrades | v2.0 | 0/? | Not started | - |
 | 13. Backend Hardening | v2.0 | 0/? | Not started | - |
 | 14. Frontend Restructure | v2.0 | 0/? | Not started | - |
