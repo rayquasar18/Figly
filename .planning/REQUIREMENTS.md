@@ -103,38 +103,38 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| BUGF-01 | — | Pending |
-| BUGF-02 | — | Pending |
-| BUGF-03 | — | Pending |
-| BUGF-04 | — | Pending |
-| BUGF-05 | — | Pending |
-| FRMW-01 | — | Pending |
-| FRMW-02 | — | Pending |
-| FRMW-03 | — | Pending |
-| BACK-01 | — | Pending |
-| BACK-02 | — | Pending |
-| BACK-03 | — | Pending |
-| BACK-04 | — | Pending |
-| BACK-05 | — | Pending |
-| BACK-06 | — | Pending |
-| BACK-07 | — | Pending |
-| BACK-08 | — | Pending |
-| FRNT-01 | — | Pending |
-| FRNT-02 | — | Pending |
-| FRNT-03 | — | Pending |
-| FRNT-04 | — | Pending |
-| DEVP-01 | — | Pending |
-| DEVP-02 | — | Pending |
-| DEVP-03 | — | Pending |
-| DEVP-04 | — | Pending |
-| SHRD-01 | — | Pending |
-| SHRD-02 | — | Pending |
+| BUGF-01 | Phase 11 | Pending |
+| BUGF-02 | Phase 11 | Pending |
+| BUGF-03 | Phase 11 | Pending |
+| BUGF-04 | Phase 11 | Pending |
+| BUGF-05 | Phase 11 | Pending |
+| FRMW-01 | Phase 12 | Pending |
+| FRMW-02 | Phase 12 | Pending |
+| FRMW-03 | Phase 12 | Pending |
+| BACK-01 | Phase 13 | Pending |
+| BACK-02 | Phase 13 | Pending |
+| BACK-03 | Phase 13 | Pending |
+| BACK-04 | Phase 13 | Pending |
+| BACK-05 | Phase 13 | Pending |
+| BACK-06 | Phase 13 | Pending |
+| BACK-07 | Phase 13 | Pending |
+| BACK-08 | Phase 13 | Pending |
+| FRNT-01 | Phase 14 | Pending |
+| FRNT-02 | Phase 14 | Pending |
+| FRNT-03 | Phase 14 | Pending |
+| FRNT-04 | Phase 14 | Pending |
+| DEVP-01 | Phase 15 | Pending |
+| DEVP-02 | Phase 15 | Pending |
+| DEVP-03 | Phase 15 | Pending |
+| DEVP-04 | Phase 15 | Pending |
+| SHRD-01 | Phase 16 | Pending |
+| SHRD-02 | Phase 16 | Pending |
 
 **Coverage:**
 - v2.0 requirements: 26 total
-- Mapped to phases: 0
-- Unmapped: 26 (pending roadmap creation)
+- Mapped to phases: 26
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-22*
-*Last updated: 2026-03-22 after initial definition*
+*Last updated: 2026-03-22 after roadmap creation*
