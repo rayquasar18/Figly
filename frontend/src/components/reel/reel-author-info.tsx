@@ -21,7 +21,7 @@ export function ReelAuthorInfo({ reel }: ReelAuthorInfoProps) {
   const handleFollow = () => {
     if (!currentUser) return;
     followMutation.mutate(
-      { userId: reel.author.id, username: reel.author.username },
+      { userId: reel.author.id, username: reel.author.username ?? '' },
       { onSuccess: () => setIsFollowed(true) },
     );
   };
@@ -30,10 +30,10 @@ export function ReelAuthorInfo({ reel }: ReelAuthorInfoProps) {
     <div className="absolute bottom-16 left-3 max-w-[70%]">
       {/* Author row */}
       <div className="flex items-center gap-2">
-        <Link href={`/${reel.author.username}`}>
+        <Link href={`/${reel.author.username ?? ''}`}>
           <Avatar className="size-8">
             {reel.author.avatarUrl && (
-              <AvatarImage src={reel.author.avatarUrl} alt={reel.author.username} />
+              <AvatarImage src={reel.author.avatarUrl} alt={reel.author.username ?? ''} />
             )}
             <AvatarFallback className="text-xs">
               {reel.author.displayName?.charAt(0)?.toUpperCase() || '?'}
@@ -41,17 +41,17 @@ export function ReelAuthorInfo({ reel }: ReelAuthorInfoProps) {
           </Avatar>
         </Link>
         <Link
-          href={`/${reel.author.username}`}
+          href={`/${reel.author.username ?? ''}`}
           className="text-sm font-semibold text-white"
         >
-          {reel.author.username}
+          {reel.author.username ?? ''}
         </Link>
         {!isOwnProfile && !isFollowed && (
           <button
             onClick={handleFollow}
             disabled={followMutation.isPending}
             className="rounded-md border border-white px-3 py-1 text-xs font-semibold text-white"
-            aria-label={`Theo doi ${reel.author.username}`}
+            aria-label={`Theo doi ${reel.author.username ?? ''}`}
           >
             Theo doi
           </button>

@@ -66,15 +66,15 @@ describe('AuthService', () => {
   });
 
   describe('signup', () => {
-    const signupDto = { email: 'test@test.com', password: 'Test1234', name: 'Test User', username: 'testuser' };
+    const signupDto = { email: 'test@test.com', password: 'Test1234' };
 
-    it('should create user with hashed password and emailVerified=false', async () => {
+    it('should create user with hashed password, null name/username, and emailVerified=false', async () => {
       mockPrisma.user.findUnique.mockResolvedValue(null);
       mockPrisma.user.create.mockResolvedValue({
         id: 'user-1',
         email: signupDto.email,
-        name: signupDto.name,
-        username: signupDto.username,
+        name: null,
+        username: null,
         emailVerified: false,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -89,7 +89,8 @@ describe('AuthService', () => {
         expect.objectContaining({
           data: expect.objectContaining({
             email: signupDto.email,
-            name: signupDto.name,
+            name: null,
+            username: null,
             emailVerified: false,
           }),
         }),
@@ -99,6 +100,25 @@ describe('AuthService', () => {
       const createCall = mockPrisma.user.create.mock.calls[0][0];
       expect(createCall.data.passwordHash).not.toBe(signupDto.password);
       expect(createCall.data.passwordHash).toBeTruthy();
+    });
+
+    it('should create user with null name and null username', async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(null);
+      mockPrisma.user.create.mockResolvedValue({
+        id: 'user-1',
+        email: signupDto.email,
+        name: null,
+        username: null,
+        emailVerified: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+
+      await service.signup(signupDto);
+
+      const createCall = mockPrisma.user.create.mock.calls[0][0];
+      expect(createCall.data.name).toBeNull();
+      expect(createCall.data.username).toBeNull();
     });
 
     it('should throw ConflictException for duplicate email', async () => {

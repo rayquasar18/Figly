@@ -155,7 +155,7 @@ export function ReelFeed({
             data-reel-index={index}
             className="h-[100dvh] snap-start"
             role="article"
-            aria-label={`Reel cua ${reel.author.username}`}
+            aria-label={`Reel cua ${reel.author.username ?? ''}`}
           >
             <ReelCard
               reel={reel}

@@ -67,10 +67,10 @@ function PostDetailContent({
       <div className="flex w-full flex-col md:w-1/2">
         {/* Author header */}
         <div className="flex items-center gap-3 border-b px-4 py-3">
-          <Link href={`/${post.author.username}`}>
+          <Link href={`/${post.author.username ?? ''}`}>
             <Avatar className="size-8">
               {post.author.avatarUrl ? (
-                <AvatarImage src={post.author.avatarUrl} alt={post.author.username} />
+                <AvatarImage src={post.author.avatarUrl} alt={post.author.username ?? ''} />
               ) : null}
               <AvatarFallback className="text-xs">
                 {post.author.displayName?.charAt(0)?.toUpperCase() || '?'}
@@ -78,10 +78,10 @@ function PostDetailContent({
             </Avatar>
           </Link>
           <Link
-            href={`/${post.author.username}`}
+            href={`/${post.author.username ?? ''}`}
             className="flex-1 text-sm font-semibold hover:underline"
           >
-            {post.author.username}
+            {post.author.username ?? ''}
           </Link>
           <PostMenu post={post} onDeleted={onClose} />
         </div>
@@ -93,7 +93,7 @@ function PostDetailContent({
             <div className="px-4 py-3 border-b">
               <CaptionDisplay
                 caption={post.caption}
-                username={post.author.username}
+                username={post.author.username ?? ''}
               />
             </div>
           )}

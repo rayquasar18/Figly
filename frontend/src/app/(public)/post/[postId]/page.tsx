@@ -71,10 +71,10 @@ export default function PostDetailPage() {
 
       {/* Author */}
       <div className="flex items-center gap-3 px-3 py-2">
-        <Link href={`/${post.author.username}`}>
+        <Link href={`/${post.author.username ?? ''}`}>
           <Avatar className="size-8">
             {post.author.avatarUrl ? (
-              <AvatarImage src={post.author.avatarUrl} alt={post.author.username} />
+              <AvatarImage src={post.author.avatarUrl} alt={post.author.username ?? ''} />
             ) : null}
             <AvatarFallback className="text-xs">
               {post.author.displayName?.charAt(0)?.toUpperCase() || '?'}
@@ -82,10 +82,10 @@ export default function PostDetailPage() {
           </Avatar>
         </Link>
         <Link
-          href={`/${post.author.username}`}
+          href={`/${post.author.username ?? ''}`}
           className="text-sm font-semibold hover:underline"
         >
-          {post.author.username}
+          {post.author.username ?? ''}
         </Link>
       </div>
 
@@ -103,7 +103,7 @@ export default function PostDetailPage() {
       {/* Caption */}
       {post.caption && (
         <div className="px-3 mt-1">
-          <CaptionDisplay caption={post.caption} username={post.author.username} />
+          <CaptionDisplay caption={post.caption} username={post.author.username ?? ''} />
         </div>
       )}
 

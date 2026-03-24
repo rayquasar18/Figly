@@ -46,25 +46,26 @@ describe('Auth E2E (real DB)', () => {
   it('POST /api/auth/signup — creates user', async () => {
     const res = await request(app.getHttpServer())
       .post('/api/auth/signup')
-      .send({ email: testEmail, password: testPassword, name: testName, username: testUsername })
+      .send({ email: testEmail, password: testPassword })
       .expect(201);
 
     expect(res.body.user.email).toBe(testEmail);
-    expect(res.body.user.name).toBe(testName);
+    expect(res.body.user.name).toBeNull();
+    expect(res.body.user.username).toBeNull();
     expect(res.body.user.emailVerified).toBe(false);
   });
 
   it('POST /api/auth/signup — rejects duplicate email', async () => {
     await request(app.getHttpServer())
       .post('/api/auth/signup')
-      .send({ email: testEmail, password: testPassword, name: testName, username: `${testUsername}_dup` })
+      .send({ email: testEmail, password: testPassword })
       .expect(409);
   });
 
   it('POST /api/auth/signup — rejects weak password', async () => {
     const res = await request(app.getHttpServer())
       .post('/api/auth/signup')
-      .send({ email: 'weak@test.com', password: '12345678', name: 'Weak', username: 'weakuser' })
+      .send({ email: 'weak@test.com', password: '12345678' })
       .expect(400);
 
     expect(res.body.message).toBeDefined();
@@ -137,7 +138,7 @@ describe('Auth E2E (real DB)', () => {
       .expect(200);
 
     expect(res.body.user.email).toBe(testEmail);
-    expect(res.body.user.name).toBe(testName);
+    expect(res.body.user.name).toBeNull();
   });
 
   it('GET /api/auth/me — returns 401 without cookies', async () => {

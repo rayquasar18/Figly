@@ -59,6 +59,7 @@ export function renderVerificationEmail(name: string, verificationUrl: string): 
 }
 
 function escapeHtml(str: string): string {
+  if (!str) return '';
   return str
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')

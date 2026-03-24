@@ -76,9 +76,12 @@ describe('FeedService - Public Feed', () => {
       expect(result.hasMore).toBe(false);
       expect(result.nextCursor).toBeNull();
 
-      // Verify no user-specific WHERE filter
+      // Verify public feed filters out null-username users
       const findManyCall = mockPrisma.post.findMany.mock.calls[0][0];
-      expect(findManyCall.where).toBeUndefined();
+      expect(findManyCall.where).toEqual({
+        postType: 'POST',
+        user: { username: { not: null } },
+      });
     });
 
     it('should return posts with isLiked=false and isBookmarked=false', async () => {

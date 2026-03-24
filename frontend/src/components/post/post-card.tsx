@@ -66,10 +66,10 @@ export function PostCard({ post, onOpenDetail }: PostCardProps) {
     <article className="border-b pb-4">
       {/* Author header */}
       <div className="flex items-center gap-3 px-3 py-2">
-        <Link href={`/${post.author.username}`}>
+        <Link href={`/${post.author.username ?? ''}`}>
           <Avatar className="size-8">
             {post.author.avatarUrl ? (
-              <AvatarImage src={post.author.avatarUrl} alt={post.author.username} />
+              <AvatarImage src={post.author.avatarUrl} alt={post.author.username ?? ''} />
             ) : null}
             <AvatarFallback className="text-xs">
               {post.author.displayName?.charAt(0)?.toUpperCase() || '?'}
@@ -78,10 +78,10 @@ export function PostCard({ post, onOpenDetail }: PostCardProps) {
         </Link>
         <div className="flex-1 min-w-0">
           <Link
-            href={`/${post.author.username}`}
+            href={`/${post.author.username ?? ''}`}
             className="text-sm font-semibold hover:underline"
           >
-            {post.author.username}
+            {post.author.username ?? ''}
           </Link>
         </div>
         <span className="text-xs text-muted-foreground">{relativeTime}</span>
@@ -120,7 +120,7 @@ export function PostCard({ post, onOpenDetail }: PostCardProps) {
       <div className="px-3 mt-1">
         <CaptionDisplay
           caption={post.caption}
-          username={post.author.username}
+          username={post.author.username ?? ''}
           truncate
         />
       </div>

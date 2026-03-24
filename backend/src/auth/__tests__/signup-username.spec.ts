@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ConflictException, BadRequestException } from '@nestjs/common';
+import { ConflictException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { AuthService } from '../auth.service';
@@ -118,7 +118,7 @@ describe('Username and Bio validators (shared package)', () => {
   });
 });
 
-describe('AuthService - signup with username', () => {
+describe('AuthService - signup with simplified dto (email+password only)', () => {
   let service: AuthService;
 
   const mockPrisma = {
@@ -183,20 +183,18 @@ describe('AuthService - signup with username', () => {
     jest.clearAllMocks();
   });
 
-  it('should accept username in signup dto and store it in User', async () => {
+  it('should create user with null name and null username when signing up with email+password only', async () => {
     const signupDto = {
       email: 'test@test.com',
       password: 'Test1234',
-      name: 'Test User',
-      username: 'testuser',
     };
 
     mockPrisma.user.findUnique.mockResolvedValue(null);
     mockPrisma.user.create.mockResolvedValue({
       id: 'user-1',
       email: signupDto.email,
-      name: signupDto.name,
-      username: signupDto.username,
+      name: null,
+      username: null,
       emailVerified: false,
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -205,45 +203,16 @@ describe('AuthService - signup with username', () => {
     const result = await service.signup(signupDto);
 
     expect(result).toBeDefined();
-    expect(result.username).toBe('testuser');
+    expect(result.name).toBeNull();
+    expect(result.username).toBeNull();
     expect(mockPrisma.user.create).toHaveBeenCalledWith(
       expect.objectContaining({
         data: expect.objectContaining({
-          username: 'testuser',
+          name: null,
+          username: null,
         }),
       }),
     );
-  });
-
-  it('should reject reserved usernames', async () => {
-    const signupDto = {
-      email: 'test@test.com',
-      password: 'Test1234',
-      name: 'Test User',
-      username: 'admin',
-    };
-
-    mockPrisma.user.findUnique.mockResolvedValue(null);
-
-    await expect(service.signup(signupDto)).rejects.toThrow(BadRequestException);
-  });
-
-  it('should handle P2002 unique constraint violation on username', async () => {
-    const signupDto = {
-      email: 'test@test.com',
-      password: 'Test1234',
-      name: 'Test User',
-      username: 'taken_username',
-    };
-
-    mockPrisma.user.findUnique.mockResolvedValue(null);
-    // Simulate Prisma P2002 error (unique constraint violation on username)
-    const prismaError = new Error('Unique constraint failed on the fields: (`username`)');
-    (prismaError as any).code = 'P2002';
-    (prismaError as any).meta = { target: ['username'] };
-    mockPrisma.user.create.mockRejectedValue(prismaError);
-
-    await expect(service.signup(signupDto)).rejects.toThrow(ConflictException);
   });
 
   it('should include username in getMe response', async () => {

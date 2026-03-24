@@ -33,7 +33,7 @@ export class AuthController {
   async signup(@Body() signupDto: SignupDto) {
     const user = await this.authService.signup(signupDto);
     // Send verification email
-    await this.authService.sendVerificationEmail(user.id, user.email, user.name);
+    await this.authService.sendVerificationEmail(user.id, user.email, user.name || 'ban');
     return {
       message: 'Dang ky thanh cong. Vui long kiem tra email de xac minh.',
       user,
@@ -111,8 +111,8 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   async resendVerification(@Req() req: Request) {
     const { userId, email } = req.user as any;
-    // Fetch user to get name
-    await this.authService.resendVerification(userId, email, 'User');
+    const { user } = await this.authService.getMe(userId);
+    await this.authService.resendVerification(userId, email, user.name || 'ban');
     return { message: 'Email xac minh da duoc gui lai' };
   }
 

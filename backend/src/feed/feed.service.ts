@@ -112,6 +112,9 @@ export class FeedService {
     const posts = await this.prisma.post.findMany({
       where: {
         postType: 'POST' as const,
+        user: {
+          username: { not: null },
+        },
       },
       include: {
         user: {
@@ -186,6 +189,9 @@ export class FeedService {
     const posts = await this.prisma.post.findMany({
       where: {
         postType: 'REEL',
+        user: {
+          username: { not: null },
+        },
       },
       include: {
         user: {
