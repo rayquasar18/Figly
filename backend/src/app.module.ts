@@ -3,7 +3,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { BullModule } from '@nestjs/bullmq';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, APP_PIPE } from '@nestjs/core';
+import { ZodValidationPipe } from 'nestjs-zod';
+import { validateEnv } from './config/env.schema';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { MediaModule } from './media/media.module';
@@ -21,6 +23,7 @@ import configuration from './config/configuration';
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configuration],
+      validate: validateEnv,
       envFilePath: [
         join(__dirname, '..', '.env'),
         join(__dirname, '..', '..', '.env'),
@@ -64,6 +67,10 @@ import configuration from './config/configuration';
   ],
   controllers: [],
   providers: [
+    {
+      provide: APP_PIPE,
+      useClass: ZodValidationPipe,
+    },
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
