@@ -5,13 +5,13 @@ export declare const updateProfileSchema: z.ZodObject<{
     bio: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     avatarId: z.ZodOptional<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
-    username?: string | undefined;
     displayName?: string | undefined;
+    username?: string | undefined;
     bio?: string | null | undefined;
     avatarId?: string | undefined;
 }, {
-    username?: string | undefined;
     displayName?: string | undefined;
+    username?: string | undefined;
     bio?: string | null | undefined;
     avatarId?: string | undefined;
 }>;
