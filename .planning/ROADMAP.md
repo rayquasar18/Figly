@@ -58,11 +58,11 @@ Plans:
   2. Next.js 16 is installed with all async API migrations complete (cookies, headers, params awaited) and pages load correctly
   3. NestJS 11 is installed with all dependencies aligned and the backend starts without errors
   4. All existing v1.0 features (auth, posts, feed, collections, reels) continue to work after upgrades
-**Plans:** 1/3 plans executed
+**Plans:** 2/3 plans executed
 Plans:
 - [x] 12-01-PLAN.md — Upgrade NestJS backend from v10 to v11 with all satellite dependencies aligned
 - [ ] 12-02-PLAN.md — Remove React.forwardRef from all 20 shadcn/ui components (React 19 migration)
-- [ ] 12-03-PLAN.md — Migrate 4 pages from useParams to async params with use() hook (Next.js 16 migration)
+- [x] 12-03-PLAN.md — Migrate 4 pages from useParams to async params with use() hook (Next.js 16 migration)
 
 ### Phase 13: Backend Hardening
 **Goal**: Backend is production-ready with proper validation, error handling, logging, monitoring, and API documentation
@@ -120,7 +120,7 @@ Plans:
 | 4. Collection System | v1.0 | 6/6 | Complete | 2026-03-15 |
 | 10. Reels | v1.0 | 2/2 | Complete | 2026-03-20 |
 | 11. Bugfixes & UX Flow | v2.0 | 3/3 | Complete    | 2026-03-24 |
-| 12. Framework Upgrades | v2.0 | 1/3 | In Progress|  |
+| 12. Framework Upgrades | v2.0 | 2/3 | In Progress|  |
 | 13. Backend Hardening | v2.0 | 0/? | Not started | - |
 | 14. Frontend Restructure | v2.0 | 0/? | Not started | - |
 | 15. DevOps & Tooling | v2.0 | 0/? | Not started | - |

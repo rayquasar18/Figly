@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Architecture & Production Hardening
 status: unknown
-stopped_at: Completed 12-01-PLAN.md
-last_updated: "2026-03-24T06:19:40.220Z"
+stopped_at: Completed 12-03-PLAN.md
+last_updated: "2026-03-24T06:25:40.478Z"
 progress:
   total_phases: 6
   completed_phases: 1
   total_plans: 6
-  completed_plans: 4
+  completed_plans: 5
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-20)
 ## Current Position
 
 Phase: 12 (framework-upgrades) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 
 ## Performance Metrics
 
@@ -51,6 +51,7 @@ Recent decisions affecting current work:
 - [Phase 11]: Manual Prisma migration for nullable name (shadow DB baseline broken)
 - [Phase 11]: Null-safe name pattern: user.name || 'ban' before email services
 - [Phase 12-01]: NestJS 11 upgrade requires no code changes -- existing patterns (cookie-parser import, config factory, Express types) are fully compatible
+- [Phase 12-03]: All 8 dynamic route pages now use async params pattern with use() hook -- useParams fully eliminated
 
 ### Pending Todos
 
@@ -69,6 +70,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-24T06:19:40.218Z
-Stopped at: Completed 12-01-PLAN.md
+Last session: 2026-03-24T06:25:40.475Z
+Stopped at: Completed 12-03-PLAN.md
 Resume file: None
