@@ -82,10 +82,16 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 
 **v1.0 MVP shipped 2026-03-20**
 - 23,289 LOC TypeScript + 782 LOC Prisma
-- 6 phases completed (1, 2, 3, 3.1, 4, 10), 21 plans executed
+- 7 phases completed (1, 2, 3, 3.1, 4, 10, 11), 24 plans executed
 - NestJS backend + Next.js frontend monorepo
 - PostgreSQL (Prisma), MinIO media storage, BullMQ async processing
 - ffmpeg video transcoding for reels
+
+**Phase 11 complete (2026-03-24):**
+- Signup simplified to email+password only (name/username deferred to complete-profile)
+- Profile redirect loop fixed (auth cache invalidation)
+- Explore page null-username filter added
+- Instagram-style desktop sidebar navigation (220px fixed left sidebar)
 
 **Known gaps from v1.0:**
 - Phases 5-9 (Search, Notifications, Moderation, DM, Stories) not yet built
@@ -138,4 +144,4 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 | v2.0 Architecture milestone | Audit revealed 15+ production gaps; fix before adding features | — Pending |
 
 ---
-*Last updated: 2026-03-20 after v2.0 milestone start*
+*Last updated: 2026-03-24 after Phase 11 completion*
