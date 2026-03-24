@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { usernameSchema, USERNAME_RULES } from '@figly/shared';
+import { useQueryClient } from '@tanstack/react-query';
 import { useUpdateProfile, useCheckUsername } from '@/hooks/queries/profile-queries';
 import { useAuthStore } from '@/stores/auth-store';
 import { Button } from '@/components/ui/button';
@@ -27,14 +28,14 @@ const completeProfileSchema = z.object({
   displayName: z
     .string()
     .min(1, { message: 'Ten hien thi khong duoc de trong' })
-    .max(50, { message: 'Ten hien thi khong duoc vuot qua 50 ky tu' })
-    .optional(),
+    .max(50, { message: 'Ten hien thi khong duoc vuot qua 50 ky tu' }),
 });
 
 type CompleteProfileForm = z.infer<typeof completeProfileSchema>;
 
 export function CompleteProfileForm() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const updateProfile = useUpdateProfile();
   const { user } = useAuthStore();
   const [debouncedUsername, setDebouncedUsername] = useState('');
@@ -65,8 +66,10 @@ export function CompleteProfileForm() {
     try {
       await updateProfile.mutateAsync({
         username: data.username,
-        displayName: data.displayName || undefined,
+        displayName: data.displayName,
       });
+      // CRITICAL: Invalidate auth cache so layout username gate sees updated data
+      await queryClient.invalidateQueries({ queryKey: ['auth', 'me'] });
       toast.success('Ho so da duoc cap nhat');
       router.replace('/');
     } catch (error: unknown) {
