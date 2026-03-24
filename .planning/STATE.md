@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Architecture & Production Hardening
-status: Ready to execute
-stopped_at: Completed 13-03-PLAN.md
-last_updated: "2026-03-24T22:12:57.751Z"
+status: Phase complete — ready for verification
+stopped_at: Completed 13-04-PLAN.md
+last_updated: "2026-03-24T22:19:53.664Z"
 progress:
   total_phases: 6
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 10
-  completed_plans: 9
+  completed_plans: 10
 ---
 
 # Project State
@@ -61,6 +61,8 @@ Recent decisions affecting current work:
 - [Phase 13]: RedisService extends ioredis directly for full API surface; @Global RedisModule shares singleton instance
 - [Phase 13]: ThrottlerModule.forRootAsync injects shared RedisService for Redis-backed rate limiting
 - [Phase 13]: E2e tests override ThrottlerGuard to prevent rate limit accumulation across test runs
+- [Phase 13]: Swagger path 'api/docs' is absolute from app root, not doubled by setGlobalPrefix
+- [Phase 13]: ZodSerializerInterceptor registered globally; @ZodSerializerDto per-endpoint for explicit control
 
 ### Pending Todos
 
@@ -79,6 +81,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-24T22:12:57.748Z
-Stopped at: Completed 13-03-PLAN.md
+Last session: 2026-03-24T22:19:53.661Z
+Stopped at: Completed 13-04-PLAN.md
 Resume file: None

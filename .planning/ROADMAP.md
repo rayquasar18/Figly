@@ -27,7 +27,7 @@
 
 - [x] **Phase 11: Bugfixes & UX Flow** - Fix broken registration flow, explore page, and desktop navigation layout (completed 2026-03-24)
 - [x] **Phase 12: Framework Upgrades** - Upgrade React 18->19, Next.js 14->16, NestJS 10->11 (completed 2026-03-24)
-- [ ] **Phase 13: Backend Hardening** - Add env validation, exception filter, structured logging, health checks, Swagger, DTO unification, response serialization, Redis rate limiter
+- [x] **Phase 13: Backend Hardening** - Add env validation, exception filter, structured logging, health checks, Swagger, DTO unification, response serialization, Redis rate limiter (completed 2026-03-24)
 - [ ] **Phase 14: Frontend Restructure** - Reorganize to features/ pattern, add auth middleware, SSR/SEO for public routes, dark mode
 - [ ] **Phase 15: DevOps & Tooling** - ESLint/Prettier/Husky, CI/CD pipeline, Docker dual-container split
 - [ ] **Phase 16: Shared Package Cleanup** - Rename dto/ to schemas/, remove dist/ from git tracking
@@ -76,12 +76,12 @@ Plans:
   5. Swagger UI is accessible at /api/docs with all endpoints documented from decorators
   6. All DTOs use nestjs-zod schemas (no class-validator decorators remain) and API responses exclude internal fields (passwords, internal IDs)
   7. Rate limiter survives server restarts (Redis-backed) and correctly throttles excessive requests
-**Plans:** 3/4 plans executed
+**Plans:** 4/4 plans complete
 Plans:
 - [x] 13-01-PLAN.md — Install deps, Zod env validation, migrate 7 DTO files to nestjs-zod
 - [x] 13-02-PLAN.md — Global exception filter and Pino structured logging
 - [x] 13-03-PLAN.md — Health checks (Prisma/Redis/MinIO) and Redis-backed rate limiter
-- [ ] 13-04-PLAN.md — Swagger/OpenAPI documentation and response serialization
+- [x] 13-04-PLAN.md — Swagger/OpenAPI documentation and response serialization
 
 ### Phase 14: Frontend Restructure
 **Goal**: Frontend codebase follows best-practice organization, public pages are SEO-friendly, and dark mode is functional
@@ -126,7 +126,7 @@ Plans:
 | 10. Reels | v1.0 | 2/2 | Complete | 2026-03-20 |
 | 11. Bugfixes & UX Flow | v2.0 | 3/3 | Complete    | 2026-03-24 |
 | 12. Framework Upgrades | v2.0 | 3/3 | Complete    | 2026-03-24 |
-| 13. Backend Hardening | v2.0 | 3/4 | In Progress|  |
+| 13. Backend Hardening | v2.0 | 4/4 | Complete   | 2026-03-24 |
 | 14. Frontend Restructure | v2.0 | 0/? | Not started | - |
 | 15. DevOps & Tooling | v2.0 | 0/? | Not started | - |
 | 16. Shared Package Cleanup | v2.0 | 0/? | Not started | - |
