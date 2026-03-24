@@ -1,6 +1,7 @@
 'use client';
 
-import { useParams, useRouter } from 'next/navigation';
+import { use } from 'react';
+import { useRouter } from 'next/navigation';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { vi } from 'date-fns/locale';
@@ -14,10 +15,13 @@ import { CaptionDisplay } from '@/components/post/caption-display';
 import { CommentList } from '@/components/comment/comment-list';
 import Link from 'next/link';
 
-export default function PostDetailPage() {
-  const params = useParams();
+export default function PostDetailPage({
+  params,
+}: {
+  params: Promise<{ postId: string }>;
+}) {
+  const { postId } = use(params);
   const router = useRouter();
-  const postId = params.postId as string;
   const { data: post, isLoading } = usePostDetail(postId);
 
   if (isLoading) {

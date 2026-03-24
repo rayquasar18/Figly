@@ -1,7 +1,6 @@
 'use client';
 
-import { useParams } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { use, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ChevronRight, Loader2 } from 'lucide-react';
 import { useItemsBySeries, useSeriesByCategory } from '@/hooks/queries/collection-queries';
@@ -23,9 +22,12 @@ function ItemGridSkeleton() {
   );
 }
 
-export default function SeriesItemsPage() {
-  const params = useParams<{ categorySlug: string; seriesSlug: string }>();
-  const { categorySlug, seriesSlug } = params;
+export default function SeriesItemsPage({
+  params,
+}: {
+  params: Promise<{ categorySlug: string; seriesSlug: string }>;
+}) {
+  const { categorySlug, seriesSlug } = use(params);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useItemsBySeries(categorySlug, seriesSlug);
   const { data: seriesList } = useSeriesByCategory(categorySlug);

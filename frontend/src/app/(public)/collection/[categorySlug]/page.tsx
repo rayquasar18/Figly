@@ -1,6 +1,6 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { use } from 'react';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 import { useSeriesByCategory, useCategories } from '@/hooks/queries/collection-queries';
@@ -22,9 +22,12 @@ function SeriesGridSkeleton() {
   );
 }
 
-export default function CategorySeriesPage() {
-  const params = useParams<{ categorySlug: string }>();
-  const categorySlug = params.categorySlug;
+export default function CategorySeriesPage({
+  params,
+}: {
+  params: Promise<{ categorySlug: string }>;
+}) {
+  const { categorySlug } = use(params);
   const { data: seriesList, isLoading } = useSeriesByCategory(categorySlug);
   const { data: categories } = useCategories();
 

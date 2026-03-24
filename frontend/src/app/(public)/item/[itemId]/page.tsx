@@ -1,6 +1,7 @@
 'use client';
 
-import { useParams, useRouter } from 'next/navigation';
+import { use } from 'react';
+import { useRouter } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import { useItemDetail } from '@/hooks/queries/collection-queries';
 import { ItemDetail } from '@/components/collection/item-detail';
@@ -19,10 +20,14 @@ function ItemDetailSkeleton() {
   );
 }
 
-export default function ItemDetailPage() {
-  const params = useParams<{ itemId: string }>();
+export default function ItemDetailPage({
+  params,
+}: {
+  params: Promise<{ itemId: string }>;
+}) {
+  const { itemId } = use(params);
   const router = useRouter();
-  const { data: item, isLoading, isError } = useItemDetail(params.itemId);
+  const { data: item, isLoading, isError } = useItemDetail(itemId);
 
   return (
     <div className="mx-auto max-w-lg px-4 py-6">
