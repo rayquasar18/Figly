@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Architecture & Production Hardening
 status: Ready to execute
-stopped_at: Completed 13-02-PLAN.md
-last_updated: "2026-03-24T22:12:22.080Z"
+stopped_at: Completed 13-03-PLAN.md
+last_updated: "2026-03-24T22:12:57.751Z"
 progress:
   total_phases: 6
   completed_phases: 2
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-20)
 ## Current Position
 
 Phase: 13 (backend-hardening) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 
 ## Performance Metrics
 
@@ -58,6 +58,9 @@ Recent decisions affecting current work:
 - [Phase 13]: Logger.error called only for 500+ errors; 4xx are not logged to reduce noise
 - [Phase 13]: Pino uses pino-pretty in development and raw JSON in production for log aggregation readiness
 - [Phase 13]: Global exception filter: P2002->409, P2025->404, unknown->500 with safe messages (no Prisma details)
+- [Phase 13]: RedisService extends ioredis directly for full API surface; @Global RedisModule shares singleton instance
+- [Phase 13]: ThrottlerModule.forRootAsync injects shared RedisService for Redis-backed rate limiting
+- [Phase 13]: E2e tests override ThrottlerGuard to prevent rate limit accumulation across test runs
 
 ### Pending Todos
 
@@ -76,6 +79,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-24T22:12:22.077Z
-Stopped at: Completed 13-02-PLAN.md
+Last session: 2026-03-24T22:12:57.748Z
+Stopped at: Completed 13-03-PLAN.md
 Resume file: None

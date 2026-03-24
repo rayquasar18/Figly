@@ -26,11 +26,11 @@ Requirements for v2.0 Architecture & Production Hardening. Each maps to roadmap 
 - [x] **BACK-01**: Environment variables validated at startup using Zod schemas (no fallback defaults for secrets)
 - [x] **BACK-02**: Global exception filter catches all unhandled errors and returns safe responses (no Prisma/internal details leaked)
 - [x] **BACK-03**: Structured logging with Pino replaces basic NestJS Logger across all modules
-- [ ] **BACK-04**: Health check endpoint reports database, Redis, and MinIO connectivity
+- [x] **BACK-04**: Health check endpoint reports database, Redis, and MinIO connectivity
 - [ ] **BACK-05**: Swagger/OpenAPI documentation auto-generated from all API endpoints
 - [x] **BACK-06**: DTO validation unified with nestjs-zod (class-validator duplication removed)
 - [ ] **BACK-07**: Response serialization layer strips internal fields from API responses
-- [ ] **BACK-08**: Redis-backed rate limiter replaces in-process memory rate limiter
+- [x] **BACK-08**: Redis-backed rate limiter replaces in-process memory rate limiter
 
 ### Frontend Restructure
 
@@ -114,11 +114,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BACK-01 | Phase 13 | Complete |
 | BACK-02 | Phase 13 | Complete |
 | BACK-03 | Phase 13 | Complete |
-| BACK-04 | Phase 13 | Pending |
+| BACK-04 | Phase 13 | Complete |
 | BACK-05 | Phase 13 | Pending |
 | BACK-06 | Phase 13 | Complete |
 | BACK-07 | Phase 13 | Pending |
-| BACK-08 | Phase 13 | Pending |
+| BACK-08 | Phase 13 | Complete |
 | FRNT-01 | Phase 14 | Pending |
 | FRNT-02 | Phase 14 | Pending |
 | FRNT-03 | Phase 14 | Pending |
