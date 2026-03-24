@@ -45,7 +45,7 @@ created: 2026-03-24
 | 13-03-01 | 03 | 2 | BACK-05 | smoke | Manual: start server, curl /api/docs | N/A | ⬜ pending |
 | 13-03-02 | 03 | 2 | BACK-06 | unit | `cd backend && npx jest --testPathPattern=auth --no-coverage` | ✅ (update) | ⬜ pending |
 | 13-03-03 | 03 | 2 | BACK-07 | unit | `cd backend && npx jest --testPathPattern=serializ --no-coverage` | ❌ W0 | ⬜ pending |
-| 13-04-01 | 04 | 2 | BACK-08 | unit | `cd backend && npx jest --testPathPattern=throttle --no-coverage` | ❌ W0 | ⬜ pending |
+| 13-04-01 | 04 | 3 | BACK-08 | unit | `cd backend && npx jest --testPathPattern=throttle --no-coverage` | ❌ W0 | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
