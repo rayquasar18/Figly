@@ -120,7 +120,7 @@ Plans:
 | 4. Collection System | v1.0 | 6/6 | Complete | 2026-03-15 |
 | 10. Reels | v1.0 | 2/2 | Complete | 2026-03-20 |
 | 11. Bugfixes & UX Flow | v2.0 | 3/3 | Complete    | 2026-03-24 |
-| 12. Framework Upgrades | v2.0 | 3/3 | Complete   | 2026-03-24 |
+| 12. Framework Upgrades | v2.0 | 3/3 | Complete    | 2026-03-24 |
 | 13. Backend Hardening | v2.0 | 0/? | Not started | - |
 | 14. Frontend Restructure | v2.0 | 0/? | Not started | - |
 | 15. DevOps & Tooling | v2.0 | 0/? | Not started | - |
