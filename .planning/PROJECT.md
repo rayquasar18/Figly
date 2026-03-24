@@ -32,7 +32,7 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 
 **v2.0 — Architecture & Production Hardening:**
 - [ ] Tai cau truc thu muc frontend/backend theo chuan best practice
-- [ ] Cap nhat framework len phien ban moi nhat (React 19, Next.js 15, NestJS 11)
+- [x] Cap nhat framework len phien ban moi nhat (React 19, Next.js 16, NestJS 11) — Validated in Phase 12
 - [ ] Don file thua, tai cau truc shared package
 - [ ] Env validation, global exception filter, structured logging
 - [ ] Next.js middleware, SSR/SEO cho trang cong khai
@@ -63,7 +63,7 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 
 **Target features:**
 - Tai cau truc thu muc frontend va backend theo chuan best practice
-- Cap nhat Next.js, React, NestJS len phien ban moi nhat (React 19, Next.js 15, NestJS 11)
+- ✓ Cap nhat Next.js, React, NestJS len phien ban moi nhat (React 19, Next.js 16, NestJS 11) — Phase 12
 - Don file thua, sua shared package cho kien truc doc lap
 - Env validation, global exception filter, structured logging (Pino)
 - Next.js middleware cho auth redirect (xoa flash of content)
@@ -82,10 +82,16 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 
 **v1.0 MVP shipped 2026-03-20**
 - 23,289 LOC TypeScript + 782 LOC Prisma
-- 7 phases completed (1, 2, 3, 3.1, 4, 10, 11), 24 plans executed
+- 8 phases completed (1, 2, 3, 3.1, 4, 10, 11, 12), 27 plans executed
 - NestJS backend + Next.js frontend monorepo
 - PostgreSQL (Prisma), MinIO media storage, BullMQ async processing
 - ffmpeg video transcoding for reels
+
+**Phase 12 complete (2026-03-24):**
+- NestJS upgraded v10→v11 with all satellites aligned
+- React.forwardRef removed from all 20 shadcn/ui components (React 19 ref-as-prop)
+- 4 pages migrated from useParams() to async params with use() hook
+- Zero deprecation warnings remaining
 
 **Phase 11 complete (2026-03-24):**
 - Signup simplified to email+password only (name/username deferred to complete-profile)
@@ -144,4 +150,4 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 | v2.0 Architecture milestone | Audit revealed 15+ production gaps; fix before adding features | — Pending |
 
 ---
-*Last updated: 2026-03-24 after Phase 11 completion*
+*Last updated: 2026-03-24 after Phase 12 completion*
