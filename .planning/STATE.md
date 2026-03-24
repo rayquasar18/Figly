@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Architecture & Production Hardening
 status: unknown
-stopped_at: Completed 11-03-PLAN.md
-last_updated: "2026-03-24T01:15:30.422Z"
+stopped_at: Completed 11-02-PLAN.md
+last_updated: "2026-03-24T01:19:56.172Z"
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 3
-  completed_plans: 1
+  completed_plans: 2
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-20)
 ## Current Position
 
 Phase: 11 (bugfixes-ux-flow) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 
 ## Performance Metrics
 
@@ -46,6 +46,8 @@ Recent decisions affecting current work:
 - [v2.0]: Phase order: Bugfixes -> Framework upgrades -> Backend -> Frontend -> DevOps -> Shared cleanup
 - [v2.0]: Unify DTO validation with nestjs-zod (remove class-validator duplication)
 - [Phase 11]: Sidebar width 220px fixed, matching Instagram desktop pattern
+- [Phase 11-02]: PostAuthor.username typed as string | null; null-username users filtered at backend query level
+- [Phase 11-02]: Auth cache invalidated after profile mutation to prevent redirect loop
 
 ### Pending Todos
 
@@ -64,6 +66,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-24T01:15:30.420Z
-Stopped at: Completed 11-03-PLAN.md
+Last session: 2026-03-24T01:19:56.170Z
+Stopped at: Completed 11-02-PLAN.md
 Resume file: None
