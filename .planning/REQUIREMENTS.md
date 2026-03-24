@@ -17,7 +17,7 @@ Requirements for v2.0 Architecture & Production Hardening. Each maps to roadmap 
 
 ### Framework Upgrades
 
-- [ ] **FRMW-01**: React upgraded from v18 to v19 with all breaking changes resolved
+- [x] **FRMW-01**: React upgraded from v18 to v19 with all breaking changes resolved
 - [x] **FRMW-02**: Next.js upgraded from v14 to v16 with async API migrations complete
 - [x] **FRMW-03**: NestJS upgraded from v10 to v11 with all dependencies aligned
 
@@ -108,7 +108,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BUGF-03 | Phase 11 | Complete |
 | BUGF-04 | Phase 11 | Complete |
 | BUGF-05 | Phase 11 | Complete |
-| FRMW-01 | Phase 12 | Pending |
+| FRMW-01 | Phase 12 | Complete |
 | FRMW-02 | Phase 12 | Complete |
 | FRMW-03 | Phase 12 | Complete |
 | BACK-01 | Phase 13 | Pending |

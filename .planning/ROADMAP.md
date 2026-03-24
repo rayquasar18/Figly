@@ -26,7 +26,7 @@
 **Milestone Goal:** Upgrade frameworks, harden architecture, restructure codebase, and add production-ready infrastructure — before building new features.
 
 - [x] **Phase 11: Bugfixes & UX Flow** - Fix broken registration flow, explore page, and desktop navigation layout (completed 2026-03-24)
-- [ ] **Phase 12: Framework Upgrades** - Upgrade React 18->19, Next.js 14->16, NestJS 10->11
+- [x] **Phase 12: Framework Upgrades** - Upgrade React 18->19, Next.js 14->16, NestJS 10->11 (completed 2026-03-24)
 - [ ] **Phase 13: Backend Hardening** - Add env validation, exception filter, structured logging, health checks, Swagger, DTO unification, response serialization, Redis rate limiter
 - [ ] **Phase 14: Frontend Restructure** - Reorganize to features/ pattern, add auth middleware, SSR/SEO for public routes, dark mode
 - [ ] **Phase 15: DevOps & Tooling** - ESLint/Prettier/Husky, CI/CD pipeline, Docker dual-container split
@@ -58,10 +58,10 @@ Plans:
   2. Next.js 16 is installed with all async API migrations complete (cookies, headers, params awaited) and pages load correctly
   3. NestJS 11 is installed with all dependencies aligned and the backend starts without errors
   4. All existing v1.0 features (auth, posts, feed, collections, reels) continue to work after upgrades
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans complete
 Plans:
 - [x] 12-01-PLAN.md — Upgrade NestJS backend from v10 to v11 with all satellite dependencies aligned
-- [ ] 12-02-PLAN.md — Remove React.forwardRef from all 20 shadcn/ui components (React 19 migration)
+- [x] 12-02-PLAN.md — Remove React.forwardRef from all 20 shadcn/ui components (React 19 migration)
 - [x] 12-03-PLAN.md — Migrate 4 pages from useParams to async params with use() hook (Next.js 16 migration)
 
 ### Phase 13: Backend Hardening
@@ -120,7 +120,7 @@ Plans:
 | 4. Collection System | v1.0 | 6/6 | Complete | 2026-03-15 |
 | 10. Reels | v1.0 | 2/2 | Complete | 2026-03-20 |
 | 11. Bugfixes & UX Flow | v2.0 | 3/3 | Complete    | 2026-03-24 |
-| 12. Framework Upgrades | v2.0 | 2/3 | In Progress|  |
+| 12. Framework Upgrades | v2.0 | 3/3 | Complete   | 2026-03-24 |
 | 13. Backend Hardening | v2.0 | 0/? | Not started | - |
 | 14. Frontend Restructure | v2.0 | 0/? | Not started | - |
 | 15. DevOps & Tooling | v2.0 | 0/? | Not started | - |

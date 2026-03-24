@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Architecture & Production Hardening
 status: unknown
-stopped_at: Completed 12-03-PLAN.md
-last_updated: "2026-03-24T06:25:40.478Z"
+stopped_at: Completed 12-02-PLAN.md
+last_updated: "2026-03-24T06:30:47.673Z"
 progress:
   total_phases: 6
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 6
-  completed_plans: 5
+  completed_plans: 6
 ---
 
 # Project State
@@ -52,6 +52,7 @@ Recent decisions affecting current work:
 - [Phase 11]: Null-safe name pattern: user.name || 'ban' before email services
 - [Phase 12-01]: NestJS 11 upgrade requires no code changes -- existing patterns (cookie-parser import, config factory, Express types) are fully compatible
 - [Phase 12-03]: All 8 dynamic route pages now use async params pattern with use() hook -- useParams fully eliminated
+- [Phase 12]: React 19 ref-as-prop pattern: function Component({ ref, ...props }) replaces const Component = React.forwardRef((props, ref) => ...)
 
 ### Pending Todos
 
@@ -70,6 +71,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-24T06:25:40.475Z
-Stopped at: Completed 12-03-PLAN.md
+Last session: 2026-03-24T06:30:47.670Z
+Stopped at: Completed 12-02-PLAN.md
 Resume file: None
