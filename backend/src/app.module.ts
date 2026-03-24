@@ -4,7 +4,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis';
 import { BullModule } from '@nestjs/bullmq';
-import { APP_GUARD, APP_PIPE } from '@nestjs/core';
+import { APP_GUARD, APP_PIPE, APP_FILTER } from '@nestjs/core';
+import { LoggerModule } from 'nestjs-pino';
+import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { ZodValidationPipe } from 'nestjs-zod';
 import { validateEnv } from './config/env.schema';
 import { RedisModule } from './redis/redis.module';
@@ -32,6 +34,19 @@ import configuration from './config/configuration';
         join(__dirname, '..', '.env'),
         join(__dirname, '..', '..', '.env'),
       ],
+    }),
+    LoggerModule.forRootAsync({
+      useFactory: (configService: ConfigService) => ({
+        pinoHttp: {
+          level: configService.get('NODE_ENV') === 'production' ? 'info' : 'debug',
+          transport:
+            configService.get('NODE_ENV') !== 'production'
+              ? { target: 'pino-pretty', options: { colorize: true, singleLine: true } }
+              : undefined,
+          redact: ['req.headers.authorization', 'req.headers.cookie'],
+        },
+      }),
+      inject: [ConfigService],
     }),
     RedisModule,
     ThrottlerModule.forRootAsync({
@@ -71,6 +86,10 @@ import configuration from './config/configuration';
   ],
   controllers: [],
   providers: [
+    {
+      provide: APP_FILTER,
+      useClass: AllExceptionsFilter,
+    },
     {
       provide: APP_PIPE,
       useClass: ZodValidationPipe,

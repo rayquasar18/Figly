@@ -1,9 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
+import { ThrottlerGuard } from '@nestjs/throttler';
 import * as request from 'supertest';
 import * as cookieParser from 'cookie-parser';
 import { AppModule } from '../src/app.module';
 import { PrismaService } from '../src/prisma/prisma.service';
+
+// Disable rate limiting in e2e tests to avoid Redis-backed throttler
+// interfering with sequential test requests
+class ThrottlerGuardMock extends ThrottlerGuard {
+  async canActivate(): Promise<boolean> {
+    return true;
+  }
+}
 
 describe('Auth E2E (real DB)', () => {
   let app: INestApplication;
@@ -17,7 +26,10 @@ describe('Auth E2E (real DB)', () => {
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    }).compile();
+    })
+      .overrideProvider(ThrottlerGuard)
+      .useClass(ThrottlerGuardMock)
+      .compile();
 
     app = moduleFixture.createNestApplication();
     app.setGlobalPrefix('api');
@@ -29,15 +41,19 @@ describe('Auth E2E (real DB)', () => {
 
   afterAll(async () => {
     // Cleanup test user and related data
-    const user = await prisma.user.findUnique({ where: { email: testEmail } });
-    if (user) {
-      await prisma.refreshToken.deleteMany({ where: { userId: user.id } });
-      await prisma.verificationToken.deleteMany({ where: { userId: user.id } });
-      await prisma.passwordResetToken.deleteMany({ where: { userId: user.id } });
-      await prisma.media.deleteMany({ where: { userId: user.id } });
-      await prisma.user.delete({ where: { id: user.id } });
+    try {
+      const user = await prisma.user.findUnique({ where: { email: testEmail } });
+      if (user) {
+        await prisma.refreshToken.deleteMany({ where: { userId: user.id } });
+        await prisma.verificationToken.deleteMany({ where: { userId: user.id } });
+        await prisma.passwordResetToken.deleteMany({ where: { userId: user.id } });
+        await prisma.media.deleteMany({ where: { userId: user.id } });
+        await prisma.user.delete({ where: { id: user.id } });
+      }
+    } catch {
+      // Ignore cleanup errors (DB may be unavailable)
     }
-    await app.close();
+    if (app) await app.close();
   });
 
   // ─── Signup ───

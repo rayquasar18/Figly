@@ -30,8 +30,8 @@ export function ReelCard({
   const [showHeart, setShowHeart] = useState(false);
   const [heartPos, setHeartPos] = useState({ x: 0, y: 0 });
   const lastTapRef = useRef(0);
-  const playPauseTimerRef = useRef<ReturnType<typeof setTimeout>>();
-  const heartTimerRef = useRef<ReturnType<typeof setTimeout>>();
+  const playPauseTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const heartTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const likeMutation = useLikeMutation();
 
   const videoSrc = reel.media[0]?.url;

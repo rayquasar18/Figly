@@ -3,10 +3,10 @@
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { Search } from 'lucide-react';
 import { useMe } from '@/hooks/queries/auth-queries';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { Sidebar } from '@/components/layout/sidebar';
+import { HeaderSearch } from '@/components/layout/header-search';
 import { CreatePostFlow } from '@/components/create-post/create-post-flow';
 import { CreateReelFlow } from '@/components/reel/create-reel-flow';
 
@@ -78,15 +78,7 @@ export default function AppLayout({
               <Link href="/" className="text-xl font-bold md:hidden">
                 Figly
               </Link>
-              <div className="flex items-center gap-2">
-                <Link
-                  href="/search"
-                  className="flex size-9 items-center justify-center rounded-full hover:bg-muted"
-                  aria-label="Tim kiem"
-                >
-                  <Search className="size-5 text-muted-foreground" />
-                </Link>
-              </div>
+              <HeaderSearch />
             </div>
           </header>
         )}

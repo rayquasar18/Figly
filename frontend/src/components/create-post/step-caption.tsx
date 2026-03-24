@@ -49,7 +49,7 @@ export function StepCaption() {
   const [profileResults, setProfileResults] = useState<ProfileSuggestion[]>([]);
   const [popoverOpen, setPopoverOpen] = useState(false);
   const [triggerStart, setTriggerStart] = useState(0);
-  const debounceRef = useRef<ReturnType<typeof setTimeout>>();
+  const debounceRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   // Preview first image (cropped blob or original preview)
   const firstImage = images[0];

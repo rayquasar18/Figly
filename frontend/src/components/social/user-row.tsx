@@ -12,7 +12,8 @@ interface UserRowProps {
   onRemove?: (userId: string) => void;
 }
 
-function getInitials(name: string): string {
+function getInitials(name: string | undefined | null): string {
+  if (!name) return '?';
   return name
     .split(' ')
     .map((part) => part[0])

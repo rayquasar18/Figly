@@ -4,7 +4,6 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import {
   Home,
-  Search,
   Compass,
   Clapperboard,
   PlusSquare,
@@ -22,7 +21,6 @@ export function Sidebar() {
 
   const links = [
     { href: '/', icon: Home, label: 'Trang chu', isActive: pathname === '/' },
-    { href: '/search', icon: Search, label: 'Tim kiem', isActive: pathname === '/search' },
     { href: '/explore', icon: Compass, label: 'Kham pha', isActive: pathname === '/explore' },
     { href: '/reels', icon: Clapperboard, label: 'Reels', isActive: pathname.startsWith('/reels') },
     {

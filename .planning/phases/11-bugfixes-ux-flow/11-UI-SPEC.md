@@ -119,7 +119,6 @@ Dark mode: CSS variables already defined in globals.css `.dark` class. No change
 | [Figly logo]              |  <- text-xl font-bold, mb-8, px-3
 |                           |
 | [Home icon] Trang chu     |  <- nav link, active: font-semibold + fill-current icon
-| [Search icon] Tim kiem    |
 | [Compass icon] Kham pha   |
 | [Clapper icon] Reels      |
 | [PlusSquare] Tao moi      |  <- button, not link
@@ -151,7 +150,6 @@ Dark mode: CSS variables already defined in globals.css `.dark` class. No change
 | Label | Icon | Route |
 |-------|------|-------|
 | Trang chu | `Home` | `/` |
-| Tim kiem | `Search` | `/search` |
 | Kham pha | `Compass` | `/explore` |
 | Reels | `Clapperboard` | `/reels` |
 | Tao moi | `PlusSquare` | button (create post) |
@@ -159,7 +157,7 @@ Dark mode: CSS variables already defined in globals.css `.dark` class. No change
 
 **Desktop layout with sidebar:**
 - Main content area: `md:ml-[220px]` to offset sidebar width
-- Header: keep on desktop but remove "Figly" text (it is in the sidebar). Keep search icon in header.
+- Header: keep on desktop with inline search input (HeaderSearch component). Hide "Figly" text on desktop (it is in the sidebar).
 - Bottom nav: `md:hidden` (already set, no change)
 - Bottom padding on main: `pb-14 md:pb-0` (already set, no change)
 - Reels page: sidebar still visible but header hidden (`hideHeader` logic unchanged)
@@ -222,7 +220,6 @@ Removed copy (was on old signup form):
 |---------|------|
 | Brand | Figly |
 | Home link | Trang chu |
-| Search link | Tim kiem |
 | Explore link | Kham pha |
 | Reels link | Reels |
 | Create button | Tao moi |

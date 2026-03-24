@@ -157,32 +157,6 @@ export function PostCard({ post, onOpenDetail }: PostCardProps) {
         </button>
       )}
 
-      {/* CSS for heart animation */}
-      <style jsx global>{`
-        @keyframes heartBurst {
-          0% {
-            transform: scale(0);
-            opacity: 1;
-          }
-          15% {
-            transform: scale(1.2);
-            opacity: 1;
-          }
-          30% {
-            transform: scale(0.95);
-            opacity: 1;
-          }
-          45%,
-          80% {
-            transform: scale(1);
-            opacity: 1;
-          }
-          100% {
-            transform: scale(1);
-            opacity: 0;
-          }
-        }
-      `}</style>
     </article>
   );
 }

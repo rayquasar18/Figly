@@ -13,7 +13,7 @@ human_verification:
     expected: "After setting username+displayName, user lands on homepage without being sent back to /complete-profile"
     why_human: "Cache invalidation timing and redirect loop behavior require runtime observation"
   - test: "Desktop sidebar visibility at >= 768px viewport"
-    expected: "Sidebar appears at 220px width with all 6 items; header Figly text is hidden"
+    expected: "Sidebar appears at 220px width with 5 items (no Search link); header has inline search input; header Figly text is hidden"
     why_human: "Responsive CSS breakpoints require browser rendering to verify"
   - test: "Mobile layout unchanged"
     expected: "Bottom nav visible below 768px; sidebar hidden"
@@ -44,7 +44,7 @@ human_verification:
 | 6  | Explore page loads and displays posts without errors | ✓ VERIFIED | `feed.service.ts` `getPublicFeed` where clause includes `user: { username: { not: null } }` |
 | 7  | Posts from users without usernames are excluded from public feed | ✓ VERIFIED | `feed.service.ts` lines 113-117 (getPublicFeed) and lines 192-194 (getReelsFeed): both filter `username: { not: null }` |
 | 8  | PostAuthor.username typed as string \| null | ✓ VERIFIED | `post.types.ts` line 12: `username: string \| null` |
-| 9  | Desktop viewport shows a fixed left sidebar with 6 navigation links | ✓ VERIFIED | `sidebar.tsx`: 5 Link items (Home, Search, Explore, Reels, Profile) + 1 Create button = 6 items; `hidden md:block` |
+| 9  | Desktop viewport shows a fixed left sidebar with 5 navigation links + inline header search | ✓ VERIFIED | `sidebar.tsx`: 4 Link items (Home, Explore, Reels, Profile) + 1 Create button = 5 items; `hidden md:block`; header has inline `HeaderSearch` component |
 | 10 | Main content is offset by sidebar width on desktop | ✓ VERIFIED | `layout.tsx` line 74: `<div className="md:ml-[220px]">` wraps header+main |
 
 **Score:** 10/10 truths verified
@@ -84,7 +84,7 @@ human_verification:
 | BUGF-02 | 11-01-PLAN.md | Backend signup endpoint accepts registration without username/name | ✓ SATISFIED | `auth.service.ts` signup() signature: `{ email: string; password: string }`; creates user with `name: null, username: null`; Prisma schema `name String?` |
 | BUGF-03 | 11-02-PLAN.md | Complete-profile page properly redirects to homepage after username is set | ✓ SATISFIED | `complete-profile-form.tsx` invalidates `['auth', 'me']` before `router.replace('/')`, breaking the redirect loop |
 | BUGF-04 | 11-02-PLAN.md | Explore page loads and displays content correctly | ✓ SATISFIED | `feed.service.ts` filters `user: { username: { not: null } }` in `getPublicFeed`; `PostAuthor.username` typed as `string \| null` with null-safety guards in components |
-| BUGF-05 | 11-03-PLAN.md | Desktop layout has Instagram-style left sidebar navigation | ✓ SATISFIED | `sidebar.tsx` created with 6 nav items (Home, Search, Explore, Reels, Create, Profile), `hidden md:block`, integrated into layout with `md:ml-[220px]` offset |
+| BUGF-05 | 11-03-PLAN.md | Desktop layout has Instagram-style left sidebar navigation with inline header search | ✓ SATISFIED | `sidebar.tsx` created with 5 nav items (Home, Explore, Reels, Create, Profile), `hidden md:block`, integrated into layout with `md:ml-[220px]` offset; `header-search.tsx` provides inline search in header |
 
 All 5 requirement IDs claimed by plans are accounted for. No orphaned requirements detected.
 

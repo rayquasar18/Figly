@@ -68,3 +68,18 @@ export function useCheckUsername(username: string) {
     staleTime: 30 * 1000,
   });
 }
+
+/** Search profiles by username or display name */
+export function useSearchProfiles(query: string) {
+  return useQuery({
+    queryKey: ['search-profiles', query],
+    queryFn: async () => {
+      const response = await apiClient.get<
+        { id: string; username: string; displayName: string; avatarUrl: string | null }[]
+      >(`/profiles/search?q=${encodeURIComponent(query)}`);
+      return response.data;
+    },
+    enabled: query.length >= 2,
+    staleTime: 30 * 1000,
+  });
+}

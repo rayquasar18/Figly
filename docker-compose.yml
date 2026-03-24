@@ -85,7 +85,8 @@ services:
       JWT_ACCESS_SECRET: dev-access-secret-change-in-prod
       JWT_REFRESH_SECRET: dev-refresh-secret-change-in-prod
       FRONTEND_URL: http://localhost:3000
-      RESEND_API_KEY: re_dev_placeholder
+      RESEND_API_KEY: ${RESEND_API_KEY:-re_dev_placeholder}
+      RESEND_FROM_ADDRESS: ${RESEND_FROM_ADDRESS:-Figly <onboarding@resend.dev>}
       BACKEND_PORT: 4000
     depends_on:
       postgres:

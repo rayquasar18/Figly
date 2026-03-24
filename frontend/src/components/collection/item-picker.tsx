@@ -37,7 +37,7 @@ export function ItemPicker({
   const [localSelectedItems, setLocalSelectedItems] = useState<Map<string, LinkedItemResponse>>(
     new Map(),
   );
-  const debounceRef = useRef<ReturnType<typeof setTimeout>>();
+  const debounceRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const sentinelRef = useRef<HTMLDivElement>(null);
 
   // Reset local state when dialog opens

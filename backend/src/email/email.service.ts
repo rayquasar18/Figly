@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Resend } from 'resend';
 import { renderVerificationEmail } from './templates/verification';
@@ -6,13 +6,14 @@ import { renderPasswordResetEmail } from './templates/password-reset';
 
 @Injectable()
 export class EmailService {
+  private readonly logger = new Logger(EmailService.name);
   private resend: Resend;
   private fromAddress: string;
 
   constructor(private configService: ConfigService) {
     const apiKey = this.configService.get<string>('resend.apiKey');
     this.resend = new Resend(apiKey || 'test');
-    this.fromAddress = 'Figly <onboarding@resend.dev>';
+    this.fromAddress = this.configService.get<string>('resend.fromAddress') || 'Figly <onboarding@resend.dev>';
   }
 
   async sendVerificationEmail(email: string, name: string, token: string): Promise<void> {
@@ -20,12 +21,7 @@ export class EmailService {
     const verificationUrl = `${frontendUrl}/verify-email?token=${token}`;
     const html = renderVerificationEmail(name, verificationUrl);
 
-    await this.resend.emails.send({
-      from: this.fromAddress,
-      to: email,
-      subject: 'Xac minh email cua ban - Figly',
-      html,
-    });
+    await this.sendEmail(email, 'Xac minh email cua ban - Figly', html);
   }
 
   async sendPasswordResetEmail(email: string, name: string, token: string): Promise<void> {
@@ -33,11 +29,19 @@ export class EmailService {
     const resetUrl = `${frontendUrl}/reset-password?token=${token}`;
     const html = renderPasswordResetEmail(name, resetUrl);
 
-    await this.resend.emails.send({
+    await this.sendEmail(email, 'Dat lai mat khau - Figly', html);
+  }
+
+  private async sendEmail(to: string, subject: string, html: string): Promise<void> {
+    const { data, error } = await this.resend.emails.send({
       from: this.fromAddress,
-      to: email,
-      subject: 'Dat lai mat khau - Figly',
+      to,
+      subject,
       html,
     });
+
+    if (error) {
+      this.logger.error(`Failed to send email to ${to}: ${error.message}`);
+    }
   }
 }
