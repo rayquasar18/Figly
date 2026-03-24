@@ -24,8 +24,8 @@ Requirements for v2.0 Architecture & Production Hardening. Each maps to roadmap 
 ### Backend Hardening
 
 - [x] **BACK-01**: Environment variables validated at startup using Zod schemas (no fallback defaults for secrets)
-- [ ] **BACK-02**: Global exception filter catches all unhandled errors and returns safe responses (no Prisma/internal details leaked)
-- [ ] **BACK-03**: Structured logging with Pino replaces basic NestJS Logger across all modules
+- [x] **BACK-02**: Global exception filter catches all unhandled errors and returns safe responses (no Prisma/internal details leaked)
+- [x] **BACK-03**: Structured logging with Pino replaces basic NestJS Logger across all modules
 - [ ] **BACK-04**: Health check endpoint reports database, Redis, and MinIO connectivity
 - [ ] **BACK-05**: Swagger/OpenAPI documentation auto-generated from all API endpoints
 - [x] **BACK-06**: DTO validation unified with nestjs-zod (class-validator duplication removed)
@@ -112,8 +112,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FRMW-02 | Phase 12 | Complete |
 | FRMW-03 | Phase 12 | Complete |
 | BACK-01 | Phase 13 | Complete |
-| BACK-02 | Phase 13 | Pending |
-| BACK-03 | Phase 13 | Pending |
+| BACK-02 | Phase 13 | Complete |
+| BACK-03 | Phase 13 | Complete |
 | BACK-04 | Phase 13 | Pending |
 | BACK-05 | Phase 13 | Pending |
 | BACK-06 | Phase 13 | Complete |

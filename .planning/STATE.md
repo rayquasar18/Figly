@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Architecture & Production Hardening
-status: unknown
-stopped_at: Completed 13-01-PLAN.md
-last_updated: "2026-03-24T21:58:33.022Z"
+status: Ready to execute
+stopped_at: Completed 13-02-PLAN.md
+last_updated: "2026-03-24T22:12:22.080Z"
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 10
-  completed_plans: 7
+  completed_plans: 9
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-20)
 ## Current Position
 
 Phase: 13 (backend-hardening) — EXECUTING
-Plan: 2 of 4
+Plan: 3 of 4
 
 ## Performance Metrics
 
@@ -55,6 +55,9 @@ Recent decisions affecting current work:
 - [Phase 12]: React 19 ref-as-prop pattern: function Component({ ref, ...props }) replaces const Component = React.forwardRef((props, ref) => ...)
 - [Phase 13]: Zod ^3.25.0 bump for nestjs-zod peer compatibility; createZodDto wrapper pattern for all backend DTOs
 - [Phase 13]: ZodValidationPipe via APP_PIPE in AppModule providers; env validation via ConfigModule validate option
+- [Phase 13]: Logger.error called only for 500+ errors; 4xx are not logged to reduce noise
+- [Phase 13]: Pino uses pino-pretty in development and raw JSON in production for log aggregation readiness
+- [Phase 13]: Global exception filter: P2002->409, P2025->404, unknown->500 with safe messages (no Prisma details)
 
 ### Pending Todos
 
@@ -73,6 +76,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-24T21:58:33.019Z
-Stopped at: Completed 13-01-PLAN.md
+Last session: 2026-03-24T22:12:22.077Z
+Stopped at: Completed 13-02-PLAN.md
 Resume file: None
