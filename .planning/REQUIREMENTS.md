@@ -9,8 +9,8 @@ Requirements for v2.0 Architecture & Production Hardening. Each maps to roadmap 
 
 ### Bugfixes & UX Flow
 
-- [ ] **BUGF-01**: Signup form only requires email and password (remove name and username fields from registration)
-- [ ] **BUGF-02**: Backend signup endpoint accepts registration without username/name (make fields optional)
+- [x] **BUGF-01**: Signup form only requires email and password (remove name and username fields from registration)
+- [x] **BUGF-02**: Backend signup endpoint accepts registration without username/name (make fields optional)
 - [x] **BUGF-03**: Complete-profile page properly redirects to homepage after username is set (fix auth cache invalidation so layout stops redirecting back)
 - [x] **BUGF-04**: Explore page loads and displays content correctly
 - [x] **BUGF-05**: Desktop layout has Instagram-style left sidebar navigation (Home, Search, Explore, Reels, Create, Profile)
@@ -103,8 +103,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| BUGF-01 | Phase 11 | Pending |
-| BUGF-02 | Phase 11 | Pending |
+| BUGF-01 | Phase 11 | Complete |
+| BUGF-02 | Phase 11 | Complete |
 | BUGF-03 | Phase 11 | Complete |
 | BUGF-04 | Phase 11 | Complete |
 | BUGF-05 | Phase 11 | Complete |

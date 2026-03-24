@@ -25,7 +25,7 @@
 
 **Milestone Goal:** Upgrade frameworks, harden architecture, restructure codebase, and add production-ready infrastructure — before building new features.
 
-- [ ] **Phase 11: Bugfixes & UX Flow** - Fix broken registration flow, explore page, and desktop navigation layout
+- [x] **Phase 11: Bugfixes & UX Flow** - Fix broken registration flow, explore page, and desktop navigation layout (completed 2026-03-24)
 - [ ] **Phase 12: Framework Upgrades** - Upgrade React 18->19, Next.js 14->16, NestJS 10->11
 - [ ] **Phase 13: Backend Hardening** - Add env validation, exception filter, structured logging, health checks, Swagger, DTO unification, response serialization, Redis rate limiter
 - [ ] **Phase 14: Frontend Restructure** - Reorganize to features/ pattern, add auth middleware, SSR/SEO for public routes, dark mode
@@ -43,9 +43,9 @@
   2. After signup, user is directed to a complete-profile page where they set a username, and upon completion they land on the homepage without redirect loops
   3. Explore page loads and displays content (posts/reels) without errors
   4. Desktop viewport shows an Instagram-style left sidebar with navigation links (Home, Search, Explore, Reels, Create, Profile)
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans complete
 Plans:
-- [ ] 11-01-PLAN.md — Simplify signup to email+password only (Prisma migration, shared/backend/frontend DTOs, email template)
+- [x] 11-01-PLAN.md — Simplify signup to email+password only (Prisma migration, shared/backend/frontend DTOs, email template)
 - [x] 11-02-PLAN.md — Fix complete-profile redirect loop and explore page null-username issue
 - [x] 11-03-PLAN.md — Add Instagram-style desktop sidebar navigation
 
@@ -115,7 +115,7 @@ Plans:
 | 3.1 Public Viewing Mode | v1.0 | 2/2 | Complete | 2026-03-14 |
 | 4. Collection System | v1.0 | 6/6 | Complete | 2026-03-15 |
 | 10. Reels | v1.0 | 2/2 | Complete | 2026-03-20 |
-| 11. Bugfixes & UX Flow | v2.0 | 2/3 | In Progress|  |
+| 11. Bugfixes & UX Flow | v2.0 | 3/3 | Complete   | 2026-03-24 |
 | 12. Framework Upgrades | v2.0 | 0/? | Not started | - |
 | 13. Backend Hardening | v2.0 | 0/? | Not started | - |
 | 14. Frontend Restructure | v2.0 | 0/? | Not started | - |

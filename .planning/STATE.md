@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Architecture & Production Hardening
 status: unknown
-stopped_at: Completed 11-02-PLAN.md
-last_updated: "2026-03-24T01:19:56.172Z"
+stopped_at: Completed 11-01-PLAN.md
+last_updated: "2026-03-24T01:23:45.312Z"
 progress:
   total_phases: 6
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 3
-  completed_plans: 2
+  completed_plans: 3
 ---
 
 # Project State
@@ -48,6 +48,8 @@ Recent decisions affecting current work:
 - [Phase 11]: Sidebar width 220px fixed, matching Instagram desktop pattern
 - [Phase 11-02]: PostAuthor.username typed as string | null; null-username users filtered at backend query level
 - [Phase 11-02]: Auth cache invalidated after profile mutation to prevent redirect loop
+- [Phase 11]: Manual Prisma migration for nullable name (shadow DB baseline broken)
+- [Phase 11]: Null-safe name pattern: user.name || 'ban' before email services
 
 ### Pending Todos
 
@@ -66,6 +68,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-24T01:19:56.170Z
-Stopped at: Completed 11-02-PLAN.md
+Last session: 2026-03-24T01:23:45.310Z
+Stopped at: Completed 11-01-PLAN.md
 Resume file: None
