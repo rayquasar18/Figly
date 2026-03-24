@@ -34,11 +34,13 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 - [ ] Tai cau truc thu muc frontend/backend theo chuan best practice
 - [x] Cap nhat framework len phien ban moi nhat (React 19, Next.js 16, NestJS 11) — Validated in Phase 12
 - [ ] Don file thua, tai cau truc shared package
-- [ ] Env validation, global exception filter, structured logging
+- [x] Env validation, global exception filter, structured logging — Validated in Phase 13
 - [ ] Next.js middleware, SSR/SEO cho trang cong khai
-- [ ] Swagger/OpenAPI, ESLint/Prettier/Husky, CI/CD
-- [ ] Docker split 2 container, Redis-backed rate limiter
-- [ ] Thong nhat DTO validation, response serialization, health check
+- [x] Swagger/OpenAPI — Validated in Phase 13
+- [ ] ESLint/Prettier/Husky, CI/CD
+- [ ] Docker split 2 container
+- [x] Redis-backed rate limiter — Validated in Phase 13
+- [x] Thong nhat DTO validation, response serialization, health check — Validated in Phase 13
 - [ ] ThemeProvider dark mode
 
 **Deferred features (v2.1+):**
@@ -82,10 +84,20 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 
 **v1.0 MVP shipped 2026-03-20**
 - 23,289 LOC TypeScript + 782 LOC Prisma
-- 8 phases completed (1, 2, 3, 3.1, 4, 10, 11, 12), 27 plans executed
+- 8 phases completed (1, 2, 3, 3.1, 4, 10, 11, 12, 13), 31 plans executed
 - NestJS backend + Next.js frontend monorepo
 - PostgreSQL (Prisma), MinIO media storage, BullMQ async processing
 - ffmpeg video transcoding for reels
+
+**Phase 13 complete (2026-03-25):**
+- Zod env validation — rejects missing JWT secrets and DATABASE_URL at startup
+- All 7 DTO files migrated from class-validator to nestjs-zod (class-validator removed)
+- Global exception filter with Prisma error mapping (no stack traces leaked)
+- Pino structured JSON logging with header redaction
+- Health check endpoint (/health) with Prisma/Redis/MinIO indicators
+- Redis-backed rate limiter (replaced in-memory)
+- Swagger/OpenAPI at /api/docs
+- Response serialization stripping internal fields (passwordHash, etc.)
 
 **Phase 12 complete (2026-03-24):**
 - NestJS upgraded v10→v11 with all satellites aligned
@@ -105,16 +117,16 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 
 **Architecture audit findings (v2.0 trigger):**
 - Tat ca trang frontend la 'use client' — khong SSR, khong SEO
-- Khong co env validation — JWT secret fallback ve gia tri mac dinh (lo hong bao mat)
-- Khong co global exception filter — lo Prisma error ra client
-- Khong co structured logging — chi NestJS Logger co ban
+- Khong co env validation — ~~JWT secret fallback ve gia tri mac dinh (lo hong bao mat)~~ Fixed Phase 13
+- Khong co global exception filter — ~~lo Prisma error ra client~~ Fixed Phase 13
+- Khong co structured logging — ~~chi NestJS Logger co ban~~ Fixed Phase 13
 - Khong co middleware.ts — auth redirect phia client gay nhap nhay
-- Khong co Swagger/OpenAPI
+- ~~Khong co Swagger/OpenAPI~~ Fixed Phase 13
 - Khong co ESLint/Prettier/Husky config
 - Khong co CI/CD
 - Docker la 1 container ket hop (can tach 2)
-- DTO validation trung lap giua class-validator va Zod
-- Rate limiter dung bo nho trong tien trinh (khong Redis)
+- ~~DTO validation trung lap giua class-validator va Zod~~ Fixed Phase 13 (class-validator removed)
+- ~~Rate limiter dung bo nho trong tien trinh (khong Redis)~~ Fixed Phase 13
 - ThemeProvider thieu (dark mode la ma chet)
 - Thu muc frontend/backend chua theo chuan best practice
 - Shared package can tai cau truc cho doc lap hon
@@ -150,4 +162,4 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 | v2.0 Architecture milestone | Audit revealed 15+ production gaps; fix before adding features | — Pending |
 
 ---
-*Last updated: 2026-03-24 after Phase 12 completion*
+*Last updated: 2026-03-25 after Phase 13 completion*
