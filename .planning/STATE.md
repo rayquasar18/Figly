@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Architecture & Production Hardening
 status: unknown
-stopped_at: Completed 11-01-PLAN.md
-last_updated: "2026-03-24T01:29:11.517Z"
+stopped_at: Completed 12-01-PLAN.md
+last_updated: "2026-03-24T06:19:40.220Z"
 progress:
   total_phases: 6
   completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
+  total_plans: 6
+  completed_plans: 4
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-20)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 11 — bugfixes-ux-flow
+**Current focus:** Phase 12 — framework-upgrades
 
 ## Current Position
 
-Phase: 12
-Plan: Not started
+Phase: 12 (framework-upgrades) — EXECUTING
+Plan: 2 of 3
 
 ## Performance Metrics
 
@@ -50,6 +50,7 @@ Recent decisions affecting current work:
 - [Phase 11-02]: Auth cache invalidated after profile mutation to prevent redirect loop
 - [Phase 11]: Manual Prisma migration for nullable name (shadow DB baseline broken)
 - [Phase 11]: Null-safe name pattern: user.name || 'ban' before email services
+- [Phase 12-01]: NestJS 11 upgrade requires no code changes -- existing patterns (cookie-parser import, config factory, Express types) are fully compatible
 
 ### Pending Todos
 
@@ -68,6 +69,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-24T01:23:45.310Z
-Stopped at: Completed 11-01-PLAN.md
+Last session: 2026-03-24T06:19:40.218Z
+Stopped at: Completed 12-01-PLAN.md
 Resume file: None
