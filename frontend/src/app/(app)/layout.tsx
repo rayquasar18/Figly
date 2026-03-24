@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Search } from 'lucide-react';
 import { useMe } from '@/hooks/queries/auth-queries';
 import { BottomNav } from '@/components/layout/bottom-nav';
+import { Sidebar } from '@/components/layout/sidebar';
 import { CreatePostFlow } from '@/components/create-post/create-post-flow';
 import { CreateReelFlow } from '@/components/reel/create-reel-flow';
 
@@ -69,25 +70,28 @@ export default function AppLayout({
 
   return (
     <>
-      {!hideHeader && (
-        <header className="sticky top-0 z-40 border-b bg-background">
-          <div className="mx-auto flex h-14 max-w-4xl items-center justify-between px-4">
-            <Link href="/" className="text-xl font-bold">
-              Figly
-            </Link>
-            <div className="flex items-center gap-2">
-              <Link
-                href="/search"
-                className="flex size-9 items-center justify-center rounded-full hover:bg-muted"
-                aria-label="Tim kiem"
-              >
-                <Search className="size-5 text-muted-foreground" />
+      <Sidebar />
+      <div className="md:ml-[220px]">
+        {!hideHeader && (
+          <header className="sticky top-0 z-40 border-b bg-background">
+            <div className="mx-auto flex h-14 max-w-4xl items-center justify-between px-4">
+              <Link href="/" className="text-xl font-bold md:hidden">
+                Figly
               </Link>
+              <div className="flex items-center gap-2">
+                <Link
+                  href="/search"
+                  className="flex size-9 items-center justify-center rounded-full hover:bg-muted"
+                  aria-label="Tim kiem"
+                >
+                  <Search className="size-5 text-muted-foreground" />
+                </Link>
+              </div>
             </div>
-          </div>
-        </header>
-      )}
-      <main className="pb-14 md:pb-0">{children}</main>
+          </header>
+        )}
+        <main className="pb-14 md:pb-0">{children}</main>
+      </div>
       <BottomNav />
       <CreatePostFlow />
       <CreateReelFlow />
