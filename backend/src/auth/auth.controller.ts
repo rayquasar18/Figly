@@ -11,9 +11,11 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
+import { ZodSerializerDto } from 'nestjs-zod';
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
 import { SignupDto, LoginDto, ResetPasswordRequestDto, ResetPasswordDto, VerifyEmailDto } from './dto/auth.dto';
+import { SignupResponseDto, LoginResponseDto, MeResponseDto } from '../common/dto/user-response.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
@@ -30,6 +32,7 @@ export class AuthController {
   // ---------------------
 
   @Post('signup')
+  @ZodSerializerDto(SignupResponseDto)
   async signup(@Body() signupDto: SignupDto) {
     const user = await this.authService.signup(signupDto);
     // Send verification email
@@ -44,6 +47,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(LocalAuthGuard)
   @Throttle({ login: { ttl: 60000, limit: 5 } })
+  @ZodSerializerDto(LoginResponseDto)
   async login(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
     const user = req.user as any;
     const userAgent = req.headers['user-agent'] || 'unknown';
@@ -88,6 +92,7 @@ export class AuthController {
 
   @Get('me')
   @UseGuards(JwtAuthGuard)
+  @ZodSerializerDto(MeResponseDto)
   async me(@Req() req: Request) {
     const { userId } = req.user as any;
     return this.authService.getMe(userId);
