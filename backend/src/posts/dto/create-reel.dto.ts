@@ -1,40 +1,12 @@
-import {
-  IsString,
-  IsNotEmpty,
-  IsOptional,
-  MaxLength,
-  IsArray,
-  IsNumber,
-  Min,
-} from 'class-validator';
-import { REEL_LIMITS } from '@figly/shared';
+import { createZodDto } from 'nestjs-zod';
+import { createReelSchema } from '@figly/shared';
+import { z } from 'zod';
 
-export class CreateReelDto {
-  @IsString()
-  @IsNotEmpty({ message: 'Media ID khong duoc de trong' })
-  mediaId!: string;
+// Extend shared schema with backend-specific video metadata fields
+const backendCreateReelSchema = createReelSchema.extend({
+  duration: z.number().min(0),
+  width: z.number().min(1),
+  height: z.number().min(1),
+});
 
-  @IsOptional()
-  @IsString()
-  @MaxLength(REEL_LIMITS.maxCaptionLength, {
-    message: `Chu thich khong duoc vuot qua ${REEL_LIMITS.maxCaptionLength} ky tu`,
-  })
-  caption?: string;
-
-  @IsOptional()
-  @IsArray()
-  @IsString({ each: true })
-  linkedItemIds?: string[];
-
-  @IsNumber()
-  @Min(0)
-  duration!: number;
-
-  @IsNumber()
-  @Min(1)
-  width!: number;
-
-  @IsNumber()
-  @Min(1)
-  height!: number;
-}
+export class CreateReelDto extends createZodDto(backendCreateReelSchema) {}
