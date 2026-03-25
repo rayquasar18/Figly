@@ -92,7 +92,12 @@ Plans:
   2. Unauthenticated users hitting protected routes are redirected to login server-side (no flash of protected content)
   3. Public pages (feed, profiles, individual posts) render as Server Components with proper meta tags (title, description, og:image) visible in page source
   4. Dark mode toggles between system preference and manual selection, persisting across sessions
-**Plans**: TBD
+**Plans:** 4 plans
+Plans:
+- [ ] 14-01-PLAN.md — Auth proxy, server-fetch utility, dark mode setup, Tailwind config update
+- [ ] 14-02-PLAN.md — Directory restructure: move components/hooks/stores to features/ with barrel exports
+- [ ] 14-03-PLAN.md — Convert 9 public pages to Server Components with generateMetadata for SEO
+- [ ] 14-04-PLAN.md — Convert 12 authenticated + auth pages to Server Components
 
 ### Phase 15: DevOps & Tooling
 **Goal**: Codebase has automated quality gates, CI/CD pipeline, and production-ready containerization
@@ -127,7 +132,7 @@ Plans:
 | 11. Bugfixes & UX Flow | v2.0 | 3/3 | Complete    | 2026-03-24 |
 | 12. Framework Upgrades | v2.0 | 3/3 | Complete    | 2026-03-24 |
 | 13. Backend Hardening | v2.0 | 4/4 | Complete    | 2026-03-24 |
-| 14. Frontend Restructure | v2.0 | 0/? | Not started | - |
+| 14. Frontend Restructure | v2.0 | 0/4 | In progress | - |
 | 15. DevOps & Tooling | v2.0 | 0/? | Not started | - |
 | 16. Shared Package Cleanup | v2.0 | 0/? | Not started | - |
 
