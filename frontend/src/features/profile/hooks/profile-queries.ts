@@ -1,8 +1,4 @@
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
 import { useAuthStore } from '@/features/auth';
 import type { ProfileResponse } from '@figly/shared';
@@ -12,9 +8,7 @@ export function useProfile(username: string) {
   return useQuery({
     queryKey: ['profile', username],
     queryFn: async () => {
-      const response = await apiClient.get<ProfileResponse>(
-        `/profiles/${username}`,
-      );
+      const response = await apiClient.get<ProfileResponse>(`/profiles/${username}`);
       return response.data;
     },
     enabled: !!username,
@@ -34,10 +28,7 @@ export function useUpdateProfile() {
       bio?: string | null;
       avatarId?: string;
     }) => {
-      const response = await apiClient.patch<ProfileResponse>(
-        '/profiles/me',
-        data,
-      );
+      const response = await apiClient.patch<ProfileResponse>('/profiles/me', data);
       return response.data;
     },
     onSuccess: (data) => {
@@ -59,9 +50,7 @@ export function useCheckUsername(username: string) {
   return useQuery({
     queryKey: ['username-check', username],
     queryFn: async () => {
-      const response = await apiClient.get<{ available: boolean }>(
-        `/profiles/check/${username}`,
-      );
+      const response = await apiClient.get<{ available: boolean }>(`/profiles/check/${username}`);
       return response.data;
     },
     enabled: username.length >= 3,

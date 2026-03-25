@@ -49,11 +49,7 @@ export function CreatePostFlow() {
           const img = images[i];
           const crop = img.croppedAreaPixels;
           if (crop) {
-            const blob = await getCroppedImg(
-              img.previewUrl,
-              crop,
-              img.rotation,
-            );
+            const blob = await getCroppedImg(img.previewUrl, crop, img.rotation);
             setCroppedBlob(i, blob);
           } else {
             // No crop set -- use default (full image as blob)
@@ -88,13 +84,9 @@ export function CreatePostFlow() {
         const formData = new FormData();
         formData.append('file', blob, `image-${i}.jpg`);
 
-        const uploadResponse = await apiClient.post<{ id: string }>(
-          '/media/upload',
-          formData,
-          {
-            headers: { 'Content-Type': 'multipart/form-data' },
-          },
-        );
+        const uploadResponse = await apiClient.post<{ id: string }>('/media/upload', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
         mediaIds.push(uploadResponse.data.id);
         setMediaId(i, uploadResponse.data.id);
       }
@@ -127,13 +119,7 @@ export function CreatePostFlow() {
       <header className="flex h-12 shrink-0 items-center justify-between border-b px-4">
         {/* Left: Close or Back */}
         {step === 'gallery' ? (
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={close}
-            disabled={isBusy}
-            aria-label="Dong"
-          >
+          <Button variant="ghost" size="icon" onClick={close} disabled={isBusy} aria-label="Dong">
             <X className="size-5" />
           </Button>
         ) : (
@@ -153,27 +139,19 @@ export function CreatePostFlow() {
 
         {/* Right: Next / Share */}
         {step === 'caption' ? (
-          <Button
-            size="sm"
-            onClick={handlePublish}
-            disabled={!canAdvance || isBusy}
-          >
-            {isPublishing ? (
-              <Loader2 className="mr-1 size-4 animate-spin" />
-            ) : null}
+          <Button size="sm" onClick={handlePublish} disabled={!canAdvance || isBusy}>
+            {isPublishing ? <Loader2 className="mr-1 size-4 animate-spin" /> : null}
             Chia se
           </Button>
         ) : (
           <Button
             variant="ghost"
             size="sm"
-            className="text-primary font-semibold"
+            className="font-semibold text-primary"
             onClick={handleNext}
             disabled={!canAdvance || isBusy}
           >
-            {isProcessing ? (
-              <Loader2 className="mr-1 size-4 animate-spin" />
-            ) : null}
+            {isProcessing ? <Loader2 className="mr-1 size-4 animate-spin" /> : null}
             Tiep
           </Button>
         )}

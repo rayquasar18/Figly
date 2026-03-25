@@ -10,11 +10,7 @@ import { HeaderSearch } from '@/components/layout/header-search';
 import { CreatePostFlow } from '@/features/create-post';
 import { CreateReelFlow } from '@/features/reel';
 
-export default function AppLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AppLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const { data: user, isLoading, isError } = useMe();

@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  NotFoundException,
-  ForbiddenException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import type {
   ChecklistResponse,
@@ -260,10 +256,7 @@ export class ChecklistService {
     };
   }
 
-  async toggleEntry(
-    entryId: string,
-    userId: string,
-  ): Promise<{ id: string; isChecked: boolean }> {
+  async toggleEntry(entryId: string, userId: string): Promise<{ id: string; isChecked: boolean }> {
     const entry = await this.prisma.checklistEntry.findUnique({
       where: { id: entryId },
       include: { checklist: { select: { id: true, userId: true } } },
@@ -304,11 +297,7 @@ export class ChecklistService {
     });
   }
 
-  async reorderEntries(
-    checklistId: string,
-    userId: string,
-    entryIds: string[],
-  ): Promise<void> {
+  async reorderEntries(checklistId: string, userId: string, entryIds: string[]): Promise<void> {
     const checklist = await this.prisma.checklist.findFirst({
       where: { id: checklistId, userId },
     });

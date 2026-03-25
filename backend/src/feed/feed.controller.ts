@@ -1,10 +1,4 @@
-import {
-  Controller,
-  Get,
-  Query,
-  UseGuards,
-  Req,
-} from '@nestjs/common';
+import { Controller, Get, Query, UseGuards, Req } from '@nestjs/common';
 import { Request } from 'express';
 import { FeedService } from './feed.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -33,10 +27,7 @@ export class FeedController {
 
   @Get()
   @UseGuards(JwtAuthGuard, EmailVerifiedGuard)
-  async getFeed(
-    @Req() req: Request,
-    @Query('cursor') cursor?: string,
-  ) {
+  async getFeed(@Req() req: Request, @Query('cursor') cursor?: string) {
     const { userId } = req.user as any;
     return this.feedService.getFeed(userId, cursor);
   }

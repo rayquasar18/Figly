@@ -68,9 +68,7 @@ export function ItemSearch() {
             </div>
           ) : showEmpty ? (
             <div className="flex flex-col items-center justify-center py-8 text-center">
-              <p className="text-sm text-muted-foreground">
-                Khong tim thay ket qua
-              </p>
+              <p className="text-sm text-muted-foreground">Khong tim thay ket qua</p>
             </div>
           ) : (
             <>

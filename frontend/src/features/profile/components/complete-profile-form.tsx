@@ -59,8 +59,9 @@ export function CompleteProfileForm() {
   }, [watchedUsername]);
 
   const shouldCheck = debouncedUsername.length >= USERNAME_RULES.minLength;
-  const { data: usernameCheck, isFetching: isCheckingUsername } =
-    useCheckUsername(shouldCheck ? debouncedUsername : '');
+  const { data: usernameCheck, isFetching: isCheckingUsername } = useCheckUsername(
+    shouldCheck ? debouncedUsername : '',
+  );
 
   async function onSubmit(data: CompleteProfileForm) {
     try {
@@ -74,8 +75,8 @@ export function CompleteProfileForm() {
       router.replace('/');
     } catch (error: unknown) {
       const message =
-        (error as { response?: { data?: { message?: string } } })?.response
-          ?.data?.message ?? 'Cap nhat that bai. Vui long thu lai.';
+        (error as { response?: { data?: { message?: string } } })?.response?.data?.message ??
+        'Cap nhat that bai. Vui long thu lai.';
       toast.error(message);
     }
   }
@@ -114,9 +115,7 @@ export function CompleteProfileForm() {
                   )}
                 </div>
               </FormControl>
-              <FormDescription>
-                Chi chua chu thuong, so, dau gach duoi va dau cham
-              </FormDescription>
+              <FormDescription>Chi chua chu thuong, so, dau gach duoi va dau cham</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -129,22 +128,14 @@ export function CompleteProfileForm() {
             <FormItem>
               <FormLabel>Ten hien thi</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Ten hien thi cua ban"
-                  autoComplete="name"
-                  {...field}
-                />
+                <Input placeholder="Ten hien thi cua ban" autoComplete="name" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={updateProfile.isPending}
-        >
+        <Button type="submit" className="w-full" disabled={updateProfile.isPending}>
           {updateProfile.isPending ? (
             <>
               <Loader2 className="mr-1.5 size-4 animate-spin" />

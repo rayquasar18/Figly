@@ -1,18 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
-import { ThrottlerGuard } from '@nestjs/throttler';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
 import * as cookieParser from 'cookie-parser';
 import { AppModule } from '../src/app.module';
 import { PrismaService } from '../src/prisma/prisma.service';
-
-// Disable rate limiting in e2e tests to avoid Redis-backed throttler
-// interfering with sequential test requests
-class ThrottlerGuardMock extends ThrottlerGuard {
-  async canActivate(): Promise<boolean> {
-    return true;
-  }
-}
 
 describe('Auth E2E (real DB)', () => {
   let app: INestApplication;
@@ -26,14 +17,12 @@ describe('Auth E2E (real DB)', () => {
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    })
-      .overrideProvider(ThrottlerGuard)
-      .useClass(ThrottlerGuardMock)
-      .compile();
+    }).compile();
 
     app = moduleFixture.createNestApplication();
     app.setGlobalPrefix('api');
     app.use(cookieParser());
+    app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
     await app.init();
 
     prisma = app.get(PrismaService);
@@ -41,19 +30,15 @@ describe('Auth E2E (real DB)', () => {
 
   afterAll(async () => {
     // Cleanup test user and related data
-    try {
-      const user = await prisma.user.findUnique({ where: { email: testEmail } });
-      if (user) {
-        await prisma.refreshToken.deleteMany({ where: { userId: user.id } });
-        await prisma.verificationToken.deleteMany({ where: { userId: user.id } });
-        await prisma.passwordResetToken.deleteMany({ where: { userId: user.id } });
-        await prisma.media.deleteMany({ where: { userId: user.id } });
-        await prisma.user.delete({ where: { id: user.id } });
-      }
-    } catch {
-      // Ignore cleanup errors (DB may be unavailable)
+    const user = await prisma.user.findUnique({ where: { email: testEmail } });
+    if (user) {
+      await prisma.refreshToken.deleteMany({ where: { userId: user.id } });
+      await prisma.verificationToken.deleteMany({ where: { userId: user.id } });
+      await prisma.passwordResetToken.deleteMany({ where: { userId: user.id } });
+      await prisma.media.deleteMany({ where: { userId: user.id } });
+      await prisma.user.delete({ where: { id: user.id } });
     }
-    if (app) await app.close();
+    await app.close();
   });
 
   // ─── Signup ───
@@ -61,26 +46,30 @@ describe('Auth E2E (real DB)', () => {
   it('POST /api/auth/signup — creates user', async () => {
     const res = await request(app.getHttpServer())
       .post('/api/auth/signup')
-      .send({ email: testEmail, password: testPassword })
+      .send({ email: testEmail, password: testPassword, name: testName, username: testUsername })
       .expect(201);
 
     expect(res.body.user.email).toBe(testEmail);
-    expect(res.body.user.name).toBeNull();
-    expect(res.body.user.username).toBeNull();
+    expect(res.body.user.name).toBe(testName);
     expect(res.body.user.emailVerified).toBe(false);
   });
 
   it('POST /api/auth/signup — rejects duplicate email', async () => {
     await request(app.getHttpServer())
       .post('/api/auth/signup')
-      .send({ email: testEmail, password: testPassword })
+      .send({
+        email: testEmail,
+        password: testPassword,
+        name: testName,
+        username: `${testUsername}_dup`,
+      })
       .expect(409);
   });
 
   it('POST /api/auth/signup — rejects weak password', async () => {
     const res = await request(app.getHttpServer())
       .post('/api/auth/signup')
-      .send({ email: 'weak@test.com', password: '12345678' })
+      .send({ email: 'weak@test.com', password: '12345678', name: 'Weak', username: 'weakuser' })
       .expect(400);
 
     expect(res.body.message).toBeDefined();
@@ -153,13 +142,11 @@ describe('Auth E2E (real DB)', () => {
       .expect(200);
 
     expect(res.body.user.email).toBe(testEmail);
-    expect(res.body.user.name).toBeNull();
+    expect(res.body.user.name).toBe(testName);
   });
 
   it('GET /api/auth/me — returns 401 without cookies', async () => {
-    await request(app.getHttpServer())
-      .get('/api/auth/me')
-      .expect(401);
+    await request(app.getHttpServer()).get('/api/auth/me').expect(401);
   });
 
   // ─── Token refresh ───
@@ -222,8 +209,6 @@ describe('Auth E2E (real DB)', () => {
 
   it('GET /api/auth/me — fails after logout (cookies cleared)', async () => {
     // After logout, cookies should be cleared
-    await request(app.getHttpServer())
-      .get('/api/auth/me')
-      .expect(401);
+    await request(app.getHttpServer()).get('/api/auth/me').expect(401);
   });
 });

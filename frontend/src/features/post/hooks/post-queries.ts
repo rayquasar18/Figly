@@ -1,15 +1,6 @@
-import {
-  useInfiniteQuery,
-  useQuery,
-  useMutation,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
-import type {
-  PaginatedResponse,
-  FeedPostResponse,
-  PostResponse,
-} from '@figly/shared';
+import type { PaginatedResponse, FeedPostResponse, PostResponse } from '@figly/shared';
 
 /** Fetch chronological feed from followed users with infinite scroll */
 export function useFeed() {
@@ -70,7 +61,11 @@ export function useCreatePost() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (data: { caption?: string; mediaIds: string[]; linkedItemIds?: string[] }) => {
+    mutationFn: async (data: {
+      caption?: string;
+      mediaIds: string[];
+      linkedItemIds?: string[];
+    }) => {
       const response = await apiClient.post<PostResponse>('/posts', data);
       return response.data;
     },

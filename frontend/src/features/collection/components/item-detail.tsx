@@ -15,11 +15,7 @@ export function ItemDetail({ item }: ItemDetailProps) {
       {/* Image */}
       <div className="aspect-square w-full overflow-hidden rounded-lg bg-muted">
         {item.imageUrl ? (
-          <img
-            src={item.imageUrl}
-            alt={item.name}
-            className="size-full object-cover"
-          />
+          <img src={item.imageUrl} alt={item.name} className="size-full object-cover" />
         ) : (
           <div className="flex size-full items-center justify-center">
             <Package className="size-20 text-muted-foreground/30" />
@@ -48,14 +44,11 @@ export function ItemDetail({ item }: ItemDetailProps) {
           </Link>
         </div>
 
-        {item.description && (
-          <p className="text-sm text-muted-foreground">{item.description}</p>
-        )}
+        {item.description && <p className="text-sm text-muted-foreground">{item.description}</p>}
 
         {item.releaseDate && (
           <p className="text-sm text-muted-foreground">
-            Ngay phat hanh:{' '}
-            {new Date(item.releaseDate).toLocaleDateString('vi-VN')}
+            Ngay phat hanh: {new Date(item.releaseDate).toLocaleDateString('vi-VN')}
           </p>
         )}
 

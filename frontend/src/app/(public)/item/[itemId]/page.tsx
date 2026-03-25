@@ -1,51 +1,46 @@
-import type { Metadata } from 'next';
-import { fetchApi } from '@/lib/server-fetch';
-import ItemDetailPageClient from './item-detail-page-client';
+'use client';
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://figly.app';
-const toAbsoluteUrl = (url: string | null | undefined): string | undefined =>
-  url ? (url.startsWith('http') ? url : `${APP_URL}${url}`) : undefined;
+import { useParams, useRouter } from 'next/navigation';
+import { ArrowLeft } from 'lucide-react';
+import { useItemDetail } from '@/hooks/queries/collection-queries';
+import { ItemDetail } from '@/components/collection/item-detail';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Button } from '@/components/ui/button';
 
-interface ItemResponse {
-  id: string;
-  name: string;
-  description?: string | null;
-  imageUrl?: string | null;
+function ItemDetailSkeleton() {
+  return (
+    <div className="space-y-4">
+      <Skeleton className="aspect-square w-full rounded-lg" />
+      <Skeleton className="h-6 w-2/3" />
+      <Skeleton className="h-4 w-1/2" />
+      <Skeleton className="h-4 w-full" />
+      <Skeleton className="h-10 w-full" />
+    </div>
+  );
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ itemId: string }>;
-}): Promise<Metadata> {
-  const { itemId } = await params;
-  const item = await fetchApi<ItemResponse>(`/collection/items/${itemId}`);
-  if (!item) {
-    return { title: 'Vat pham khong ton tai | Figly' };
-  }
-  const ogImage = toAbsoluteUrl(item.imageUrl);
-  return {
-    title: `${item.name} | Figly`,
-    description: item.description || `Xem chi tiet ${item.name} tren Figly`,
-    openGraph: {
-      title: `${item.name} | Figly`,
-      description: item.description || `Xem chi tiet ${item.name} tren Figly`,
-      images: ogImage ? [{ url: ogImage }] : [],
-    },
-    twitter: {
-      card: ogImage ? 'summary_large_image' : 'summary',
-      title: `${item.name} | Figly`,
-      images: ogImage ? [ogImage] : [],
-    },
-  };
-}
+export default function ItemDetailPage() {
+  const params = useParams<{ itemId: string }>();
+  const router = useRouter();
+  const { data: item, isLoading, isError } = useItemDetail(params.itemId);
 
-export default async function ItemDetailPage({
-  params,
-}: {
-  params: Promise<{ itemId: string }>;
-}) {
-  const { itemId } = await params;
+  return (
+    <div className="mx-auto max-w-lg px-4 py-6">
+      {/* Back button */}
+      <Button variant="ghost" size="sm" onClick={() => router.back()} className="-ml-2 mb-4">
+        <ArrowLeft className="mr-1 size-4" />
+        Quay lai
+      </Button>
 
-  return <ItemDetailPageClient itemId={itemId} />;
+      {isLoading ? (
+        <ItemDetailSkeleton />
+      ) : isError || !item ? (
+        <div className="flex flex-col items-center justify-center py-20 text-center">
+          <p className="text-muted-foreground">Khong tim thay vat pham</p>
+        </div>
+      ) : (
+        <ItemDetail item={item} />
+      )}
+    </div>
+  );
 }

@@ -4,24 +4,11 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import {
-  usernameSchema,
-  bioSchema,
-  USERNAME_RULES,
-  PROFILE_LIMITS,
-} from '@figly/shared';
+import { usernameSchema, bioSchema, USERNAME_RULES, PROFILE_LIMITS } from '@figly/shared';
 import type { ProfileResponse } from '@figly/shared';
-import {
-  useUpdateProfile,
-  useCheckUsername,
-} from '../hooks/profile-queries';
+import { useUpdateProfile, useCheckUsername } from '@/hooks/queries/profile-queries';
 import { apiClient } from '@/lib/api-client';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -55,8 +42,7 @@ interface ProfileEditModalProps {
   profile: ProfileResponse;
 }
 
-function getInitials(name: string | undefined | null): string {
-  if (!name) return '?';
+function getInitials(name: string): string {
   return name
     .split(' ')
     .map((part) => part[0])
@@ -66,11 +52,7 @@ function getInitials(name: string | undefined | null): string {
     .toUpperCase();
 }
 
-export function ProfileEditModal({
-  open,
-  onOpenChange,
-  profile,
-}: ProfileEditModalProps) {
+export function ProfileEditModal({ open, onOpenChange, profile }: ProfileEditModalProps) {
   const updateProfile = useUpdateProfile();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
@@ -100,11 +82,11 @@ export function ProfileEditModal({
 
   // Only check availability if username differs from current
   const shouldCheckUsername =
-    debouncedUsername.length >= USERNAME_RULES.minLength &&
-    debouncedUsername !== profile.username;
+    debouncedUsername.length >= USERNAME_RULES.minLength && debouncedUsername !== profile.username;
 
-  const { data: usernameCheck, isFetching: isCheckingUsername } =
-    useCheckUsername(shouldCheckUsername ? debouncedUsername : '');
+  const { data: usernameCheck, isFetching: isCheckingUsername } = useCheckUsername(
+    shouldCheckUsername ? debouncedUsername : '',
+  );
 
   // Reset form when profile changes or modal opens
   useEffect(() => {
@@ -132,11 +114,9 @@ export function ProfileEditModal({
       try {
         const formData = new FormData();
         formData.append('file', file);
-        const response = await apiClient.post<{ id: string }>(
-          '/media/upload',
-          formData,
-          { headers: { 'Content-Type': 'multipart/form-data' } },
-        );
+        const response = await apiClient.post<{ id: string }>('/media/upload', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
         form.setValue('avatarId', response.data.id);
       } catch {
         toast.error('Tai anh len that bai. Vui long thu lai.');
@@ -160,8 +140,8 @@ export function ProfileEditModal({
       onOpenChange(false);
     } catch (error: unknown) {
       const message =
-        (error as { response?: { data?: { message?: string } } })?.response
-          ?.data?.message ?? 'Cap nhat that bai. Vui long thu lai.';
+        (error as { response?: { data?: { message?: string } } })?.response?.data?.message ??
+        'Cap nhat that bai. Vui long thu lai.';
       toast.error(message);
     }
   }
@@ -176,10 +156,7 @@ export function ProfileEditModal({
         </DialogHeader>
 
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-5"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
             {/* Avatar upload */}
             <div className="flex flex-col items-center gap-3">
               <Avatar className="size-20 border">
@@ -225,11 +202,7 @@ export function ProfileEditModal({
                 <FormItem>
                   <FormLabel>Ten hien thi</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Ten hien thi cua ban"
-                      autoComplete="name"
-                      {...field}
-                    />
+                    <Input placeholder="Ten hien thi cua ban" autoComplete="name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

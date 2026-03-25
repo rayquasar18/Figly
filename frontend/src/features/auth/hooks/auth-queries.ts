@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
-import { useAuthStore } from '../stores/auth-store';
+import { useAuthStore } from '@/stores/auth-store';
 import type { PublicUser } from '@figly/shared';
 
 // GET /auth/me - check current session
@@ -44,7 +44,12 @@ export function useLoginMutation() {
 // POST /auth/signup
 export function useSignupMutation() {
   return useMutation({
-    mutationFn: async (data: { email: string; password: string }) => {
+    mutationFn: async (data: {
+      email: string;
+      password: string;
+      name: string;
+      username: string;
+    }) => {
       const response = await apiClient.post('/auth/signup', data);
       return response.data;
     },

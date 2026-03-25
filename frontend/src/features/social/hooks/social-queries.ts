@@ -1,14 +1,6 @@
-import {
-  useMutation,
-  useInfiniteQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useMutation, useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
-import type {
-  ProfileResponse,
-  UserListItem,
-  PaginatedResponse,
-} from '@figly/shared';
+import type { ProfileResponse, UserListItem, PaginatedResponse } from '@figly/shared';
 
 /** Follow a user. Optimistically updates profile cache. */
 export function useFollowMutation() {
@@ -16,9 +8,7 @@ export function useFollowMutation() {
 
   return useMutation({
     mutationFn: async ({ userId }: { userId: string; username: string }) => {
-      const response = await apiClient.post<{ message: string }>(
-        `/social/follow/${userId}`,
-      );
+      const response = await apiClient.post<{ message: string }>(`/social/follow/${userId}`);
       return response.data;
     },
     onMutate: async ({ username }) => {
@@ -26,10 +16,7 @@ export function useFollowMutation() {
       await queryClient.cancelQueries({ queryKey: ['profile', username] });
 
       // Snapshot current data for rollback
-      const previous = queryClient.getQueryData<ProfileResponse>([
-        'profile',
-        username,
-      ]);
+      const previous = queryClient.getQueryData<ProfileResponse>(['profile', username]);
 
       // Optimistically set isFollowing=true and increment followerCount
       if (previous) {
@@ -45,10 +32,7 @@ export function useFollowMutation() {
     onError: (_err, _vars, context) => {
       // Rollback to snapshot on error
       if (context?.previous) {
-        queryClient.setQueryData(
-          ['profile', context.username],
-          context.previous,
-        );
+        queryClient.setQueryData(['profile', context.username], context.previous);
       }
     },
     onSettled: (_data, _err, { username }) => {
@@ -65,18 +49,13 @@ export function useUnfollowMutation() {
 
   return useMutation({
     mutationFn: async ({ userId }: { userId: string; username: string }) => {
-      const response = await apiClient.delete<{ message: string }>(
-        `/social/follow/${userId}`,
-      );
+      const response = await apiClient.delete<{ message: string }>(`/social/follow/${userId}`);
       return response.data;
     },
     onMutate: async ({ username }) => {
       await queryClient.cancelQueries({ queryKey: ['profile', username] });
 
-      const previous = queryClient.getQueryData<ProfileResponse>([
-        'profile',
-        username,
-      ]);
+      const previous = queryClient.getQueryData<ProfileResponse>(['profile', username]);
 
       if (previous) {
         queryClient.setQueryData<ProfileResponse>(['profile', username], {
@@ -90,10 +69,7 @@ export function useUnfollowMutation() {
     },
     onError: (_err, _vars, context) => {
       if (context?.previous) {
-        queryClient.setQueryData(
-          ['profile', context.username],
-          context.previous,
-        );
+        queryClient.setQueryData(['profile', context.username], context.previous);
       }
     },
     onSettled: (_data, _err, { username }) => {
@@ -105,7 +81,7 @@ export function useUnfollowMutation() {
 }
 
 /** Fetch paginated followers for a user with optional search filter. */
-export function useFollowers(username: string, search?: string) {
+export function useFollowers(username: string, search?: string, enabled = true) {
   return useInfiniteQuery({
     queryKey: ['followers', username, search],
     queryFn: async ({ pageParam }) => {
@@ -121,12 +97,12 @@ export function useFollowers(username: string, search?: string) {
     },
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
-    enabled: !!username,
+    enabled: !!username && enabled,
   });
 }
 
 /** Fetch paginated following list for a user with optional search filter. */
-export function useFollowing(username: string, search?: string) {
+export function useFollowing(username: string, search?: string, enabled = true) {
   return useInfiniteQuery({
     queryKey: ['following', username, search],
     queryFn: async ({ pageParam }) => {
@@ -142,7 +118,7 @@ export function useFollowing(username: string, search?: string) {
     },
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
-    enabled: !!username,
+    enabled: !!username && enabled,
   });
 }
 
@@ -152,9 +128,7 @@ export function useRemoveFollowerMutation() {
 
   return useMutation({
     mutationFn: async ({ userId }: { userId: string }) => {
-      const response = await apiClient.delete<{ message: string }>(
-        `/social/followers/${userId}`,
-      );
+      const response = await apiClient.delete<{ message: string }>(`/social/followers/${userId}`);
       return response.data;
     },
     onSettled: () => {

@@ -2,11 +2,7 @@
 
 import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
 import { Search, X, Package, Loader2 } from 'lucide-react';
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -31,9 +27,7 @@ export function ItemPicker({
 }: ItemPickerProps) {
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
-  const [localSelectedIds, setLocalSelectedIds] = useState<Set<string>>(
-    new Set(selectedItemIds),
-  );
+  const [localSelectedIds, setLocalSelectedIds] = useState<Set<string>>(new Set(selectedItemIds));
   const [localSelectedItems, setLocalSelectedItems] = useState<Map<string, LinkedItemResponse>>(
     new Map(),
   );
@@ -60,13 +54,8 @@ export function ItemPicker({
     };
   }, [query]);
 
-  const {
-    data,
-    isLoading,
-    isFetchingNextPage,
-    hasNextPage,
-    fetchNextPage,
-  } = useSearchItems(debouncedQuery);
+  const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } =
+    useSearchItems(debouncedQuery);
 
   // Infinite scroll observer
   useEffect(() => {
@@ -91,13 +80,16 @@ export function ItemPicker({
     return data.pages.flatMap((page) => page.items);
   }, [data]);
 
-  const toLinkedItem = useCallback((item: ItemResponse): LinkedItemResponse => ({
-    id: item.id,
-    name: item.name,
-    seriesName: item.seriesName,
-    categoryName: item.categoryName,
-    imageUrl: item.imageUrl,
-  }), []);
+  const toLinkedItem = useCallback(
+    (item: ItemResponse): LinkedItemResponse => ({
+      id: item.id,
+      name: item.name,
+      seriesName: item.seriesName,
+      categoryName: item.categoryName,
+      imageUrl: item.imageUrl,
+    }),
+    [],
+  );
 
   const handleItemClick = useCallback(
     (item: ItemResponse) => {
@@ -173,11 +165,7 @@ export function ItemPicker({
         {mode === 'multi' && localSelectedIds.size > 0 && (
           <div className="flex flex-wrap gap-1.5 px-4 pb-2">
             {Array.from(localSelectedItems.values()).map((item) => (
-              <Badge
-                key={item.id}
-                variant="secondary"
-                className="flex items-center gap-1"
-              >
+              <Badge key={item.id} variant="secondary" className="flex items-center gap-1">
                 {item.name}
                 <button
                   type="button"
@@ -193,7 +181,7 @@ export function ItemPicker({
 
         {/* Search results */}
         <ScrollArea className="flex-1 border-t">
-          <div className="min-h-[200px] max-h-[400px]">
+          <div className="max-h-[400px] min-h-[200px]">
             {debouncedQuery.length === 0 && (
               <div className="flex h-[200px] flex-col items-center justify-center text-sm text-muted-foreground">
                 <Package className="mb-2 size-8" />
@@ -227,18 +215,14 @@ export function ItemPicker({
                   {/* Item image or placeholder */}
                   <div className="flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-md bg-muted">
                     {item.imageUrl ? (
-                      <img
-                        src={item.imageUrl}
-                        alt={item.name}
-                        className="size-full object-cover"
-                      />
+                      <img src={item.imageUrl} alt={item.name} className="size-full object-cover" />
                     ) : (
                       <Package className="size-5 text-muted-foreground" />
                     )}
                   </div>
 
                   {/* Item info */}
-                  <div className="flex-1 min-w-0">
+                  <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-medium">{item.name}</p>
                     <p className="truncate text-xs text-muted-foreground">
                       {item.seriesName} &middot; {item.categoryName}

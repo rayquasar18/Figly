@@ -44,10 +44,7 @@ export function UserRow({ user, showRemoveButton, onRemove }: UserRowProps) {
         >
           {user.displayName}
         </Link>
-        <Link
-          href={`/${user.username}`}
-          className="block truncate text-sm text-muted-foreground"
-        >
+        <Link href={`/${user.username}`} className="block truncate text-sm text-muted-foreground">
           @{user.username}
         </Link>
       </div>

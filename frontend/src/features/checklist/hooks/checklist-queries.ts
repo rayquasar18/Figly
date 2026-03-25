@@ -1,8 +1,4 @@
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
 import { toast } from 'sonner';
 import type {
@@ -18,8 +14,7 @@ export function useMyChecklists() {
   return useQuery({
     queryKey: ['checklists'],
     queryFn: async () => {
-      const response =
-        await apiClient.get<ChecklistResponse[]>('/checklists');
+      const response = await apiClient.get<ChecklistResponse[]>('/checklists');
       return response.data;
     },
   });
@@ -30,9 +25,7 @@ export function useChecklistDetail(checklistId: string) {
   return useQuery({
     queryKey: ['checklist', checklistId],
     queryFn: async () => {
-      const response = await apiClient.get<ChecklistDetailResponse>(
-        `/checklists/${checklistId}`,
-      );
+      const response = await apiClient.get<ChecklistDetailResponse>(`/checklists/${checklistId}`);
       return response.data;
     },
     enabled: !!checklistId,
@@ -47,10 +40,7 @@ export function useCreateChecklist() {
 
   return useMutation({
     mutationFn: async (data: { name: string; isPublic: boolean }) => {
-      const response = await apiClient.post<ChecklistResponse>(
-        '/checklists',
-        data,
-      );
+      const response = await apiClient.post<ChecklistResponse>('/checklists', data);
       return response.data;
     },
     onSuccess: () => {
@@ -72,10 +62,7 @@ export function useUpdateChecklist() {
       checklistId: string;
       data: { name?: string; isPublic?: boolean };
     }) => {
-      const response = await apiClient.patch<ChecklistResponse>(
-        `/checklists/${checklistId}`,
-        data,
-      );
+      const response = await apiClient.patch<ChecklistResponse>(`/checklists/${checklistId}`, data);
       return response.data;
     },
     onSuccess: (_data, { checklistId }) => {
@@ -146,30 +133,24 @@ export function useToggleEntry() {
       ]);
 
       // Optimistic toggle
-      queryClient.setQueryData<ChecklistDetailResponse>(
-        ['checklist', checklistId],
-        (old) => {
-          if (!old) return old;
-          const entries = old.entries.map((e) =>
-            e.id === entryId ? { ...e, isChecked: !e.isChecked } : e,
-          );
-          const checkedEntries = entries.filter((e) => e.isChecked).length;
-          return {
-            ...old,
-            entries,
-            checkedEntries,
-          };
-        },
-      );
+      queryClient.setQueryData<ChecklistDetailResponse>(['checklist', checklistId], (old) => {
+        if (!old) return old;
+        const entries = old.entries.map((e) =>
+          e.id === entryId ? { ...e, isChecked: !e.isChecked } : e,
+        );
+        const checkedEntries = entries.filter((e) => e.isChecked).length;
+        return {
+          ...old,
+          entries,
+          checkedEntries,
+        };
+      });
 
       return { previous, checklistId };
     },
     onError: (_err, _vars, context) => {
       if (context?.previous) {
-        queryClient.setQueryData(
-          ['checklist', context.checklistId],
-          context.previous,
-        );
+        queryClient.setQueryData(['checklist', context.checklistId], context.previous);
       }
     },
     onSettled: (_data, _err, { checklistId }) => {
@@ -199,13 +180,7 @@ export function useReorderEntries() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({
-      checklistId,
-      entryIds,
-    }: {
-      checklistId: string;
-      entryIds: string[];
-    }) => {
+    mutationFn: async ({ checklistId, entryIds }: { checklistId: string; entryIds: string[] }) => {
       await apiClient.patch(`/checklists/${checklistId}/reorder`, {
         entryIds,
       });
@@ -219,29 +194,23 @@ export function useReorderEntries() {
       ]);
 
       // Optimistic reorder: rearrange entries based on entryIds order
-      queryClient.setQueryData<ChecklistDetailResponse>(
-        ['checklist', checklistId],
-        (old) => {
-          if (!old) return old;
-          const entryMap = new Map(old.entries.map((e) => [e.id, e]));
-          const reordered = entryIds
-            .map((id, index) => {
-              const entry = entryMap.get(id);
-              return entry ? { ...entry, position: index } : null;
-            })
-            .filter(Boolean) as ChecklistEntryResponse[];
-          return { ...old, entries: reordered };
-        },
-      );
+      queryClient.setQueryData<ChecklistDetailResponse>(['checklist', checklistId], (old) => {
+        if (!old) return old;
+        const entryMap = new Map(old.entries.map((e) => [e.id, e]));
+        const reordered = entryIds
+          .map((id, index) => {
+            const entry = entryMap.get(id);
+            return entry ? { ...entry, position: index } : null;
+          })
+          .filter(Boolean) as ChecklistEntryResponse[];
+        return { ...old, entries: reordered };
+      });
 
       return { previous, checklistId };
     },
     onError: (_err, _vars, context) => {
       if (context?.previous) {
-        queryClient.setQueryData(
-          ['checklist', context.checklistId],
-          context.previous,
-        );
+        queryClient.setQueryData(['checklist', context.checklistId], context.previous);
       }
     },
     onSettled: (_data, _err, { checklistId }) => {

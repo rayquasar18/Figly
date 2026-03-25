@@ -1,9 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import {
-  BadRequestException,
-  NotFoundException,
-  ForbiddenException,
-} from '@nestjs/common';
+import { BadRequestException, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { PostsService } from '../posts.service';
 import { PrismaService } from '../../prisma/prisma.service';
 import { StorageService } from '../../media/storage.service';
@@ -176,27 +172,29 @@ describe('PostsService', () => {
 
       const result = await service.getPost('post-1', 'viewer-1');
 
-      expect(result).toEqual(expect.objectContaining({
-        id: 'post-1',
-        author: expect.objectContaining({
-          id: 'author-1',
-          username: 'testuser',
-          displayName: 'Test User',
-          avatarUrl: 'https://minio.local/avatars/medium/avatar.jpg?signed=1',
-        }),
-        media: [
-          expect.objectContaining({
-            id: 'pm-1',
-            mediaId: 'media-1',
-            position: 0,
-            url: 'https://minio.local/posts/large/img1.jpg?signed=1',
+      expect(result).toEqual(
+        expect.objectContaining({
+          id: 'post-1',
+          author: expect.objectContaining({
+            id: 'author-1',
+            username: 'testuser',
+            displayName: 'Test User',
+            avatarUrl: 'https://minio.local/avatars/medium/avatar.jpg?signed=1',
           }),
-        ],
-        likeCount: 5,
-        commentCount: 3,
-        isLiked: false,
-        isBookmarked: false,
-      }));
+          media: [
+            expect.objectContaining({
+              id: 'pm-1',
+              mediaId: 'media-1',
+              position: 0,
+              url: 'https://minio.local/posts/large/img1.jpg?signed=1',
+            }),
+          ],
+          likeCount: 5,
+          commentCount: 3,
+          isLiked: false,
+          isBookmarked: false,
+        }),
+      );
     });
 
     it('should set isLiked=true when viewer has liked the post', async () => {
@@ -432,10 +430,12 @@ describe('PostsService', () => {
       const result = await service.getSavedPosts('user-1');
 
       expect(result.items).toHaveLength(1);
-      expect(result.items[0]).toEqual(expect.objectContaining({
-        id: 'post-1',
-        isBookmarked: true,
-      }));
+      expect(result.items[0]).toEqual(
+        expect.objectContaining({
+          id: 'post-1',
+          isBookmarked: true,
+        }),
+      );
       expect(result.hasMore).toBe(false);
     });
   });
@@ -476,19 +476,21 @@ describe('PostsService', () => {
       const result = await service.getUserPosts('testuser', 'viewer-1');
 
       expect(result.items).toHaveLength(1);
-      expect(result.items[0]).toEqual(expect.objectContaining({
-        id: 'post-1',
-        author: expect.objectContaining({ username: 'testuser' }),
-      }));
+      expect(result.items[0]).toEqual(
+        expect.objectContaining({
+          id: 'post-1',
+          author: expect.objectContaining({ username: 'testuser' }),
+        }),
+      );
       expect(result.hasMore).toBe(false);
     });
 
     it('should throw NotFoundException for non-existent username', async () => {
       mockPrisma.user.findUnique.mockResolvedValue(null);
 
-      await expect(
-        service.getUserPosts('nonexistent', 'viewer-1'),
-      ).rejects.toThrow(NotFoundException);
+      await expect(service.getUserPosts('nonexistent', 'viewer-1')).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 
@@ -508,9 +510,7 @@ describe('PostsService', () => {
 
     it('should search case-insensitively', async () => {
       mockPrisma.hashtag = { findMany: jest.fn() } as any;
-      (mockPrisma.hashtag as any).findMany.mockResolvedValue([
-        { id: 'h-1', name: 'food' },
-      ]);
+      (mockPrisma.hashtag as any).findMany.mockResolvedValue([{ id: 'h-1', name: 'food' }]);
 
       const result = await service.searchHashtags('Food');
 

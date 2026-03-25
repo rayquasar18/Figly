@@ -15,11 +15,7 @@ export function ItemCard({ item }: ItemCardProps) {
       <Card className="group overflow-hidden transition-shadow hover:shadow-md">
         <div className="relative aspect-square bg-muted">
           {item.imageUrl ? (
-            <img
-              src={item.imageUrl}
-              alt={item.name}
-              className="size-full object-cover"
-            />
+            <img src={item.imageUrl} alt={item.name} className="size-full object-cover" />
           ) : (
             <div className="flex size-full items-center justify-center">
               <Package className="size-8 text-muted-foreground/50" />
@@ -44,9 +40,7 @@ export function ItemCard({ item }: ItemCardProps) {
           <h4 className="line-clamp-2 text-sm font-medium leading-tight group-hover:text-primary">
             {item.name}
           </h4>
-          <p className="mt-0.5 text-xs text-muted-foreground">
-            {item.seriesName}
-          </p>
+          <p className="mt-0.5 text-xs text-muted-foreground">{item.seriesName}</p>
         </div>
       </Card>
     </Link>

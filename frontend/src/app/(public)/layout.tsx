@@ -7,11 +7,7 @@ import { PublicNav } from '@/components/layout/public-nav';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { CreatePostFlow } from '@/features/create-post';
 
-export default function PublicLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function PublicLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const { data: user, isLoading } = useMe();
 

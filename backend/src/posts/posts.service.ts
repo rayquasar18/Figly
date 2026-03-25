@@ -411,13 +411,20 @@ export class PostsService {
     const urlMap = await this.resolvePresignedUrls(items.map((b: any) => b.post));
 
     return {
-      items: items.map((b: any) => this.mapPostResponse(b.post, likedSet, new Set(postIds), urlMap)),
+      items: items.map((b: any) =>
+        this.mapPostResponse(b.post, likedSet, new Set(postIds), urlMap),
+      ),
       nextCursor,
       hasMore,
     };
   }
 
-  async getUserPosts(username: string, viewerId: string | null, cursor?: string, take = POST_LIMITS.feedPageSize) {
+  async getUserPosts(
+    username: string,
+    viewerId: string | null,
+    cursor?: string,
+    take = POST_LIMITS.feedPageSize,
+  ) {
     const user = await this.prisma.user.findUnique({
       where: { username },
       select: { id: true },

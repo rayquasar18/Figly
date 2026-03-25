@@ -15,15 +15,18 @@ main          <- Production-ready code (protected)
 ## Branch Types
 
 ### `main`
+
 - Always reflects production-ready state
 - **Never commit directly** — only merge from `release/*` or `hotfix/*`
 - Tagged with version numbers on each release
 
 ### `develop`
+
 - Integration branch for ongoing development
 - All feature branches merge here via Pull Request
 
 ### `feature/<name>`
+
 - **Create from:** `develop`
 - **Merge into:** `develop`
 - **Naming:** `feature/add-login`, `feature/update-dashboard`
@@ -38,6 +41,7 @@ git push -u origin feature/my-feature
 ```
 
 ### `release/<version>`
+
 - **Create from:** `develop`
 - **Merge into:** `main` AND `develop`
 - **Naming:** `release/1.0.0`, `release/1.2.0`
@@ -50,6 +54,7 @@ git checkout -b release/1.0.0
 ```
 
 ### `hotfix/<name>`
+
 - **Create from:** `main`
 - **Merge into:** `main` AND `develop`
 - **Naming:** `hotfix/fix-crash`, `hotfix/security-patch`

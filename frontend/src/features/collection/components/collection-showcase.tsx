@@ -78,10 +78,7 @@ export function CollectionShowcase({ username }: CollectionShowcaseProps) {
         <Package className="mb-3 size-12 text-muted-foreground/40" />
         <p className="text-muted-foreground">Chua co vat pham nao</p>
         {isOwnProfile && (
-          <Link
-            href="/collection"
-            className="mt-3 text-sm text-primary hover:underline"
-          >
+          <Link href="/collection" className="mt-3 text-sm text-primary hover:underline">
             Kham pha bo suu tap
           </Link>
         )}
@@ -111,9 +108,7 @@ export function CollectionShowcase({ username }: CollectionShowcaseProps) {
 
       {Array.from(grouped.entries()).map(([categoryName, categoryItems]) => (
         <div key={categoryName}>
-          <h3 className="mb-3 text-sm font-semibold capitalize">
-            {categoryName}
-          </h3>
+          <h3 className="mb-3 text-sm font-semibold capitalize">{categoryName}</h3>
           <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5">
             {categoryItems.map((item) => (
               <ItemCard key={item.id} item={item} />

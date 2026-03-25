@@ -20,9 +20,7 @@ export default async function LoginPage() {
     <Card>
       <CardHeader className="text-center">
         <CardTitle className="text-2xl font-bold">Dang nhap</CardTitle>
-        <CardDescription>
-          Dang nhap vao tai khoan Figly cua ban
-        </CardDescription>
+        <CardDescription>Dang nhap vao tai khoan Figly cua ban</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <LoginForm />
@@ -47,7 +45,7 @@ export default async function LoginPage() {
         </Link>
         <p className="text-sm text-muted-foreground">
           Chua co tai khoan?{' '}
-          <Link href="/signup" className="text-primary hover:underline font-medium">
+          <Link href="/signup" className="font-medium text-primary hover:underline">
             Dang ky
           </Link>
         </p>

@@ -23,10 +23,7 @@ export class SocialController {
   @Post('follow/:userId')
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard, EmailVerifiedGuard)
-  async follow(
-    @Param('userId') targetUserId: string,
-    @Req() req: Request,
-  ) {
+  async follow(@Param('userId') targetUserId: string, @Req() req: Request) {
     const { userId } = req.user as any;
     return this.socialService.follow(userId, targetUserId);
   }
@@ -34,10 +31,7 @@ export class SocialController {
   @Delete('follow/:userId')
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard, EmailVerifiedGuard)
-  async unfollow(
-    @Param('userId') targetUserId: string,
-    @Req() req: Request,
-  ) {
+  async unfollow(@Param('userId') targetUserId: string, @Req() req: Request) {
     const { userId } = req.user as any;
     return this.socialService.unfollow(userId, targetUserId);
   }
@@ -69,10 +63,7 @@ export class SocialController {
   @Delete('followers/:userId')
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard, EmailVerifiedGuard)
-  async removeFollower(
-    @Param('userId') followerUserId: string,
-    @Req() req: Request,
-  ) {
+  async removeFollower(@Param('userId') followerUserId: string, @Req() req: Request) {
     const { userId } = req.user as any;
     return this.socialService.removeFollower(userId, followerUserId);
   }

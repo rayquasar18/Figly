@@ -8,12 +8,12 @@ import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { usePostDetail } from '../hooks/post-queries';
+import { usePostDetail } from '@/hooks/queries/post-queries';
 import { PostCarousel } from './post-carousel';
 import { PostActions } from './post-actions';
 import { PostMenu } from './post-menu';
 import { CaptionDisplay } from './caption-display';
-import { CommentList } from '@/features/comment';
+import { CommentList } from '@/components/comment/comment-list';
 
 interface PostDetailModalProps {
   postId: string | null;
@@ -26,7 +26,7 @@ export function PostDetailModal({ postId, open, onClose }: PostDetailModalProps)
 
   return (
     <Dialog open={open} onOpenChange={(isOpen) => !isOpen && onClose()}>
-      <DialogContent className="max-w-4xl max-h-[90vh] p-0 overflow-hidden gap-0">
+      <DialogContent className="max-h-[90vh] max-w-4xl gap-0 overflow-hidden p-0">
         <DialogTitle className="sr-only">Chi tiet bai viet</DialogTitle>
         <PostDetailContent postId={postId} onClose={onClose} />
       </DialogContent>
@@ -34,13 +34,7 @@ export function PostDetailModal({ postId, open, onClose }: PostDetailModalProps)
   );
 }
 
-function PostDetailContent({
-  postId,
-  onClose,
-}: {
-  postId: string;
-  onClose: () => void;
-}) {
+function PostDetailContent({ postId, onClose }: { postId: string; onClose: () => void }) {
   const { data: post, isLoading } = usePostDetail(postId);
 
   if (isLoading || !post) {
@@ -67,10 +61,10 @@ function PostDetailContent({
       <div className="flex w-full flex-col md:w-1/2">
         {/* Author header */}
         <div className="flex items-center gap-3 border-b px-4 py-3">
-          <Link href={`/${post.author.username ?? ''}`}>
+          <Link href={`/${post.author.username}`}>
             <Avatar className="size-8">
               {post.author.avatarUrl ? (
-                <AvatarImage src={post.author.avatarUrl} alt={post.author.username ?? ''} />
+                <AvatarImage src={post.author.avatarUrl} alt={post.author.username} />
               ) : null}
               <AvatarFallback className="text-xs">
                 {post.author.displayName?.charAt(0)?.toUpperCase() || '?'}
@@ -78,10 +72,10 @@ function PostDetailContent({
             </Avatar>
           </Link>
           <Link
-            href={`/${post.author.username ?? ''}`}
+            href={`/${post.author.username}`}
             className="flex-1 text-sm font-semibold hover:underline"
           >
-            {post.author.username ?? ''}
+            {post.author.username}
           </Link>
           <PostMenu post={post} onDeleted={onClose} />
         </div>
@@ -90,11 +84,8 @@ function PostDetailContent({
         <ScrollArea className="flex-1">
           {/* Caption as first "comment" */}
           {post.caption && (
-            <div className="px-4 py-3 border-b">
-              <CaptionDisplay
-                caption={post.caption}
-                username={post.author.username ?? ''}
-              />
+            <div className="border-b px-4 py-3">
+              <CaptionDisplay caption={post.caption} username={post.author.username} />
             </div>
           )}
 
@@ -126,9 +117,7 @@ function PostDetailContent({
             isBookmarked={post.isBookmarked}
             likeCount={post.likeCount}
           />
-          <p className="px-3 pb-2 text-xs text-muted-foreground">
-            {relativeTime}
-          </p>
+          <p className="px-3 pb-2 text-xs text-muted-foreground">{relativeTime}</p>
         </div>
       </div>
     </div>

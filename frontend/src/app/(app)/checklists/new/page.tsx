@@ -1,11 +1,26 @@
-import type { Metadata } from 'next';
-import { NewChecklistPageClient } from './new-checklist-page-client';
+'use client';
 
-export const metadata: Metadata = {
-  title: 'Tao checklist moi | Figly',
-  description: 'Tao checklist bo suu tap moi tren Figly',
-};
+import { useRouter } from 'next/navigation';
+import { useCreateChecklist } from '@/hooks/queries/checklist-queries';
+import { ChecklistForm } from '@/components/checklist/checklist-form';
+import type { CreateChecklistDto } from '@figly/shared';
 
-export default async function CreateChecklistPage() {
-  return <NewChecklistPageClient />;
+export default function CreateChecklistPage() {
+  const router = useRouter();
+  const createChecklist = useCreateChecklist();
+
+  function handleSubmit(data: CreateChecklistDto) {
+    createChecklist.mutate(data, {
+      onSuccess: (checklist) => {
+        router.push(`/checklists/${checklist.id}`);
+      },
+    });
+  }
+
+  return (
+    <div className="mx-auto max-w-lg px-4 py-6">
+      <h1 className="mb-6 text-xl font-bold">Tao checklist moi</h1>
+      <ChecklistForm onSubmit={handleSubmit} isPending={createChecklist.isPending} />
+    </div>
+  );
 }

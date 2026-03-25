@@ -72,12 +72,7 @@ export function ImageCropper({
         </label>
 
         {/* Rotate button */}
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={handleRotate}
-          aria-label="Xoay anh"
-        >
+        <Button variant="ghost" size="icon" onClick={handleRotate} aria-label="Xoay anh">
           <RotateCw className="size-4" />
         </Button>
       </div>

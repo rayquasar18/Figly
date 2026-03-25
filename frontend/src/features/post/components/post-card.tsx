@@ -12,8 +12,8 @@ import { cn } from '@/lib/utils';
 import { PostCarousel } from './post-carousel';
 import { PostActions } from './post-actions';
 import { CaptionDisplay } from './caption-display';
-import { useAuthStore } from '@/features/auth';
-import { useLikeMutation } from '../hooks/interaction-queries';
+import { useAuthStore } from '@/stores/auth-store';
+import { useLikeMutation } from '@/hooks/queries/interaction-queries';
 import type { PostResponse } from '@figly/shared';
 
 interface PostCardProps {
@@ -66,22 +66,19 @@ export function PostCard({ post, onOpenDetail }: PostCardProps) {
     <article className="border-b pb-4">
       {/* Author header */}
       <div className="flex items-center gap-3 px-3 py-2">
-        <Link href={`/${post.author.username ?? ''}`}>
+        <Link href={`/${post.author.username}`}>
           <Avatar className="size-8">
             {post.author.avatarUrl ? (
-              <AvatarImage src={post.author.avatarUrl} alt={post.author.username ?? ''} />
+              <AvatarImage src={post.author.avatarUrl} alt={post.author.username} />
             ) : null}
             <AvatarFallback className="text-xs">
               {post.author.displayName?.charAt(0)?.toUpperCase() || '?'}
             </AvatarFallback>
           </Avatar>
         </Link>
-        <div className="flex-1 min-w-0">
-          <Link
-            href={`/${post.author.username ?? ''}`}
-            className="text-sm font-semibold hover:underline"
-          >
-            {post.author.username ?? ''}
+        <div className="min-w-0 flex-1">
+          <Link href={`/${post.author.username}`} className="text-sm font-semibold hover:underline">
+            {post.author.username}
           </Link>
         </div>
         <span className="text-xs text-muted-foreground">{relativeTime}</span>
@@ -97,7 +94,7 @@ export function PostCard({ post, onOpenDetail }: PostCardProps) {
             <Heart
               className={cn(
                 'size-20 fill-white text-white drop-shadow-lg',
-                'animate-in zoom-in-50 fade-in duration-300',
+                'duration-300 animate-in fade-in zoom-in-50',
               )}
               style={{
                 animation: 'heartBurst 1s ease-out forwards',
@@ -117,17 +114,13 @@ export function PostCard({ post, onOpenDetail }: PostCardProps) {
       />
 
       {/* Caption */}
-      <div className="px-3 mt-1">
-        <CaptionDisplay
-          caption={post.caption}
-          username={post.author.username ?? ''}
-          truncate
-        />
+      <div className="mt-1 px-3">
+        <CaptionDisplay caption={post.caption} username={post.author.username} truncate />
       </div>
 
       {/* Linked items badges */}
       {post.linkedItems && post.linkedItems.length > 0 && (
-        <div className="flex flex-wrap items-center gap-1.5 px-3 mt-1.5">
+        <div className="mt-1.5 flex flex-wrap items-center gap-1.5 px-3">
           {post.linkedItems.slice(0, 3).map((item) => (
             <Link key={item.id} href={`/item/${item.id}`}>
               <Badge
@@ -151,12 +144,38 @@ export function PostCard({ post, onOpenDetail }: PostCardProps) {
       {post.commentCount > 0 && (
         <button
           onClick={handleViewComments}
-          className="px-3 mt-1 text-sm text-muted-foreground hover:text-foreground"
+          className="mt-1 px-3 text-sm text-muted-foreground hover:text-foreground"
         >
           Xem tat ca {post.commentCount} binh luan
         </button>
       )}
 
+      {/* CSS for heart animation */}
+      <style jsx global>{`
+        @keyframes heartBurst {
+          0% {
+            transform: scale(0);
+            opacity: 1;
+          }
+          15% {
+            transform: scale(1.2);
+            opacity: 1;
+          }
+          30% {
+            transform: scale(0.95);
+            opacity: 1;
+          }
+          45%,
+          80% {
+            transform: scale(1);
+            opacity: 1;
+          }
+          100% {
+            transform: scale(1);
+            opacity: 0;
+          }
+        }
+      `}</style>
     </article>
   );
 }

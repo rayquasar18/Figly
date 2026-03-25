@@ -44,16 +44,8 @@ export function PostCarousel({ media, onDoubleTap }: PostCarouselProps) {
   // Single image: no carousel, just render the image
   if (media.length === 1) {
     return (
-      <div
-        className="relative aspect-square w-full overflow-hidden bg-muted"
-        onClick={handleTap}
-      >
-        <img
-          src={media[0].url}
-          alt=""
-          className="size-full object-cover"
-          draggable={false}
-        />
+      <div className="relative aspect-square w-full overflow-hidden bg-muted" onClick={handleTap}>
+        <img src={media[0].url} alt="" className="size-full object-cover" draggable={false} />
       </div>
     );
   }
@@ -61,24 +53,12 @@ export function PostCarousel({ media, onDoubleTap }: PostCarouselProps) {
   // Multi-image carousel
   return (
     <div className="relative">
-      <Carousel
-        setApi={setApi}
-        opts={{ align: 'start', loop: false }}
-        className="w-full"
-      >
+      <Carousel setApi={setApi} opts={{ align: 'start', loop: false }} className="w-full">
         <CarouselContent className="ml-0">
           {media.map((item) => (
             <CarouselItem key={item.id} className="pl-0">
-              <div
-                className="aspect-square w-full overflow-hidden bg-muted"
-                onClick={handleTap}
-              >
-                <img
-                  src={item.url}
-                  alt=""
-                  className="size-full object-cover"
-                  draggable={false}
-                />
+              <div className="aspect-square w-full overflow-hidden bg-muted" onClick={handleTap}>
+                <img src={item.url} alt="" className="size-full object-cover" draggable={false} />
               </div>
             </CarouselItem>
           ))}

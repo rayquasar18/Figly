@@ -30,7 +30,14 @@ describe('Username and Bio validators (shared package)', () => {
 
   describe('usernameSchema', () => {
     it('should accept valid usernames (lowercase, numbers, underscores, periods)', () => {
-      const validUsernames = ['john_doe', 'user123', 'test.user', 'a_b.c', 'abc', 'user_name_with_30_chars_abcdef'];
+      const validUsernames = [
+        'john_doe',
+        'user123',
+        'test.user',
+        'a_b.c',
+        'abc',
+        'user_name_with_30_chars_abcdef',
+      ];
       for (const username of validUsernames) {
         const result = usernameSchema.safeParse(username);
         expect(result.success).toBe(true);
@@ -82,7 +89,24 @@ describe('Username and Bio validators (shared package)', () => {
 
   describe('RESERVED_USERNAMES', () => {
     it('should include common reserved names', () => {
-      const expected = ['api', 'auth', 'admin', 'login', 'signup', 'settings', 'explore', 'search', 'help', 'about', 'terms', 'privacy', 'notifications', 'messages', 'feed', 'discover'];
+      const expected = [
+        'api',
+        'auth',
+        'admin',
+        'login',
+        'signup',
+        'settings',
+        'explore',
+        'search',
+        'help',
+        'about',
+        'terms',
+        'privacy',
+        'notifications',
+        'messages',
+        'feed',
+        'discover',
+      ];
       for (const name of expected) {
         expect(RESERVED_USERNAMES).toContain(name);
       }
@@ -157,7 +181,7 @@ describe('AuthService - signup with simplified dto (email+password only)', () =>
       const config: Record<string, string> = {
         'jwt.accessSecret': 'test-access-secret',
         'jwt.refreshSecret': 'test-refresh-secret',
-        'frontendUrl': 'http://localhost:3000',
+        frontendUrl: 'http://localhost:3000',
       };
       return config[key];
     }),

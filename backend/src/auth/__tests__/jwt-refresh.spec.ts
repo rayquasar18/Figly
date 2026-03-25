@@ -34,7 +34,7 @@ describe('JWT Refresh Token', () => {
       const config: Record<string, string> = {
         'jwt.accessSecret': 'test-access-secret',
         'jwt.refreshSecret': 'test-refresh-secret',
-        'frontendUrl': 'http://localhost:3000',
+        frontendUrl: 'http://localhost:3000',
       };
       return config[key];
     }),
@@ -110,9 +110,9 @@ describe('JWT Refresh Token', () => {
         },
       ]);
 
-      await expect(
-        service.refreshTokens('user-1', oldRefreshToken, 'Mozilla/5.0'),
-      ).rejects.toThrow(UnauthorizedException);
+      await expect(service.refreshTokens('user-1', oldRefreshToken, 'Mozilla/5.0')).rejects.toThrow(
+        UnauthorizedException,
+      );
     });
 
     it('should delete all user tokens on stolen token detection (invalid token)', async () => {
