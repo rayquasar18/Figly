@@ -48,7 +48,7 @@ Requirements for v2.0 Architecture & Production Hardening. Each maps to roadmap 
 
 ### Shared Package
 
-- [ ] **SHRD-01**: Shared package dto/ renamed to schemas/ with updated imports across codebase
+- [x] **SHRD-01**: Shared package dto/ renamed to schemas/ with updated imports across codebase
 - [ ] **SHRD-02**: dist/ removed from git tracking (built as artifact only)
 
 ## v2.1+ Requirements
@@ -127,7 +127,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DEVP-02 | Phase 15 | Complete |
 | DEVP-03 | Phase 15 | Complete |
 | DEVP-04 | Phase 15 | Complete |
-| SHRD-01 | Phase 16 | Pending |
+| SHRD-01 | Phase 16 | Complete |
 | SHRD-02 | Phase 16 | Pending |
 
 **Coverage:**

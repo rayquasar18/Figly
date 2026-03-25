@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Architecture & Production Hardening
-status: Ready to plan
-stopped_at: Phase 16 context gathered
-last_updated: '2026-03-25T22:58:26.299Z'
+status: In Progress
+stopped_at: Completed 16-01-PLAN.md
+last_updated: '2026-03-25T23:49:45.000Z'
 progress:
   total_phases: 6
   completed_phases: 5
   total_plans: 17
-  completed_plans: 17
+  completed_plans: 18
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-20)
 ## Current Position
 
 Phase: 16
-Plan: Not started
+Plan: 2 of 2 in current phase
 
 ## Performance Metrics
 
@@ -76,6 +76,8 @@ Recent decisions affecting current work:
 - [Phase 15]: Full monorepo node_modules in backend Docker runner for pnpm hoisting compatibility
 - [Phase 15]: NEXT*PUBLIC* vars as Docker build args (not runtime env) because Next.js inlines them at build time
 - [Phase 15]: 4 parallel CI jobs (lint, typecheck, build, test) for fastest feedback with concurrency cancel-in-progress
+- [Phase 16]: Removed stale dist/dto/ alongside source rename to keep dist consistent
+- [Phase 16]: Kept backend dto/ references in STRUCTURE.md since those are NestJS-internal DTOs, not shared package
 
 ### Pending Todos
 
@@ -94,6 +96,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-25T22:58:26.296Z
-Stopped at: Phase 16 context gathered
-Resume file: .planning/phases/16-shared-package-cleanup/16-CONTEXT.md
+Last session: 2026-03-25T23:49:45Z
+Stopped at: Completed 16-01-PLAN.md
+Resume file: None

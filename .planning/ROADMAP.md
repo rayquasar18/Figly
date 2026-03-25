@@ -138,10 +138,10 @@
 
 1. Shared package uses schemas/ directory (not dto/) with all imports across frontend and backend updated and working
 2. dist/ directory is in .gitignore and absent from the repository — shared package is consumed as TypeScript source, not pre-built artifacts
-   **Plans:** 2 plans
+   **Plans:** 1/2 plans complete
    Plans:
 
-- [ ] 16-01-PLAN.md — Rename dto/ to schemas/ with updated barrel imports and reel export fix
+- [x] 16-01-PLAN.md — Rename dto/ to schemas/ with updated barrel imports and reel export fix
 - [ ] 16-02-PLAN.md — Remove dist/ from git tracking, update gitignore and package.json entry points
 
 ## Progress
@@ -159,6 +159,6 @@
 | 13. Backend Hardening      | v2.0      | 4/4            | Complete          | 2026-03-24 |
 | 14. Frontend Restructure   | v2.0      | 2/4            | Complete          | 2026-03-25 |
 | 15. DevOps & Tooling       | v2.0      | 2/3            | Complete          | 2026-03-25 |
-| 16. Shared Package Cleanup | v2.0      | 0/2            | Planning complete | -          |
+| 16. Shared Package Cleanup | v2.0      | 1/2            | In Progress       | -          |
 
 **Full v1.0 archive:** `.planning/milestones/v1.0-ROADMAP.md`
