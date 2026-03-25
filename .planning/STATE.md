@@ -67,6 +67,8 @@ Recent decisions affecting current work:
 - [Phase 14]: ThemeProvider wraps QueryClientProvider as outermost provider
 - [Phase 14]: Theme toggle placed inside user avatar DropdownMenu per D-21
 - [Phase 14]: 9 feature barrels created (reel deferred to phase-10 merge), feature-internal relative imports, cross-feature barrel imports
+- [Phase 14]: Suspense boundary for useSearchParams: verify-email and reset-password pages wrap client component in Suspense
+- [Phase 14]: fetchApi pre-fetch without initialData prop: pages call fetchApi for cache warming, React Query hooks refetch on mount
 
 ### Pending Todos
 
@@ -85,6 +87,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-25T11:21:54.412Z
-Stopped at: Completed 14-02-PLAN.md
+Last session: 2026-03-25T11:39:32Z
+Stopped at: Completed 14-04-PLAN.md
 Resume file: None
