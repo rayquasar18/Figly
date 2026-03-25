@@ -3,7 +3,7 @@
 import { useRef } from 'react';
 import { ImagePlus, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useCreatePostStore } from '@/stores/create-post-store';
+import { useCreatePostStore } from '../stores/create-post-store';
 import { POST_LIMITS } from '@figly/shared';
 
 export function StepGallery() {

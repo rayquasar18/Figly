@@ -14,7 +14,7 @@ import type { ProfileResponse } from '@figly/shared';
 import {
   useUpdateProfile,
   useCheckUsername,
-} from '@/hooks/queries/profile-queries';
+} from '../hooks/profile-queries';
 import { apiClient } from '@/lib/api-client';
 import {
   Dialog,

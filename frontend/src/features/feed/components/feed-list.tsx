@@ -2,11 +2,10 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { Loader2 } from 'lucide-react';
-import { useFeed } from '@/hooks/queries/post-queries';
-import { PostCard } from '@/components/post/post-card';
+import { useFeed } from '@/features/post';
+import { PostCard, PostDetailModal } from '@/features/post';
 import { FeedSkeleton } from './feed-skeleton';
 import { EmptyFeed } from './empty-feed';
-import { PostDetailModal } from '@/components/post/post-detail-modal';
 
 export function FeedList() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =

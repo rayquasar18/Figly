@@ -3,8 +3,8 @@
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { useAuthStore } from '@/stores/auth-store';
-import { useFollowSeries, useFollowCategory } from '@/hooks/queries/collection-queries';
+import { useAuthStore } from '@/features/auth';
+import { useFollowSeries, useFollowCategory } from '../hooks/collection-queries';
 
 interface FollowSeriesButtonProps {
   type: 'series' | 'category';

@@ -4,8 +4,7 @@ import Link from 'next/link';
 import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useMyChecklists } from '@/hooks/queries/checklist-queries';
-import { ChecklistCard } from '@/components/checklist/checklist-card';
+import { useMyChecklists, ChecklistCard } from '@/features/checklist';
 
 function ChecklistGridSkeleton() {
   return (

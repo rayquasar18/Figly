@@ -6,12 +6,8 @@ import { formatDistanceToNow } from 'date-fns';
 import { vi } from 'date-fns/locale';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
-import { usePostDetail } from '@/hooks/queries/post-queries';
-import { PostCarousel } from '@/components/post/post-carousel';
-import { PostActions } from '@/components/post/post-actions';
-import { PostMenu } from '@/components/post/post-menu';
-import { CaptionDisplay } from '@/components/post/caption-display';
-import { CommentList } from '@/components/comment/comment-list';
+import { usePostDetail, PostCarousel, PostActions, PostMenu, CaptionDisplay } from '@/features/post';
+import { CommentList } from '@/features/comment';
 import Link from 'next/link';
 
 export default function PostDetailPage() {

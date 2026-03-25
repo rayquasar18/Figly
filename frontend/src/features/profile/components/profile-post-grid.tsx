@@ -3,8 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { Camera, Loader2 } from 'lucide-react';
-import { useUserPosts } from '@/hooks/queries/post-queries';
-import { PostDetailModal } from '@/components/post/post-detail-modal';
+import { useUserPosts, PostDetailModal } from '@/features/post';
 
 interface ProfilePostGridProps {
   username: string;

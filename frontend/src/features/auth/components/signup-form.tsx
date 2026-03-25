@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signupSchema, type SignupDto, USERNAME_RULES } from '@figly/shared';
-import { useSignupMutation } from '@/hooks/queries/auth-queries';
-import { useCheckUsername } from '@/hooks/queries/profile-queries';
+import { useSignupMutation } from '../hooks/auth-queries';
+import { useCheckUsername } from '@/features/profile';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {

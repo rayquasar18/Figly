@@ -6,8 +6,8 @@ import { formatDistanceToNow } from 'date-fns';
 import { vi } from 'date-fns/locale';
 import { Trash2 } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { useAuthStore } from '@/stores/auth-store';
-import { useDeleteComment } from '@/hooks/queries/comment-queries';
+import { useAuthStore } from '@/features/auth';
+import { useDeleteComment } from '../hooks/comment-queries';
 import type { CommentResponse } from '@figly/shared';
 
 interface CommentItemProps {

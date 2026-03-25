@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback } from 'react';
-import { useCreatePostStore } from '@/stores/create-post-store';
+import { useCreatePostStore } from '../stores/create-post-store';
 import { ImageCropper } from './image-cropper';
 import { cn } from '@/lib/utils';
 

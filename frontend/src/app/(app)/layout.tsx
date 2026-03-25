@@ -2,9 +2,9 @@
 
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { useMe } from '@/hooks/queries/auth-queries';
+import { useMe } from '@/features/auth';
 import { BottomNav } from '@/components/layout/bottom-nav';
-import { CreatePostFlow } from '@/components/create-post/create-post-flow';
+import { CreatePostFlow } from '@/features/create-post';
 
 export default function AppLayout({
   children,

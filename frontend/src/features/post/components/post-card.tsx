@@ -12,8 +12,8 @@ import { cn } from '@/lib/utils';
 import { PostCarousel } from './post-carousel';
 import { PostActions } from './post-actions';
 import { CaptionDisplay } from './caption-display';
-import { useAuthStore } from '@/stores/auth-store';
-import { useLikeMutation } from '@/hooks/queries/interaction-queries';
+import { useAuthStore } from '@/features/auth';
+import { useLikeMutation } from '../hooks/interaction-queries';
 import type { PostResponse } from '@figly/shared';
 
 interface PostCardProps {

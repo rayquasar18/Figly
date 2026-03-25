@@ -26,9 +26,9 @@ import {
   useToggleEntry,
   useRemoveEntry,
   useReorderEntries,
-} from '@/hooks/queries/checklist-queries';
-import { ChecklistEntry } from '@/components/checklist/checklist-entry';
-import { ItemPicker } from '@/components/collection/item-picker';
+  ChecklistEntry,
+} from '@/features/checklist';
+import { ItemPicker } from '@/features/collection';
 import type { LinkedItemResponse } from '@figly/shared';
 
 function DetailSkeleton() {

@@ -3,13 +3,13 @@
 import { Heart, MessageCircle, Bookmark } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { useAuthStore } from '@/stores/auth-store';
+import { useAuthStore } from '@/features/auth';
 import {
   useLikeMutation,
   useUnlikeMutation,
   useBookmarkMutation,
   useUnbookmarkMutation,
-} from '@/hooks/queries/interaction-queries';
+} from '../hooks/interaction-queries';
 
 interface PostActionsProps {
   postId: string;

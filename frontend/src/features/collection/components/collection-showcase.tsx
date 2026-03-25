@@ -5,8 +5,8 @@ import { Package, ListChecks } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ItemCard } from '@/components/collection/item-card';
-import { useAuthStore } from '@/stores/auth-store';
+import { ItemCard } from './item-card';
+import { useAuthStore } from '@/features/auth';
 import type { ItemResponse } from '@figly/shared';
 
 interface CollectionShowcaseProps {

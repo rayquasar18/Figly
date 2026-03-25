@@ -2,8 +2,7 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
-import { useItemDetail } from '@/hooks/queries/collection-queries';
-import { ItemDetail } from '@/components/collection/item-detail';
+import { useItemDetail, ItemDetail } from '@/features/collection';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 

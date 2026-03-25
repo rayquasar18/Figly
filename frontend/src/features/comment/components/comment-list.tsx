@@ -3,7 +3,7 @@
 import { useState, useCallback } from 'react';
 import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useComments } from '@/hooks/queries/comment-queries';
+import { useComments } from '../hooks/comment-queries';
 import { CommentItem } from './comment-item';
 import { CommentInput } from './comment-input';
 

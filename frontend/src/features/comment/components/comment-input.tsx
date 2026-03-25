@@ -5,8 +5,8 @@ import { Send } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { useCreateComment } from '@/hooks/queries/comment-queries';
-import { useAuthStore } from '@/stores/auth-store';
+import { useCreateComment } from '../hooks/comment-queries';
+import { useAuthStore } from '@/features/auth';
 import { POST_LIMITS } from '@figly/shared';
 
 interface CommentInputProps {

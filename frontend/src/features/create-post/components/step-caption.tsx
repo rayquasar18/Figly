@@ -11,8 +11,8 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { useCreatePostStore } from '@/stores/create-post-store';
-import { ItemPicker } from '@/components/collection/item-picker';
+import { useCreatePostStore } from '../stores/create-post-store';
+import { ItemPicker } from '@/features/collection';
 import { apiClient } from '@/lib/api-client';
 import { POST_LIMITS } from '@figly/shared';
 import type { LinkedItemResponse } from '@figly/shared';

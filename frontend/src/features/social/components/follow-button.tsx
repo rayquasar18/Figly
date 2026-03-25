@@ -3,11 +3,11 @@
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { useAuthStore } from '@/stores/auth-store';
+import { useAuthStore } from '@/features/auth';
 import {
   useFollowMutation,
   useUnfollowMutation,
-} from '@/hooks/queries/social-queries';
+} from '../hooks/social-queries';
 
 interface FollowButtonProps {
   userId: string;

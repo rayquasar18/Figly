@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { useSearchItems } from '@/hooks/queries/collection-queries';
+import { useSearchItems } from '../hooks/collection-queries';
 import type { ItemResponse, LinkedItemResponse } from '@figly/shared';
 
 interface ItemPickerProps {

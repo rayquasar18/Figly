@@ -3,11 +3,11 @@
 import { Check, Heart } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { useAuthStore } from '@/stores/auth-store';
+import { useAuthStore } from '@/features/auth';
 import {
   useToggleOwned,
   useToggleWishlist,
-} from '@/hooks/queries/collection-queries';
+} from '../hooks/collection-queries';
 
 interface OwnedWishlistToggleProps {
   itemId: string;

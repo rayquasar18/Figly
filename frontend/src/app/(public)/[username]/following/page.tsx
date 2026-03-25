@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { use } from 'react';
-import { FollowerList } from '@/components/social/follower-list';
+import { FollowerList } from '@/features/social';
 
 export default function FollowingPage({
   params,

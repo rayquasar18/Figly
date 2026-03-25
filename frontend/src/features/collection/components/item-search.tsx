@@ -3,8 +3,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Search as SearchIcon, Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { useSearchItems } from '@/hooks/queries/collection-queries';
-import { ItemCard } from '@/components/collection/item-card';
+import { useSearchItems } from '../hooks/collection-queries';
+import { ItemCard } from './item-card';
 
 export function ItemSearch() {
   const [inputValue, setInputValue] = useState('');

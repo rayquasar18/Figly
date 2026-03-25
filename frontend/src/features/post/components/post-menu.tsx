@@ -20,8 +20,8 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { useUpdateCaption, useDeletePost } from '@/hooks/queries/interaction-queries';
-import { useAuthStore } from '@/stores/auth-store';
+import { useUpdateCaption, useDeletePost } from '../hooks/interaction-queries';
+import { useAuthStore } from '@/features/auth';
 import { POST_LIMITS } from '@figly/shared';
 import type { PostResponse } from '@figly/shared';
 

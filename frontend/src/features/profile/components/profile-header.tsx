@@ -3,7 +3,7 @@
 import type { ProfileResponse } from '@figly/shared';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { FollowButton } from '@/components/social/follow-button';
+import { FollowButton } from '@/features/social';
 import { ProfileStats } from './profile-stats';
 
 interface ProfileHeaderProps {

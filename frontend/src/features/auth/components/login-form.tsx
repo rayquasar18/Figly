@@ -3,7 +3,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, type LoginDto } from '@figly/shared';
-import { useLoginMutation } from '@/hooks/queries/auth-queries';
+import { useLoginMutation } from '../hooks/auth-queries';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {

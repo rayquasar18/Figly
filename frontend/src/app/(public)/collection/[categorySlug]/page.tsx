@@ -3,9 +3,7 @@
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
-import { useSeriesByCategory, useCategories } from '@/hooks/queries/collection-queries';
-import { SeriesCard } from '@/components/collection/series-card';
-import { FollowSeriesButton } from '@/components/collection/follow-series-button';
+import { useSeriesByCategory, useCategories, SeriesCard, FollowSeriesButton } from '@/features/collection';
 import { Skeleton } from '@/components/ui/skeleton';
 
 function SeriesGridSkeleton() {

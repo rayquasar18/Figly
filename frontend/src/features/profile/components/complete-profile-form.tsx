@@ -5,8 +5,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { usernameSchema, USERNAME_RULES } from '@figly/shared';
-import { useUpdateProfile, useCheckUsername } from '@/hooks/queries/profile-queries';
-import { useAuthStore } from '@/stores/auth-store';
+import { useUpdateProfile, useCheckUsername } from '../hooks/profile-queries';
+import { useAuthStore } from '@/features/auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {

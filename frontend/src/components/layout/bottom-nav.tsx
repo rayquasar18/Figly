@@ -3,8 +3,8 @@
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Home, Search, Package, PlusSquare, User } from 'lucide-react';
-import { useMe } from '@/hooks/queries/auth-queries';
-import { useCreatePostStore } from '@/stores/create-post-store';
+import { useMe } from '@/features/auth';
+import { useCreatePostStore } from '@/features/create-post';
 import { cn } from '@/lib/utils';
 
 export function BottomNav() {
