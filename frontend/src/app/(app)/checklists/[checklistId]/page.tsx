@@ -90,9 +90,7 @@ export default function ChecklistDetailPage({
       ? Math.round((checklist.checkedEntries / checklist.totalEntries) * 100)
       : 0;
 
-  const sortedEntries = [...checklist.entries].sort(
-    (a, b) => a.position - b.position,
-  );
+  const sortedEntries = [...checklist.entries].sort((a, b) => a.position - b.position);
 
   function handleStartEdit() {
     setEditName(checklist!.name);
@@ -108,10 +106,7 @@ export default function ChecklistDetailPage({
   }
 
   function handleDelete() {
-    deleteChecklist.mutate(
-      { checklistId },
-      { onSuccess: () => router.push('/checklists') },
-    );
+    deleteChecklist.mutate({ checklistId }, { onSuccess: () => router.push('/checklists') });
   }
 
   function handleAddFreeform() {
@@ -125,9 +120,7 @@ export default function ChecklistDetailPage({
 
   function handleAddItem(ids: string[], _items?: LinkedItemResponse[]) {
     if (ids.length === 0) return;
-    addEntry.mutate(
-      { checklistId, data: { itemId: ids[0] } },
-    );
+    addEntry.mutate({ checklistId, data: { itemId: ids[0] } });
   }
 
   function handleToggle(entryId: string) {
@@ -141,10 +134,7 @@ export default function ChecklistDetailPage({
   function handleMoveUp(index: number) {
     if (index <= 0) return;
     const newOrder = [...sortedEntries];
-    [newOrder[index - 1], newOrder[index]] = [
-      newOrder[index],
-      newOrder[index - 1],
-    ];
+    [newOrder[index - 1], newOrder[index]] = [newOrder[index], newOrder[index - 1]];
     reorderEntries.mutate({
       checklistId,
       entryIds: newOrder.map((e) => e.id),
@@ -154,10 +144,7 @@ export default function ChecklistDetailPage({
   function handleMoveDown(index: number) {
     if (index >= sortedEntries.length - 1) return;
     const newOrder = [...sortedEntries];
-    [newOrder[index], newOrder[index + 1]] = [
-      newOrder[index + 1],
-      newOrder[index],
-    ];
+    [newOrder[index], newOrder[index + 1]] = [newOrder[index + 1], newOrder[index]];
     reorderEntries.mutate({
       checklistId,
       entryIds: newOrder.map((e) => e.id),

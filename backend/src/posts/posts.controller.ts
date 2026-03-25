@@ -34,10 +34,7 @@ export class PostsController {
   // Static routes MUST be before :id param routes
   @Get('saved')
   @UseGuards(JwtAuthGuard, EmailVerifiedGuard)
-  async getSavedPosts(
-    @Req() req: Request,
-    @Query('cursor') cursor?: string,
-  ) {
+  async getSavedPosts(@Req() req: Request, @Query('cursor') cursor?: string) {
     const { userId } = req.user as any;
     return this.postsService.getSavedPosts(userId, cursor);
   }

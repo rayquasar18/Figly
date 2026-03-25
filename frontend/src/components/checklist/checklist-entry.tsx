@@ -30,21 +30,13 @@ export function ChecklistEntry({
 
   return (
     <div className="flex items-center gap-3 rounded-lg border p-3">
-      <Checkbox
-        checked={entry.isChecked}
-        onCheckedChange={onToggle}
-        className="shrink-0"
-      />
+      <Checkbox checked={entry.isChecked} onCheckedChange={onToggle} className="shrink-0" />
 
       <div className="flex min-w-0 flex-1 items-center gap-2">
         {entry.itemId && (
           <div className="size-8 shrink-0 overflow-hidden rounded bg-muted">
             {entry.itemImageUrl ? (
-              <img
-                src={entry.itemImageUrl}
-                alt={displayName}
-                className="size-full object-cover"
-              />
+              <img src={entry.itemImageUrl} alt={displayName} className="size-full object-cover" />
             ) : (
               <div className="flex size-full items-center justify-center">
                 <Package className="size-4 text-muted-foreground/50" />

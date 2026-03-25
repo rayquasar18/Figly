@@ -28,29 +28,23 @@ export function ProfileStats({
   return (
     <div className="flex gap-6">
       <div className="flex flex-col items-center">
-        <span className="text-lg font-semibold tabular-nums">
-          {formatNumber(postCount)}
-        </span>
+        <span className="text-lg font-semibold tabular-nums">{formatNumber(postCount)}</span>
         <span className="text-xs text-muted-foreground">bai viet</span>
       </div>
 
       <Link
         href={`/${username}/followers`}
-        className="flex flex-col items-center hover:opacity-80 transition-opacity"
+        className="flex flex-col items-center transition-opacity hover:opacity-80"
       >
-        <span className="text-lg font-semibold tabular-nums">
-          {formatNumber(followerCount)}
-        </span>
+        <span className="text-lg font-semibold tabular-nums">{formatNumber(followerCount)}</span>
         <span className="text-xs text-muted-foreground">nguoi theo doi</span>
       </Link>
 
       <Link
         href={`/${username}/following`}
-        className="flex flex-col items-center hover:opacity-80 transition-opacity"
+        className="flex flex-col items-center transition-opacity hover:opacity-80"
       >
-        <span className="text-lg font-semibold tabular-nums">
-          {formatNumber(followingCount)}
-        </span>
+        <span className="text-lg font-semibold tabular-nums">{formatNumber(followingCount)}</span>
         <span className="text-xs text-muted-foreground">dang theo doi</span>
       </Link>
     </div>

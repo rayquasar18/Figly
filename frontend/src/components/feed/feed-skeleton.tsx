@@ -32,7 +32,7 @@ export function FeedSkeleton() {
           </div>
 
           {/* Caption skeleton */}
-          <div className="px-3 pt-2 space-y-1">
+          <div className="space-y-1 px-3 pt-2">
             <Skeleton className="h-3.5 w-full" />
             <Skeleton className="h-3.5 w-3/4" />
           </div>

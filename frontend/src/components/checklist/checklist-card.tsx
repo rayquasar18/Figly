@@ -33,12 +33,8 @@ export function ChecklistCard({ checklist }: ChecklistCardProps) {
     <Link href={`/checklists/${checklist.id}`}>
       <Card className="p-4 transition-shadow hover:shadow-md">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="font-semibold leading-tight line-clamp-2">
-            {checklist.name}
-          </h3>
-          {checklist.isPublic && (
-            <Globe className="size-4 shrink-0 text-muted-foreground" />
-          )}
+          <h3 className="line-clamp-2 font-semibold leading-tight">{checklist.name}</h3>
+          {checklist.isPublic && <Globe className="size-4 shrink-0 text-muted-foreground" />}
         </div>
 
         <div className="mt-3 space-y-1.5">

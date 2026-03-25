@@ -26,8 +26,10 @@ function ItemGridSkeleton() {
 export default function SeriesItemsPage() {
   const params = useParams<{ categorySlug: string; seriesSlug: string }>();
   const { categorySlug, seriesSlug } = params;
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useItemsBySeries(categorySlug, seriesSlug);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useItemsBySeries(
+    categorySlug,
+    seriesSlug,
+  );
   const { data: seriesList } = useSeriesByCategory(categorySlug);
   const sentinelRef = useRef<HTMLDivElement>(null);
 
@@ -62,22 +64,15 @@ export default function SeriesItemsPage() {
           Bo suu tap
         </Link>
         <ChevronRight className="size-3.5" />
-        <Link
-          href={`/collection/${categorySlug}`}
-          className="hover:text-primary hover:underline"
-        >
+        <Link href={`/collection/${categorySlug}`} className="hover:text-primary hover:underline">
           {categorySlug.replace(/-/g, ' ')}
         </Link>
         <ChevronRight className="size-3.5" />
-        <span className="font-medium text-foreground">
-          {seriesSlug.replace(/-/g, ' ')}
-        </span>
+        <span className="font-medium text-foreground">{seriesSlug.replace(/-/g, ' ')}</span>
       </nav>
 
       <div className="mb-6 flex items-center justify-between gap-3">
-        <h1 className="text-xl font-bold capitalize">
-          {seriesSlug.replace(/-/g, ' ')}
-        </h1>
+        <h1 className="text-xl font-bold capitalize">{seriesSlug.replace(/-/g, ' ')}</h1>
         {currentSeries && (
           <FollowSeriesButton
             type="series"

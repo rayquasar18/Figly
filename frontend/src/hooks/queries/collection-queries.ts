@@ -1,9 +1,4 @@
-import {
-  useQuery,
-  useInfiniteQuery,
-  useMutation,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useQuery, useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
 import type {
   CategoryResponse,
@@ -20,8 +15,7 @@ export function useCategories() {
   return useQuery({
     queryKey: ['categories'],
     queryFn: async () => {
-      const response =
-        await apiClient.get<CategoryResponse[]>('/collection/categories');
+      const response = await apiClient.get<CategoryResponse[]>('/collection/categories');
       return response.data;
     },
     staleTime: 5 * 60 * 1000,
@@ -44,10 +38,7 @@ export function useSeriesByCategory(categorySlug: string) {
 }
 
 /** Fetch items within a series with cursor pagination */
-export function useItemsBySeries(
-  categorySlug: string,
-  seriesSlug: string,
-) {
+export function useItemsBySeries(categorySlug: string, seriesSlug: string) {
   return useInfiniteQuery({
     queryKey: ['items', categorySlug, seriesSlug],
     queryFn: async ({ pageParam }) => {
@@ -71,9 +62,7 @@ export function useItemDetail(itemId: string) {
   return useQuery({
     queryKey: ['itemDetail', itemId],
     queryFn: async () => {
-      const response = await apiClient.get<ItemDetailResponse>(
-        `/collection/items/${itemId}`,
-      );
+      const response = await apiClient.get<ItemDetailResponse>(`/collection/items/${itemId}`);
       return response.data;
     },
     enabled: !!itemId,
@@ -82,10 +71,7 @@ export function useItemDetail(itemId: string) {
 }
 
 /** Search items with debounced query and optional filters */
-export function useSearchItems(
-  q: string,
-  filters?: { categoryId?: string; seriesId?: string },
-) {
+export function useSearchItems(q: string, filters?: { categoryId?: string; seriesId?: string }) {
   return useInfiniteQuery({
     queryKey: ['searchItems', q, filters?.categoryId, filters?.seriesId],
     queryFn: async ({ pageParam }) => {
@@ -120,47 +106,34 @@ function updateItemInQueries(
   updater: (item: ItemResponse) => ItemResponse,
 ) {
   // Update items list queries
-  queryClient.setQueriesData<InfiniteItemData>(
-    { queryKey: ['items'] },
-    (old) => {
-      if (!old) return old;
-      return {
-        ...old,
-        pages: old.pages.map((page) => ({
-          ...page,
-          items: page.items.map((item) =>
-            item.id === itemId ? updater(item) : item,
-          ),
-        })),
-      };
-    },
-  );
+  queryClient.setQueriesData<InfiniteItemData>({ queryKey: ['items'] }, (old) => {
+    if (!old) return old;
+    return {
+      ...old,
+      pages: old.pages.map((page) => ({
+        ...page,
+        items: page.items.map((item) => (item.id === itemId ? updater(item) : item)),
+      })),
+    };
+  });
 
   // Update search results
-  queryClient.setQueriesData<InfiniteItemData>(
-    { queryKey: ['searchItems'] },
-    (old) => {
-      if (!old) return old;
-      return {
-        ...old,
-        pages: old.pages.map((page) => ({
-          ...page,
-          items: page.items.map((item) =>
-            item.id === itemId ? updater(item) : item,
-          ),
-        })),
-      };
-    },
-  );
+  queryClient.setQueriesData<InfiniteItemData>({ queryKey: ['searchItems'] }, (old) => {
+    if (!old) return old;
+    return {
+      ...old,
+      pages: old.pages.map((page) => ({
+        ...page,
+        items: page.items.map((item) => (item.id === itemId ? updater(item) : item)),
+      })),
+    };
+  });
 
   // Update single item detail
-  queryClient.setQueryData<ItemDetailResponse>(
-    ['itemDetail', itemId],
-    (old) => {
-      if (!old) return old;
-      return { ...old, ...updater(old) };
-    },
-  );
+  queryClient.setQueryData<ItemDetailResponse>(['itemDetail', itemId], (old) => {
+    if (!old) return old;
+    return { ...old, ...updater(old) };
+  });
 }
 
 /** Toggle owned status with optimistic update */
@@ -180,10 +153,7 @@ export function useToggleOwned() {
       await queryClient.cancelQueries({ queryKey: ['searchItems'] });
       await queryClient.cancelQueries({ queryKey: ['itemDetail', itemId] });
 
-      const previousDetail = queryClient.getQueryData<ItemDetailResponse>([
-        'itemDetail',
-        itemId,
-      ]);
+      const previousDetail = queryClient.getQueryData<ItemDetailResponse>(['itemDetail', itemId]);
       const previousItems = queryClient.getQueriesData<InfiniteItemData>({
         queryKey: ['items'],
       });
@@ -202,28 +172,22 @@ export function useToggleOwned() {
       });
 
       // Also update ownerCount on detail
-      queryClient.setQueryData<ItemDetailResponse>(
-        ['itemDetail', itemId],
-        (old) => {
-          if (!old) return old;
-          const newOwned = !old.isOwned;
-          return {
-            ...old,
-            isOwned: newOwned,
-            isWishlisted: newOwned ? false : old.isWishlisted,
-            ownerCount: old.ownerCount + (newOwned ? 1 : -1),
-          };
-        },
-      );
+      queryClient.setQueryData<ItemDetailResponse>(['itemDetail', itemId], (old) => {
+        if (!old) return old;
+        const newOwned = !old.isOwned;
+        return {
+          ...old,
+          isOwned: newOwned,
+          isWishlisted: newOwned ? false : old.isWishlisted,
+          ownerCount: old.ownerCount + (newOwned ? 1 : -1),
+        };
+      });
 
       return { previousDetail, previousItems, previousSearch, itemId };
     },
     onError: (_err, { itemId }, context) => {
       if (context?.previousDetail) {
-        queryClient.setQueryData(
-          ['itemDetail', itemId],
-          context.previousDetail,
-        );
+        queryClient.setQueryData(['itemDetail', itemId], context.previousDetail);
       }
       if (context?.previousItems) {
         for (const [key, data] of context.previousItems) {
@@ -261,10 +225,7 @@ export function useToggleWishlist() {
       await queryClient.cancelQueries({ queryKey: ['searchItems'] });
       await queryClient.cancelQueries({ queryKey: ['itemDetail', itemId] });
 
-      const previousDetail = queryClient.getQueryData<ItemDetailResponse>([
-        'itemDetail',
-        itemId,
-      ]);
+      const previousDetail = queryClient.getQueryData<ItemDetailResponse>(['itemDetail', itemId]);
       const previousItems = queryClient.getQueriesData<InfiniteItemData>({
         queryKey: ['items'],
       });
@@ -283,31 +244,23 @@ export function useToggleWishlist() {
       });
 
       // Also update ownerCount on detail if owned was cleared
-      queryClient.setQueryData<ItemDetailResponse>(
-        ['itemDetail', itemId],
-        (old) => {
-          if (!old) return old;
-          const newWishlisted = !old.isWishlisted;
-          return {
-            ...old,
-            isWishlisted: newWishlisted,
-            isOwned: newWishlisted ? false : old.isOwned,
-            ownerCount:
-              newWishlisted && old.isOwned
-                ? Math.max(0, old.ownerCount - 1)
-                : old.ownerCount,
-          };
-        },
-      );
+      queryClient.setQueryData<ItemDetailResponse>(['itemDetail', itemId], (old) => {
+        if (!old) return old;
+        const newWishlisted = !old.isWishlisted;
+        return {
+          ...old,
+          isWishlisted: newWishlisted,
+          isOwned: newWishlisted ? false : old.isOwned,
+          ownerCount:
+            newWishlisted && old.isOwned ? Math.max(0, old.ownerCount - 1) : old.ownerCount,
+        };
+      });
 
       return { previousDetail, previousItems, previousSearch, itemId };
     },
     onError: (_err, { itemId }, context) => {
       if (context?.previousDetail) {
-        queryClient.setQueryData(
-          ['itemDetail', itemId],
-          context.previousDetail,
-        );
+        queryClient.setQueryData(['itemDetail', itemId], context.previousDetail);
       }
       if (context?.previousItems) {
         for (const [key, data] of context.previousItems) {
@@ -344,15 +297,10 @@ export function useFollowSeries() {
     onMutate: async ({ id }) => {
       await queryClient.cancelQueries({ queryKey: ['series'] });
 
-      queryClient.setQueriesData<SeriesResponse[]>(
-        { queryKey: ['series'] },
-        (old) => {
-          if (!old) return old;
-          return old.map((s) =>
-            s.id === id ? { ...s, isFollowed: !s.isFollowed } : s,
-          );
-        },
-      );
+      queryClient.setQueriesData<SeriesResponse[]>({ queryKey: ['series'] }, (old) => {
+        if (!old) return old;
+        return old.map((s) => (s.id === id ? { ...s, isFollowed: !s.isFollowed } : s));
+      });
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['series'] });

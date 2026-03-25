@@ -101,9 +101,7 @@ export const useCreatePostStore = create<CreatePostState>((set, get) => ({
     const newImages = images.filter((_, i) => i !== index);
     // Adjust active index if needed
     const newActiveIndex =
-      activeImageIndex >= newImages.length
-        ? Math.max(0, newImages.length - 1)
-        : activeImageIndex;
+      activeImageIndex >= newImages.length ? Math.max(0, newImages.length - 1) : activeImageIndex;
     set({ images: newImages, activeImageIndex: newActiveIndex });
   },
 

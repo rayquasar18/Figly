@@ -100,9 +100,7 @@ export function PostActions({
       </div>
 
       {likeCount > 0 && (
-        <p className="mt-1 text-sm font-semibold">
-          {likeCount.toLocaleString()} luot thich
-        </p>
+        <p className="mt-1 text-sm font-semibold">{likeCount.toLocaleString()} luot thich</p>
       )}
     </div>
   );

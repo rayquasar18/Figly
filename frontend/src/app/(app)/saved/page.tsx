@@ -8,8 +8,7 @@ import { PostDetailModal } from '@/components/post/post-detail-modal';
 
 export default function SavedPostsPage() {
   const router = useRouter();
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useSavedPosts();
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useSavedPosts();
   const sentinelRef = useRef<HTMLDivElement>(null);
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
 
@@ -60,9 +59,7 @@ export default function SavedPostsPage() {
           <div className="flex size-16 items-center justify-center rounded-full border-2 border-muted-foreground/30">
             <Bookmark className="size-8 text-muted-foreground/50" />
           </div>
-          <p className="mt-4 text-lg font-semibold">
-            Chua co bai viet nao duoc luu
-          </p>
+          <p className="mt-4 text-lg font-semibold">Chua co bai viet nao duoc luu</p>
           <p className="mt-1 text-sm text-muted-foreground">
             Luu bai viet ma ban muon xem lai sau.
           </p>

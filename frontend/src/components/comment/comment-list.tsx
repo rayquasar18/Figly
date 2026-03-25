@@ -12,19 +12,15 @@ interface CommentListProps {
 }
 
 export function CommentList({ postId }: CommentListProps) {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useComments(postId);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useComments(postId);
   const [replyTarget, setReplyTarget] = useState<{
     parentId: string;
     parentAuthorUsername: string;
   } | null>(null);
 
-  const handleReply = useCallback(
-    (parentId: string, parentAuthorUsername: string) => {
-      setReplyTarget({ parentId, parentAuthorUsername });
-    },
-    [],
-  );
+  const handleReply = useCallback((parentId: string, parentAuthorUsername: string) => {
+    setReplyTarget({ parentId, parentAuthorUsername });
+  }, []);
 
   const handleCancelReply = useCallback(() => {
     setReplyTarget(null);
@@ -41,9 +37,7 @@ export function CommentList({ postId }: CommentListProps) {
             <Loader2 className="size-5 animate-spin text-muted-foreground" />
           </div>
         ) : comments.length === 0 ? (
-          <p className="py-4 text-center text-sm text-muted-foreground">
-            Chua co binh luan nao
-          </p>
+          <p className="py-4 text-center text-sm text-muted-foreground">Chua co binh luan nao</p>
         ) : (
           <>
             {comments
@@ -66,9 +60,7 @@ export function CommentList({ postId }: CommentListProps) {
                   disabled={isFetchingNextPage}
                   className="text-xs text-muted-foreground"
                 >
-                  {isFetchingNextPage ? (
-                    <Loader2 className="mr-1 size-3 animate-spin" />
-                  ) : null}
+                  {isFetchingNextPage ? <Loader2 className="mr-1 size-3 animate-spin" /> : null}
                   Tai them binh luan
                 </Button>
               </div>
@@ -78,11 +70,7 @@ export function CommentList({ postId }: CommentListProps) {
       </div>
 
       {/* Comment input */}
-      <CommentInput
-        postId={postId}
-        replyTarget={replyTarget}
-        onCancelReply={handleCancelReply}
-      />
+      <CommentInput postId={postId} replyTarget={replyTarget} onCancelReply={handleCancelReply} />
     </div>
   );
 }

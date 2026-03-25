@@ -26,10 +26,7 @@ export class CollectionController {
 
   @Get('categories/:slug/series')
   @UseGuards(OptionalJwtAuthGuard)
-  async getSeriesByCategory(
-    @Param('slug') slug: string,
-    @Req() req: Request,
-  ) {
+  async getSeriesByCategory(@Param('slug') slug: string, @Req() req: Request) {
     const viewerId = (req.user as any)?.userId || null;
     return this.collectionService.getSeriesByCategory(slug, viewerId);
   }
@@ -75,10 +72,7 @@ export class CollectionController {
 
   @Get('items/:id')
   @UseGuards(OptionalJwtAuthGuard)
-  async getItemDetail(
-    @Param('id') id: string,
-    @Req() req: Request,
-  ) {
+  async getItemDetail(@Param('id') id: string, @Req() req: Request) {
     const viewerId = (req.user as any)?.userId || null;
     return this.collectionService.getItemDetail(id, viewerId);
   }
@@ -86,10 +80,7 @@ export class CollectionController {
   @Post('items/:id/owned')
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
-  async toggleOwned(
-    @Param('id') itemId: string,
-    @Req() req: Request,
-  ) {
+  async toggleOwned(@Param('id') itemId: string, @Req() req: Request) {
     const { userId } = req.user as any;
     return this.collectionService.toggleOwned(userId, itemId);
   }
@@ -97,10 +88,7 @@ export class CollectionController {
   @Post('items/:id/wishlist')
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
-  async toggleWishlist(
-    @Param('id') itemId: string,
-    @Req() req: Request,
-  ) {
+  async toggleWishlist(@Param('id') itemId: string, @Req() req: Request) {
     const { userId } = req.user as any;
     return this.collectionService.toggleWishlist(userId, itemId);
   }
@@ -108,10 +96,7 @@ export class CollectionController {
   @Post('categories/:id/follow')
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
-  async followCategory(
-    @Param('id') categoryId: string,
-    @Req() req: Request,
-  ) {
+  async followCategory(@Param('id') categoryId: string, @Req() req: Request) {
     const { userId } = req.user as any;
     return this.collectionService.followCategory(userId, categoryId);
   }
@@ -119,10 +104,7 @@ export class CollectionController {
   @Post('series/:id/follow')
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
-  async followSeries(
-    @Param('id') seriesId: string,
-    @Req() req: Request,
-  ) {
+  async followSeries(@Param('id') seriesId: string, @Req() req: Request) {
     const { userId } = req.user as any;
     return this.collectionService.followSeries(userId, seriesId);
   }
@@ -135,10 +117,6 @@ export class CollectionController {
     @Req() req?: Request,
   ) {
     const viewerId = (req?.user as any)?.userId || null;
-    return this.collectionService.getUserOwnedItems(
-      username,
-      viewerId,
-      cursor,
-    );
+    return this.collectionService.getUserOwnedItems(username, viewerId, cursor);
   }
 }

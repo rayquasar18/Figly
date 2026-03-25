@@ -77,11 +77,7 @@ export function PostMenu({ post, onDeleted }: PostMenuProps) {
           rows={2}
         />
         <div className="flex gap-2">
-          <Button
-            size="sm"
-            onClick={handleSaveCaption}
-            disabled={updateCaption.isPending}
-          >
+          <Button size="sm" onClick={handleSaveCaption} disabled={updateCaption.isPending}>
             {updateCaption.isPending ? 'Dang luu...' : 'Luu'}
           </Button>
           <Button
@@ -132,8 +128,7 @@ export function PostMenu({ post, onDeleted }: PostMenuProps) {
           <AlertDialogHeader>
             <AlertDialogTitle>Xoa bai viet</AlertDialogTitle>
             <AlertDialogDescription>
-              Ban co chac chan muon xoa bai viet nay khong? Hanh dong nay khong
-              the hoan tac.
+              Ban co chac chan muon xoa bai viet nay khong? Hanh dong nay khong the hoan tac.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

@@ -107,9 +107,7 @@ describe('MediaService', () => {
         mimetype: 'application/pdf',
       } as Express.Multer.File;
 
-      await expect(service.upload(nonImageFile, userId)).rejects.toThrow(
-        BadRequestException,
-      );
+      await expect(service.upload(nonImageFile, userId)).rejects.toThrow(BadRequestException);
     });
 
     it('should reject files exceeding size limit with PayloadTooLargeException', async () => {
@@ -118,9 +116,7 @@ describe('MediaService', () => {
         size: FILE_LIMITS.image + 1, // Just over 10MB
       } as Express.Multer.File;
 
-      await expect(service.upload(oversizedFile, userId)).rejects.toThrow(
-        PayloadTooLargeException,
-      );
+      await expect(service.upload(oversizedFile, userId)).rejects.toThrow(PayloadTooLargeException);
     });
   });
 
@@ -238,9 +234,7 @@ describe('MediaProcessor', () => {
       await processor.process(job);
 
       // Should download original
-      expect(storageService.download).toHaveBeenCalledWith(
-        'originals/user-123/uuid-test.jpg',
-      );
+      expect(storageService.download).toHaveBeenCalledWith('originals/user-123/uuid-test.jpg');
 
       // Should upload 3 variants
       expect(storageService.upload).toHaveBeenCalledTimes(3);
@@ -260,9 +254,7 @@ describe('MediaProcessor', () => {
     });
 
     it('should set status to FAILED on processing error', async () => {
-      (storageService.download as jest.Mock).mockRejectedValue(
-        new Error('Download failed'),
-      );
+      (storageService.download as jest.Mock).mockRejectedValue(new Error('Download failed'));
 
       const job = {
         data: {

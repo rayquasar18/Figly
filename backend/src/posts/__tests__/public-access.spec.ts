@@ -71,17 +71,21 @@ describe('Public Access - PostsService', () => {
 
       const result = await service.getPost('post-1', null);
 
-      expect(result).toEqual(expect.objectContaining({
-        id: 'post-1',
-        isLiked: false,
-        isBookmarked: false,
-        likeCount: 5,
-        commentCount: 3,
-      }));
-      expect(result.author).toEqual(expect.objectContaining({
-        id: 'author-1',
-        username: 'testuser',
-      }));
+      expect(result).toEqual(
+        expect.objectContaining({
+          id: 'post-1',
+          isLiked: false,
+          isBookmarked: false,
+          likeCount: 5,
+          commentCount: 3,
+        }),
+      );
+      expect(result.author).toEqual(
+        expect.objectContaining({
+          id: 'author-1',
+          username: 'testuser',
+        }),
+      );
     });
 
     it('should NOT query likes or bookmarks when viewerId is null', async () => {

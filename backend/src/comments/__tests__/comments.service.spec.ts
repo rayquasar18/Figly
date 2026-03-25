@@ -1,8 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import {
-  NotFoundException,
-  ForbiddenException,
-} from '@nestjs/common';
+import { NotFoundException, ForbiddenException } from '@nestjs/common';
 import { CommentsService } from '../comments.service';
 import { PrismaService } from '../../prisma/prisma.service';
 import { StorageService } from '../../media/storage.service';
@@ -108,7 +105,7 @@ describe('CommentsService', () => {
       expect(result.parentId).toBe('parent-1');
     });
 
-    it('should flatten reply-to-reply to 1 level (use parent\'s parentId)', async () => {
+    it("should flatten reply-to-reply to 1 level (use parent's parentId)", async () => {
       mockPrisma.post.findUnique.mockResolvedValue({ id: 'post-1' });
       mockPrisma.comment.findUnique.mockResolvedValue({
         id: 'reply-1',
@@ -260,17 +257,17 @@ describe('CommentsService', () => {
         userId: 'other-user',
       });
 
-      await expect(
-        service.deleteComment('comment-1', 'user-1'),
-      ).rejects.toThrow(ForbiddenException);
+      await expect(service.deleteComment('comment-1', 'user-1')).rejects.toThrow(
+        ForbiddenException,
+      );
     });
 
     it('should throw NotFoundException if comment does not exist', async () => {
       mockPrisma.comment.findUnique.mockResolvedValue(null);
 
-      await expect(
-        service.deleteComment('nonexistent', 'user-1'),
-      ).rejects.toThrow(NotFoundException);
+      await expect(service.deleteComment('nonexistent', 'user-1')).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 });

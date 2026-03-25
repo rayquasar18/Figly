@@ -29,11 +29,7 @@ export class CommentsController {
     @Query('cursor') cursor?: string,
     @Query('take') take?: string,
   ) {
-    return this.commentsService.getComments(
-      postId,
-      cursor,
-      take ? parseInt(take, 10) : undefined,
-    );
+    return this.commentsService.getComments(postId, cursor, take ? parseInt(take, 10) : undefined);
   }
 
   @Post('posts/:postId/comments')

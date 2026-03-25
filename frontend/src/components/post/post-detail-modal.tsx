@@ -26,7 +26,7 @@ export function PostDetailModal({ postId, open, onClose }: PostDetailModalProps)
 
   return (
     <Dialog open={open} onOpenChange={(isOpen) => !isOpen && onClose()}>
-      <DialogContent className="max-w-4xl max-h-[90vh] p-0 overflow-hidden gap-0">
+      <DialogContent className="max-h-[90vh] max-w-4xl gap-0 overflow-hidden p-0">
         <DialogTitle className="sr-only">Chi tiet bai viet</DialogTitle>
         <PostDetailContent postId={postId} onClose={onClose} />
       </DialogContent>
@@ -34,13 +34,7 @@ export function PostDetailModal({ postId, open, onClose }: PostDetailModalProps)
   );
 }
 
-function PostDetailContent({
-  postId,
-  onClose,
-}: {
-  postId: string;
-  onClose: () => void;
-}) {
+function PostDetailContent({ postId, onClose }: { postId: string; onClose: () => void }) {
   const { data: post, isLoading } = usePostDetail(postId);
 
   if (isLoading || !post) {
@@ -90,11 +84,8 @@ function PostDetailContent({
         <ScrollArea className="flex-1">
           {/* Caption as first "comment" */}
           {post.caption && (
-            <div className="px-4 py-3 border-b">
-              <CaptionDisplay
-                caption={post.caption}
-                username={post.author.username}
-              />
+            <div className="border-b px-4 py-3">
+              <CaptionDisplay caption={post.caption} username={post.author.username} />
             </div>
           )}
 
@@ -126,9 +117,7 @@ function PostDetailContent({
             isBookmarked={post.isBookmarked}
             likeCount={post.likeCount}
           />
-          <p className="px-3 pb-2 text-xs text-muted-foreground">
-            {relativeTime}
-          </p>
+          <p className="px-3 pb-2 text-xs text-muted-foreground">{relativeTime}</p>
         </div>
       </div>
     </div>

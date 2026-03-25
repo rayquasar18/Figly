@@ -43,15 +43,9 @@ export default function CategorySeriesPage() {
       </nav>
 
       <div className="mb-6 flex items-center justify-between gap-3">
-        <h1 className="text-xl font-bold capitalize">
-          {categorySlug.replace(/-/g, ' ')}
-        </h1>
+        <h1 className="text-xl font-bold capitalize">{categorySlug.replace(/-/g, ' ')}</h1>
         {currentCategory && (
-          <FollowSeriesButton
-            type="category"
-            id={currentCategory.id}
-            isFollowed={false}
-          />
+          <FollowSeriesButton type="category" id={currentCategory.id} isFollowed={false} />
         )}
       </div>
 
@@ -60,11 +54,7 @@ export default function CategorySeriesPage() {
       ) : seriesList && seriesList.length > 0 ? (
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
           {seriesList.map((series) => (
-            <SeriesCard
-              key={series.id}
-              series={series}
-              categorySlug={categorySlug}
-            />
+            <SeriesCard key={series.id} series={series} categorySlug={categorySlug} />
           ))}
         </div>
       ) : (

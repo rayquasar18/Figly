@@ -57,17 +57,11 @@ export function CaptionDisplay({ caption, username, truncate = false }: CaptionD
       {parts.map((part, i) => (
         <Fragment key={i}>
           {part.type === 'hashtag' ? (
-            <Link
-              href={`/hashtag/${part.value.slice(1)}`}
-              className="text-primary hover:underline"
-            >
+            <Link href={`/hashtag/${part.value.slice(1)}`} className="text-primary hover:underline">
               {part.value}
             </Link>
           ) : part.type === 'mention' ? (
-            <Link
-              href={`/${part.value.slice(1)}`}
-              className="text-primary hover:underline"
-            >
+            <Link href={`/${part.value.slice(1)}`} className="text-primary hover:underline">
               {part.value}
             </Link>
           ) : (

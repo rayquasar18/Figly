@@ -13,7 +13,13 @@ import {
 import { Throttle } from '@nestjs/throttler';
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
-import { SignupDto, LoginDto, ResetPasswordRequestDto, ResetPasswordDto, VerifyEmailDto } from './dto/auth.dto';
+import {
+  SignupDto,
+  LoginDto,
+  ResetPasswordRequestDto,
+  ResetPasswordDto,
+  VerifyEmailDto,
+} from './dto/auth.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
@@ -47,10 +53,7 @@ export class AuthController {
   async login(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
     const user = req.user as any;
     const userAgent = req.headers['user-agent'] || 'unknown';
-    const tokens = await this.authService.login(
-      { id: user.id, email: user.email },
-      userAgent,
-    );
+    const tokens = await this.authService.login({ id: user.id, email: user.email }, userAgent);
     this.authService.setCookies(res, tokens);
     return {
       user: {
@@ -150,10 +153,7 @@ export class AuthController {
   async googleAuthCallback(@Req() req: Request, @Res() res: Response) {
     const user = req.user as any;
     const userAgent = req.headers['user-agent'] || 'unknown';
-    const tokens = await this.authService.login(
-      { id: user.id, email: user.email },
-      userAgent,
-    );
+    const tokens = await this.authService.login({ id: user.id, email: user.email }, userAgent);
     this.authService.setCookies(res, tokens);
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
     res.redirect(`${frontendUrl}/auth/callback`);
@@ -174,10 +174,7 @@ export class AuthController {
   async appleAuthCallback(@Req() req: Request, @Res() res: Response) {
     const user = req.user as any;
     const userAgent = req.headers['user-agent'] || 'unknown';
-    const tokens = await this.authService.login(
-      { id: user.id, email: user.email },
-      userAgent,
-    );
+    const tokens = await this.authService.login({ id: user.id, email: user.email }, userAgent);
     this.authService.setCookies(res, tokens);
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
     res.redirect(`${frontendUrl}/auth/callback`);

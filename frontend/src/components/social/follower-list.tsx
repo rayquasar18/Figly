@@ -69,18 +69,15 @@ export function FollowerList({ username, type }: FollowerListProps) {
     return () => clearTimeout(timer);
   }, [search]);
 
-  // Use the correct query hook based on type
-  const query =
-    type === 'followers'
-      ? useFollowers(username, debouncedSearch || undefined)
-      : useFollowing(username, debouncedSearch || undefined);
+  // Always call both hooks (React rules-of-hooks) but only enable the relevant one
+  const followersQuery = useFollowers(username, debouncedSearch || undefined, type === 'followers');
+  const followingQuery = useFollowing(username, debouncedSearch || undefined, type === 'following');
+  const query = type === 'followers' ? followersQuery : followingQuery;
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    query;
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = query;
 
   // Determine if this is the current user's own followers list
-  const isOwnFollowers =
-    type === 'followers' && currentUser?.username === username;
+  const isOwnFollowers = type === 'followers' && currentUser?.username === username;
 
   const handleRemove = useCallback(
     (userId: string) => {
@@ -110,10 +107,7 @@ export function FollowerList({ username, type }: FollowerListProps) {
   // Flatten pages into a single items array
   const items = data?.pages.flatMap((page) => page.items) ?? [];
 
-  const emptyMessage =
-    type === 'followers'
-      ? 'Chua co nguoi theo doi nao'
-      : 'Chua theo doi ai';
+  const emptyMessage = type === 'followers' ? 'Chua co nguoi theo doi nao' : 'Chua theo doi ai';
 
   return (
     <div className="flex flex-col gap-4">

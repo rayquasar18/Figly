@@ -5,11 +5,7 @@ import { Link, X } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { useCreatePostStore } from '@/stores/create-post-store';
 import { ItemPicker } from '@/components/collection/item-picker';
@@ -42,8 +38,7 @@ export function StepCaption() {
 
   const [itemPickerOpen, setItemPickerOpen] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [autocompleteMode, setAutocompleteMode] =
-    useState<AutocompleteMode>(null);
+  const [autocompleteMode, setAutocompleteMode] = useState<AutocompleteMode>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [hashtagResults, setHashtagResults] = useState<HashtagSuggestion[]>([]);
   const [profileResults, setProfileResults] = useState<ProfileSuggestion[]>([]);
@@ -104,33 +99,30 @@ export function StepCaption() {
     [setCaption],
   );
 
-  const debouncedSearch = useCallback(
-    (mode: 'hashtag' | 'mention', query: string) => {
-      if (debounceRef.current) {
-        clearTimeout(debounceRef.current);
-      }
-      debounceRef.current = setTimeout(async () => {
-        try {
-          if (mode === 'hashtag') {
-            const res = await apiClient.get<HashtagSuggestion[]>(
-              `/hashtags/search?q=${encodeURIComponent(query)}`,
-            );
-            setHashtagResults(res.data);
-            setPopoverOpen(res.data.length > 0);
-          } else {
-            const res = await apiClient.get<ProfileSuggestion[]>(
-              `/profiles/search?q=${encodeURIComponent(query)}`,
-            );
-            setProfileResults(res.data);
-            setPopoverOpen(res.data.length > 0);
-          }
-        } catch {
-          setPopoverOpen(false);
+  const debouncedSearch = useCallback((mode: 'hashtag' | 'mention', query: string) => {
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
+    debounceRef.current = setTimeout(async () => {
+      try {
+        if (mode === 'hashtag') {
+          const res = await apiClient.get<HashtagSuggestion[]>(
+            `/hashtags/search?q=${encodeURIComponent(query)}`,
+          );
+          setHashtagResults(res.data);
+          setPopoverOpen(res.data.length > 0);
+        } else {
+          const res = await apiClient.get<ProfileSuggestion[]>(
+            `/profiles/search?q=${encodeURIComponent(query)}`,
+          );
+          setProfileResults(res.data);
+          setPopoverOpen(res.data.length > 0);
         }
-      }, 300);
-    },
-    [],
-  );
+      } catch {
+        setPopoverOpen(false);
+      }
+    }, 300);
+  }, []);
 
   const insertSuggestion = useCallback(
     (text: string) => {
@@ -138,8 +130,7 @@ export function StepCaption() {
       const after = caption.slice(
         triggerStart + (autocompleteMode === 'hashtag' ? 1 : 1) + searchTerm.length,
       );
-      const insertion =
-        autocompleteMode === 'hashtag' ? `#${text} ` : `@${text} `;
+      const insertion = autocompleteMode === 'hashtag' ? `#${text} ` : `@${text} `;
       const newCaption = before + insertion + after;
       setCaption(newCaption);
       setPopoverOpen(false);
@@ -228,10 +219,7 @@ export function StepCaption() {
                 >
                   <Avatar className="size-6">
                     {profile.avatarUrl ? (
-                      <AvatarImage
-                        src={profile.avatarUrl}
-                        alt={profile.username}
-                      />
+                      <AvatarImage src={profile.avatarUrl} alt={profile.username} />
                     ) : null}
                     <AvatarFallback className="text-[10px]">
                       {profile.name?.charAt(0)?.toUpperCase() || '?'}
@@ -239,9 +227,7 @@ export function StepCaption() {
                   </Avatar>
                   <div className="text-left">
                     <p className="font-medium">{profile.username}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {profile.name}
-                    </p>
+                    <p className="text-xs text-muted-foreground">{profile.name}</p>
                   </div>
                 </button>
               ))}
@@ -263,11 +249,7 @@ export function StepCaption() {
           {linkedItems.length > 0 && (
             <div className="flex flex-wrap gap-1.5">
               {linkedItems.map((item) => (
-                <Badge
-                  key={item.id}
-                  variant="secondary"
-                  className="flex items-center gap-1"
-                >
+                <Badge key={item.id} variant="secondary" className="flex items-center gap-1">
                   {item.name}
                   <button
                     type="button"

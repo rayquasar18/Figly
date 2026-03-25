@@ -24,10 +24,7 @@ export class MediaController {
   @Post('upload')
   @HttpCode(HttpStatus.CREATED)
   @UseInterceptors(FileInterceptor('file'))
-  async upload(
-    @UploadedFile() file: Express.Multer.File,
-    @Req() req: Request,
-  ) {
+  async upload(@UploadedFile() file: Express.Multer.File, @Req() req: Request) {
     const { userId } = req.user as any;
     const media = await this.mediaService.upload(file, userId);
     return { media };

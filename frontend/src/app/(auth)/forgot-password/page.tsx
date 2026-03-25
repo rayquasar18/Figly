@@ -16,13 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function ForgotPasswordPage() {
   const forgotPasswordMutation = useForgotPasswordMutation();
@@ -64,9 +58,7 @@ export default function ForgotPasswordPage() {
     <Card>
       <CardHeader className="text-center">
         <CardTitle className="text-2xl font-bold">Quen mat khau</CardTitle>
-        <CardDescription>
-          Nhap email cua ban de nhan lien ket dat lai mat khau.
-        </CardDescription>
+        <CardDescription>Nhap email cua ban de nhan lien ket dat lai mat khau.</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -90,14 +82,8 @@ export default function ForgotPasswordPage() {
               )}
             />
 
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={forgotPasswordMutation.isPending}
-            >
-              {forgotPasswordMutation.isPending
-                ? 'Dang gui...'
-                : 'Gui lien ket dat lai'}
+            <Button type="submit" className="w-full" disabled={forgotPasswordMutation.isPending}>
+              {forgotPasswordMutation.isPending ? 'Dang gui...' : 'Gui lien ket dat lai'}
             </Button>
           </form>
         </Form>

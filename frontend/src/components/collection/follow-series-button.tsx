@@ -13,12 +13,7 @@ interface FollowSeriesButtonProps {
   size?: 'sm' | 'default';
 }
 
-export function FollowSeriesButton({
-  type,
-  id,
-  isFollowed,
-  size = 'sm',
-}: FollowSeriesButtonProps) {
+export function FollowSeriesButton({ type, id, isFollowed, size = 'sm' }: FollowSeriesButtonProps) {
   const router = useRouter();
   const followSeries = useFollowSeries();
   const followCategory = useFollowCategory();
@@ -45,8 +40,7 @@ export function FollowSeriesButton({
       onClick={handleClick}
       disabled={isPending}
       className={cn(
-        isFollowed &&
-          'hover:border-destructive hover:text-destructive hover:bg-destructive/10',
+        isFollowed && 'hover:border-destructive hover:bg-destructive/10 hover:text-destructive',
       )}
     >
       {isFollowed ? 'Dang theo doi' : 'Theo doi'}

@@ -74,12 +74,8 @@ export class MediaService {
       thumbnail: media.thumbnailKey
         ? await this.storageService.getPresignedUrl(media.thumbnailKey)
         : null,
-      medium: media.mediumKey
-        ? await this.storageService.getPresignedUrl(media.mediumKey)
-        : null,
-      large: media.largeKey
-        ? await this.storageService.getPresignedUrl(media.largeKey)
-        : null,
+      medium: media.mediumKey ? await this.storageService.getPresignedUrl(media.mediumKey) : null,
+      large: media.largeKey ? await this.storageService.getPresignedUrl(media.largeKey) : null,
     };
 
     return { media, urls };

@@ -1,8 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import {
-  ForbiddenException,
-  NotFoundException,
-} from '@nestjs/common';
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { ChecklistService } from '../checklist.service';
 import { PrismaService } from '../../prisma/prisma.service';
 
@@ -38,10 +35,7 @@ describe('ChecklistService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        ChecklistService,
-        { provide: PrismaService, useValue: mockPrisma },
-      ],
+      providers: [ChecklistService, { provide: PrismaService, useValue: mockPrisma }],
     }).compile();
 
     service = module.get<ChecklistService>(ChecklistService);
@@ -67,13 +61,15 @@ describe('ChecklistService', () => {
         isPublic: false,
       });
 
-      expect(result).toEqual(expect.objectContaining({
-        id: 'cl-1',
-        name: 'My Gundam List',
-        isPublic: false,
-        totalEntries: 0,
-        checkedEntries: 0,
-      }));
+      expect(result).toEqual(
+        expect.objectContaining({
+          id: 'cl-1',
+          name: 'My Gundam List',
+          isPublic: false,
+          totalEntries: 0,
+          checkedEntries: 0,
+        }),
+      );
       expect(mockPrisma.checklist.create).toHaveBeenCalledWith({
         data: {
           userId: 'user-1',
@@ -85,7 +81,7 @@ describe('ChecklistService', () => {
   });
 
   describe('getMyChecklists', () => {
-    it('should return only the user\'s checklists with entry counts', async () => {
+    it("should return only the user's checklists with entry counts", async () => {
       mockPrisma.checklist.findMany.mockResolvedValue([
         {
           id: 'cl-1',
@@ -112,16 +108,20 @@ describe('ChecklistService', () => {
       const result = await service.getMyChecklists('user-1');
 
       expect(result).toHaveLength(2);
-      expect(result[0]).toEqual(expect.objectContaining({
-        id: 'cl-1',
-        totalEntries: 3,
-        checkedEntries: 2,
-      }));
-      expect(result[1]).toEqual(expect.objectContaining({
-        id: 'cl-2',
-        totalEntries: 0,
-        checkedEntries: 0,
-      }));
+      expect(result[0]).toEqual(
+        expect.objectContaining({
+          id: 'cl-1',
+          totalEntries: 3,
+          checkedEntries: 2,
+        }),
+      );
+      expect(result[1]).toEqual(
+        expect.objectContaining({
+          id: 'cl-2',
+          totalEntries: 0,
+          checkedEntries: 0,
+        }),
+      );
       expect(mockPrisma.checklist.findMany).toHaveBeenCalledWith(
         expect.objectContaining({
           where: { userId: 'user-1' },
@@ -144,7 +144,11 @@ describe('ChecklistService', () => {
             id: 'entry-1',
             checklistId: 'cl-1',
             itemId: 'item-1',
-            item: { name: 'RX-78-2', imageKey: null, series: { name: 'MG', category: { name: 'Gundam' } } },
+            item: {
+              name: 'RX-78-2',
+              imageKey: null,
+              series: { name: 'MG', category: { name: 'Gundam' } },
+            },
             freeformText: null,
             isChecked: true,
             position: 0,
@@ -165,17 +169,21 @@ describe('ChecklistService', () => {
 
       expect(result.id).toBe('cl-1');
       expect(result.entries).toHaveLength(2);
-      expect(result.entries[0]).toEqual(expect.objectContaining({
-        id: 'entry-1',
-        itemName: 'RX-78-2',
-        isChecked: true,
-        position: 0,
-      }));
-      expect(result.entries[1]).toEqual(expect.objectContaining({
-        id: 'entry-2',
-        freeformText: 'Buy display case',
-        isChecked: false,
-      }));
+      expect(result.entries[0]).toEqual(
+        expect.objectContaining({
+          id: 'entry-1',
+          itemName: 'RX-78-2',
+          isChecked: true,
+          position: 0,
+        }),
+      );
+      expect(result.entries[1]).toEqual(
+        expect.objectContaining({
+          id: 'entry-2',
+          freeformText: 'Buy display case',
+          isChecked: false,
+        }),
+      );
     });
 
     it('should throw ForbiddenException for non-owner on private checklist', async () => {
@@ -189,9 +197,9 @@ describe('ChecklistService', () => {
         entries: [],
       });
 
-      await expect(
-        service.getChecklistDetail('cl-1', 'other-user'),
-      ).rejects.toThrow(ForbiddenException);
+      await expect(service.getChecklistDetail('cl-1', 'other-user')).rejects.toThrow(
+        ForbiddenException,
+      );
     });
 
     it('should allow non-owner to view public checklist', async () => {
@@ -212,9 +220,9 @@ describe('ChecklistService', () => {
     it('should throw NotFoundException when checklist does not exist', async () => {
       mockPrisma.checklist.findUnique.mockResolvedValue(null);
 
-      await expect(
-        service.getChecklistDetail('nonexistent', 'user-1'),
-      ).rejects.toThrow(NotFoundException);
+      await expect(service.getChecklistDetail('nonexistent', 'user-1')).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 
@@ -243,19 +251,19 @@ describe('ChecklistService', () => {
       const result = await service.getPublicChecklists('collector');
 
       expect(result).toHaveLength(1);
-      expect(result[0]).toEqual(expect.objectContaining({
-        id: 'cl-1',
-        totalEntries: 5,
-        checkedEntries: 3,
-      }));
+      expect(result[0]).toEqual(
+        expect.objectContaining({
+          id: 'cl-1',
+          totalEntries: 5,
+          checkedEntries: 3,
+        }),
+      );
     });
 
     it('should throw NotFoundException for non-existent username', async () => {
       mockPrisma.user.findUnique.mockResolvedValue(null);
 
-      await expect(
-        service.getPublicChecklists('nonexistent'),
-      ).rejects.toThrow(NotFoundException);
+      await expect(service.getPublicChecklists('nonexistent')).rejects.toThrow(NotFoundException);
     });
   });
 
@@ -313,9 +321,9 @@ describe('ChecklistService', () => {
     it('should throw ForbiddenException if not owner', async () => {
       mockPrisma.checklist.findFirst.mockResolvedValue(null);
 
-      await expect(
-        service.deleteChecklist('cl-1', 'other-user'),
-      ).rejects.toThrow(ForbiddenException);
+      await expect(service.deleteChecklist('cl-1', 'other-user')).rejects.toThrow(
+        ForbiddenException,
+      );
     });
   });
 
@@ -382,7 +390,11 @@ describe('ChecklistService', () => {
         id: 'entry-1',
         checklistId: 'cl-1',
         itemId: 'item-1',
-        item: { name: 'RX-78-2', imageKey: null, series: { name: 'MG', category: { name: 'Gundam' } } },
+        item: {
+          name: 'RX-78-2',
+          imageKey: null,
+          series: { name: 'MG', category: { name: 'Gundam' } },
+        },
         freeformText: null,
         isChecked: false,
         position: 0,
@@ -441,17 +453,13 @@ describe('ChecklistService', () => {
         checklist: { id: 'cl-1', userId: 'other-user' },
       });
 
-      await expect(
-        service.toggleEntry('entry-1', 'user-1'),
-      ).rejects.toThrow(ForbiddenException);
+      await expect(service.toggleEntry('entry-1', 'user-1')).rejects.toThrow(ForbiddenException);
     });
 
     it('should throw NotFoundException when entry does not exist', async () => {
       mockPrisma.checklistEntry.findUnique.mockResolvedValue(null);
 
-      await expect(
-        service.toggleEntry('nonexistent', 'user-1'),
-      ).rejects.toThrow(NotFoundException);
+      await expect(service.toggleEntry('nonexistent', 'user-1')).rejects.toThrow(NotFoundException);
     });
   });
 
@@ -476,9 +484,7 @@ describe('ChecklistService', () => {
         checklist: { id: 'cl-1', userId: 'other-user' },
       });
 
-      await expect(
-        service.removeEntry('entry-1', 'user-1'),
-      ).rejects.toThrow(ForbiddenException);
+      await expect(service.removeEntry('entry-1', 'user-1')).rejects.toThrow(ForbiddenException);
     });
   });
 
@@ -510,9 +516,9 @@ describe('ChecklistService', () => {
     it('should throw ForbiddenException if not owner', async () => {
       mockPrisma.checklist.findFirst.mockResolvedValue(null);
 
-      await expect(
-        service.reorderEntries('cl-1', 'other-user', ['entry-1']),
-      ).rejects.toThrow(ForbiddenException);
+      await expect(service.reorderEntries('cl-1', 'other-user', ['entry-1'])).rejects.toThrow(
+        ForbiddenException,
+      );
     });
   });
 });

@@ -1,10 +1,4 @@
-import {
-  IsString,
-  IsOptional,
-  IsBoolean,
-  IsArray,
-  MaxLength,
-} from 'class-validator';
+import { IsString, IsOptional, IsBoolean, IsArray, MaxLength } from 'class-validator';
 
 export class CreateChecklistDto {
   @IsString({ message: 'Ten checklist phai la chuoi ky tu' })

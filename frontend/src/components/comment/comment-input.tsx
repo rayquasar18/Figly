@@ -18,11 +18,7 @@ interface CommentInputProps {
   onCancelReply?: () => void;
 }
 
-export function CommentInput({
-  postId,
-  replyTarget,
-  onCancelReply,
-}: CommentInputProps) {
+export function CommentInput({ postId, replyTarget, onCancelReply }: CommentInputProps) {
   const isAuthenticated = !!useAuthStore((s) => s.user);
   const [content, setContent] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -67,7 +63,7 @@ export function CommentInput({
       <div className="border-t p-3">
         <Link
           href="/login"
-          className="flex items-center justify-center rounded-md border p-2.5 text-sm text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"
+          className="flex items-center justify-center rounded-md border p-2.5 text-sm text-muted-foreground transition-colors hover:border-foreground hover:text-foreground"
         >
           Dang nhap de binh luan
         </Link>
@@ -80,10 +76,7 @@ export function CommentInput({
       {replyTarget && (
         <div className="mb-1 flex items-center gap-2 text-xs text-muted-foreground">
           <span>Tra loi @{replyTarget.parentAuthorUsername}</span>
-          <button
-            onClick={onCancelReply}
-            className="text-primary hover:underline"
-          >
+          <button onClick={onCancelReply} className="text-primary hover:underline">
             Huy
           </button>
         </div>
@@ -96,7 +89,7 @@ export function CommentInput({
           onKeyDown={handleKeyDown}
           placeholder="Them binh luan..."
           maxLength={POST_LIMITS.commentMaxLength}
-          className="min-h-[36px] max-h-[100px] resize-none border-0 p-0 text-sm shadow-none focus-visible:ring-0"
+          className="max-h-[100px] min-h-[36px] resize-none border-0 p-0 text-sm shadow-none focus-visible:ring-0"
           rows={1}
         />
         <Button

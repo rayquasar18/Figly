@@ -1,8 +1,4 @@
-import {
-  useInfiniteQuery,
-  useMutation,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
 import type { PaginatedResponse, CommentResponse } from '@figly/shared';
 
@@ -31,17 +27,11 @@ export function useCreateComment(postId: string) {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({
-      content,
-      parentId,
-    }: {
-      content: string;
-      parentId?: string;
-    }) => {
-      const response = await apiClient.post<CommentResponse>(
-        `/posts/${postId}/comments`,
-        { content, parentId },
-      );
+    mutationFn: async ({ content, parentId }: { content: string; parentId?: string }) => {
+      const response = await apiClient.post<CommentResponse>(`/posts/${postId}/comments`, {
+        content,
+        parentId,
+      });
       return response.data;
     },
     onSuccess: () => {

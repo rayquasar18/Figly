@@ -6,11 +6,7 @@ import { useMe } from '@/hooks/queries/auth-queries';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { CreatePostFlow } from '@/components/create-post/create-post-flow';
 
-export default function AppLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AppLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const { data: user, isLoading, isError } = useMe();

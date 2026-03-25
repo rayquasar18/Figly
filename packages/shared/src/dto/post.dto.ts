@@ -15,10 +15,7 @@ export const createPostSchema = z.object({
     })
     .optional()
     .nullable(),
-  linkedItemIds: z
-    .array(z.string())
-    .max(10, { message: 'Toi da 10 vat pham lien ket' })
-    .optional(),
+  linkedItemIds: z.array(z.string()).max(10, { message: 'Toi da 10 vat pham lien ket' }).optional(),
 });
 
 export const updateCaptionSchema = z.object({

@@ -43,10 +43,7 @@ export default function PostDetailPage() {
     return (
       <div className="flex flex-col items-center justify-center py-20">
         <p className="text-muted-foreground">Khong tim thay bai viet</p>
-        <button
-          onClick={() => router.back()}
-          className="mt-2 text-primary hover:underline"
-        >
+        <button onClick={() => router.back()} className="mt-2 text-primary hover:underline">
           Quay lai
         </button>
       </div>
@@ -81,10 +78,7 @@ export default function PostDetailPage() {
             </AvatarFallback>
           </Avatar>
         </Link>
-        <Link
-          href={`/${post.author.username}`}
-          className="text-sm font-semibold hover:underline"
-        >
+        <Link href={`/${post.author.username}`} className="text-sm font-semibold hover:underline">
           {post.author.username}
         </Link>
       </div>
@@ -102,13 +96,13 @@ export default function PostDetailPage() {
 
       {/* Caption */}
       {post.caption && (
-        <div className="px-3 mt-1">
+        <div className="mt-1 px-3">
           <CaptionDisplay caption={post.caption} username={post.author.username} />
         </div>
       )}
 
       {/* Timestamp */}
-      <p className="px-3 mt-1 text-xs text-muted-foreground">{relativeTime}</p>
+      <p className="mt-1 px-3 text-xs text-muted-foreground">{relativeTime}</p>
 
       {/* Comments */}
       <div className="mt-3 border-t">

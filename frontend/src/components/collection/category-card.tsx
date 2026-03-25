@@ -15,11 +15,7 @@ export function CategoryCard({ category }: CategoryCardProps) {
       <Card className="group overflow-hidden transition-shadow hover:shadow-md">
         <div className="relative aspect-[4/3] bg-muted">
           {category.coverImage ? (
-            <img
-              src={category.coverImage}
-              alt={category.name}
-              className="size-full object-cover"
-            />
+            <img src={category.coverImage} alt={category.name} className="size-full object-cover" />
           ) : (
             <div className="flex size-full items-center justify-center">
               <Package className="size-12 text-muted-foreground/50" />
@@ -27,9 +23,7 @@ export function CategoryCard({ category }: CategoryCardProps) {
           )}
         </div>
         <CardContent className="p-3">
-          <h3 className="font-semibold leading-tight group-hover:text-primary">
-            {category.name}
-          </h3>
+          <h3 className="font-semibold leading-tight group-hover:text-primary">{category.name}</h3>
           {category.description && (
             <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">
               {category.description}

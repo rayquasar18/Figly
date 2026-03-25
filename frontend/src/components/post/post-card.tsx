@@ -76,11 +76,8 @@ export function PostCard({ post, onOpenDetail }: PostCardProps) {
             </AvatarFallback>
           </Avatar>
         </Link>
-        <div className="flex-1 min-w-0">
-          <Link
-            href={`/${post.author.username}`}
-            className="text-sm font-semibold hover:underline"
-          >
+        <div className="min-w-0 flex-1">
+          <Link href={`/${post.author.username}`} className="text-sm font-semibold hover:underline">
             {post.author.username}
           </Link>
         </div>
@@ -97,7 +94,7 @@ export function PostCard({ post, onOpenDetail }: PostCardProps) {
             <Heart
               className={cn(
                 'size-20 fill-white text-white drop-shadow-lg',
-                'animate-in zoom-in-50 fade-in duration-300',
+                'duration-300 animate-in fade-in zoom-in-50',
               )}
               style={{
                 animation: 'heartBurst 1s ease-out forwards',
@@ -117,17 +114,13 @@ export function PostCard({ post, onOpenDetail }: PostCardProps) {
       />
 
       {/* Caption */}
-      <div className="px-3 mt-1">
-        <CaptionDisplay
-          caption={post.caption}
-          username={post.author.username}
-          truncate
-        />
+      <div className="mt-1 px-3">
+        <CaptionDisplay caption={post.caption} username={post.author.username} truncate />
       </div>
 
       {/* Linked items badges */}
       {post.linkedItems && post.linkedItems.length > 0 && (
-        <div className="flex flex-wrap items-center gap-1.5 px-3 mt-1.5">
+        <div className="mt-1.5 flex flex-wrap items-center gap-1.5 px-3">
           {post.linkedItems.slice(0, 3).map((item) => (
             <Link key={item.id} href={`/item/${item.id}`}>
               <Badge
@@ -151,7 +144,7 @@ export function PostCard({ post, onOpenDetail }: PostCardProps) {
       {post.commentCount > 0 && (
         <button
           onClick={handleViewComments}
-          className="px-3 mt-1 text-sm text-muted-foreground hover:text-foreground"
+          className="mt-1 px-3 text-sm text-muted-foreground hover:text-foreground"
         >
           Xem tat ca {post.commentCount} binh luan
         </button>

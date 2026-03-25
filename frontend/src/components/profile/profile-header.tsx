@@ -27,9 +27,9 @@ export function ProfileHeader({ profile, onEditClick }: ProfileHeaderProps) {
       {/* Top section: avatar + stats */}
       <div className="flex flex-col items-center gap-6 md:flex-row md:items-start">
         {/* Avatar */}
-        <Avatar className="size-20 md:size-36 border">
+        <Avatar className="size-20 border md:size-36">
           <AvatarImage src={profile.avatarUrl ?? undefined} alt={profile.displayName} />
-          <AvatarFallback className="text-xl md:text-3xl font-medium">
+          <AvatarFallback className="text-xl font-medium md:text-3xl">
             {getInitials(profile.displayName)}
           </AvatarFallback>
         </Avatar>
@@ -74,9 +74,9 @@ export function ProfileHeader({ profile, onEditClick }: ProfileHeaderProps) {
 
       {/* Name + bio section */}
       <div className="space-y-1">
-        <p className="font-semibold text-balance">{profile.displayName}</p>
+        <p className="text-balance font-semibold">{profile.displayName}</p>
         {profile.bio && (
-          <p className="text-sm text-muted-foreground text-pretty whitespace-pre-line">
+          <p className="whitespace-pre-line text-pretty text-sm text-muted-foreground">
             {profile.bio}
           </p>
         )}

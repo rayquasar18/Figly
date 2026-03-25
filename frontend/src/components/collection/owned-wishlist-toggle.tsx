@@ -4,10 +4,7 @@ import { Check, Heart } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/stores/auth-store';
-import {
-  useToggleOwned,
-  useToggleWishlist,
-} from '@/hooks/queries/collection-queries';
+import { useToggleOwned, useToggleWishlist } from '@/hooks/queries/collection-queries';
 
 interface OwnedWishlistToggleProps {
   itemId: string;
@@ -15,11 +12,7 @@ interface OwnedWishlistToggleProps {
   isWishlisted: boolean;
 }
 
-export function OwnedWishlistToggle({
-  itemId,
-  isOwned,
-  isWishlisted,
-}: OwnedWishlistToggleProps) {
+export function OwnedWishlistToggle({ itemId, isOwned, isWishlisted }: OwnedWishlistToggleProps) {
   const router = useRouter();
   const toggleOwned = useToggleOwned();
   const toggleWishlist = useToggleWishlist();
@@ -52,7 +45,7 @@ export function OwnedWishlistToggle({
         disabled={toggleOwned.isPending || toggleWishlist.isPending}
         className={
           isOwned
-            ? 'bg-green-600 text-white hover:bg-green-700 transition-colors'
+            ? 'bg-green-600 text-white transition-colors hover:bg-green-700'
             : 'transition-colors'
         }
       >
@@ -66,7 +59,7 @@ export function OwnedWishlistToggle({
         disabled={toggleOwned.isPending || toggleWishlist.isPending}
         className={
           isWishlisted
-            ? 'bg-rose-500 text-white hover:bg-rose-600 transition-colors'
+            ? 'bg-rose-500 text-white transition-colors hover:bg-rose-600'
             : 'transition-colors'
         }
       >

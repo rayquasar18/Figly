@@ -21,10 +21,7 @@ import configuration from './config/configuration';
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configuration],
-      envFilePath: [
-        join(__dirname, '..', '.env'),
-        join(__dirname, '..', '..', '.env'),
-      ],
+      envFilePath: [join(__dirname, '..', '.env'), join(__dirname, '..', '..', '.env')],
     }),
     ThrottlerModule.forRoot([
       {

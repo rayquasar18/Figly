@@ -52,7 +52,7 @@ describe('Password Reset', () => {
       const config: Record<string, string> = {
         'jwt.accessSecret': 'test-access-secret',
         'jwt.refreshSecret': 'test-refresh-secret',
-        'frontendUrl': 'http://localhost:3000',
+        frontendUrl: 'http://localhost:3000',
       };
       return config[key];
     }),
@@ -145,8 +145,9 @@ describe('Password Reset', () => {
         usedAt: null,
       });
 
-      await expect(service.resetPassword(rawToken, 'NewPassword1'))
-        .rejects.toThrow(BadRequestException);
+      await expect(service.resetPassword(rawToken, 'NewPassword1')).rejects.toThrow(
+        BadRequestException,
+      );
     });
 
     it('should throw BadRequestException for already-used reset token', async () => {
@@ -161,8 +162,9 @@ describe('Password Reset', () => {
         usedAt: new Date(), // already used
       });
 
-      await expect(service.resetPassword(rawToken, 'NewPassword1'))
-        .rejects.toThrow(BadRequestException);
+      await expect(service.resetPassword(rawToken, 'NewPassword1')).rejects.toThrow(
+        BadRequestException,
+      );
     });
   });
 });

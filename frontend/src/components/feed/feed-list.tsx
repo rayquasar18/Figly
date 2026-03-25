@@ -9,8 +9,7 @@ import { EmptyFeed } from './empty-feed';
 import { PostDetailModal } from '@/components/post/post-detail-modal';
 
 export function FeedList() {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useFeed();
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useFeed();
   const sentinelRef = useRef<HTMLDivElement>(null);
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
 
@@ -53,11 +52,7 @@ export function FeedList() {
     <>
       <div className="space-y-0">
         {items.map((post) => (
-          <PostCard
-            key={post.id}
-            post={post}
-            onOpenDetail={handleOpenDetail}
-          />
+          <PostCard key={post.id} post={post} onOpenDetail={handleOpenDetail} />
         ))}
 
         {/* Sentinel for infinite scroll */}

@@ -21,12 +21,8 @@ export function getRotatedSize(
 ): { width: number; height: number } {
   const rotRad = (rotation * Math.PI) / 180;
   return {
-    width:
-      Math.abs(Math.cos(rotRad) * width) +
-      Math.abs(Math.sin(rotRad) * height),
-    height:
-      Math.abs(Math.sin(rotRad) * width) +
-      Math.abs(Math.cos(rotRad) * height),
+    width: Math.abs(Math.cos(rotRad) * width) + Math.abs(Math.sin(rotRad) * height),
+    height: Math.abs(Math.sin(rotRad) * width) + Math.abs(Math.cos(rotRad) * height),
   };
 }
 

@@ -17,12 +17,7 @@ export function BottomNav() {
   return (
     <nav className="fixed inset-x-0 bottom-0 z-40 border-t bg-background md:hidden">
       <div className="flex h-14 items-center justify-around">
-        <NavLink
-          href="/"
-          icon={Home}
-          label="Trang chu"
-          isActive={pathname === '/'}
-        />
+        <NavLink href="/" icon={Home} label="Trang chu" isActive={pathname === '/'} />
         <NavLink
           href="/search"
           icon={Search}
@@ -47,9 +42,7 @@ export function BottomNav() {
           href={profileHref}
           icon={User}
           label="Ho so"
-          isActive={
-            !!user?.username && pathname.startsWith(`/${user.username}`)
-          }
+          isActive={!!user?.username && pathname.startsWith(`/${user.username}`)}
         />
       </div>
     </nav>

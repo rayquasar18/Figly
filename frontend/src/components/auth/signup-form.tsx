@@ -48,8 +48,9 @@ export function SignupForm() {
   }, [watchedUsername]);
 
   const shouldCheck = debouncedUsername.length >= USERNAME_RULES.minLength;
-  const { data: usernameCheck, isFetching: isCheckingUsername } =
-    useCheckUsername(shouldCheck ? debouncedUsername : '');
+  const { data: usernameCheck, isFetching: isCheckingUsername } = useCheckUsername(
+    shouldCheck ? debouncedUsername : '',
+  );
 
   async function onSubmit(data: SignupDto) {
     setServerError(null);
@@ -86,12 +87,7 @@ export function SignupForm() {
             <FormItem>
               <FormLabel>Ten</FormLabel>
               <FormControl>
-                <Input
-                  type="text"
-                  placeholder="Nhap ten cua ban"
-                  autoComplete="name"
-                  {...field}
-                />
+                <Input type="text" placeholder="Nhap ten cua ban" autoComplete="name" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -129,9 +125,7 @@ export function SignupForm() {
                   )}
                 </div>
               </FormControl>
-              <FormDescription>
-                Chi chua chu thuong, so, dau gach duoi va dau cham
-              </FormDescription>
+              <FormDescription>Chi chua chu thuong, so, dau gach duoi va dau cham</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -175,11 +169,7 @@ export function SignupForm() {
           )}
         />
 
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={signupMutation.isPending}
-        >
+        <Button type="submit" className="w-full" disabled={signupMutation.isPending}>
           {signupMutation.isPending ? 'Dang dang ky...' : 'Dang ky'}
         </Button>
       </form>

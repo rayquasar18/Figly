@@ -17,13 +17,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
 import { AxiosError } from 'axios';
 
@@ -88,9 +82,7 @@ export default function ResetPasswordPage() {
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold">Lien ket khong hop le</CardTitle>
-          <CardDescription>
-            Lien ket dat lai mat khau khong hop le hoac da het han.
-          </CardDescription>
+          <CardDescription>Lien ket dat lai mat khau khong hop le hoac da het han.</CardDescription>
         </CardHeader>
         <CardContent className="text-center">
           <Link href="/forgot-password">
@@ -156,14 +148,8 @@ export default function ResetPasswordPage() {
               )}
             />
 
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={resetMutation.isPending}
-            >
-              {resetMutation.isPending
-                ? 'Dang dat lai...'
-                : 'Dat lai mat khau'}
+            <Button type="submit" className="w-full" disabled={resetMutation.isPending}>
+              {resetMutation.isPending ? 'Dang dat lai...' : 'Dat lai mat khau'}
             </Button>
           </form>
         </Form>

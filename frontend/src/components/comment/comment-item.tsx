@@ -26,11 +26,7 @@ function renderCommentContent(text: string) {
     if (part.match(regex)) {
       const username = part.slice(1);
       return (
-        <Link
-          key={i}
-          href={`/${username}`}
-          className="text-primary hover:underline"
-        >
+        <Link key={i} href={`/${username}`} className="text-primary hover:underline">
           {part}
         </Link>
       );
@@ -39,12 +35,7 @@ function renderCommentContent(text: string) {
   });
 }
 
-export function CommentItem({
-  comment,
-  postId,
-  onReply,
-  isReply = false,
-}: CommentItemProps) {
+export function CommentItem({ comment, postId, onReply, isReply = false }: CommentItemProps) {
   const { user: currentUser } = useAuthStore();
   const deleteComment = useDeleteComment(postId);
   const isOwner = currentUser?.id === comment.author.id;
@@ -67,7 +58,7 @@ export function CommentItem({
             </AvatarFallback>
           </Avatar>
         </Link>
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1">
           <div className="text-sm">
             <Link
               href={`/${comment.author.username}`}
@@ -81,12 +72,7 @@ export function CommentItem({
             <span>{relativeTime}</span>
             {onReply && (
               <button
-                onClick={() =>
-                  onReply(
-                    comment.parentId ?? comment.id,
-                    comment.author.username,
-                  )
-                }
+                onClick={() => onReply(comment.parentId ?? comment.id, comment.author.username)}
                 className="font-semibold hover:text-foreground"
               >
                 Tra loi
@@ -109,13 +95,7 @@ export function CommentItem({
       {comment.replies?.length > 0 && (
         <div>
           {comment.replies.map((reply) => (
-            <CommentItem
-              key={reply.id}
-              comment={reply}
-              postId={postId}
-              onReply={onReply}
-              isReply
-            />
+            <CommentItem key={reply.id} comment={reply} postId={postId} onReply={onReply} isReply />
           ))}
         </div>
       )}

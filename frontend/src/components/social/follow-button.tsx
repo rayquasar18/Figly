@@ -4,10 +4,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useAuthStore } from '@/stores/auth-store';
-import {
-  useFollowMutation,
-  useUnfollowMutation,
-} from '@/hooks/queries/social-queries';
+import { useFollowMutation, useUnfollowMutation } from '@/hooks/queries/social-queries';
 
 interface FollowButtonProps {
   userId: string;
@@ -16,12 +13,7 @@ interface FollowButtonProps {
   size?: 'sm' | 'default';
 }
 
-export function FollowButton({
-  userId,
-  username,
-  isFollowing,
-  size = 'sm',
-}: FollowButtonProps) {
+export function FollowButton({ userId, username, isFollowing, size = 'sm' }: FollowButtonProps) {
   const router = useRouter();
   const followMutation = useFollowMutation();
   const unfollowMutation = useUnfollowMutation();
@@ -50,8 +42,7 @@ export function FollowButton({
       onClick={handleClick}
       disabled={isPending}
       className={cn(
-        isFollowing &&
-          'hover:border-destructive hover:text-destructive hover:bg-destructive/10',
+        isFollowing && 'hover:border-destructive hover:bg-destructive/10 hover:text-destructive',
       )}
     >
       {isFollowing ? 'Dang theo doi' : 'Theo doi'}

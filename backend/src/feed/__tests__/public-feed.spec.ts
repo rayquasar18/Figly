@@ -62,10 +62,7 @@ describe('FeedService - Public Feed', () => {
 
   describe('getPublicFeed', () => {
     it('should return chronological posts from all users without auth', async () => {
-      const posts = [
-        createMockPost('post-2', 'user-b'),
-        createMockPost('post-1', 'user-a'),
-      ];
+      const posts = [createMockPost('post-2', 'user-b'), createMockPost('post-1', 'user-a')];
 
       mockPrisma.post.findMany.mockResolvedValue(posts);
       mockStorageService.getPresignedUrl.mockResolvedValue('https://url.com/signed');
@@ -104,9 +101,7 @@ describe('FeedService - Public Feed', () => {
 
     it('should support cursor pagination', async () => {
       // Return 11 posts (take+1) to simulate hasMore=true
-      const posts = Array.from({ length: 11 }, (_, i) =>
-        createMockPost(`post-${i}`, `user-${i}`),
-      );
+      const posts = Array.from({ length: 11 }, (_, i) => createMockPost(`post-${i}`, `user-${i}`));
 
       mockPrisma.post.findMany.mockResolvedValue(posts);
       mockStorageService.getPresignedUrl.mockResolvedValue('https://url.com/signed');

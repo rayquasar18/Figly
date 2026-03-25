@@ -1,7 +1,4 @@
-import {
-  useMutation,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
 import { toast } from 'sonner';
 import type { ToggleResponse, PostResponse, PaginatedResponse } from '@figly/shared';
@@ -18,64 +15,46 @@ function updatePostInQueries(
   updater: (post: PostResponse) => PostResponse,
 ) {
   // Update feed pages
-  queryClient.setQueriesData<InfinitePostData>(
-    { queryKey: ['feed'] },
-    (old) => {
-      if (!old) return old;
-      return {
-        ...old,
-        pages: old.pages.map((page) => ({
-          ...page,
-          items: page.items.map((item) =>
-            item.id === postId ? updater(item) : item,
-          ),
-        })),
-      };
-    },
-  );
+  queryClient.setQueriesData<InfinitePostData>({ queryKey: ['feed'] }, (old) => {
+    if (!old) return old;
+    return {
+      ...old,
+      pages: old.pages.map((page) => ({
+        ...page,
+        items: page.items.map((item) => (item.id === postId ? updater(item) : item)),
+      })),
+    };
+  });
 
   // Update userPosts pages
-  queryClient.setQueriesData<InfinitePostData>(
-    { queryKey: ['userPosts'] },
-    (old) => {
-      if (!old) return old;
-      return {
-        ...old,
-        pages: old.pages.map((page) => ({
-          ...page,
-          items: page.items.map((item) =>
-            item.id === postId ? updater(item) : item,
-          ),
-        })),
-      };
-    },
-  );
+  queryClient.setQueriesData<InfinitePostData>({ queryKey: ['userPosts'] }, (old) => {
+    if (!old) return old;
+    return {
+      ...old,
+      pages: old.pages.map((page) => ({
+        ...page,
+        items: page.items.map((item) => (item.id === postId ? updater(item) : item)),
+      })),
+    };
+  });
 
   // Update savedPosts pages
-  queryClient.setQueriesData<InfinitePostData>(
-    { queryKey: ['savedPosts'] },
-    (old) => {
-      if (!old) return old;
-      return {
-        ...old,
-        pages: old.pages.map((page) => ({
-          ...page,
-          items: page.items.map((item) =>
-            item.id === postId ? updater(item) : item,
-          ),
-        })),
-      };
-    },
-  );
+  queryClient.setQueriesData<InfinitePostData>({ queryKey: ['savedPosts'] }, (old) => {
+    if (!old) return old;
+    return {
+      ...old,
+      pages: old.pages.map((page) => ({
+        ...page,
+        items: page.items.map((item) => (item.id === postId ? updater(item) : item)),
+      })),
+    };
+  });
 
   // Update single post detail
-  queryClient.setQueryData<PostResponse>(
-    ['post', postId],
-    (old) => {
-      if (!old) return old;
-      return updater(old);
-    },
-  );
+  queryClient.setQueryData<PostResponse>(['post', postId], (old) => {
+    if (!old) return old;
+    return updater(old);
+  });
 }
 
 /** Like a post with optimistic update */
@@ -84,9 +63,7 @@ export function useLikeMutation() {
 
   return useMutation({
     mutationFn: async ({ postId }: { postId: string }) => {
-      const response = await apiClient.post<ToggleResponse>(
-        `/posts/${postId}/like`,
-      );
+      const response = await apiClient.post<ToggleResponse>(`/posts/${postId}/like`);
       return response.data;
     },
     onMutate: async ({ postId }) => {
@@ -129,9 +106,7 @@ export function useUnlikeMutation() {
 
   return useMutation({
     mutationFn: async ({ postId }: { postId: string }) => {
-      const response = await apiClient.delete<ToggleResponse>(
-        `/posts/${postId}/like`,
-      );
+      const response = await apiClient.delete<ToggleResponse>(`/posts/${postId}/like`);
       return response.data;
     },
     onMutate: async ({ postId }) => {
@@ -174,9 +149,7 @@ export function useBookmarkMutation() {
 
   return useMutation({
     mutationFn: async ({ postId }: { postId: string }) => {
-      const response = await apiClient.post<ToggleResponse>(
-        `/posts/${postId}/bookmark`,
-      );
+      const response = await apiClient.post<ToggleResponse>(`/posts/${postId}/bookmark`);
       return response.data;
     },
     onMutate: async ({ postId }) => {
@@ -217,9 +190,7 @@ export function useUnbookmarkMutation() {
 
   return useMutation({
     mutationFn: async ({ postId }: { postId: string }) => {
-      const response = await apiClient.delete<ToggleResponse>(
-        `/posts/${postId}/bookmark`,
-      );
+      const response = await apiClient.delete<ToggleResponse>(`/posts/${postId}/bookmark`);
       return response.data;
     },
     onMutate: async ({ postId }) => {
@@ -260,10 +231,7 @@ export function useUpdateCaption() {
 
   return useMutation({
     mutationFn: async ({ postId, caption }: { postId: string; caption: string }) => {
-      const response = await apiClient.patch<PostResponse>(
-        `/posts/${postId}`,
-        { caption },
-      );
+      const response = await apiClient.patch<PostResponse>(`/posts/${postId}`, { caption });
       return response.data;
     },
     onSuccess: (_data, { postId }) => {

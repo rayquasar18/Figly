@@ -50,7 +50,7 @@ describe('Apple Sign-In', () => {
       const config: Record<string, string> = {
         'jwt.accessSecret': 'test-access-secret',
         'jwt.refreshSecret': 'test-refresh-secret',
-        'frontendUrl': 'http://localhost:3000',
+        frontendUrl: 'http://localhost:3000',
       };
       return config[key];
     }),

@@ -4,11 +4,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useMe } from '@/hooks/queries/auth-queries';
 
-export default function AuthLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AuthLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const { data: user, isLoading } = useMe();
 
@@ -34,9 +30,7 @@ export default function AuthLayout({
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="w-full max-w-md">
-        {children}
-      </div>
+      <div className="w-full max-w-md">{children}</div>
     </div>
   );
 }

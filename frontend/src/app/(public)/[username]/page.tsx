@@ -10,11 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Grid3X3, Package } from 'lucide-react';
 import { CollectionShowcase } from '@/components/collection/collection-showcase';
 
-export default function ProfilePage({
-  params,
-}: {
-  params: Promise<{ username: string }>;
-}) {
+export default function ProfilePage({ params }: { params: Promise<{ username: string }> }) {
   const { username } = use(params);
   const { data: profile, isLoading, isError } = useProfile(username);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -36,10 +32,7 @@ export default function ProfilePage({
 
   return (
     <div className="mx-auto w-full max-w-4xl p-4 md:p-6">
-      <ProfileHeader
-        profile={profile}
-        onEditClick={() => setEditModalOpen(true)}
-      />
+      <ProfileHeader profile={profile} onEditClick={() => setEditModalOpen(true)} />
 
       <Tabs defaultValue="posts" className="mt-6">
         <TabsList className="w-full justify-center">
@@ -62,11 +55,7 @@ export default function ProfilePage({
       </Tabs>
 
       {profile.isOwnProfile && (
-        <ProfileEditModal
-          open={editModalOpen}
-          onOpenChange={setEditModalOpen}
-          profile={profile}
-        />
+        <ProfileEditModal open={editModalOpen} onOpenChange={setEditModalOpen} profile={profile} />
       )}
     </div>
   );

@@ -4,11 +4,7 @@ import Link from 'next/link';
 import { use } from 'react';
 import { FollowerList } from '@/components/social/follower-list';
 
-export default function FollowersPage({
-  params,
-}: {
-  params: Promise<{ username: string }>;
-}) {
+export default function FollowersPage({ params }: { params: Promise<{ username: string }> }) {
   const { username } = use(params);
 
   return (
@@ -36,7 +32,7 @@ export default function FollowersPage({
             />
           </svg>
         </Link>
-        <h1 className="text-xl font-semibold text-balance">Nguoi theo doi</h1>
+        <h1 className="text-balance text-xl font-semibold">Nguoi theo doi</h1>
       </div>
 
       <FollowerList username={username} type="followers" />
