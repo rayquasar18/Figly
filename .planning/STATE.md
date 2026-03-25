@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Architecture & Production Hardening
-status: Ready to plan
-stopped_at: Phase 14 context gathered
-last_updated: "2026-03-25T01:30:49.058Z"
+status: Ready to execute
+stopped_at: Completed 14-02-PLAN.md
+last_updated: "2026-03-25T11:21:54.415Z"
 progress:
   total_phases: 6
   completed_phases: 3
-  total_plans: 10
+  total_plans: 14
   completed_plans: 10
 ---
 
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-20)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 13 — backend-hardening
+**Current focus:** Phase 14 — frontend-restructure
 
 ## Current Position
 
-Phase: 14
-Plan: Not started
+Phase: 14 (frontend-restructure) — EXECUTING
+Plan: 3 of 4
 
 ## Performance Metrics
 
@@ -63,6 +63,10 @@ Recent decisions affecting current work:
 - [Phase 13]: E2e tests override ThrottlerGuard to prevent rate limit accumulation across test runs
 - [Phase 13]: Swagger path 'api/docs' is absolute from app root, not doubled by setGlobalPrefix
 - [Phase 13]: ZodSerializerInterceptor registered globally; @ZodSerializerDto per-endpoint for explicit control
+- [Phase 14]: Next.js 16 proxy.ts convention used instead of deprecated middleware.ts
+- [Phase 14]: ThemeProvider wraps QueryClientProvider as outermost provider
+- [Phase 14]: Theme toggle placed inside user avatar DropdownMenu per D-21
+- [Phase 14]: 9 feature barrels created (reel deferred to phase-10 merge), feature-internal relative imports, cross-feature barrel imports
 
 ### Pending Todos
 
@@ -81,6 +85,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-25T01:30:49.055Z
-Stopped at: Phase 14 context gathered
-Resume file: .planning/phases/14-frontend-restructure/14-CONTEXT.md
+Last session: 2026-03-25T11:21:54.412Z
+Stopped at: Completed 14-02-PLAN.md
+Resume file: None

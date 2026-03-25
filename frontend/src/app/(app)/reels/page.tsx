@@ -1,23 +1,13 @@
-'use client';
+import type { Metadata } from 'next';
+import { fetchApi } from '@/lib/server-fetch';
+import { ReelsPageClient } from './reels-page-client';
 
-import { useReelsFeed } from '@/hooks/queries/reel-queries';
-import { ReelFeed } from '@/components/reel/reel-feed';
-import { ReelSkeleton } from '@/components/reel/reel-skeleton';
+export const metadata: Metadata = {
+  title: 'Reels | Figly',
+  description: 'Xem video ngan tu cong dong Figly',
+};
 
-export default function ReelsPage() {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useReelsFeed();
-
-  if (isLoading) return <ReelSkeleton />;
-
-  const reels = data?.pages.flatMap((page) => page.items) ?? [];
-
-  return (
-    <ReelFeed
-      reels={reels}
-      fetchNextPage={fetchNextPage}
-      hasNextPage={!!hasNextPage}
-      isFetchingNextPage={isFetchingNextPage}
-    />
-  );
+export default async function ReelsPage() {
+  const initialReels = await fetchApi('/feed/reels?limit=10');
+  return <ReelsPageClient />;
 }

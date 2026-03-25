@@ -34,10 +34,10 @@ Requirements for v2.0 Architecture & Production Hardening. Each maps to roadmap 
 
 ### Frontend Restructure
 
-- [ ] **FRNT-01**: Frontend directory restructured to features/ pattern (domain-grouped components, hooks, stores)
-- [ ] **FRNT-02**: Next.js middleware handles auth redirects (no client-side flash of content)
+- [x] **FRNT-01**: Frontend directory restructured to features/ pattern (domain-grouped components, hooks, stores)
+- [x] **FRNT-02**: Next.js middleware handles auth redirects (no client-side flash of content)
 - [ ] **FRNT-03**: Public routes (feed, profiles, posts) rendered as Server Components with generateMetadata for SEO
-- [ ] **FRNT-04**: ThemeProvider configured with dark mode support (system preference + manual toggle)
+- [x] **FRNT-04**: ThemeProvider configured with dark mode support (system preference + manual toggle)
 
 ### DevOps & Tooling
 
@@ -119,10 +119,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BACK-06 | Phase 13 | Complete |
 | BACK-07 | Phase 13 | Complete |
 | BACK-08 | Phase 13 | Complete |
-| FRNT-01 | Phase 14 | Pending |
-| FRNT-02 | Phase 14 | Pending |
+| FRNT-01 | Phase 14 | Complete |
+| FRNT-02 | Phase 14 | Complete |
 | FRNT-03 | Phase 14 | Pending |
-| FRNT-04 | Phase 14 | Pending |
+| FRNT-04 | Phase 14 | Complete |
 | DEVP-01 | Phase 15 | Pending |
 | DEVP-02 | Phase 15 | Pending |
 | DEVP-03 | Phase 15 | Pending |

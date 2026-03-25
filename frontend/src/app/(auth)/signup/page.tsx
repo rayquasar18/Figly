@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SignupForm } from '@/features/auth';
 import {
@@ -9,7 +10,12 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-export default function SignupPage() {
+export const metadata: Metadata = {
+  title: 'Dang ky | Figly',
+  description: 'Tao tai khoan Figly de bat dau chia se bo suu tap',
+};
+
+export default async function SignupPage() {
   return (
     <Card>
       <CardHeader className="text-center">
