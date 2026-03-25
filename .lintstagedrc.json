@@ -1,0 +1,6 @@
+{
+  "frontend/**/*.{ts,tsx}": ["eslint --fix --no-warn-ignored", "prettier --write"],
+  "backend/**/*.ts": ["eslint --fix --no-warn-ignored", "prettier --write"],
+  "packages/shared/**/*.ts": ["eslint --fix --no-warn-ignored", "prettier --write"],
+  "*.{json,md,yml,yaml}": ["prettier --write"]
+}
