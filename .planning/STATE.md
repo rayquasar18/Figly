@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Architecture & Production Hardening
 status: In Progress
-stopped_at: Completed 16-01-PLAN.md
+stopped_at: Completed 16-02-PLAN.md
 last_updated: '2026-03-25T23:49:45.000Z'
 progress:
   total_phases: 6
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-20)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 15 — devops-tooling
+**Current focus:** Phase 16 -- shared-package-cleanup
 
 ## Current Position
 
 Phase: 16
-Plan: 2 of 2 in current phase
+Plan: 2 of 2 (completed)
 
 ## Performance Metrics
 
@@ -78,6 +78,7 @@ Recent decisions affecting current work:
 - [Phase 15]: 4 parallel CI jobs (lint, typecheck, build, test) for fastest feedback with concurrency cancel-in-progress
 - [Phase 16]: Removed stale dist/dto/ alongside source rename to keep dist consistent
 - [Phase 16]: Kept backend dto/ references in STRUCTURE.md since those are NestJS-internal DTOs, not shared package
+- [Phase 16]: D-08 deferred: main field kept as ./dist/index.js because NestJS tsc produces external require calls resolved at Node.js runtime
 
 ### Pending Todos
 
@@ -97,5 +98,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-25T23:49:45Z
-Stopped at: Completed 16-01-PLAN.md
+Stopped at: Completed 16-02-PLAN.md
 Resume file: None
