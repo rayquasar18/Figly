@@ -12,7 +12,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const compat = new FlatCompat({ baseDirectory: __dirname });
 
 export default tseslint.config(
-  { ignores: ['.next/**', 'node_modules/**'] },
+  { ignores: ['.next/**', 'node_modules/**', 'next-env.d.ts'] },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   ...compat.extends('next/core-web-vitals'),
