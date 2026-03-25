@@ -8,16 +8,30 @@ import {
   Clapperboard,
   PlusSquare,
   User,
+  Sun,
+  Moon,
+  Monitor,
 } from 'lucide-react';
+import { useTheme } from 'next-themes';
 import { useMe } from '@/hooks/queries/auth-queries';
 import { useCreatePostStore } from '@/stores/create-post-store';
 import { cn } from '@/lib/utils';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 export function Sidebar() {
   const pathname = usePathname();
   const { data: user } = useMe();
   const openCreatePost = useCreatePostStore((s) => s.open);
   const profileHref = user?.username ? `/${user.username}` : '/';
+  const { theme, setTheme } = useTheme();
 
   const links = [
     { href: '/', icon: Home, label: 'Trang chu', isActive: pathname === '/' },
@@ -66,6 +80,39 @@ export function Sidebar() {
             <span>Tao moi</span>
           </button>
         </nav>
+
+        {user && (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="flex items-center gap-3 rounded-lg px-3 py-3 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground w-full">
+                <Avatar className="size-6">
+                  <AvatarImage src={user.avatarUrl ?? undefined} alt={user.displayName || user.username || ''} />
+                  <AvatarFallback>{(user.displayName || user.username || 'U')[0].toUpperCase()}</AvatarFallback>
+                </Avatar>
+                <span className="truncate">{user.displayName || user.username}</span>
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent side="top" align="start" className="w-56">
+              <DropdownMenuLabel>Giao dien</DropdownMenuLabel>
+              <DropdownMenuItem onClick={() => setTheme('light')}>
+                <Sun className="mr-2 size-4" />
+                Sang
+                {theme === 'light' && <span className="ml-auto text-xs">&#10003;</span>}
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme('dark')}>
+                <Moon className="mr-2 size-4" />
+                Toi
+                {theme === 'dark' && <span className="ml-auto text-xs">&#10003;</span>}
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme('system')}>
+                <Monitor className="mr-2 size-4" />
+                He thong
+                {theme === 'system' && <span className="ml-auto text-xs">&#10003;</span>}
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
       </div>
     </aside>
   );
