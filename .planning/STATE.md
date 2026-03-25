@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Architecture & Production Hardening
-status: Ready to execute
-stopped_at: Completed 15-03-PLAN.md
-last_updated: "2026-03-25T17:02:33.426Z"
+status: Phase complete — ready for verification
+stopped_at: Completed 15-02-PLAN.md
+last_updated: "2026-03-25T17:19:42.449Z"
 progress:
   total_phases: 6
   completed_phases: 4
   total_plans: 17
-  completed_plans: 14
+  completed_plans: 16
 ---
 
 # Project State
@@ -75,6 +75,7 @@ Recent decisions affecting current work:
 - [Phase 15]: Type-check excluded from pre-commit hook (too slow), deferred to CI only
 - [Phase 15]: Full monorepo node_modules in backend Docker runner for pnpm hoisting compatibility
 - [Phase 15]: NEXT_PUBLIC_ vars as Docker build args (not runtime env) because Next.js inlines them at build time
+- [Phase 15]: 4 parallel CI jobs (lint, typecheck, build, test) for fastest feedback with concurrency cancel-in-progress
 
 ### Pending Todos
 
@@ -93,6 +94,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-25T17:02:33.423Z
-Stopped at: Completed 15-03-PLAN.md
+Last session: 2026-03-25T17:19:42.446Z
+Stopped at: Completed 15-02-PLAN.md
 Resume file: None
