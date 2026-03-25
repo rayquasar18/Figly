@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Architecture & Production Hardening
-status: Ready to execute
-stopped_at: Completed 14-02-PLAN.md
-last_updated: "2026-03-25T11:21:54.415Z"
+status: Phase complete — ready for verification
+stopped_at: Completed 14-04-PLAN.md
+last_updated: "2026-03-25T11:41:33.123Z"
 progress:
   total_phases: 6
   completed_phases: 3
   total_plans: 14
-  completed_plans: 10
+  completed_plans: 12
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-20)
 ## Current Position
 
 Phase: 14 (frontend-restructure) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 
 ## Performance Metrics
 
@@ -67,6 +67,8 @@ Recent decisions affecting current work:
 - [Phase 14]: ThemeProvider wraps QueryClientProvider as outermost provider
 - [Phase 14]: Theme toggle placed inside user avatar DropdownMenu per D-21
 - [Phase 14]: 9 feature barrels created (reel deferred to phase-10 merge), feature-internal relative imports, cross-feature barrel imports
+- [Phase 14]: toAbsoluteUrl helper defined per-page for og:image absolute URL resolution
+- [Phase 14]: Server Component page pattern: async page.tsx with generateMetadata delegates to *-client.tsx
 - [Phase 14]: Suspense boundary for useSearchParams: verify-email and reset-password pages wrap client component in Suspense
 - [Phase 14]: fetchApi pre-fetch without initialData prop: pages call fetchApi for cache warming, React Query hooks refetch on mount
 
@@ -87,6 +89,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-25T11:39:32Z
+Last session: 2026-03-25T11:41:33.120Z
 Stopped at: Completed 14-04-PLAN.md
 Resume file: None
