@@ -1,116 +1,61 @@
-'use client';
+import type { Metadata } from 'next';
+import { fetchApi } from '@/lib/server-fetch';
+import SeriesItemsPageClient from './series-items-page-client';
 
-import { use, useEffect, useRef } from 'react';
-import Link from 'next/link';
-import { ChevronRight, Loader2 } from 'lucide-react';
-import { useItemsBySeries, useSeriesByCategory, ItemCard, FollowSeriesButton } from '@/features/collection';
-import { Skeleton } from '@/components/ui/skeleton';
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://figly.app';
+const toAbsoluteUrl = (url: string | null | undefined): string | undefined =>
+  url ? (url.startsWith('http') ? url : `${APP_URL}${url}`) : undefined;
 
-function ItemGridSkeleton() {
-  return (
-    <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5">
-      {Array.from({ length: 8 }).map((_, i) => (
-        <div key={i} className="space-y-1.5">
-          <Skeleton className="aspect-square w-full rounded-lg" />
-          <Skeleton className="h-3 w-3/4" />
-          <Skeleton className="h-2.5 w-1/2" />
-        </div>
-      ))}
-    </div>
-  );
+interface SeriesResponse {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string | null;
+  imageUrl?: string | null;
 }
 
-export default function SeriesItemsPage({
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ categorySlug: string; seriesSlug: string }>;
+}): Promise<Metadata> {
+  const { categorySlug, seriesSlug } = await params;
+  const series = await fetchApi<SeriesResponse>(
+    `/collection/categories/${categorySlug}/series/${seriesSlug}`,
+  );
+  if (!series) {
+    return { title: 'Bo khong ton tai | Figly' };
+  }
+  const ogImage = toAbsoluteUrl(series.imageUrl);
+  return {
+    title: `${series.name} | Figly`,
+    description:
+      series.description || `Kham pha ${series.name} tren Figly`,
+    openGraph: {
+      title: `${series.name} | Figly`,
+      description:
+        series.description || `Kham pha ${series.name} tren Figly`,
+      images: ogImage ? [{ url: ogImage }] : [],
+    },
+    twitter: {
+      card: ogImage ? 'summary_large_image' : 'summary',
+      title: `${series.name} | Figly`,
+      images: ogImage ? [ogImage] : [],
+    },
+  };
+}
+
+export default async function SeriesItemsPage({
   params,
 }: {
   params: Promise<{ categorySlug: string; seriesSlug: string }>;
 }) {
-  const { categorySlug, seriesSlug } = use(params);
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useItemsBySeries(categorySlug, seriesSlug);
-  const { data: seriesList } = useSeriesByCategory(categorySlug);
-  const sentinelRef = useRef<HTMLDivElement>(null);
-
-  // Find current series from the category's series list for follow button
-  const currentSeries = seriesList?.find((s) => s.slug === seriesSlug);
-
-  // Infinite scroll via IntersectionObserver
-  useEffect(() => {
-    const sentinel = sentinelRef.current;
-    if (!sentinel) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0]?.isIntersecting && hasNextPage && !isFetchingNextPage) {
-          fetchNextPage();
-        }
-      },
-      { threshold: 0.1 },
-    );
-
-    observer.observe(sentinel);
-    return () => observer.disconnect();
-  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
-
-  const items = data?.pages.flatMap((page) => page.items) ?? [];
+  const { categorySlug, seriesSlug } = await params;
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-6">
-      {/* Breadcrumb */}
-      <nav className="mb-4 flex items-center gap-1 text-sm text-muted-foreground">
-        <Link href="/collection" className="hover:text-primary hover:underline">
-          Bo suu tap
-        </Link>
-        <ChevronRight className="size-3.5" />
-        <Link
-          href={`/collection/${categorySlug}`}
-          className="hover:text-primary hover:underline"
-        >
-          {categorySlug.replace(/-/g, ' ')}
-        </Link>
-        <ChevronRight className="size-3.5" />
-        <span className="font-medium text-foreground">
-          {seriesSlug.replace(/-/g, ' ')}
-        </span>
-      </nav>
-
-      <div className="mb-6 flex items-center justify-between gap-3">
-        <h1 className="text-xl font-bold capitalize">
-          {seriesSlug.replace(/-/g, ' ')}
-        </h1>
-        {currentSeries && (
-          <FollowSeriesButton
-            type="series"
-            id={currentSeries.id}
-            isFollowed={currentSeries.isFollowed ?? false}
-          />
-        )}
-      </div>
-
-      {isLoading ? (
-        <ItemGridSkeleton />
-      ) : items.length > 0 ? (
-        <>
-          <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5">
-            {items.map((item) => (
-              <ItemCard key={item.id} item={item} />
-            ))}
-          </div>
-
-          {/* Sentinel for infinite scroll */}
-          <div ref={sentinelRef} className="h-px" />
-
-          {isFetchingNextPage && (
-            <div className="flex justify-center py-6">
-              <Loader2 className="size-6 animate-spin text-muted-foreground" />
-            </div>
-          )}
-        </>
-      ) : (
-        <div className="flex flex-col items-center justify-center py-20 text-center">
-          <p className="text-muted-foreground">Chua co vat pham nao trong bo nay</p>
-        </div>
-      )}
-    </div>
+    <SeriesItemsPageClient
+      categorySlug={categorySlug}
+      seriesSlug={seriesSlug}
+    />
   );
 }
