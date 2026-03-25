@@ -1,11 +1,11 @@
-// DTOs
+// Schemas
 export {
   signupSchema,
   loginSchema,
   resetPasswordRequestSchema,
   resetPasswordSchema,
   verifyEmailSchema,
-} from './dto/auth.dto';
+} from './schemas/auth.schema';
 
 export type {
   SignupDto,
@@ -13,16 +13,16 @@ export type {
   ResetPasswordRequestDto,
   ResetPasswordDto,
   VerifyEmailDto,
-} from './dto/auth.dto';
+} from './schemas/auth.schema';
 
-export { updateProfileSchema } from './dto/profile.dto';
-export type { UpdateProfileDto } from './dto/profile.dto';
+export { updateProfileSchema } from './schemas/profile.schema';
+export type { UpdateProfileDto } from './schemas/profile.schema';
 
-export { createPostSchema, updateCaptionSchema } from './dto/post.dto';
-export type { CreatePostDto, UpdateCaptionDto } from './dto/post.dto';
+export { createPostSchema, updateCaptionSchema } from './schemas/post.schema';
+export type { CreatePostDto, UpdateCaptionDto } from './schemas/post.schema';
 
-export { createCommentSchema } from './dto/comment.dto';
-export type { CreateCommentDto } from './dto/comment.dto';
+export { createCommentSchema } from './schemas/comment.schema';
+export type { CreateCommentDto } from './schemas/comment.schema';
 
 // Types
 export type { TokenPair, JwtPayload, AuthResponse } from './types/auth.types';
@@ -49,25 +49,30 @@ export {
   PROFILE_LIMITS,
   POST_LIMITS,
   COLLECTION_LIMITS,
+  REEL_LIMITS,
 } from './constants/index';
 
-// Collection DTOs
-export { searchItemsSchema } from './dto/collection.dto';
-export type { SearchItemsDto } from './dto/collection.dto';
+// Collection schemas
+export { searchItemsSchema } from './schemas/collection.schema';
+export type { SearchItemsDto } from './schemas/collection.schema';
 
-// Checklist DTOs
+// Checklist schemas
 export {
   createChecklistSchema,
   updateChecklistSchema,
   addChecklistEntrySchema,
   reorderEntriesSchema,
-} from './dto/checklist.dto';
+} from './schemas/checklist.schema';
 export type {
   CreateChecklistDto,
   UpdateChecklistDto,
   AddChecklistEntryDto,
   ReorderEntriesDto,
-} from './dto/checklist.dto';
+} from './schemas/checklist.schema';
+
+// Reel schemas (was missing from barrel -- fixed during rename)
+export { createReelSchema } from './schemas/reel.schema';
+export type { CreateReelInput } from './schemas/reel.schema';
 
 // Collection Types
 export type {

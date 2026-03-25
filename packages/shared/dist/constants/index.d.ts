@@ -38,3 +38,4 @@ export declare const COLLECTION_LIMITS: {
     readonly freeformTextMaxLength: 200;
     readonly maxChecklistEntries: 100;
 };
+export { REEL_LIMITS } from './reel.constants';

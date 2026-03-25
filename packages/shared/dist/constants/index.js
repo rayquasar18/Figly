@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.COLLECTION_LIMITS = exports.POST_LIMITS = exports.PROFILE_LIMITS = exports.THUMBNAIL_SIZES = exports.FILE_LIMITS = exports.TOKEN_EXPIRY = void 0;
+exports.REEL_LIMITS = exports.COLLECTION_LIMITS = exports.POST_LIMITS = exports.PROFILE_LIMITS = exports.THUMBNAIL_SIZES = exports.FILE_LIMITS = exports.TOKEN_EXPIRY = void 0;
 exports.TOKEN_EXPIRY = {
     access: '15m',
     accessSeconds: 15 * 60,
@@ -41,3 +41,5 @@ exports.COLLECTION_LIMITS = {
     freeformTextMaxLength: 200,
     maxChecklistEntries: 100,
 };
+var reel_constants_1 = require("./reel.constants");
+Object.defineProperty(exports, "REEL_LIMITS", { enumerable: true, get: function () { return reel_constants_1.REEL_LIMITS; } });

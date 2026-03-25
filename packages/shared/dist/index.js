@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.reorderEntriesSchema = exports.addChecklistEntrySchema = exports.updateChecklistSchema = exports.createChecklistSchema = exports.searchItemsSchema = exports.COLLECTION_LIMITS = exports.POST_LIMITS = exports.PROFILE_LIMITS = exports.THUMBNAIL_SIZES = exports.FILE_LIMITS = exports.TOKEN_EXPIRY = exports.bioSchema = exports.usernameSchema = exports.RESERVED_USERNAMES = exports.USERNAME_RULES = exports.validatePassword = exports.passwordRegex = exports.PASSWORD_MIN_LENGTH = exports.createCommentSchema = exports.updateCaptionSchema = exports.createPostSchema = exports.updateProfileSchema = exports.verifyEmailSchema = exports.resetPasswordSchema = exports.resetPasswordRequestSchema = exports.loginSchema = exports.signupSchema = void 0;
-// DTOs
-var auth_dto_1 = require("./dto/auth.dto");
-Object.defineProperty(exports, "signupSchema", { enumerable: true, get: function () { return auth_dto_1.signupSchema; } });
-Object.defineProperty(exports, "loginSchema", { enumerable: true, get: function () { return auth_dto_1.loginSchema; } });
-Object.defineProperty(exports, "resetPasswordRequestSchema", { enumerable: true, get: function () { return auth_dto_1.resetPasswordRequestSchema; } });
-Object.defineProperty(exports, "resetPasswordSchema", { enumerable: true, get: function () { return auth_dto_1.resetPasswordSchema; } });
-Object.defineProperty(exports, "verifyEmailSchema", { enumerable: true, get: function () { return auth_dto_1.verifyEmailSchema; } });
-var profile_dto_1 = require("./dto/profile.dto");
-Object.defineProperty(exports, "updateProfileSchema", { enumerable: true, get: function () { return profile_dto_1.updateProfileSchema; } });
-var post_dto_1 = require("./dto/post.dto");
-Object.defineProperty(exports, "createPostSchema", { enumerable: true, get: function () { return post_dto_1.createPostSchema; } });
-Object.defineProperty(exports, "updateCaptionSchema", { enumerable: true, get: function () { return post_dto_1.updateCaptionSchema; } });
-var comment_dto_1 = require("./dto/comment.dto");
-Object.defineProperty(exports, "createCommentSchema", { enumerable: true, get: function () { return comment_dto_1.createCommentSchema; } });
+exports.createReelSchema = exports.reorderEntriesSchema = exports.addChecklistEntrySchema = exports.updateChecklistSchema = exports.createChecklistSchema = exports.searchItemsSchema = exports.REEL_LIMITS = exports.COLLECTION_LIMITS = exports.POST_LIMITS = exports.PROFILE_LIMITS = exports.THUMBNAIL_SIZES = exports.FILE_LIMITS = exports.TOKEN_EXPIRY = exports.bioSchema = exports.usernameSchema = exports.RESERVED_USERNAMES = exports.USERNAME_RULES = exports.validatePassword = exports.passwordRegex = exports.PASSWORD_MIN_LENGTH = exports.createCommentSchema = exports.updateCaptionSchema = exports.createPostSchema = exports.updateProfileSchema = exports.verifyEmailSchema = exports.resetPasswordSchema = exports.resetPasswordRequestSchema = exports.loginSchema = exports.signupSchema = void 0;
+// Schemas
+var auth_schema_1 = require("./schemas/auth.schema");
+Object.defineProperty(exports, "signupSchema", { enumerable: true, get: function () { return auth_schema_1.signupSchema; } });
+Object.defineProperty(exports, "loginSchema", { enumerable: true, get: function () { return auth_schema_1.loginSchema; } });
+Object.defineProperty(exports, "resetPasswordRequestSchema", { enumerable: true, get: function () { return auth_schema_1.resetPasswordRequestSchema; } });
+Object.defineProperty(exports, "resetPasswordSchema", { enumerable: true, get: function () { return auth_schema_1.resetPasswordSchema; } });
+Object.defineProperty(exports, "verifyEmailSchema", { enumerable: true, get: function () { return auth_schema_1.verifyEmailSchema; } });
+var profile_schema_1 = require("./schemas/profile.schema");
+Object.defineProperty(exports, "updateProfileSchema", { enumerable: true, get: function () { return profile_schema_1.updateProfileSchema; } });
+var post_schema_1 = require("./schemas/post.schema");
+Object.defineProperty(exports, "createPostSchema", { enumerable: true, get: function () { return post_schema_1.createPostSchema; } });
+Object.defineProperty(exports, "updateCaptionSchema", { enumerable: true, get: function () { return post_schema_1.updateCaptionSchema; } });
+var comment_schema_1 = require("./schemas/comment.schema");
+Object.defineProperty(exports, "createCommentSchema", { enumerable: true, get: function () { return comment_schema_1.createCommentSchema; } });
 // Validators
 var password_1 = require("./validators/password");
 Object.defineProperty(exports, "PASSWORD_MIN_LENGTH", { enumerable: true, get: function () { return password_1.PASSWORD_MIN_LENGTH; } });
@@ -33,12 +33,16 @@ Object.defineProperty(exports, "THUMBNAIL_SIZES", { enumerable: true, get: funct
 Object.defineProperty(exports, "PROFILE_LIMITS", { enumerable: true, get: function () { return index_1.PROFILE_LIMITS; } });
 Object.defineProperty(exports, "POST_LIMITS", { enumerable: true, get: function () { return index_1.POST_LIMITS; } });
 Object.defineProperty(exports, "COLLECTION_LIMITS", { enumerable: true, get: function () { return index_1.COLLECTION_LIMITS; } });
-// Collection DTOs
-var collection_dto_1 = require("./dto/collection.dto");
-Object.defineProperty(exports, "searchItemsSchema", { enumerable: true, get: function () { return collection_dto_1.searchItemsSchema; } });
-// Checklist DTOs
-var checklist_dto_1 = require("./dto/checklist.dto");
-Object.defineProperty(exports, "createChecklistSchema", { enumerable: true, get: function () { return checklist_dto_1.createChecklistSchema; } });
-Object.defineProperty(exports, "updateChecklistSchema", { enumerable: true, get: function () { return checklist_dto_1.updateChecklistSchema; } });
-Object.defineProperty(exports, "addChecklistEntrySchema", { enumerable: true, get: function () { return checklist_dto_1.addChecklistEntrySchema; } });
-Object.defineProperty(exports, "reorderEntriesSchema", { enumerable: true, get: function () { return checklist_dto_1.reorderEntriesSchema; } });
+Object.defineProperty(exports, "REEL_LIMITS", { enumerable: true, get: function () { return index_1.REEL_LIMITS; } });
+// Collection schemas
+var collection_schema_1 = require("./schemas/collection.schema");
+Object.defineProperty(exports, "searchItemsSchema", { enumerable: true, get: function () { return collection_schema_1.searchItemsSchema; } });
+// Checklist schemas
+var checklist_schema_1 = require("./schemas/checklist.schema");
+Object.defineProperty(exports, "createChecklistSchema", { enumerable: true, get: function () { return checklist_schema_1.createChecklistSchema; } });
+Object.defineProperty(exports, "updateChecklistSchema", { enumerable: true, get: function () { return checklist_schema_1.updateChecklistSchema; } });
+Object.defineProperty(exports, "addChecklistEntrySchema", { enumerable: true, get: function () { return checklist_schema_1.addChecklistEntrySchema; } });
+Object.defineProperty(exports, "reorderEntriesSchema", { enumerable: true, get: function () { return checklist_schema_1.reorderEntriesSchema; } });
+// Reel schemas (was missing from barrel -- fixed during rename)
+var reel_schema_1 = require("./schemas/reel.schema");
+Object.defineProperty(exports, "createReelSchema", { enumerable: true, get: function () { return reel_schema_1.createReelSchema; } });
