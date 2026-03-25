@@ -84,10 +84,17 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 
 **v1.0 MVP shipped 2026-03-20**
 - 23,289 LOC TypeScript + 782 LOC Prisma
-- 8 phases completed (1, 2, 3, 3.1, 4, 10, 11, 12, 13), 31 plans executed
+- 8 phases completed (1, 2, 3, 3.1, 4, 10, 11, 12, 13, 14, 15), 31 plans executed
 - NestJS backend + Next.js frontend monorepo
 - PostgreSQL (Prisma), MinIO media storage, BullMQ async processing
 - ffmpeg video transcoding for reels
+
+**Phase 15 complete (2026-03-25):**
+- ESLint 9 flat config + Prettier enforced across all 3 workspaces (zero errors)
+- Husky pre-commit hook with lint-staged auto-formatting
+- GitHub Actions CI/CD with 4 parallel jobs (lint, typecheck, build, test)
+- Docker dual-container split: figly-frontend (Next.js standalone) + figly-backend (NestJS)
+- Docker internal network (figly-net) for container communication
 
 **Phase 13 complete (2026-03-25):**
 - Zod env validation — rejects missing JWT secrets and DATABASE_URL at startup
