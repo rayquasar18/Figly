@@ -108,78 +108,80 @@
 
 ## Out of Scope
 
-| Feature | Reason |
-|---------|--------|
+| Feature                           | Reason                                                                                            |
+| --------------------------------- | ------------------------------------------------------------------------------------------------- |
 | Built-in marketplace / e-commerce | Massive regulatory burden (payments, disputes, fraud). "For Sale" status + external links instead |
-| Native mobile app | Web-first. PWA covers mobile needs. Revisit after web validation |
-| AI-powered recommendations | Insufficient data at launch. Simple co-occurrence ("collectors who own X also own Y") instead |
-| Full video editing suite | Not core to collection tracking. Users edit externally and upload |
-| NFT / digital collectibles | Controversial, market crashed, alienates users |
-| Auction system | Full auction logic is an entire product. Use DMs for offers |
-| Price tracking / market value | Complex data sourcing. Link to PriceCharting externally |
-| Real-time typing indicators | Marginal value vs infrastructure cost |
+| Native mobile app                 | Web-first. PWA covers mobile needs. Revisit after web validation                                  |
+| AI-powered recommendations        | Insufficient data at launch. Simple co-occurrence ("collectors who own X also own Y") instead     |
+| Full video editing suite          | Not core to collection tracking. Users edit externally and upload                                 |
+| NFT / digital collectibles        | Controversial, market crashed, alienates users                                                    |
+| Auction system                    | Full auction logic is an entire product. Use DMs for offers                                       |
+| Price tracking / market value     | Complex data sourcing. Link to PriceCharting externally                                           |
+| Real-time typing indicators       | Marginal value vs infrastructure cost                                                             |
 
 ## Traceability
 
-| Requirement | Phase | Status |
-|-------------|-------|--------|
-| AUTH-01 | Phase 1 | Complete |
-| AUTH-02 | Phase 1 | Complete |
-| AUTH-03 | Phase 1 | Complete |
-| AUTH-04 | Phase 1 | Complete |
-| AUTH-05 | Phase 1 | Complete |
-| AUTH-06 | Phase 1 | Complete |
-| PROF-01 | Phase 2 | Complete |
-| PROF-02 | Phase 2 | Complete |
-| PROF-03 | Phase 2 | Complete |
-| PROF-04 | Phase 4 | Complete |
-| CONT-01 | Phase 3 | Complete |
-| CONT-02 | Phase 3 | Complete |
-| CONT-03 | Phase 3 | Complete |
-| CONT-04 | Phase 3 | Complete |
-| CONT-05 | Phase 3 | Complete |
-| CONT-06 | Phase 3 | Complete |
-| CONT-07 | Phase 4 | Complete |
-| CONT-08 | Phase 9 | Pending |
-| CONT-09 | Phase 9 | Pending |
-| CONT-10 | Phase 10 | Pending |
-| CONT-11 | Phase 10 | Pending |
-| INTR-01 | Phase 3 | Complete |
-| INTR-02 | Phase 3 | Complete |
-| INTR-03 | Phase 3 | Complete |
-| INTR-04 | Phase 3 | Complete |
-| INTR-05 | Phase 3 | Complete |
-| SOCL-01 | Phase 2 | Complete |
-| SOCL-02 | Phase 2 | Complete |
-| SOCL-03 | Phase 3 | Complete |
-| SOCL-04 | Phase 4 | Complete |
-| DISC-01 | Phase 5 | Pending |
-| DISC-02 | Phase 5 | Pending |
-| DISC-03 | Phase 5 | Pending |
-| COLL-01 | Phase 4 | Complete |
-| COLL-02 | Phase 4 | Complete |
-| COLL-03 | Phase 4 | Complete |
-| COLL-04 | Phase 4 | Complete |
-| COLL-05 | Phase 4 | Complete |
-| COLL-06 | Phase 4 | Complete |
-| COLL-07 | Phase 4 | Complete |
-| MESG-01 | Phase 8 | Pending |
-| MESG-02 | Phase 8 | Pending |
-| MESG-03 | Phase 8 | Pending |
-| MESG-04 | Phase 8 | Pending |
-| NOTF-01 | Phase 6 | Pending |
-| NOTF-02 | Phase 6 | Pending |
-| NOTF-03 | Phase 6 | Pending |
-| MODR-01 | Phase 7 | Pending |
-| MODR-02 | Phase 7 | Pending |
-| MODR-03 | Phase 7 | Pending |
-| MODR-04 | Phase 7 | Pending |
+| Requirement | Phase    | Status   |
+| ----------- | -------- | -------- |
+| AUTH-01     | Phase 1  | Complete |
+| AUTH-02     | Phase 1  | Complete |
+| AUTH-03     | Phase 1  | Complete |
+| AUTH-04     | Phase 1  | Complete |
+| AUTH-05     | Phase 1  | Complete |
+| AUTH-06     | Phase 1  | Complete |
+| PROF-01     | Phase 2  | Complete |
+| PROF-02     | Phase 2  | Complete |
+| PROF-03     | Phase 2  | Complete |
+| PROF-04     | Phase 4  | Complete |
+| CONT-01     | Phase 3  | Complete |
+| CONT-02     | Phase 3  | Complete |
+| CONT-03     | Phase 3  | Complete |
+| CONT-04     | Phase 3  | Complete |
+| CONT-05     | Phase 3  | Complete |
+| CONT-06     | Phase 3  | Complete |
+| CONT-07     | Phase 4  | Complete |
+| CONT-08     | Phase 9  | Pending  |
+| CONT-09     | Phase 9  | Pending  |
+| CONT-10     | Phase 10 | Pending  |
+| CONT-11     | Phase 10 | Pending  |
+| INTR-01     | Phase 3  | Complete |
+| INTR-02     | Phase 3  | Complete |
+| INTR-03     | Phase 3  | Complete |
+| INTR-04     | Phase 3  | Complete |
+| INTR-05     | Phase 3  | Complete |
+| SOCL-01     | Phase 2  | Complete |
+| SOCL-02     | Phase 2  | Complete |
+| SOCL-03     | Phase 3  | Complete |
+| SOCL-04     | Phase 4  | Complete |
+| DISC-01     | Phase 5  | Pending  |
+| DISC-02     | Phase 5  | Pending  |
+| DISC-03     | Phase 5  | Pending  |
+| COLL-01     | Phase 4  | Complete |
+| COLL-02     | Phase 4  | Complete |
+| COLL-03     | Phase 4  | Complete |
+| COLL-04     | Phase 4  | Complete |
+| COLL-05     | Phase 4  | Complete |
+| COLL-06     | Phase 4  | Complete |
+| COLL-07     | Phase 4  | Complete |
+| MESG-01     | Phase 8  | Pending  |
+| MESG-02     | Phase 8  | Pending  |
+| MESG-03     | Phase 8  | Pending  |
+| MESG-04     | Phase 8  | Pending  |
+| NOTF-01     | Phase 6  | Pending  |
+| NOTF-02     | Phase 6  | Pending  |
+| NOTF-03     | Phase 6  | Pending  |
+| MODR-01     | Phase 7  | Pending  |
+| MODR-02     | Phase 7  | Pending  |
+| MODR-03     | Phase 7  | Pending  |
+| MODR-04     | Phase 7  | Pending  |
 
 **Coverage:**
+
 - v1 requirements: 41 total
 - Mapped to phases: 41
 - Unmapped: 0
 
 ---
-*Requirements defined: 2026-03-13*
-*Last updated: 2026-03-13 after roadmap creation*
+
+_Requirements defined: 2026-03-13_
+_Last updated: 2026-03-13 after roadmap creation_

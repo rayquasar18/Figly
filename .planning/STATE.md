@@ -4,7 +4,7 @@ milestone: v1.0
 milestone_name: milestone
 status: completed
 stopped_at: Completed 04-06-PLAN.md
-last_updated: "2026-03-15T00:28:20.246Z"
+last_updated: '2026-03-15T00:28:20.246Z'
 last_activity: 2026-03-15 -- Completed 04-06 Item Picker and Post-Item Linking Frontend
 progress:
   total_phases: 11
@@ -35,25 +35,27 @@ Progress: [██████████] 100% (Phase 4: 6/6 plans)
 ## Performance Metrics
 
 **Velocity:**
+
 - Total plans completed: 16
 - Average duration: 7 min
 - Total execution time: 2.1 hours
 
 **By Phase:**
 
-| Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| 01-foundation-auth | 3 | 37 min | 12 min |
-| 02-profiles-social-graph | 4 | 23 min | 6 min |
-| 03-content-feed | 4 | 38 min | 10 min |
-| 03.1-public-viewing-mode | 1 | 7 min | 7 min |
-| 04-collection-system | 4 | 20 min | 5 min |
+| Phase                    | Plans | Total  | Avg/Plan |
+| ------------------------ | ----- | ------ | -------- |
+| 01-foundation-auth       | 3     | 37 min | 12 min   |
+| 02-profiles-social-graph | 4     | 23 min | 6 min    |
+| 03-content-feed          | 4     | 38 min | 10 min   |
+| 03.1-public-viewing-mode | 1     | 7 min  | 7 min    |
+| 04-collection-system     | 4     | 20 min | 5 min    |
 
 **Recent Trend:**
+
 - Last 5 plans: 7, 4, 5, 6, 5 min
 - Trend: improving
 
-*Updated after each plan completion*
+_Updated after each plan completion_
 | Phase 03 P01 | 3 | 2 tasks | 8 files |
 | Phase 03 P02 | 10 | 2 tasks | 19 files |
 | Phase 03 P03 | 13 | 2 tasks | 12 files |
@@ -131,7 +133,7 @@ Recent decisions affecting current work:
 - [04-02]: Toggle endpoints return { success, isOwned/isWishlisted } for frontend state updates
 - [04-02]: Batch status check uses Promise.all for parallel owned + wishlist queries
 - [04-03]: Ownership enforcement via findFirst(id, userId) pattern for checklist write operations
-- [04-03]: Entry position managed via aggregate _max + 1 for append, $transaction for reorder
+- [04-03]: Entry position managed via aggregate \_max + 1 for append, $transaction for reorder
 - [04-03]: mapLinkedItems helper duplicated in PostsService and FeedService for module independence
 - [04-03]: PostResponse.linkedItems optional field to avoid breaking existing frontend code
 - [04-04]: Cross-query optimistic updates via updateItemInQueries helper for items/searchItems/itemDetail consistency
