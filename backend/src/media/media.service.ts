@@ -19,7 +19,11 @@ export class MediaService {
     @Inject('BullQueue_media-processing') private mediaQueue: Queue,
   ) {}
 
-  async upload(file: Express.Multer.File, userId: string, purpose: 'post' | 'story' | 'reel' = 'post') {
+  async upload(
+    file: Express.Multer.File,
+    userId: string,
+    purpose: 'post' | 'story' | 'reel' = 'post',
+  ) {
     const isVideo = file.mimetype.startsWith('video/');
 
     // Validate mimetype: images always allowed, video only for reel/story

@@ -6,8 +6,4 @@ export { ProfileEditModal } from './components/profile-edit-modal';
 export { ProfileStats } from './components/profile-stats';
 export { CompleteProfileForm } from './components/complete-profile-form';
 // Hooks
-export {
-  useProfile,
-  useUpdateProfile,
-  useCheckUsername,
-} from './hooks/profile-queries';
+export { useProfile, useUpdateProfile, useCheckUsername } from './hooks/profile-queries';

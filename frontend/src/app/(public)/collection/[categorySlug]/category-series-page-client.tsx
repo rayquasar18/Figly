@@ -28,9 +28,7 @@ interface CategorySeriesPageClientProps {
   categorySlug: string;
 }
 
-export default function CategorySeriesPageClient({
-  categorySlug,
-}: CategorySeriesPageClientProps) {
+export default function CategorySeriesPageClient({ categorySlug }: CategorySeriesPageClientProps) {
   const { data: seriesList, isLoading } = useSeriesByCategory(categorySlug);
   const { data: categories } = useCategories();
 
@@ -49,15 +47,9 @@ export default function CategorySeriesPageClient({
       </nav>
 
       <div className="mb-6 flex items-center justify-between gap-3">
-        <h1 className="text-xl font-bold capitalize">
-          {categorySlug.replace(/-/g, ' ')}
-        </h1>
+        <h1 className="text-xl font-bold capitalize">{categorySlug.replace(/-/g, ' ')}</h1>
         {currentCategory && (
-          <FollowSeriesButton
-            type="category"
-            id={currentCategory.id}
-            isFollowed={false}
-          />
+          <FollowSeriesButton type="category" id={currentCategory.id} isFollowed={false} />
         )}
       </div>
 
@@ -66,18 +58,12 @@ export default function CategorySeriesPageClient({
       ) : seriesList && seriesList.length > 0 ? (
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
           {seriesList.map((series) => (
-            <SeriesCard
-              key={series.id}
-              series={series}
-              categorySlug={categorySlug}
-            />
+            <SeriesCard key={series.id} series={series} categorySlug={categorySlug} />
           ))}
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center py-20 text-center">
-          <p className="text-muted-foreground">
-            Chua co bo nao trong danh muc nay
-          </p>
+          <p className="text-muted-foreground">Chua co bo nao trong danh muc nay</p>
         </div>
       )}
     </div>

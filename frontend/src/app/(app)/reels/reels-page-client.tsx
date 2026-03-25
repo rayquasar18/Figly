@@ -3,8 +3,7 @@
 import { ReelFeed, ReelSkeleton, useReelsFeed } from '@/features/reel';
 
 export function ReelsPageClient() {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useReelsFeed();
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useReelsFeed();
 
   const reels = data?.pages.flatMap((p) => p.items) ?? [];
 

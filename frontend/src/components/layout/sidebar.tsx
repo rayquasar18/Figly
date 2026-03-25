@@ -2,16 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import {
-  Home,
-  Compass,
-  Clapperboard,
-  PlusSquare,
-  User,
-  Sun,
-  Moon,
-  Monitor,
-} from 'lucide-react';
+import { Home, Compass, Clapperboard, PlusSquare, User, Sun, Moon, Monitor } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useMe } from '@/features/auth';
 import { useCreatePostStore } from '@/features/create-post';
@@ -64,9 +55,7 @@ export function Sidebar() {
               )}
               aria-label={link.label}
             >
-              <link.icon
-                className={cn('size-6', link.isActive && 'fill-current')}
-              />
+              <link.icon className={cn('size-6', link.isActive && 'fill-current')} />
               <span>{link.label}</span>
             </Link>
           ))}
@@ -84,9 +73,11 @@ export function Sidebar() {
         {user && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="flex items-center gap-3 rounded-lg px-3 py-3 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground w-full">
+              <button className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
                 <Avatar className="size-6">
-                  <AvatarFallback>{(user.name || user.username || 'U')[0].toUpperCase()}</AvatarFallback>
+                  <AvatarFallback>
+                    {(user.name || user.username || 'U')[0].toUpperCase()}
+                  </AvatarFallback>
                 </Avatar>
                 <span className="truncate">{user.name || user.username}</span>
               </button>

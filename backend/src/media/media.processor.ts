@@ -153,16 +153,8 @@ export class MediaProcessor extends WorkerHost {
         .replace('originals/', 'thumbnails/')
         .replace(/\.[^.]+$/, '.jpg');
 
-      await this.storageService.upload(
-        transcodedKey,
-        fs.readFileSync(tmpOutput),
-        'video/mp4',
-      );
-      await this.storageService.upload(
-        thumbnailKey,
-        fs.readFileSync(tmpThumb),
-        'image/jpeg',
-      );
+      await this.storageService.upload(transcodedKey, fs.readFileSync(tmpOutput), 'video/mp4');
+      await this.storageService.upload(thumbnailKey, fs.readFileSync(tmpThumb), 'image/jpeg');
 
       // Update Media record with transcoded keys
       await this.prisma.media.update({
@@ -174,9 +166,7 @@ export class MediaProcessor extends WorkerHost {
         },
       });
 
-      this.logger.log(
-        `Video ${mediaId} transcoded successfully: ${duration}s, ${width}x${height}`,
-      );
+      this.logger.log(`Video ${mediaId} transcoded successfully: ${duration}s, ${width}x${height}`);
     } catch (error) {
       this.logger.error(`Failed to transcode video ${mediaId}: ${error}`);
 

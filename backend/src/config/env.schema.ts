@@ -3,8 +3,12 @@ import { z } from 'zod';
 const envSchema = z.object({
   // Required -- no defaults, app fails to start without these
   DATABASE_URL: z.string().url({ message: 'DATABASE_URL must be a valid URL' }),
-  JWT_ACCESS_SECRET: z.string().min(16, { message: 'JWT_ACCESS_SECRET must be at least 16 characters' }),
-  JWT_REFRESH_SECRET: z.string().min(16, { message: 'JWT_REFRESH_SECRET must be at least 16 characters' }),
+  JWT_ACCESS_SECRET: z
+    .string()
+    .min(16, { message: 'JWT_ACCESS_SECRET must be at least 16 characters' }),
+  JWT_REFRESH_SECRET: z
+    .string()
+    .min(16, { message: 'JWT_REFRESH_SECRET must be at least 16 characters' }),
 
   // Optional with safe defaults
   REDIS_URL: z.string().default('redis://localhost:6379'),
@@ -40,9 +44,7 @@ export function validateEnv(config: Record<string, unknown>): Env {
     const formatted = result.error.issues
       .map((i) => `  ${i.path.join('.')}: ${i.message}`)
       .join('\n');
-    throw new Error(
-      `\nEnvironment validation failed:\n${formatted}\n\nApplication cannot start.`,
-    );
+    throw new Error(`\nEnvironment validation failed:\n${formatted}\n\nApplication cannot start.`);
   }
   return result.data;
 }

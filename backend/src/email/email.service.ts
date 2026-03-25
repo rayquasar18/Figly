@@ -13,7 +13,8 @@ export class EmailService {
   constructor(private configService: ConfigService) {
     const apiKey = this.configService.get<string>('resend.apiKey');
     this.resend = new Resend(apiKey || 'test');
-    this.fromAddress = this.configService.get<string>('resend.fromAddress') || 'Figly <onboarding@resend.dev>';
+    this.fromAddress =
+      this.configService.get<string>('resend.fromAddress') || 'Figly <onboarding@resend.dev>';
   }
 
   async sendVerificationEmail(email: string, name: string, token: string): Promise<void> {

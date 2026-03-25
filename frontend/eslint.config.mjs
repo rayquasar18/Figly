@@ -12,7 +12,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const compat = new FlatCompat({ baseDirectory: __dirname });
 
 export default tseslint.config(
-  { ignores: ['.next/**', 'node_modules/**'] },
+  { ignores: ['.next/**', 'node_modules/**', 'next-env.d.ts'] },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   ...compat.extends('next/core-web-vitals'),
@@ -31,7 +31,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['tailwind.config.ts', 'postcss.config.*'],
+    files: ['tailwind.config.ts', 'postcss.config.*', 'next.config.js'],
     rules: {
       '@typescript-eslint/no-require-imports': 'off',
     },

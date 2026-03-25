@@ -45,9 +45,7 @@ export function ChecklistsPageClient() {
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center py-20 text-center">
-          <p className="text-muted-foreground">
-            Ban chua co checklist nao
-          </p>
+          <p className="text-muted-foreground">Ban chua co checklist nao</p>
           <Button asChild className="mt-4" size="sm">
             <Link href="/checklists/new">
               <Plus className="mr-1.5 size-4" />

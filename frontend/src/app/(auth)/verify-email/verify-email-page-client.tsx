@@ -4,13 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useVerifyEmailMutation } from '@/features/auth';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
 export function VerifyEmailPageClient() {
@@ -48,9 +42,7 @@ export function VerifyEmailPageClient() {
         <Card>
           <CardHeader className="text-center">
             <CardTitle className="text-2xl font-bold">Xac minh thanh cong!</CardTitle>
-            <CardDescription>
-              Email da duoc xac minh! Ban co the dang nhap.
-            </CardDescription>
+            <CardDescription>Email da duoc xac minh! Ban co the dang nhap.</CardDescription>
           </CardHeader>
           <CardContent className="text-center">
             <Link href="/login">
@@ -87,14 +79,12 @@ export function VerifyEmailPageClient() {
     <Card>
       <CardHeader className="text-center">
         <CardTitle className="text-2xl font-bold">Xac minh email</CardTitle>
-        <CardDescription>
-          Vui long kiem tra email de xac minh tai khoan.
-        </CardDescription>
+        <CardDescription>Vui long kiem tra email de xac minh tai khoan.</CardDescription>
       </CardHeader>
-      <CardContent className="text-center space-y-4">
+      <CardContent className="space-y-4 text-center">
         <p className="text-sm text-muted-foreground">
-          Chung toi da gui mot lien ket xac minh den email cua ban.
-          Vui long nhan vao lien ket de kich hoat tai khoan.
+          Chung toi da gui mot lien ket xac minh den email cua ban. Vui long nhan vao lien ket de
+          kich hoat tai khoan.
         </p>
         <Link href="/login">
           <Button variant="outline" className="w-full">

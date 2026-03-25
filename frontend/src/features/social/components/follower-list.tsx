@@ -5,11 +5,7 @@ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useAuthStore } from '@/features/auth';
-import {
-  useFollowers,
-  useFollowing,
-  useRemoveFollowerMutation,
-} from '../hooks/social-queries';
+import { useFollowers, useFollowing, useRemoveFollowerMutation } from '../hooks/social-queries';
 import { UserRow } from './user-row';
 
 interface FollowerListProps {

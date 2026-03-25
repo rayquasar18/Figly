@@ -10,7 +10,7 @@ import { AuthService } from '../auth.service';
  * passport-apple provides the Strategy class.
  * Apple Sign-In requires: clientID, teamID, keyID, privateKeyString, callbackURL.
  */
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+
 let ApplePassportStrategy: any;
 try {
   ApplePassportStrategy = require('passport-apple').Strategy;

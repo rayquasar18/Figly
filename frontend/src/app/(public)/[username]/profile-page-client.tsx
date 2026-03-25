@@ -19,10 +19,7 @@ interface ProfilePageClientProps {
   initialProfile: ProfileResponse | null;
 }
 
-export default function ProfilePageClient({
-  username,
-  initialProfile,
-}: ProfilePageClientProps) {
+export default function ProfilePageClient({ username, initialProfile }: ProfilePageClientProps) {
   const { data: profile, isLoading, isError } = useProfile(username);
   const [editModalOpen, setEditModalOpen] = useState(false);
 
@@ -46,10 +43,7 @@ export default function ProfilePageClient({
 
   return (
     <div className="mx-auto w-full max-w-4xl p-4 md:p-6">
-      <ProfileHeader
-        profile={displayProfile}
-        onEditClick={() => setEditModalOpen(true)}
-      />
+      <ProfileHeader profile={displayProfile} onEditClick={() => setEditModalOpen(true)} />
 
       <Tabs defaultValue="posts" className="mt-6">
         <TabsList className="w-full justify-center">
