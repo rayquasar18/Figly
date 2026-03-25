@@ -8,6 +8,8 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json ./
 COPY frontend/package.json ./frontend/
 COPY backend/package.json ./backend/
 COPY packages/shared/package.json ./packages/shared/
+# Copy Prisma schema for postinstall prisma generate
+COPY backend/prisma/schema.prisma ./backend/prisma/schema.prisma
 RUN pnpm install --frozen-lockfile
 
 # --- Builder stage ---
@@ -17,6 +19,8 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/frontend/node_modules ./frontend/node_modules
 COPY --from=deps /app/packages/shared/node_modules ./packages/shared/node_modules
 COPY . .
+# Ensure public dir exists (may be empty)
+RUN mkdir -p frontend/public
 # Build shared first (frontend depends on shared types)
 RUN pnpm --filter @figly/shared build
 # Build frontend with standalone output
