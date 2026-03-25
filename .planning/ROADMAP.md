@@ -28,7 +28,7 @@
 - [x] **Phase 11: Bugfixes & UX Flow** - Fix broken registration flow, explore page, and desktop navigation layout (completed 2026-03-24)
 - [x] **Phase 12: Framework Upgrades** - Upgrade React 18->19, Next.js 14->16, NestJS 10->11 (completed 2026-03-24)
 - [x] **Phase 13: Backend Hardening** - Add env validation, exception filter, structured logging, health checks, Swagger, DTO unification, response serialization, Redis rate limiter (completed 2026-03-24)
-- [ ] **Phase 14: Frontend Restructure** - Reorganize to features/ pattern, add auth middleware, SSR/SEO for public routes, dark mode
+- [x] **Phase 14: Frontend Restructure** - Reorganize to features/ pattern, add auth middleware, SSR/SEO for public routes, dark mode (completed 2026-03-25)
 - [ ] **Phase 15: DevOps & Tooling** - ESLint/Prettier/Husky, CI/CD pipeline, Docker dual-container split
 - [ ] **Phase 16: Shared Package Cleanup** - Rename dto/ to schemas/, remove dist/ from git tracking
 
@@ -92,7 +92,7 @@ Plans:
   2. Unauthenticated users hitting protected routes are redirected to login server-side (no flash of protected content)
   3. Public pages (feed, profiles, individual posts) render as Server Components with proper meta tags (title, description, og:image) visible in page source
   4. Dark mode toggles between system preference and manual selection, persisting across sessions
-**Plans:** 2/4 plans executed
+**Plans:** 4/4 plans complete
 Plans:
 - [x] 14-01-PLAN.md — Auth proxy, server-fetch utility, dark mode setup, Tailwind config update
 - [x] 14-02-PLAN.md — Directory restructure: move components/hooks/stores to features/ with barrel exports
@@ -132,7 +132,7 @@ Plans:
 | 11. Bugfixes & UX Flow | v2.0 | 3/3 | Complete    | 2026-03-24 |
 | 12. Framework Upgrades | v2.0 | 3/3 | Complete    | 2026-03-24 |
 | 13. Backend Hardening | v2.0 | 4/4 | Complete    | 2026-03-24 |
-| 14. Frontend Restructure | v2.0 | 2/4 | In Progress|  |
+| 14. Frontend Restructure | v2.0 | 2/4 | Complete    | 2026-03-25 |
 | 15. DevOps & Tooling | v2.0 | 0/? | Not started | - |
 | 16. Shared Package Cleanup | v2.0 | 0/? | Not started | - |
 
