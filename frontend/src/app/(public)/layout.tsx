@@ -2,10 +2,10 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useMe } from '@/hooks/queries/auth-queries';
+import { useMe } from '@/features/auth';
 import { PublicNav } from '@/components/layout/public-nav';
 import { BottomNav } from '@/components/layout/bottom-nav';
-import { CreatePostFlow } from '@/components/create-post/create-post-flow';
+import { CreatePostFlow } from '@/features/create-post';
 
 export default function PublicLayout({
   children,

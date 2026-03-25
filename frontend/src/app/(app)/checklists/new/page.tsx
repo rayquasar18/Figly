@@ -1,8 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useCreateChecklist } from '@/hooks/queries/checklist-queries';
-import { ChecklistForm } from '@/components/checklist/checklist-form';
+import { useCreateChecklist, ChecklistForm } from '@/features/checklist';
 import type { CreateChecklistDto } from '@figly/shared';
 
 export default function CreateChecklistPage() {

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { useVerifyEmailMutation } from '@/hooks/queries/auth-queries';
+import { useVerifyEmailMutation } from '@/features/auth';
 import {
   Card,
   CardContent,

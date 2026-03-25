@@ -2,10 +2,8 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { Loader2 } from 'lucide-react';
-import { usePublicFeed } from '@/hooks/queries/post-queries';
-import { PostCard } from '@/components/post/post-card';
-import { FeedSkeleton } from '@/components/feed/feed-skeleton';
-import { PostDetailModal } from '@/components/post/post-detail-modal';
+import { usePublicFeed, PostCard, PostDetailModal } from '@/features/post';
+import { FeedSkeleton } from '@/features/feed';
 
 export default function ExplorePage() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =

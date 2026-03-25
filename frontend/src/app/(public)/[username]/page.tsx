@@ -1,15 +1,11 @@
 'use client';
 
 import { use, useState } from 'react';
-import { useProfile } from '@/hooks/queries/profile-queries';
-import { ProfileHeader } from '@/components/profile/profile-header';
-import { ProfilePostGrid } from '@/components/profile/profile-post-grid';
-import { ProfileSkeleton } from '@/components/profile/profile-skeleton';
-import { ProfileEditModal } from '@/components/profile/profile-edit-modal';
+import { useProfile, ProfileHeader, ProfilePostGrid, ProfileSkeleton, ProfileEditModal } from '@/features/profile';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Grid3X3, Package, Clapperboard } from 'lucide-react';
-import { CollectionShowcase } from '@/components/collection/collection-showcase';
-import { ProfileReelGrid } from '@/components/reel/profile-reel-grid';
+import { CollectionShowcase } from '@/features/collection';
+import { ProfileReelGrid } from '@/features/reel';
 
 export default function ProfilePage({
   params,

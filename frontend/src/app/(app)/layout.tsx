@@ -3,12 +3,12 @@
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { useMe } from '@/hooks/queries/auth-queries';
+import { useMe } from '@/features/auth';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { Sidebar } from '@/components/layout/sidebar';
 import { HeaderSearch } from '@/components/layout/header-search';
-import { CreatePostFlow } from '@/components/create-post/create-post-flow';
-import { CreateReelFlow } from '@/components/reel/create-reel-flow';
+import { CreatePostFlow } from '@/features/create-post';
+import { CreateReelFlow } from '@/features/reel';
 
 export default function AppLayout({
   children,

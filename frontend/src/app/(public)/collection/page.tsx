@@ -1,8 +1,6 @@
 'use client';
 
-import { useCategories } from '@/hooks/queries/collection-queries';
-import { CategoryCard } from '@/components/collection/category-card';
-import { ItemSearch } from '@/components/collection/item-search';
+import { useCategories, CategoryCard, ItemSearch } from '@/features/collection';
 import { Skeleton } from '@/components/ui/skeleton';
 
 function CategoryGridSkeleton() {

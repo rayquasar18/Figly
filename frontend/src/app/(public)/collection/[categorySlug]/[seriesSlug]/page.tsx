@@ -3,9 +3,7 @@
 import { use, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ChevronRight, Loader2 } from 'lucide-react';
-import { useItemsBySeries, useSeriesByCategory } from '@/hooks/queries/collection-queries';
-import { ItemCard } from '@/components/collection/item-card';
-import { FollowSeriesButton } from '@/components/collection/follow-series-button';
+import { useItemsBySeries, useSeriesByCategory, ItemCard, FollowSeriesButton } from '@/features/collection';
 import { Skeleton } from '@/components/ui/skeleton';
 
 function ItemGridSkeleton() {

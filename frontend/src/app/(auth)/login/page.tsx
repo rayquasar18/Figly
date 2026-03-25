@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import { LoginForm } from '@/components/auth/login-form';
-import { SocialLoginButtons } from '@/components/auth/social-login-buttons';
+import { LoginForm, SocialLoginButtons } from '@/features/auth';
 import {
   Card,
   CardContent,

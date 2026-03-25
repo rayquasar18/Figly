@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useMe } from '@/hooks/queries/auth-queries';
+import { useMe } from '@/features/auth';
 
 export default function AuthLayout({
   children,

@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback } from 'react';
-import { useAuthStore } from '@/stores/auth-store';
+import { useAuthStore } from '@/features/auth';
 import { apiClient } from '@/lib/api-client';
 import type { PublicUser } from '@figly/shared';
 
