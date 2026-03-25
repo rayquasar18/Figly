@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Architecture & Production Hardening
-status: Ready to plan
-stopped_at: Phase 15 context gathered
-last_updated: "2026-03-25T16:05:26.726Z"
+status: Ready to execute
+stopped_at: Completed 15-03-PLAN.md
+last_updated: "2026-03-25T17:02:33.426Z"
 progress:
   total_phases: 6
   completed_phases: 4
-  total_plans: 14
+  total_plans: 17
   completed_plans: 14
 ---
 
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-20)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 14 — frontend-restructure
+**Current focus:** Phase 15 — devops-tooling
 
 ## Current Position
 
-Phase: 15
-Plan: Not started
+Phase: 15 (devops-tooling) — EXECUTING
+Plan: 3 of 3
 
 ## Performance Metrics
 
@@ -71,6 +71,10 @@ Recent decisions affecting current work:
 - [Phase 14]: Server Component page pattern: async page.tsx with generateMetadata delegates to *-client.tsx
 - [Phase 14]: Suspense boundary for useSearchParams: verify-email and reset-password pages wrap client component in Suspense
 - [Phase 14]: fetchApi pre-fetch without initialData prop: pages call fetchApi for cache warming, React Query hooks refetch on mount
+- [Phase 15]: ESLint 9 flat config with eslint-config-next@15.5 for ESLint 9 compatibility
+- [Phase 15]: Type-check excluded from pre-commit hook (too slow), deferred to CI only
+- [Phase 15]: Full monorepo node_modules in backend Docker runner for pnpm hoisting compatibility
+- [Phase 15]: NEXT_PUBLIC_ vars as Docker build args (not runtime env) because Next.js inlines them at build time
 
 ### Pending Todos
 
@@ -89,6 +93,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-25T16:05:26.722Z
-Stopped at: Phase 15 context gathered
-Resume file: .planning/phases/15-devops-tooling/15-CONTEXT.md
+Last session: 2026-03-25T17:02:33.423Z
+Stopped at: Completed 15-03-PLAN.md
+Resume file: None

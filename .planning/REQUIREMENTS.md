@@ -41,10 +41,10 @@ Requirements for v2.0 Architecture & Production Hardening. Each maps to roadmap 
 
 ### DevOps & Tooling
 
-- [ ] **DEVP-01**: ESLint + Prettier configured with consistent rules across frontend, backend, shared
-- [ ] **DEVP-02**: Husky + lint-staged runs linting on pre-commit
+- [x] **DEVP-01**: ESLint + Prettier configured with consistent rules across frontend, backend, shared
+- [x] **DEVP-02**: Husky + lint-staged runs linting on pre-commit
 - [ ] **DEVP-03**: CI/CD pipeline via GitHub Actions (lint, type-check, build, test)
-- [ ] **DEVP-04**: Docker split into 2 separate containers (figly-frontend, figly-backend)
+- [x] **DEVP-04**: Docker split into 2 separate containers (figly-frontend, figly-backend)
 
 ### Shared Package
 
@@ -123,10 +123,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FRNT-02 | Phase 14 | Complete |
 | FRNT-03 | Phase 14 | Complete |
 | FRNT-04 | Phase 14 | Complete |
-| DEVP-01 | Phase 15 | Pending |
-| DEVP-02 | Phase 15 | Pending |
+| DEVP-01 | Phase 15 | Complete |
+| DEVP-02 | Phase 15 | Complete |
 | DEVP-03 | Phase 15 | Pending |
-| DEVP-04 | Phase 15 | Pending |
+| DEVP-04 | Phase 15 | Complete |
 | SHRD-01 | Phase 16 | Pending |
 | SHRD-02 | Phase 16 | Pending |
 
