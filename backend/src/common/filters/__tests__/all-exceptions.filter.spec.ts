@@ -135,9 +135,7 @@ describe('AllExceptionsFilter', () => {
   });
 
   it('should log 500 errors but not 4xx errors', () => {
-    const loggerErrorSpy = jest
-      .spyOn(Logger.prototype, 'error')
-      .mockImplementation();
+    const loggerErrorSpy = jest.spyOn(Logger.prototype, 'error').mockImplementation();
 
     // 500 error should be logged
     const serverError = new Error('Internal failure');

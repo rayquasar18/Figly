@@ -24,17 +24,12 @@ export class AllExceptionsFilter implements ExceptionFilter {
     if (exception instanceof HttpException) {
       status = exception.getStatus();
       const res = exception.getResponse();
-      message =
-        typeof res === 'string'
-          ? res
-          : (res as any).message || message;
+      message = typeof res === 'string' ? res : (res as any).message || message;
       // If message is an array (validation errors), join them
       if (Array.isArray(message)) {
         message = message.join('; ');
       }
-    } else if (
-      exception instanceof Prisma.PrismaClientKnownRequestError
-    ) {
+    } else if (exception instanceof Prisma.PrismaClientKnownRequestError) {
       switch (exception.code) {
         case 'P2002':
           status = HttpStatus.CONFLICT;

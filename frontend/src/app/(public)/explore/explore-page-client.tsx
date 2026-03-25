@@ -6,8 +6,7 @@ import { usePublicFeed, PostCard, PostDetailModal } from '@/features/post';
 import { FeedSkeleton } from '@/features/feed';
 
 export default function ExplorePageClient() {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    usePublicFeed();
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = usePublicFeed();
   const sentinelRef = useRef<HTMLDivElement>(null);
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
 
@@ -69,11 +68,7 @@ export default function ExplorePageClient() {
 
       <div className="space-y-0">
         {items.map((post) => (
-          <PostCard
-            key={post.id}
-            post={post}
-            onOpenDetail={handleOpenDetail}
-          />
+          <PostCard key={post.id} post={post} onOpenDetail={handleOpenDetail} />
         ))}
 
         {/* Sentinel for infinite scroll */}

@@ -17,10 +17,7 @@ export class FeedController {
 
   @Get('reels')
   @UseGuards(OptionalJwtAuthGuard)
-  async getReelsFeed(
-    @Req() req: Request,
-    @Query('cursor') cursor?: string,
-  ) {
+  async getReelsFeed(@Req() req: Request, @Query('cursor') cursor?: string) {
     const userId = (req.user as any)?.userId || null;
     return this.feedService.getReelsFeed(userId, cursor);
   }

@@ -17,10 +17,7 @@ exports.createPostSchema = zod_1.z.object({
     })
         .optional()
         .nullable(),
-    linkedItemIds: zod_1.z
-        .array(zod_1.z.string())
-        .max(10, { message: 'Toi da 10 vat pham lien ket' })
-        .optional(),
+    linkedItemIds: zod_1.z.array(zod_1.z.string()).max(10, { message: 'Toi da 10 vat pham lien ket' }).optional(),
 });
 exports.updateCaptionSchema = zod_1.z.object({
     caption: zod_1.z

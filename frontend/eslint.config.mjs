@@ -31,7 +31,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['tailwind.config.ts', 'postcss.config.*'],
+    files: ['tailwind.config.ts', 'postcss.config.*', 'next.config.js'],
     rules: {
       '@typescript-eslint/no-require-imports': 'off',
     },

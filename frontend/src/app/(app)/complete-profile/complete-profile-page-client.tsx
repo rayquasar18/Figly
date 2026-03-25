@@ -8,12 +8,8 @@ export function CompleteProfilePageClient() {
     <div className="flex min-h-[80dvh] items-center justify-center px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold text-balance">
-            Hoan thanh ho so
-          </CardTitle>
-          <CardDescription>
-            Chon ten nguoi dung de bat dau
-          </CardDescription>
+          <CardTitle className="text-balance text-2xl font-bold">Hoan thanh ho so</CardTitle>
+          <CardDescription>Chon ten nguoi dung de bat dau</CardDescription>
         </CardHeader>
         <CardContent>
           <CompleteProfileForm />

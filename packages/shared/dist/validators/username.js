@@ -37,6 +37,4 @@ exports.usernameSchema = zod_1.z
     .regex(exports.USERNAME_RULES.pattern, {
     message: 'Ten nguoi dung chi chua chu thuong, so, dau gach duoi va dau cham',
 });
-exports.bioSchema = zod_1.z
-    .string()
-    .max(150, { message: 'Tieu su khong duoc vuot qua 150 ky tu' });
+exports.bioSchema = zod_1.z.string().max(150, { message: 'Tieu su khong duoc vuot qua 150 ky tu' });

@@ -114,9 +114,9 @@ services:
     container_name: figly-frontend
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
-      HOSTNAME: "0.0.0.0"
+      HOSTNAME: '0.0.0.0'
     depends_on:
       - figly-backend
     networks:

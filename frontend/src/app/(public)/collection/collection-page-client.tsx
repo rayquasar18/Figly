@@ -31,9 +31,7 @@ export default function CollectionPageClient() {
 
       {/* Separator */}
       <div className="mb-4 border-t pt-4">
-        <h2 className="text-base font-semibold text-muted-foreground">
-          Danh muc
-        </h2>
+        <h2 className="text-base font-semibold text-muted-foreground">Danh muc</h2>
       </div>
 
       {isLoading ? (

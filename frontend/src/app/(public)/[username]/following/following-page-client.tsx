@@ -7,9 +7,7 @@ interface FollowingPageClientProps {
   username: string;
 }
 
-export default function FollowingPageClient({
-  username,
-}: FollowingPageClientProps) {
+export default function FollowingPageClient({ username }: FollowingPageClientProps) {
   return (
     <div className="mx-auto max-w-lg px-4 py-6">
       {/* Header with back arrow */}
@@ -35,7 +33,7 @@ export default function FollowingPageClient({
             />
           </svg>
         </Link>
-        <h1 className="text-xl font-semibold text-balance">Dang theo doi</h1>
+        <h1 className="text-balance text-xl font-semibold">Dang theo doi</h1>
       </div>
 
       <FollowerList username={username} type="following" />

@@ -4,9 +4,7 @@ import { jwtVerify } from 'jose';
 const PROTECTED_ROUTES = ['/', '/reels', '/saved', '/checklists', '/complete-profile'];
 
 function isProtectedRoute(pathname: string): boolean {
-  return PROTECTED_ROUTES.some(
-    (route) => pathname === route || pathname.startsWith(route + '/'),
-  );
+  return PROTECTED_ROUTES.some((route) => pathname === route || pathname.startsWith(route + '/'));
 }
 
 export async function proxy(request: NextRequest) {

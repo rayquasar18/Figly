@@ -22,21 +22,14 @@ interface ItemDetailPageClientProps {
   itemId: string;
 }
 
-export default function ItemDetailPageClient({
-  itemId,
-}: ItemDetailPageClientProps) {
+export default function ItemDetailPageClient({ itemId }: ItemDetailPageClientProps) {
   const router = useRouter();
   const { data: item, isLoading, isError } = useItemDetail(itemId);
 
   return (
     <div className="mx-auto max-w-lg px-4 py-6">
       {/* Back button */}
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => router.back()}
-        className="mb-4 -ml-2"
-      >
+      <Button variant="ghost" size="sm" onClick={() => router.back()} className="-ml-2 mb-4">
         <ArrowLeft className="mr-1 size-4" />
         Quay lai
       </Button>

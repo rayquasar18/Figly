@@ -22,10 +22,7 @@ interface PostDetailPageClientProps {
   initialPost: PostResponse | null;
 }
 
-export default function PostDetailPageClient({
-  postId,
-  initialPost,
-}: PostDetailPageClientProps) {
+export default function PostDetailPageClient({ postId, initialPost }: PostDetailPageClientProps) {
   const router = useRouter();
   const { data: post, isLoading } = usePostDetail(postId);
 
@@ -55,10 +52,7 @@ export default function PostDetailPageClient({
     return (
       <div className="flex flex-col items-center justify-center py-20">
         <p className="text-muted-foreground">Khong tim thay bai viet</p>
-        <button
-          onClick={() => router.back()}
-          className="mt-2 text-primary hover:underline"
-        >
+        <button onClick={() => router.back()} className="mt-2 text-primary hover:underline">
           Quay lai
         </button>
       </div>
@@ -117,7 +111,7 @@ export default function PostDetailPageClient({
 
       {/* Caption */}
       {displayPost.caption && (
-        <div className="px-3 mt-1">
+        <div className="mt-1 px-3">
           <CaptionDisplay
             caption={displayPost.caption}
             username={displayPost.author.username ?? ''}
@@ -126,7 +120,7 @@ export default function PostDetailPageClient({
       )}
 
       {/* Timestamp */}
-      <p className="px-3 mt-1 text-xs text-muted-foreground">{relativeTime}</p>
+      <p className="mt-1 px-3 text-xs text-muted-foreground">{relativeTime}</p>
 
       {/* Comments */}
       <div className="mt-3 border-t">

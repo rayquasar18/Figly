@@ -34,8 +34,10 @@ export default function SeriesItemsPageClient({
   categorySlug,
   seriesSlug,
 }: SeriesItemsPageClientProps) {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useItemsBySeries(categorySlug, seriesSlug);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useItemsBySeries(
+    categorySlug,
+    seriesSlug,
+  );
   const { data: seriesList } = useSeriesByCategory(categorySlug);
   const sentinelRef = useRef<HTMLDivElement>(null);
 
@@ -70,22 +72,15 @@ export default function SeriesItemsPageClient({
           Bo suu tap
         </Link>
         <ChevronRight className="size-3.5" />
-        <Link
-          href={`/collection/${categorySlug}`}
-          className="hover:text-primary hover:underline"
-        >
+        <Link href={`/collection/${categorySlug}`} className="hover:text-primary hover:underline">
           {categorySlug.replace(/-/g, ' ')}
         </Link>
         <ChevronRight className="size-3.5" />
-        <span className="font-medium text-foreground">
-          {seriesSlug.replace(/-/g, ' ')}
-        </span>
+        <span className="font-medium text-foreground">{seriesSlug.replace(/-/g, ' ')}</span>
       </nav>
 
       <div className="mb-6 flex items-center justify-between gap-3">
-        <h1 className="text-xl font-bold capitalize">
-          {seriesSlug.replace(/-/g, ' ')}
-        </h1>
+        <h1 className="text-xl font-bold capitalize">{seriesSlug.replace(/-/g, ' ')}</h1>
         {currentSeries && (
           <FollowSeriesButton
             type="series"
@@ -116,9 +111,7 @@ export default function SeriesItemsPageClient({
         </>
       ) : (
         <div className="flex flex-col items-center justify-center py-20 text-center">
-          <p className="text-muted-foreground">
-            Chua co vat pham nao trong bo nay
-          </p>
+          <p className="text-muted-foreground">Chua co vat pham nao trong bo nay</p>
         </div>
       )}
     </div>
