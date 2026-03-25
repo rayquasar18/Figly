@@ -16,6 +16,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - figly-net
 
   redis:
     image: redis:7-alpine
@@ -30,6 +32,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - figly-net
 
   minio:
     image: minio/minio:latest
@@ -49,6 +53,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - figly-net
 
   minio-init:
     image: minio/mc:latest
@@ -64,15 +70,16 @@ services:
       mc anonymous set download local/figly-media;
       echo 'Bucket figly-media created with public download policy';
       "
+    networks:
+      - figly-net
 
-  app:
+  figly-backend:
     build:
       context: .
-      dockerfile: Dockerfile
-    container_name: figly-app
+      dockerfile: backend/Dockerfile
+    container_name: figly-backend
     restart: unless-stopped
     ports:
-      - "3000:3000"
       - "4000:4000"
     environment:
       DATABASE_URL: postgresql://figly:figly_dev@figly-postgres:5432/figly
@@ -85,8 +92,9 @@ services:
       JWT_ACCESS_SECRET: dev-access-secret-change-in-prod
       JWT_REFRESH_SECRET: dev-refresh-secret-change-in-prod
       FRONTEND_URL: http://localhost:3000
-      RESEND_API_KEY: re_dev_placeholder
-      BACKEND_PORT: 4000
+      RESEND_API_KEY: ${RESEND_API_KEY:-re_dev_placeholder}
+      RESEND_FROM_ADDRESS: ${RESEND_FROM_ADDRESS:-Figly <onboarding@resend.dev>}
+      PORT: 4000
     depends_on:
       postgres:
         condition: service_healthy
@@ -94,8 +102,31 @@ services:
         condition: service_healthy
       minio-init:
         condition: service_completed_successfully
+    networks:
+      - figly-net
+
+  figly-frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://figly-backend:4000/api
+    container_name: figly-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      HOSTNAME: "0.0.0.0"
+    depends_on:
+      - figly-backend
+    networks:
+      - figly-net
 
 volumes:
   postgres_data:
   redis_data:
   minio_data:
+
+networks:
+  figly-net:
+    driver: bridge
