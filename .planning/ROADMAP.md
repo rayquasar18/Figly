@@ -108,7 +108,11 @@ Plans:
   2. Git pre-commit hook automatically runs linting on staged files and blocks commits with violations
   3. GitHub Actions pipeline runs lint, type-check, build, and test on every push/PR — failing checks block merge
   4. Frontend and backend run as two separate Docker containers (figly-frontend, figly-backend) that communicate over a Docker network
-**Plans**: TBD
+**Plans:** 3 plans
+Plans:
+- [ ] 15-01-PLAN.md — ESLint 9 + Prettier config across all workspaces, Husky + lint-staged pre-commit hook
+- [ ] 15-02-PLAN.md — GitHub Actions CI/CD pipeline with parallel lint/typecheck/build/test jobs
+- [ ] 15-03-PLAN.md — Docker dual-container split (figly-frontend + figly-backend)
 
 ### Phase 16: Shared Package Cleanup
 **Goal**: Shared package is cleanly organized with no build artifacts in version control
@@ -133,7 +137,7 @@ Plans:
 | 12. Framework Upgrades | v2.0 | 3/3 | Complete    | 2026-03-24 |
 | 13. Backend Hardening | v2.0 | 4/4 | Complete    | 2026-03-24 |
 | 14. Frontend Restructure | v2.0 | 2/4 | Complete    | 2026-03-25 |
-| 15. DevOps & Tooling | v2.0 | 0/? | Not started | - |
+| 15. DevOps & Tooling | v2.0 | 0/3 | Not started | - |
 | 16. Shared Package Cleanup | v2.0 | 0/? | Not started | - |
 
 **Full v1.0 archive:** `.planning/milestones/v1.0-ROADMAP.md`
