@@ -13,8 +13,8 @@ import {
   Monitor,
 } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import { useMe } from '@/hooks/queries/auth-queries';
-import { useCreatePostStore } from '@/stores/create-post-store';
+import { useMe } from '@/features/auth';
+import { useCreatePostStore } from '@/features/create-post';
 import { cn } from '@/lib/utils';
 import {
   DropdownMenu,
@@ -86,10 +86,9 @@ export function Sidebar() {
             <DropdownMenuTrigger asChild>
               <button className="flex items-center gap-3 rounded-lg px-3 py-3 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground w-full">
                 <Avatar className="size-6">
-                  <AvatarImage src={user.avatarUrl ?? undefined} alt={user.displayName || user.username || ''} />
-                  <AvatarFallback>{(user.displayName || user.username || 'U')[0].toUpperCase()}</AvatarFallback>
+                  <AvatarFallback>{(user.name || user.username || 'U')[0].toUpperCase()}</AvatarFallback>
                 </Avatar>
-                <span className="truncate">{user.displayName || user.username}</span>
+                <span className="truncate">{user.name || user.username}</span>
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent side="top" align="start" className="w-56">
