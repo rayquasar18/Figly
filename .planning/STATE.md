@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Architecture & Production Hardening
 status: Ready to plan
-stopped_at: Completed 15-02-PLAN.md
-last_updated: "2026-03-25T17:30:16.067Z"
+stopped_at: Phase 16 context gathered
+last_updated: '2026-03-25T22:58:26.299Z'
 progress:
   total_phases: 6
   completed_phases: 5
@@ -33,7 +33,7 @@ Plan: Not started
 - Total plans completed: 21
 - v1.0 timeline: 8 days (2026-03-13 to 2026-03-20)
 
-*v2.0 metrics will populate after first plan completes*
+_v2.0 metrics will populate after first plan completes_
 
 ## Accumulated Context
 
@@ -68,13 +68,13 @@ Recent decisions affecting current work:
 - [Phase 14]: Theme toggle placed inside user avatar DropdownMenu per D-21
 - [Phase 14]: 9 feature barrels created (reel deferred to phase-10 merge), feature-internal relative imports, cross-feature barrel imports
 - [Phase 14]: toAbsoluteUrl helper defined per-page for og:image absolute URL resolution
-- [Phase 14]: Server Component page pattern: async page.tsx with generateMetadata delegates to *-client.tsx
+- [Phase 14]: Server Component page pattern: async page.tsx with generateMetadata delegates to \*-client.tsx
 - [Phase 14]: Suspense boundary for useSearchParams: verify-email and reset-password pages wrap client component in Suspense
 - [Phase 14]: fetchApi pre-fetch without initialData prop: pages call fetchApi for cache warming, React Query hooks refetch on mount
 - [Phase 15]: ESLint 9 flat config with eslint-config-next@15.5 for ESLint 9 compatibility
 - [Phase 15]: Type-check excluded from pre-commit hook (too slow), deferred to CI only
 - [Phase 15]: Full monorepo node_modules in backend Docker runner for pnpm hoisting compatibility
-- [Phase 15]: NEXT_PUBLIC_ vars as Docker build args (not runtime env) because Next.js inlines them at build time
+- [Phase 15]: NEXT*PUBLIC* vars as Docker build args (not runtime env) because Next.js inlines them at build time
 - [Phase 15]: 4 parallel CI jobs (lint, typecheck, build, test) for fastest feedback with concurrency cancel-in-progress
 
 ### Pending Todos
@@ -94,6 +94,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-25T17:19:42.446Z
-Stopped at: Completed 15-02-PLAN.md
-Resume file: None
+Last session: 2026-03-25T22:58:26.296Z
+Stopped at: Phase 16 context gathered
+Resume file: .planning/phases/16-shared-package-cleanup/16-CONTEXT.md
