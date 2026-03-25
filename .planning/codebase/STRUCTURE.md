@@ -83,7 +83,7 @@ Figly/                             # Monorepo root
 │   └── shared/                    # Shared contract package (@figly/shared)
 │       └── src/
 │           ├── index.ts           # Barrel: re-exports all public symbols
-│           ├── dto/               # Zod schemas: auth, post, profile, comment, checklist, reel
+│           ├── schemas/            # Zod schemas: auth, post, profile, comment, checklist, reel
 │           ├── types/             # TypeScript types: auth, user, post, profile, collection, etc.
 │           ├── constants/         # TOKEN_EXPIRY, FILE_LIMITS, POST_LIMITS, REEL_LIMITS, etc.
 │           └── validators/        # password.ts, username.ts (Zod validators + rules)
@@ -141,8 +141,8 @@ Figly/                             # Monorepo root
 - Contains: `auth-store.ts` (user session), `create-post-store.ts`, `create-reel-store.ts`
 
 **`packages/shared/`:**
-- Purpose: Contract layer — single source of truth for DTOs, types, and constants used by both apps
-- Contains: Zod schemas, TypeScript types, constants, validators
+- Purpose: Contract layer -- single source of truth for schemas, types, and constants used by both apps
+- Contains: Zod schemas (schemas/), TypeScript types, constants, validators
 - Generated: No (hand-authored)
 - Committed: Yes (including `dist/`)
 
@@ -222,7 +222,7 @@ Figly/                             # Monorepo root
 
 **New Shared Type or Constant:**
 - Type: `packages/shared/src/types/{domain}.types.ts`
-- DTO: `packages/shared/src/dto/{domain}.dto.ts`
+- Schema: `packages/shared/src/schemas/{domain}.schema.ts`
 - Constants: `packages/shared/src/constants/{domain}.constants.ts`
 - Re-export from: `packages/shared/src/index.ts`
 
