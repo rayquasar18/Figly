@@ -29,7 +29,7 @@
 - [x] **Phase 12: Framework Upgrades** - Upgrade React 18->19, Next.js 14->16, NestJS 10->11 (completed 2026-03-24)
 - [x] **Phase 13: Backend Hardening** - Add env validation, exception filter, structured logging, health checks, Swagger, DTO unification, response serialization, Redis rate limiter (completed 2026-03-24)
 - [x] **Phase 14: Frontend Restructure** - Reorganize to features/ pattern, add auth middleware, SSR/SEO for public routes, dark mode (completed 2026-03-25)
-- [ ] **Phase 15: DevOps & Tooling** - ESLint/Prettier/Husky, CI/CD pipeline, Docker dual-container split
+- [x] **Phase 15: DevOps & Tooling** - ESLint/Prettier/Husky, CI/CD pipeline, Docker dual-container split (completed 2026-03-25)
 - [ ] **Phase 16: Shared Package Cleanup** - Rename dto/ to schemas/, remove dist/ from git tracking
 
 ## Phase Details
@@ -108,7 +108,7 @@ Plans:
   2. Git pre-commit hook automatically runs linting on staged files and blocks commits with violations
   3. GitHub Actions pipeline runs lint, type-check, build, and test on every push/PR — failing checks block merge
   4. Frontend and backend run as two separate Docker containers (figly-frontend, figly-backend) that communicate over a Docker network
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans complete
 Plans:
 - [x] 15-01-PLAN.md — ESLint 9 + Prettier config across all workspaces, Husky + lint-staged pre-commit hook
 - [ ] 15-02-PLAN.md — GitHub Actions CI/CD pipeline with parallel lint/typecheck/build/test jobs
@@ -137,7 +137,7 @@ Plans:
 | 12. Framework Upgrades | v2.0 | 3/3 | Complete    | 2026-03-24 |
 | 13. Backend Hardening | v2.0 | 4/4 | Complete    | 2026-03-24 |
 | 14. Frontend Restructure | v2.0 | 2/4 | Complete    | 2026-03-25 |
-| 15. DevOps & Tooling | v2.0 | 2/3 | In Progress|  |
+| 15. DevOps & Tooling | v2.0 | 2/3 | Complete    | 2026-03-25 |
 | 16. Shared Package Cleanup | v2.0 | 0/? | Not started | - |
 
 **Full v1.0 archive:** `.planning/milestones/v1.0-ROADMAP.md`
