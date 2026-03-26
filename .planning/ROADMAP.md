@@ -32,7 +32,7 @@
 - [x] **Phase 15: DevOps & Tooling** - ESLint/Prettier/Husky, CI/CD pipeline, Docker dual-container split (completed 2026-03-25)
 - [x] **Phase 16: Shared Package Cleanup** - Rename dto/ to schemas/, remove dist/ from git tracking (completed 2026-03-26)
 - [x] **Phase 17: Backend Regression Restore** - Restore app.module.ts wiring, DTOs, and controller decorators lost in Phase 15-01 merge (gap closure) (completed 2026-03-26)
-- [ ] **Phase 18: Frontend Regression Restore** - Restore 17 Server Component pages, fix broken imports, remove forwardRef from UI components (gap closure)
+- [x] **Phase 18: Frontend Regression Restore** - Restore 17 Server Component pages, fix broken imports, remove forwardRef from UI components (gap closure) (completed 2026-03-26)
 
 ## Phase Details
 
@@ -178,7 +178,7 @@
 3. All imports resolve correctly (zero TS2307 errors)
 4. All 19 UI components use React 19 ref-as-prop (zero forwardRef)
 5. Frontend builds without TypeScript errors (`pnpm --filter @figly/frontend build`)
-   **Plans:** 1/4 plans executed
+   **Plans:** 4/4 plans complete
    Plans:
 
 - [x] 18-01-PLAN.md — Fix 10 stale imports in 6 features/ files and signup mutation type
@@ -203,6 +203,6 @@
 | 15. DevOps & Tooling            | v2.0      | 2/3            | Complete          | 2026-03-25 |
 | 16. Shared Package Cleanup      | v2.0      | 1/2            | Complete          | 2026-03-26 |
 | 17. Backend Regression Restore  | v2.0      | 1/2            | Complete          | 2026-03-26 |
-| 18. Frontend Regression Restore | v2.0      | 1/4 | In Progress|  |
+| 18. Frontend Regression Restore | v2.0      | 1/4 | Complete    | 2026-03-26 |
 
 **Full v1.0 archive:** `.planning/milestones/v1.0-ROADMAP.md`
