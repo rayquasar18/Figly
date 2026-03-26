@@ -162,7 +162,7 @@
    **Plans:** 2 plans
    Plans:
 
-- [ ] 17-01-PLAN.md — Restore app.module.ts with full Phase 13 infrastructure wiring
+- [x] 17-01-PLAN.md — Restore app.module.ts with full Phase 13 infrastructure wiring
 - [ ] 17-02-PLAN.md — Restore 3 DTOs to createZodDto, add @ZodSerializerDto to auth controller, fix tests
 
 ### Phase 18: Frontend Regression Restore
@@ -196,7 +196,7 @@
 | 14. Frontend Restructure        | v2.0      | 2/4            | Complete          | 2026-03-25 |
 | 15. DevOps & Tooling            | v2.0      | 2/3            | Complete          | 2026-03-25 |
 | 16. Shared Package Cleanup      | v2.0      | 1/2            | Complete          | 2026-03-26 |
-| 17. Backend Regression Restore  | v2.0      | 0/2            | Planning Complete | —          |
+| 17. Backend Regression Restore  | v2.0      | 1/2            | In Progress       | —          |
 | 18. Frontend Regression Restore | v2.0      | 0/0            | Not Started       | —          |
 
 **Full v1.0 archive:** `.planning/milestones/v1.0-ROADMAP.md`

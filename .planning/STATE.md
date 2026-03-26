@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Architecture & Production Hardening
-status: Milestone complete
-stopped_at: Completed 16-02-PLAN.md
-last_updated: "2026-03-26T00:02:42.876Z"
+status: in-progress
+stopped_at: Completed 17-01-PLAN.md
+last_updated: "2026-03-26T03:37:07Z"
 progress:
-  total_phases: 6
+  total_phases: 7
   completed_phases: 6
-  total_plans: 19
-  completed_plans: 19
+  total_plans: 21
+  completed_plans: 20
 ---
 
 # Project State
@@ -19,12 +19,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-20)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 16 -- shared-package-cleanup
+**Current focus:** Phase 17 -- backend-regression-restore
 
 ## Current Position
 
-Phase: 16
-Plan: Not started
+Phase: 17
+Plan: 1 of 2 in current phase
+Status: Plan 17-01 Complete
+Last activity: 2026-03-26 -- Completed 17-01 AppModule Infrastructure Restore
 
 ## Performance Metrics
 
@@ -80,6 +82,10 @@ Recent decisions affecting current work:
 - [Phase 16]: Kept backend dto/ references in STRUCTURE.md since those are NestJS-internal DTOs, not shared package
 - [Phase 16]: D-08 deferred: main field kept as ./dist/index.js because NestJS tsc produces external require calls resolved at Node.js runtime
 
+- [Phase 17-01]: Added class-validator as backend dependency -- auth DTOs use class-validator decorators (pre-existing missing dep)
+- [Phase 17-01]: Added @figly/shared path mapping to backend tsconfig.json for TypeScript-level module resolution in tests
+- [Phase 17-01]: Set test env vars in test/setup.ts -- ConfigModule.forRoot validate runs at import time
+
 ### Pending Todos
 
 None yet.
@@ -97,6 +103,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-25T23:49:45Z
-Stopped at: Completed 16-02-PLAN.md
+Last session: 2026-03-26T03:37:07Z
+Stopped at: Completed 17-01-PLAN.md
 Resume file: None
