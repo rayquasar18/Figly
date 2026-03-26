@@ -84,10 +84,17 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 
 **v1.0 MVP shipped 2026-03-20**
 - 23,289 LOC TypeScript + 782 LOC Prisma
-- 8 phases completed (1, 2, 3, 3.1, 4, 10, 11, 12, 13, 14, 15, 16), 33 plans executed
+- 8 phases completed (1, 2, 3, 3.1, 4, 10, 11, 12, 13, 14, 15, 16, 17), 35 plans executed
 - NestJS backend + Next.js frontend monorepo
 - PostgreSQL (Prisma), MinIO media storage, BullMQ async processing
 - ffmpeg video transcoding for reels
+
+**Phase 17 complete (2026-03-26):**
+- app.module.ts restored to full Phase 13 state: validateEnv, AllExceptionsFilter, LoggerModule, HealthModule, RedisModule, ZodValidationPipe, ZodSerializerInterceptor, ThrottlerStorageRedisService
+- 3 DTO files restored from class-validator to createZodDto (auth, profile, checklist)
+- @ZodSerializerDto decorators restored on auth controller signup/login/me
+- Null-safe name handling (user.name || 'ban') applied
+- 238 unit tests pass, verification 10/10
 
 **Phase 16 complete (2026-03-26):**
 - Shared package dto/ renamed to schemas/ (7 files) with barrel imports updated
@@ -176,4 +183,4 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 | v2.0 Architecture milestone | Audit revealed 15+ production gaps; fix before adding features | — Pending |
 
 ---
-*Last updated: 2026-03-25 after Phase 13 completion*
+*Last updated: 2026-03-26 after Phase 17 completion*
