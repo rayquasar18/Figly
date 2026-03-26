@@ -39,7 +39,7 @@ export class AuthController {
   async signup(@Body() signupDto: SignupDto) {
     const user = await this.authService.signup(signupDto);
     // Send verification email
-    await this.authService.sendVerificationEmail(user.id, user.email, user.name);
+    await this.authService.sendVerificationEmail(user.id, user.email, user.name ?? '');
     return {
       message: 'Dang ky thanh cong. Vui long kiem tra email de xac minh.',
       user,
