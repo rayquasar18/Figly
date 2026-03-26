@@ -11,7 +11,7 @@ import * as argon2 from 'argon2';
 import * as crypto from 'crypto';
 import { PrismaService } from '../prisma/prisma.service';
 import { EmailService } from '../email/email.service';
-import { TOKEN_EXPIRY, RESERVED_USERNAMES } from '@figly/shared';
+import { TOKEN_EXPIRY } from '@figly/shared';
 import type { TokenPair } from '@figly/shared';
 
 @Injectable()
@@ -27,7 +27,7 @@ export class AuthService {
   // Signup & Login
   // ---------------------
 
-  async signup(dto: { email: string; password: string; name: string; username: string }) {
+  async signup(dto: { email: string; password: string }) {
     // Check email uniqueness
     const existing = await this.prisma.user.findUnique({
       where: { email: dto.email },
@@ -37,22 +37,17 @@ export class AuthService {
       throw new ConflictException('Email da duoc su dung');
     }
 
-    // Check reserved usernames
-    if ((RESERVED_USERNAMES as readonly string[]).includes(dto.username.toLowerCase())) {
-      throw new BadRequestException('Ten nguoi dung nay da duoc dat truoc');
-    }
-
     // Hash password with Argon2
     const passwordHash = await argon2.hash(dto.password);
 
-    // Create user with username
+    // Create user with null name/username (set later in complete-profile)
     try {
       const user = await this.prisma.user.create({
         data: {
           email: dto.email,
           passwordHash,
-          name: dto.name,
-          username: dto.username,
+          name: null,
+          username: null,
           emailVerified: false,
         },
         select: {
@@ -69,8 +64,10 @@ export class AuthService {
       return user;
     } catch (error: any) {
       // Handle Prisma unique constraint violation (P2002)
-      if (error.code === 'P2002' && error.meta?.target?.includes('username')) {
-        throw new ConflictException('Ten nguoi dung da duoc su dung');
+      if (error.code === 'P2002') {
+        if (error.meta?.target?.includes('email')) {
+          throw new ConflictException('Email da duoc su dung');
+        }
       }
       throw error;
     }
@@ -314,7 +311,7 @@ export class AuthService {
       },
     });
 
-    await this.emailService.sendPasswordResetEmail(user.email, user.name, rawToken);
+    await this.emailService.sendPasswordResetEmail(user.email, user.name || 'ban', rawToken);
   }
 
   async resetPassword(rawToken: string, newPassword: string): Promise<void> {

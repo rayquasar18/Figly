@@ -66,15 +66,15 @@ describe('AuthService', () => {
   });
 
   describe('signup', () => {
-    const signupDto = { email: 'test@test.com', password: 'Test1234', name: 'Test User', username: 'testuser' };
+    const signupDto = { email: 'test@test.com', password: 'Test1234' };
 
     it('should create user with hashed password and emailVerified=false', async () => {
       mockPrisma.user.findUnique.mockResolvedValue(null);
       mockPrisma.user.create.mockResolvedValue({
         id: 'user-1',
         email: signupDto.email,
-        name: signupDto.name,
-        username: signupDto.username,
+        name: null,
+        username: null,
         emailVerified: false,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -89,7 +89,7 @@ describe('AuthService', () => {
         expect.objectContaining({
           data: expect.objectContaining({
             email: signupDto.email,
-            name: signupDto.name,
+            name: null,
             emailVerified: false,
           }),
         }),
