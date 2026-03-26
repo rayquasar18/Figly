@@ -52,13 +52,15 @@ Exceptions: 44px touch targets for mobile bottom navigation (existing pattern fr
 | Role    | Size | Weight         | Line Height |
 | ------- | ---- | -------------- | ----------- |
 | Body    | 14px | 400 (regular)  | 1.5         |
-| Label   | 14px | 500 (medium)   | 1.4         |
+| Label   | 14px | 400 (regular)  | 1.4         |
 | Heading | 20px | 600 (semibold) | 1.2         |
-| Display | 28px | 700 (bold)     | 1.2         |
+| Display | 28px | 600 (semibold) | 1.2         |
 
 Font family: `Inter` via `next/font/google` with `latin` subset. Applied via `inter.className` on `<body>`.
 
-**Source:** Pre-populated from existing layout.tsx and shadcn default typography. No changes in this phase.
+**Note on weight consolidation:** The design contract declares exactly 2 font weights (400, 600) for consistency. The existing codebase may use additional weights (500 medium, 700 bold) inherited from prior phases -- these are implementation-inherited and not part of the design contract going forward. New or restored code in this phase should use only 400 (regular) and 600 (semibold).
+
+**Source:** Pre-populated from existing layout.tsx and shadcn default typography. Weight consolidation applied per checker rules.
 
 ---
 
