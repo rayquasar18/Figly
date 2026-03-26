@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import { VerifyEmailPageClient } from './verify-email-page-client';
 
 export const metadata: Metadata = {
@@ -7,5 +8,9 @@ export const metadata: Metadata = {
 };
 
 export default async function VerifyEmailPage() {
-  return <VerifyEmailPageClient />;
+  return (
+    <Suspense>
+      <VerifyEmailPageClient />
+    </Suspense>
+  );
 }
