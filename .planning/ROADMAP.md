@@ -159,7 +159,11 @@
 3. auth.controller.ts has @ZodSerializerDto decorators on signup/login/me endpoints
 4. Backend starts without errors (`pnpm --filter @figly/backend start:dev`)
 5. All existing backend tests pass (no new failures)
-Plans:
+   **Plans:** 2 plans
+   Plans:
+
+- [ ] 17-01-PLAN.md — Restore app.module.ts with full Phase 13 infrastructure wiring
+- [ ] 17-02-PLAN.md — Restore 3 DTOs to createZodDto, add @ZodSerializerDto to auth controller, fix tests
 
 ### Phase 18: Frontend Regression Restore
 
@@ -174,25 +178,25 @@ Plans:
 3. All imports resolve correctly (zero TS2307 errors)
 4. button.tsx and input.tsx use React 19 ref-as-prop (zero forwardRef)
 5. Frontend builds without TypeScript errors (`pnpm --filter @figly/frontend build`)
-Plans:
+   Plans:
 
 ## Progress
 
-| Phase                      | Milestone | Plans Complete | Status            | Completed  |
-| -------------------------- | --------- | -------------- | ----------------- | ---------- |
-| 1. Foundation & Auth       | v1.0      | 3/3            | Complete          | 2026-03-13 |
-| 2. Profiles & Social Graph | v1.0      | 4/4            | Complete          | 2026-03-13 |
-| 3. Content & Feed          | v1.0      | 4/4            | Complete          | 2026-03-14 |
-| 3.1 Public Viewing Mode    | v1.0      | 2/2            | Complete          | 2026-03-14 |
-| 4. Collection System       | v1.0      | 6/6            | Complete          | 2026-03-15 |
-| 10. Reels                  | v1.0      | 2/2            | Complete          | 2026-03-20 |
-| 11. Bugfixes & UX Flow     | v2.0      | 3/3            | Complete          | 2026-03-24 |
-| 12. Framework Upgrades     | v2.0      | 3/3            | Complete          | 2026-03-24 |
-| 13. Backend Hardening      | v2.0      | 4/4            | Complete          | 2026-03-24 |
-| 14. Frontend Restructure   | v2.0      | 2/4            | Complete          | 2026-03-25 |
-| 15. DevOps & Tooling       | v2.0      | 2/3            | Complete          | 2026-03-25 |
-| 16. Shared Package Cleanup | v2.0      | 1/2            | Complete    | 2026-03-26 |
-| 17. Backend Regression Restore | v2.0  | 0/0            | Not Started | —          |
-| 18. Frontend Regression Restore | v2.0 | 0/0            | Not Started | —          |
+| Phase                           | Milestone | Plans Complete | Status            | Completed  |
+| ------------------------------- | --------- | -------------- | ----------------- | ---------- |
+| 1. Foundation & Auth            | v1.0      | 3/3            | Complete          | 2026-03-13 |
+| 2. Profiles & Social Graph      | v1.0      | 4/4            | Complete          | 2026-03-13 |
+| 3. Content & Feed               | v1.0      | 4/4            | Complete          | 2026-03-14 |
+| 3.1 Public Viewing Mode         | v1.0      | 2/2            | Complete          | 2026-03-14 |
+| 4. Collection System            | v1.0      | 6/6            | Complete          | 2026-03-15 |
+| 10. Reels                       | v1.0      | 2/2            | Complete          | 2026-03-20 |
+| 11. Bugfixes & UX Flow          | v2.0      | 3/3            | Complete          | 2026-03-24 |
+| 12. Framework Upgrades          | v2.0      | 3/3            | Complete          | 2026-03-24 |
+| 13. Backend Hardening           | v2.0      | 4/4            | Complete          | 2026-03-24 |
+| 14. Frontend Restructure        | v2.0      | 2/4            | Complete          | 2026-03-25 |
+| 15. DevOps & Tooling            | v2.0      | 2/3            | Complete          | 2026-03-25 |
+| 16. Shared Package Cleanup      | v2.0      | 1/2            | Complete          | 2026-03-26 |
+| 17. Backend Regression Restore  | v2.0      | 0/2            | Planning Complete | —          |
+| 18. Frontend Regression Restore | v2.0      | 0/0            | Not Started       | —          |
 
 **Full v1.0 archive:** `.planning/milestones/v1.0-ROADMAP.md`
