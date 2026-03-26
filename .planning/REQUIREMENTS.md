@@ -17,26 +17,26 @@ Requirements for v2.0 Architecture & Production Hardening. Each maps to roadmap 
 
 ### Framework Upgrades
 
-- [x] **FRMW-01**: React upgraded from v18 to v19 with all breaking changes resolved
-- [x] **FRMW-02**: Next.js upgraded from v14 to v16 with async API migrations complete
+- [ ] **FRMW-01**: React upgraded from v18 to v19 with all breaking changes resolved
+- [ ] **FRMW-02**: Next.js upgraded from v14 to v16 with async API migrations complete
 - [x] **FRMW-03**: NestJS upgraded from v10 to v11 with all dependencies aligned
 
 ### Backend Hardening
 
-- [x] **BACK-01**: Environment variables validated at startup using Zod schemas (no fallback defaults for secrets)
-- [x] **BACK-02**: Global exception filter catches all unhandled errors and returns safe responses (no Prisma/internal details leaked)
-- [x] **BACK-03**: Structured logging with Pino replaces basic NestJS Logger across all modules
-- [x] **BACK-04**: Health check endpoint reports database, Redis, and MinIO connectivity
+- [ ] **BACK-01**: Environment variables validated at startup using Zod schemas (no fallback defaults for secrets)
+- [ ] **BACK-02**: Global exception filter catches all unhandled errors and returns safe responses (no Prisma/internal details leaked)
+- [ ] **BACK-03**: Structured logging with Pino replaces basic NestJS Logger across all modules
+- [ ] **BACK-04**: Health check endpoint reports database, Redis, and MinIO connectivity
 - [x] **BACK-05**: Swagger/OpenAPI documentation auto-generated from all API endpoints
-- [x] **BACK-06**: DTO validation unified with nestjs-zod (class-validator duplication removed)
-- [x] **BACK-07**: Response serialization layer strips internal fields from API responses
-- [x] **BACK-08**: Redis-backed rate limiter replaces in-process memory rate limiter
+- [ ] **BACK-06**: DTO validation unified with nestjs-zod (class-validator duplication removed)
+- [ ] **BACK-07**: Response serialization layer strips internal fields from API responses
+- [ ] **BACK-08**: Redis-backed rate limiter replaces in-process memory rate limiter
 
 ### Frontend Restructure
 
-- [x] **FRNT-01**: Frontend directory restructured to features/ pattern (domain-grouped components, hooks, stores)
+- [ ] **FRNT-01**: Frontend directory restructured to features/ pattern (domain-grouped components, hooks, stores)
 - [x] **FRNT-02**: Next.js middleware handles auth redirects (no client-side flash of content)
-- [x] **FRNT-03**: Public routes (feed, profiles, posts) rendered as Server Components with generateMetadata for SEO
+- [ ] **FRNT-03**: Public routes (feed, profiles, posts) rendered as Server Components with generateMetadata for SEO
 - [x] **FRNT-04**: ThemeProvider configured with dark mode support (system preference + manual toggle)
 
 ### DevOps & Tooling
@@ -108,20 +108,20 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BUGF-03 | Phase 11 | Complete |
 | BUGF-04 | Phase 11 | Complete |
 | BUGF-05 | Phase 11 | Complete |
-| FRMW-01 | Phase 12 | Complete |
-| FRMW-02 | Phase 12 | Complete |
+| FRMW-01 | Phase 18 | Pending |
+| FRMW-02 | Phase 18 | Pending |
 | FRMW-03 | Phase 12 | Complete |
-| BACK-01 | Phase 13 | Complete |
-| BACK-02 | Phase 13 | Complete |
-| BACK-03 | Phase 13 | Complete |
-| BACK-04 | Phase 13 | Complete |
+| BACK-01 | Phase 17 | Pending |
+| BACK-02 | Phase 17 | Pending |
+| BACK-03 | Phase 17 | Pending |
+| BACK-04 | Phase 17 | Pending |
 | BACK-05 | Phase 13 | Complete |
-| BACK-06 | Phase 13 | Complete |
-| BACK-07 | Phase 13 | Complete |
-| BACK-08 | Phase 13 | Complete |
-| FRNT-01 | Phase 14 | Complete |
+| BACK-06 | Phase 17 | Pending |
+| BACK-07 | Phase 17 | Pending |
+| BACK-08 | Phase 17 | Pending |
+| FRNT-01 | Phase 18 | Pending |
 | FRNT-02 | Phase 14 | Complete |
-| FRNT-03 | Phase 14 | Complete |
+| FRNT-03 | Phase 18 | Pending |
 | FRNT-04 | Phase 14 | Complete |
 | DEVP-01 | Phase 15 | Complete |
 | DEVP-02 | Phase 15 | Complete |

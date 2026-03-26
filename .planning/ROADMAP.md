@@ -3,7 +3,7 @@
 ## Milestones
 
 - ✅ **v1.0 MVP** — Phases 1-4, 3.1, 10 (shipped 2026-03-20)
-- 🚧 **v2.0 Architecture & Production Hardening** — Phases 11-16 (in progress)
+- 🚧 **v2.0 Architecture & Production Hardening** — Phases 11-18 (in progress)
 
 ## Phases
 
@@ -31,6 +31,8 @@
 - [x] **Phase 14: Frontend Restructure** - Reorganize to features/ pattern, add auth middleware, SSR/SEO for public routes, dark mode (completed 2026-03-25)
 - [x] **Phase 15: DevOps & Tooling** - ESLint/Prettier/Husky, CI/CD pipeline, Docker dual-container split (completed 2026-03-25)
 - [x] **Phase 16: Shared Package Cleanup** - Rename dto/ to schemas/, remove dist/ from git tracking (completed 2026-03-26)
+- [ ] **Phase 17: Backend Regression Restore** - Restore app.module.ts wiring, DTOs, and controller decorators lost in Phase 15-01 merge (gap closure)
+- [ ] **Phase 18: Frontend Regression Restore** - Restore 17 Server Component pages, fix broken imports, remove forwardRef from UI components (gap closure)
 
 ## Phase Details
 
@@ -144,6 +146,36 @@
 - [x] 16-01-PLAN.md — Rename dto/ to schemas/ with updated barrel imports and reel export fix
 - [ ] 16-02-PLAN.md — Remove dist/ from git tracking, update gitignore and package.json entry points
 
+### Phase 17: Backend Regression Restore
+
+**Goal**: Backend starts correctly with all Phase 13 infrastructure wired — env validation, exception filter, logging, health checks, Zod DTOs, response serialization, Redis rate limiter
+**Depends on**: Phase 16 (shared package schemas must be in place for DTO imports)
+**Requirements**: BACK-01, BACK-02, BACK-03, BACK-04, BACK-06, BACK-07, BACK-08
+**Gap Closure**: Restores app.module.ts, 3 DTO files, and controller decorators regressed by Phase 15-01 worktree merge
+**Success Criteria** (what must be TRUE):
+
+1. app.module.ts imports LoggerModule, registers AllExceptionsFilter, HealthModule, RedisModule, ZodValidationPipe, ThrottlerStorageRedisService, and validateEnv
+2. All 7 backend DTO files use createZodDto (zero class-validator imports)
+3. auth.controller.ts has @ZodSerializerDto decorators on signup/login/me endpoints
+4. Backend starts without errors (`pnpm --filter @figly/backend start:dev`)
+5. All existing backend tests pass (no new failures)
+Plans:
+
+### Phase 18: Frontend Regression Restore
+
+**Goal**: Frontend builds cleanly with all pages as Server Components, correct imports, and React 19 patterns
+**Depends on**: Phase 17 (backend must be functional for frontend API calls)
+**Requirements**: FRMW-01, FRMW-02, FRNT-01, FRNT-03
+**Gap Closure**: Restores 17 page.tsx files, fixes 6 feature component imports, removes forwardRef from 2 UI components
+**Success Criteria** (what must be TRUE):
+
+1. All 21 page.tsx files are Server Components (zero 'use client' in page.tsx files)
+2. All page.tsx files have metadata or generateMetadata exports
+3. All imports resolve correctly (zero TS2307 errors)
+4. button.tsx and input.tsx use React 19 ref-as-prop (zero forwardRef)
+5. Frontend builds without TypeScript errors (`pnpm --filter @figly/frontend build`)
+Plans:
+
 ## Progress
 
 | Phase                      | Milestone | Plans Complete | Status            | Completed  |
@@ -160,5 +192,7 @@
 | 14. Frontend Restructure   | v2.0      | 2/4            | Complete          | 2026-03-25 |
 | 15. DevOps & Tooling       | v2.0      | 2/3            | Complete          | 2026-03-25 |
 | 16. Shared Package Cleanup | v2.0      | 1/2            | Complete    | 2026-03-26 |
+| 17. Backend Regression Restore | v2.0  | 0/0            | Not Started | —          |
+| 18. Frontend Regression Restore | v2.0 | 0/0            | Not Started | —          |
 
 **Full v1.0 archive:** `.planning/milestones/v1.0-ROADMAP.md`
