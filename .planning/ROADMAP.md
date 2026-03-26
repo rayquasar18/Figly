@@ -30,7 +30,7 @@
 - [x] **Phase 13: Backend Hardening** - Add env validation, exception filter, structured logging, health checks, Swagger, DTO unification, response serialization, Redis rate limiter (completed 2026-03-24)
 - [x] **Phase 14: Frontend Restructure** - Reorganize to features/ pattern, add auth middleware, SSR/SEO for public routes, dark mode (completed 2026-03-25)
 - [x] **Phase 15: DevOps & Tooling** - ESLint/Prettier/Husky, CI/CD pipeline, Docker dual-container split (completed 2026-03-25)
-- [ ] **Phase 16: Shared Package Cleanup** - Rename dto/ to schemas/, remove dist/ from git tracking
+- [x] **Phase 16: Shared Package Cleanup** - Rename dto/ to schemas/, remove dist/ from git tracking (completed 2026-03-26)
 
 ## Phase Details
 
@@ -138,7 +138,7 @@
 
 1. Shared package uses schemas/ directory (not dto/) with all imports across frontend and backend updated and working
 2. dist/ directory is in .gitignore and absent from the repository — shared package is consumed as TypeScript source, not pre-built artifacts
-   **Plans:** 1/2 plans complete
+   **Plans:** 2/2 plans complete
    Plans:
 
 - [x] 16-01-PLAN.md — Rename dto/ to schemas/ with updated barrel imports and reel export fix
@@ -159,6 +159,6 @@
 | 13. Backend Hardening      | v2.0      | 4/4            | Complete          | 2026-03-24 |
 | 14. Frontend Restructure   | v2.0      | 2/4            | Complete          | 2026-03-25 |
 | 15. DevOps & Tooling       | v2.0      | 2/3            | Complete          | 2026-03-25 |
-| 16. Shared Package Cleanup | v2.0      | 1/2            | In Progress       | -          |
+| 16. Shared Package Cleanup | v2.0      | 1/2            | Complete    | 2026-03-26 |
 
 **Full v1.0 archive:** `.planning/milestones/v1.0-ROADMAP.md`
