@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 04-06-PLAN.md
-last_updated: "2026-03-15T00:28:20.246Z"
-last_activity: 2026-03-15 -- Completed 04-06 Item Picker and Post-Item Linking Frontend
+stopped_at: Completed 17-02-PLAN.md
+last_updated: "2026-03-26T03:29:45Z"
+last_activity: 2026-03-26 -- Completed 17-02 DTO Regression Restore
 progress:
   total_phases: 11
   completed_phases: 5
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-13)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 4 (Collection System -- COMPLETE, 6/6 plans)
+**Current focus:** Phase 17 (Backend Regression Restore -- Plan 02 complete)
 
 ## Current Position
 
-Phase: 5 of 10
-Plan: 0 of ? in current phase
-Status: Phase 4 Complete
-Last activity: 2026-03-15 -- Completed 04-06 Item Picker and Post-Item Linking Frontend
+Phase: 17 of 18
+Plan: 2 of ? in current phase
+Status: Plan 17-02 Complete
+Last activity: 2026-03-26 -- Completed 17-02 DTO Regression Restore
 
 Progress: [██████████] 100% (Phase 4: 6/6 plans)
 
@@ -66,6 +66,7 @@ Progress: [██████████] 100% (Phase 4: 6/6 plans)
 | Phase 04 P04 | 6 | 2 tasks | 12 files |
 | Phase 04 P05 | 9 | 2 tasks | 18 files |
 | Phase 04 P06 | 5 | 2 tasks | 9 files |
+| Phase 17 P02 | 7 | 2 tasks | 15 files |
 
 ## Accumulated Context
 
@@ -143,6 +144,10 @@ Recent decisions affecting current work:
 - [Phase 04]: ItemPicker onSelect returns both IDs and LinkedItemResponse for store hydration without extra API calls
 - [Phase 04]: PostCard shows max 3 linked item badges with overflow count for compact feed display
 - [Phase 04]: Checklist detail replaced manual ID input with ItemPicker in single-select mode
+- [17-02]: Null-safe name pattern: user.name || 'ban' before email services
+- [17-02]: Removed class-validator/class-transformer, replaced with nestjs-zod globally
+- [17-02]: ZodValidationPipe replaces ValidationPipe in main.ts
+- [17-02]: User.name nullable in Prisma schema (Phase 11 regression restored)
 
 ### Pending Todos
 
@@ -158,6 +163,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T00:19:51Z
-Stopped at: Completed 04-06-PLAN.md
+Last session: 2026-03-26T03:29:45Z
+Stopped at: Completed 17-02-PLAN.md
 Resume file: None
