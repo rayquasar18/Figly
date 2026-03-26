@@ -33,12 +33,12 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 **v2.0 — Architecture & Production Hardening:**
 - [ ] Tai cau truc thu muc frontend/backend theo chuan best practice
 - [x] Cap nhat framework len phien ban moi nhat (React 19, Next.js 16, NestJS 11) — Validated in Phase 12
-- [ ] Don file thua, tai cau truc shared package
+- [x] Don file thua, tai cau truc shared package — Validated in Phase 16
 - [x] Env validation, global exception filter, structured logging — Validated in Phase 13
 - [ ] Next.js middleware, SSR/SEO cho trang cong khai
 - [x] Swagger/OpenAPI — Validated in Phase 13
-- [ ] ESLint/Prettier/Husky, CI/CD
-- [ ] Docker split 2 container
+- [x] ESLint/Prettier/Husky, CI/CD — Validated in Phase 15
+- [x] Docker split 2 container — Validated in Phase 15
 - [x] Redis-backed rate limiter — Validated in Phase 13
 - [x] Thong nhat DTO validation, response serialization, health check — Validated in Phase 13
 - [ ] ThemeProvider dark mode
@@ -84,10 +84,17 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 
 **v1.0 MVP shipped 2026-03-20**
 - 23,289 LOC TypeScript + 782 LOC Prisma
-- 8 phases completed (1, 2, 3, 3.1, 4, 10, 11, 12, 13, 14, 15), 31 plans executed
+- 8 phases completed (1, 2, 3, 3.1, 4, 10, 11, 12, 13, 14, 15, 16), 33 plans executed
 - NestJS backend + Next.js frontend monorepo
 - PostgreSQL (Prisma), MinIO media storage, BullMQ async processing
 - ffmpeg video transcoding for reels
+
+**Phase 16 complete (2026-03-26):**
+- Shared package dto/ renamed to schemas/ (7 files) with barrel imports updated
+- createReelSchema, CreateReelInput, REEL_LIMITS missing barrel exports fixed
+- 52 dist/ build artifacts removed from git tracking
+- .gitignore configured to prevent re-adding dist/
+- D-08 (main field change) deferred — Node.js cannot require .ts at runtime in Docker
 
 **Phase 15 complete (2026-03-25):**
 - ESLint 9 flat config + Prettier enforced across all 3 workspaces (zero errors)
@@ -136,7 +143,7 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 - ~~Rate limiter dung bo nho trong tien trinh (khong Redis)~~ Fixed Phase 13
 - ThemeProvider thieu (dark mode la ma chet)
 - Thu muc frontend/backend chua theo chuan best practice
-- Shared package can tai cau truc cho doc lap hon
+- ~~Shared package can tai cau truc cho doc lap hon~~ Fixed Phase 16
 
 ## Constraints
 
