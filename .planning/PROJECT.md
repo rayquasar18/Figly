@@ -31,11 +31,11 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 ### Active
 
 **v2.0 — Architecture & Production Hardening:**
-- [ ] Tai cau truc thu muc frontend/backend theo chuan best practice
-- [x] Cap nhat framework len phien ban moi nhat (React 19, Next.js 16, NestJS 11) — Validated in Phase 12
+- [x] Tai cau truc thu muc frontend/backend theo chuan best practice — Validated in Phase 18
+- [x] Cap nhat framework len phien ban moi nhat (React 19, Next.js 16, NestJS 11) — Validated in Phase 12, 18
 - [x] Don file thua, tai cau truc shared package — Validated in Phase 16
 - [x] Env validation, global exception filter, structured logging — Validated in Phase 13
-- [ ] Next.js middleware, SSR/SEO cho trang cong khai
+- [x] Next.js middleware, SSR/SEO cho trang cong khai — Validated in Phase 18
 - [x] Swagger/OpenAPI — Validated in Phase 13
 - [x] ESLint/Prettier/Husky, CI/CD — Validated in Phase 15
 - [x] Docker split 2 container — Validated in Phase 15
