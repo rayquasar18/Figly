@@ -31,7 +31,7 @@
 - [x] **Phase 14: Frontend Restructure** - Reorganize to features/ pattern, add auth middleware, SSR/SEO for public routes, dark mode (completed 2026-03-25)
 - [x] **Phase 15: DevOps & Tooling** - ESLint/Prettier/Husky, CI/CD pipeline, Docker dual-container split (completed 2026-03-25)
 - [x] **Phase 16: Shared Package Cleanup** - Rename dto/ to schemas/, remove dist/ from git tracking (completed 2026-03-26)
-- [ ] **Phase 17: Backend Regression Restore** - Restore app.module.ts wiring, DTOs, and controller decorators lost in Phase 15-01 merge (gap closure)
+- [x] **Phase 17: Backend Regression Restore** - Restore app.module.ts wiring, DTOs, and controller decorators lost in Phase 15-01 merge (gap closure) (completed 2026-03-26)
 - [ ] **Phase 18: Frontend Regression Restore** - Restore 17 Server Component pages, fix broken imports, remove forwardRef from UI components (gap closure)
 
 ## Phase Details
@@ -159,7 +159,7 @@
 3. auth.controller.ts has @ZodSerializerDto decorators on signup/login/me endpoints
 4. Backend starts without errors (`pnpm --filter @figly/backend start:dev`)
 5. All existing backend tests pass (no new failures)
-   **Plans:** 2 plans
+   **Plans:** 2/2 plans complete
    Plans:
 
 - [x] 17-01-PLAN.md — Restore app.module.ts with full Phase 13 infrastructure wiring
@@ -196,7 +196,7 @@
 | 14. Frontend Restructure        | v2.0      | 2/4            | Complete          | 2026-03-25 |
 | 15. DevOps & Tooling            | v2.0      | 2/3            | Complete          | 2026-03-25 |
 | 16. Shared Package Cleanup      | v2.0      | 1/2            | Complete          | 2026-03-26 |
-| 17. Backend Regression Restore  | v2.0      | 1/2            | In Progress       | —          |
+| 17. Backend Regression Restore  | v2.0      | 1/2            | Complete    | 2026-03-26 |
 | 18. Frontend Regression Restore | v2.0      | 0/0            | Not Started       | —          |
 
 **Full v1.0 archive:** `.planning/milestones/v1.0-ROADMAP.md`
