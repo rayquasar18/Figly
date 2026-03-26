@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
-import { useAuthStore } from '@/stores/auth-store';
+import { useAuthStore } from '../stores/auth-store';
 import type { PublicUser } from '@figly/shared';
 
 // GET /auth/me - check current session

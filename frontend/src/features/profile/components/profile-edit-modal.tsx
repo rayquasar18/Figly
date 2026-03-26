@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { usernameSchema, bioSchema, USERNAME_RULES, PROFILE_LIMITS } from '@figly/shared';
 import type { ProfileResponse } from '@figly/shared';
-import { useUpdateProfile, useCheckUsername } from '@/hooks/queries/profile-queries';
+import { useUpdateProfile, useCheckUsername } from '../hooks/profile-queries';
 import { apiClient } from '@/lib/api-client';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';

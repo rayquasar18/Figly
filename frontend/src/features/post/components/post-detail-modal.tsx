@@ -8,12 +8,12 @@ import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { usePostDetail } from '@/hooks/queries/post-queries';
+import { usePostDetail } from '../hooks/post-queries';
 import { PostCarousel } from './post-carousel';
 import { PostActions } from './post-actions';
 import { PostMenu } from './post-menu';
 import { CaptionDisplay } from './caption-display';
-import { CommentList } from '@/components/comment/comment-list';
+import { CommentList } from '@/features/comment';
 
 interface PostDetailModalProps {
   postId: string | null;
