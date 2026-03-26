@@ -178,10 +178,10 @@
 3. All imports resolve correctly (zero TS2307 errors)
 4. All 19 UI components use React 19 ref-as-prop (zero forwardRef)
 5. Frontend builds without TypeScript errors (`pnpm --filter @figly/frontend build`)
-   **Plans:** 4 plans
+   **Plans:** 1/4 plans executed
    Plans:
 
-- [ ] 18-01-PLAN.md — Fix 10 stale imports in 6 features/ files and signup mutation type
+- [x] 18-01-PLAN.md — Fix 10 stale imports in 6 features/ files and signup mutation type
 - [ ] 18-02-PLAN.md — Remove forwardRef from all 19 shadcn/ui components (React 19 ref-as-prop)
 - [ ] 18-03-PLAN.md — Restore 17 page.tsx files as Server Components with metadata exports
 - [ ] 18-04-PLAN.md — Full build verification and Docker rebuild
@@ -203,6 +203,6 @@
 | 15. DevOps & Tooling            | v2.0      | 2/3            | Complete          | 2026-03-25 |
 | 16. Shared Package Cleanup      | v2.0      | 1/2            | Complete          | 2026-03-26 |
 | 17. Backend Regression Restore  | v2.0      | 1/2            | Complete          | 2026-03-26 |
-| 18. Frontend Regression Restore | v2.0      | 0/4            | Planning Complete | —          |
+| 18. Frontend Regression Restore | v2.0      | 1/4 | In Progress|  |
 
 **Full v1.0 archive:** `.planning/milestones/v1.0-ROADMAP.md`
