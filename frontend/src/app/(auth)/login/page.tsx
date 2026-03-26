@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { LoginForm, SocialLoginButtons } from '@/features/auth';
+import { LoginForm } from '@/components/auth/login-form';
+import { SocialLoginButtons } from '@/components/auth/social-login-buttons';
 import {
   Card,
   CardContent,
@@ -12,10 +13,10 @@ import {
 
 export const metadata: Metadata = {
   title: 'Dang nhap | Figly',
-  description: 'Dang nhap vao Figly de chia se va quan ly bo suu tap cua ban',
+  description: 'Dang nhap vao tai khoan Figly cua ban',
 };
 
-export default async function LoginPage() {
+export default function LoginPage() {
   return (
     <Card>
       <CardHeader className="text-center">

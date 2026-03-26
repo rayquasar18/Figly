@@ -1,6 +1,6 @@
 'use client';
 
-import { CompleteProfileForm } from '@/features/profile';
+import { CompleteProfileForm } from '@/components/profile/complete-profile-form';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 export function CompleteProfilePageClient() {

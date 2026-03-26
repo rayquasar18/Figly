@@ -1,62 +1,46 @@
-'use client';
+import type { Metadata } from 'next';
+import { fetchApi } from '@/lib/server-fetch';
+import ProfilePageClient from './profile-page-client';
 
-import { use, useState } from 'react';
-import { useProfile } from '@/hooks/queries/profile-queries';
-import { ProfileHeader } from '@/components/profile/profile-header';
-import { ProfilePostGrid } from '@/components/profile/profile-post-grid';
-import { ProfileSkeleton } from '@/components/profile/profile-skeleton';
-import { ProfileEditModal } from '@/components/profile/profile-edit-modal';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Grid3X3, Package } from 'lucide-react';
-import { CollectionShowcase } from '@/components/collection/collection-showcase';
+interface ProfileResponse {
+  id: string;
+  username: string;
+  displayName: string | null;
+  bio: string | null;
+  avatarUrl: string | null;
+}
 
-export default function ProfilePage({ params }: { params: Promise<{ username: string }> }) {
-  const { username } = use(params);
-  const { data: profile, isLoading, isError } = useProfile(username);
-  const [editModalOpen, setEditModalOpen] = useState(false);
+function toAbsoluteUrl(path: string | null | undefined): string | undefined {
+  if (!path) return undefined;
+  if (path.startsWith('http')) return path;
+  const base = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api';
+  return `${base.replace('/api', '')}${path}`;
+}
 
-  if (isLoading) {
-    return <ProfileSkeleton />;
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ username: string }>;
+}): Promise<Metadata> {
+  const { username } = await params;
+  try {
+    const profile = await fetchApi<ProfileResponse>(`/profiles/${username}`);
+    if (!profile) return { title: `${username} | Figly` };
+    return {
+      title: `${profile.displayName || profile.username} (@${profile.username}) | Figly`,
+      description: profile.bio || `Xem ho so cua ${profile.username} tren Figly`,
+      openGraph: {
+        title: `${profile.displayName || profile.username} | Figly`,
+        description: profile.bio || `Xem ho so cua ${profile.username} tren Figly`,
+        images: profile.avatarUrl ? [{ url: toAbsoluteUrl(profile.avatarUrl)! }] : [],
+      },
+    };
+  } catch {
+    return { title: `${username} | Figly` };
   }
+}
 
-  if (isError || !profile) {
-    return (
-      <div className="flex min-h-[50dvh] flex-col items-center justify-center text-center">
-        <h2 className="text-xl font-semibold">Nguoi dung khong ton tai</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Trang nay khong kha dung. Vui long kiem tra lai duong dan.
-        </p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="mx-auto w-full max-w-4xl p-4 md:p-6">
-      <ProfileHeader profile={profile} onEditClick={() => setEditModalOpen(true)} />
-
-      <Tabs defaultValue="posts" className="mt-6">
-        <TabsList className="w-full justify-center">
-          <TabsTrigger value="posts" className="flex items-center gap-1.5">
-            <Grid3X3 className="size-4" />
-            <span className="text-xs uppercase tracking-wide">Bai viet</span>
-          </TabsTrigger>
-          <TabsTrigger value="collection" className="flex items-center gap-1.5">
-            <Package className="size-4" />
-            <span className="text-xs uppercase tracking-wide">Bo suu tap</span>
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="posts" className="mt-2">
-          <ProfilePostGrid username={username} />
-        </TabsContent>
-        <TabsContent value="collection" className="mt-2">
-          <CollectionShowcase username={username} />
-        </TabsContent>
-      </Tabs>
-
-      {profile.isOwnProfile && (
-        <ProfileEditModal open={editModalOpen} onOpenChange={setEditModalOpen} profile={profile} />
-      )}
-    </div>
-  );
+export default async function ProfilePage({ params }: { params: Promise<{ username: string }> }) {
+  const { username } = await params;
+  return <ProfilePageClient username={username} />;
 }

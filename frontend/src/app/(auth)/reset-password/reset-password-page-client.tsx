@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useResetPasswordMutation } from '@/features/auth';
+import { useResetPasswordMutation } from '@/hooks/queries/auth-queries';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

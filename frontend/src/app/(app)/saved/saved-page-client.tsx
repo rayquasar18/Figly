@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { Loader2, Bookmark } from 'lucide-react';
-import { useSavedPosts, PostDetailModal } from '@/features/post';
+import { useSavedPosts } from '@/hooks/queries/post-queries';
+import { PostDetailModal } from '@/components/post/post-detail-modal';
 
 export function SavedPageClient() {
   const router = useRouter();
