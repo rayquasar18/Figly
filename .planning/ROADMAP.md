@@ -170,15 +170,21 @@
 **Goal**: Frontend builds cleanly with all pages as Server Components, correct imports, and React 19 patterns
 **Depends on**: Phase 17 (backend must be functional for frontend API calls)
 **Requirements**: FRMW-01, FRMW-02, FRNT-01, FRNT-03
-**Gap Closure**: Restores 17 page.tsx files, fixes 6 feature component imports, removes forwardRef from 2 UI components
+**Gap Closure**: Restores 17 page.tsx files, fixes 6 feature component imports, removes forwardRef from 19 UI components
 **Success Criteria** (what must be TRUE):
 
 1. All 21 page.tsx files are Server Components (zero 'use client' in page.tsx files)
 2. All page.tsx files have metadata or generateMetadata exports
 3. All imports resolve correctly (zero TS2307 errors)
-4. button.tsx and input.tsx use React 19 ref-as-prop (zero forwardRef)
+4. All 19 UI components use React 19 ref-as-prop (zero forwardRef)
 5. Frontend builds without TypeScript errors (`pnpm --filter @figly/frontend build`)
+   **Plans:** 4 plans
    Plans:
+
+- [ ] 18-01-PLAN.md — Fix 10 stale imports in 6 features/ files and signup mutation type
+- [ ] 18-02-PLAN.md — Remove forwardRef from all 19 shadcn/ui components (React 19 ref-as-prop)
+- [ ] 18-03-PLAN.md — Restore 17 page.tsx files as Server Components with metadata exports
+- [ ] 18-04-PLAN.md — Full build verification and Docker rebuild
 
 ## Progress
 
@@ -196,7 +202,7 @@
 | 14. Frontend Restructure        | v2.0      | 2/4            | Complete          | 2026-03-25 |
 | 15. DevOps & Tooling            | v2.0      | 2/3            | Complete          | 2026-03-25 |
 | 16. Shared Package Cleanup      | v2.0      | 1/2            | Complete          | 2026-03-26 |
-| 17. Backend Regression Restore  | v2.0      | 1/2            | Complete    | 2026-03-26 |
-| 18. Frontend Regression Restore | v2.0      | 0/0            | Not Started       | —          |
+| 17. Backend Regression Restore  | v2.0      | 1/2            | Complete          | 2026-03-26 |
+| 18. Frontend Regression Restore | v2.0      | 0/4            | Planning Complete | —          |
 
 **Full v1.0 archive:** `.planning/milestones/v1.0-ROADMAP.md`
