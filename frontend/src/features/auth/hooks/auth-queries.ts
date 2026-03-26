@@ -44,12 +44,7 @@ export function useLoginMutation() {
 // POST /auth/signup
 export function useSignupMutation() {
   return useMutation({
-    mutationFn: async (data: {
-      email: string;
-      password: string;
-      name: string;
-      username: string;
-    }) => {
+    mutationFn: async (data: { email: string; password: string }) => {
       const response = await apiClient.post('/auth/signup', data);
       return response.data;
     },
