@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { SignupForm } from '@/components/auth/signup-form';
+import { SignupForm } from '@/features/auth';
 import {
   Card,
   CardContent,

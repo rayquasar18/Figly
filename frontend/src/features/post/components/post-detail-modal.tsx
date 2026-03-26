@@ -14,6 +14,7 @@ import { PostActions } from './post-actions';
 import { PostMenu } from './post-menu';
 import { CaptionDisplay } from './caption-display';
 import { CommentList } from '@/features/comment';
+import type { LinkedItemResponse } from '@figly/shared';
 
 interface PostDetailModalProps {
   postId: string | null;
@@ -61,10 +62,10 @@ function PostDetailContent({ postId, onClose }: { postId: string; onClose: () =>
       <div className="flex w-full flex-col md:w-1/2">
         {/* Author header */}
         <div className="flex items-center gap-3 border-b px-4 py-3">
-          <Link href={`/${post.author.username}`}>
+          <Link href={`/${post.author.username ?? ''}`}>
             <Avatar className="size-8">
               {post.author.avatarUrl ? (
-                <AvatarImage src={post.author.avatarUrl} alt={post.author.username} />
+                <AvatarImage src={post.author.avatarUrl!} alt={post.author.username ?? ''} />
               ) : null}
               <AvatarFallback className="text-xs">
                 {post.author.displayName?.charAt(0)?.toUpperCase() || '?'}
@@ -72,7 +73,7 @@ function PostDetailContent({ postId, onClose }: { postId: string; onClose: () =>
             </Avatar>
           </Link>
           <Link
-            href={`/${post.author.username}`}
+            href={`/${post.author.username ?? ''}`}
             className="flex-1 text-sm font-semibold hover:underline"
           >
             {post.author.username}
@@ -85,14 +86,14 @@ function PostDetailContent({ postId, onClose }: { postId: string; onClose: () =>
           {/* Caption as first "comment" */}
           {post.caption && (
             <div className="border-b px-4 py-3">
-              <CaptionDisplay caption={post.caption} username={post.author.username} />
+              <CaptionDisplay caption={post.caption} username={post.author.username ?? ''} />
             </div>
           )}
 
           {/* Linked items */}
           {post.linkedItems && post.linkedItems.length > 0 && (
             <div className="flex flex-wrap gap-1.5 border-b px-4 py-2.5">
-              {post.linkedItems.map((item) => (
+              {post.linkedItems.map((item: LinkedItemResponse) => (
                 <Link key={item.id} href={`/item/${item.id}`}>
                   <Badge
                     variant="secondary"

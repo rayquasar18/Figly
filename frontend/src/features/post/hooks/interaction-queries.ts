@@ -15,43 +15,58 @@ function updatePostInQueries(
   updater: (post: PostResponse) => PostResponse,
 ) {
   // Update feed pages
-  queryClient.setQueriesData<InfinitePostData>({ queryKey: ['feed'] }, (old) => {
-    if (!old) return old;
-    return {
-      ...old,
-      pages: old.pages.map((page) => ({
-        ...page,
-        items: page.items.map((item) => (item.id === postId ? updater(item) : item)),
-      })),
-    };
-  });
+  queryClient.setQueriesData<InfinitePostData>(
+    { queryKey: ['feed'] },
+    (old: InfinitePostData | undefined) => {
+      if (!old) return old;
+      return {
+        ...old,
+        pages: old.pages.map((page) => ({
+          ...page,
+          items: page.items.map((item: PostResponse) =>
+            item.id === postId ? updater(item) : item,
+          ),
+        })),
+      };
+    },
+  );
 
   // Update userPosts pages
-  queryClient.setQueriesData<InfinitePostData>({ queryKey: ['userPosts'] }, (old) => {
-    if (!old) return old;
-    return {
-      ...old,
-      pages: old.pages.map((page) => ({
-        ...page,
-        items: page.items.map((item) => (item.id === postId ? updater(item) : item)),
-      })),
-    };
-  });
+  queryClient.setQueriesData<InfinitePostData>(
+    { queryKey: ['userPosts'] },
+    (old: InfinitePostData | undefined) => {
+      if (!old) return old;
+      return {
+        ...old,
+        pages: old.pages.map((page) => ({
+          ...page,
+          items: page.items.map((item: PostResponse) =>
+            item.id === postId ? updater(item) : item,
+          ),
+        })),
+      };
+    },
+  );
 
   // Update savedPosts pages
-  queryClient.setQueriesData<InfinitePostData>({ queryKey: ['savedPosts'] }, (old) => {
-    if (!old) return old;
-    return {
-      ...old,
-      pages: old.pages.map((page) => ({
-        ...page,
-        items: page.items.map((item) => (item.id === postId ? updater(item) : item)),
-      })),
-    };
-  });
+  queryClient.setQueriesData<InfinitePostData>(
+    { queryKey: ['savedPosts'] },
+    (old: InfinitePostData | undefined) => {
+      if (!old) return old;
+      return {
+        ...old,
+        pages: old.pages.map((page) => ({
+          ...page,
+          items: page.items.map((item: PostResponse) =>
+            item.id === postId ? updater(item) : item,
+          ),
+        })),
+      };
+    },
+  );
 
   // Update single post detail
-  queryClient.setQueryData<PostResponse>(['post', postId], (old) => {
+  queryClient.setQueryData<PostResponse>(['post', postId], (old: PostResponse | undefined) => {
     if (!old) return old;
     return updater(old);
   });

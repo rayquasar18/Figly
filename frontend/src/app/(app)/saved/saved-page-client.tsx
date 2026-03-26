@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { Loader2, Bookmark } from 'lucide-react';
-import { useSavedPosts } from '@/hooks/queries/post-queries';
-import { PostDetailModal } from '@/components/post/post-detail-modal';
+import { useSavedPosts, PostDetailModal } from '@/features/post';
+import type { PostResponse, PaginatedResponse } from '@figly/shared';
 
 export function SavedPageClient() {
   const router = useRouter();
@@ -41,7 +41,7 @@ export function SavedPageClient() {
     [router],
   );
 
-  const items = data?.pages.flatMap((page) => page.items) ?? [];
+  const items = data?.pages.flatMap((page: PaginatedResponse<PostResponse>) => page.items) ?? [];
 
   return (
     <div className="mx-auto max-w-[935px] pb-16">
@@ -67,7 +67,7 @@ export function SavedPageClient() {
       ) : (
         <>
           <div className="grid grid-cols-3 gap-0.5 md:gap-1">
-            {items.map((post) => (
+            {items.map((post: PostResponse) => (
               <button
                 key={post.id}
                 onClick={() => handlePostClick(post.id)}

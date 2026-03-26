@@ -30,7 +30,7 @@ const editProfileSchema = z.object({
     .min(1, { message: 'Ten hien thi khong duoc de trong' })
     .max(50, { message: 'Ten hien thi khong duoc vuot qua 50 ky tu' }),
   username: usernameSchema,
-  bio: bioSchema.or(z.literal('')).transform((val) => val || ''),
+  bio: bioSchema.or(z.literal('')).transform((val: string) => val || ''),
   avatarId: z.string().optional(),
 });
 
@@ -131,10 +131,10 @@ export function ProfileEditModal({ open, onOpenChange, profile }: ProfileEditMod
   async function onSubmit(data: EditProfileForm) {
     try {
       await updateProfile.mutateAsync({
-        displayName: data.displayName,
-        username: data.username,
-        bio: data.bio || null,
-        avatarId: data.avatarId,
+        displayName: data.displayName as string,
+        username: data.username as string,
+        bio: (data.bio as string) || null,
+        avatarId: data.avatarId as string | undefined,
       });
       toast.success('Cap nhat thanh cong');
       onOpenChange(false);

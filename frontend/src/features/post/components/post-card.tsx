@@ -14,7 +14,7 @@ import { PostActions } from './post-actions';
 import { CaptionDisplay } from './caption-display';
 import { useAuthStore } from '@/features/auth';
 import { useLikeMutation } from '../hooks/interaction-queries';
-import type { PostResponse } from '@figly/shared';
+import type { PostResponse, LinkedItemResponse } from '@figly/shared';
 
 interface PostCardProps {
   post: PostResponse;
@@ -66,10 +66,10 @@ export function PostCard({ post, onOpenDetail }: PostCardProps) {
     <article className="border-b pb-4">
       {/* Author header */}
       <div className="flex items-center gap-3 px-3 py-2">
-        <Link href={`/${post.author.username}`}>
+        <Link href={`/${post.author.username ?? ''}`}>
           <Avatar className="size-8">
             {post.author.avatarUrl ? (
-              <AvatarImage src={post.author.avatarUrl} alt={post.author.username} />
+              <AvatarImage src={post.author.avatarUrl!} alt={post.author.username ?? ''} />
             ) : null}
             <AvatarFallback className="text-xs">
               {post.author.displayName?.charAt(0)?.toUpperCase() || '?'}
@@ -77,7 +77,10 @@ export function PostCard({ post, onOpenDetail }: PostCardProps) {
           </Avatar>
         </Link>
         <div className="min-w-0 flex-1">
-          <Link href={`/${post.author.username}`} className="text-sm font-semibold hover:underline">
+          <Link
+            href={`/${post.author.username ?? ''}`}
+            className="text-sm font-semibold hover:underline"
+          >
             {post.author.username}
           </Link>
         </div>
@@ -115,13 +118,13 @@ export function PostCard({ post, onOpenDetail }: PostCardProps) {
 
       {/* Caption */}
       <div className="mt-1 px-3">
-        <CaptionDisplay caption={post.caption} username={post.author.username} truncate />
+        <CaptionDisplay caption={post.caption} username={post.author.username ?? ''} truncate />
       </div>
 
       {/* Linked items badges */}
       {post.linkedItems && post.linkedItems.length > 0 && (
         <div className="mt-1.5 flex flex-wrap items-center gap-1.5 px-3">
-          {post.linkedItems.slice(0, 3).map((item) => (
+          {post.linkedItems.slice(0, 3).map((item: LinkedItemResponse) => (
             <Link key={item.id} href={`/item/${item.id}`}>
               <Badge
                 variant="secondary"

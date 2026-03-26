@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useMyChecklists } from '@/hooks/queries/checklist-queries';
-import { ChecklistCard } from '@/components/checklist/checklist-card';
+import { useMyChecklists, ChecklistCard } from '@/features/checklist';
+import type { ChecklistResponse } from '@figly/shared';
 
 function ChecklistGridSkeleton() {
   return (
@@ -40,7 +40,7 @@ export function ChecklistsPageClient() {
         <ChecklistGridSkeleton />
       ) : checklists && checklists.length > 0 ? (
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {checklists.map((checklist) => (
+          {checklists.map((checklist: ChecklistResponse) => (
             <ChecklistCard key={checklist.id} checklist={checklist} />
           ))}
         </div>

@@ -51,7 +51,7 @@ export function CommentItem({ comment, postId, onReply, isReply = false }: Comme
         <Link href={`/${comment.author.username}`} className="shrink-0">
           <Avatar className={isReply ? 'size-6' : 'size-8'}>
             {comment.author.avatarUrl ? (
-              <AvatarImage src={comment.author.avatarUrl} alt={comment.author.username} />
+              <AvatarImage src={comment.author.avatarUrl!} alt={comment.author.username ?? ''} />
             ) : null}
             <AvatarFallback className="text-xs">
               {comment.author.displayName?.charAt(0)?.toUpperCase() || '?'}
@@ -94,7 +94,7 @@ export function CommentItem({ comment, postId, onReply, isReply = false }: Comme
       {/* Nested replies */}
       {comment.replies?.length > 0 && (
         <div>
-          {comment.replies.map((reply) => (
+          {comment.replies.map((reply: CommentResponse) => (
             <CommentItem key={reply.id} comment={reply} postId={postId} onReply={onReply} isReply />
           ))}
         </div>

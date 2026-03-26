@@ -219,7 +219,7 @@ export function StepCaption() {
                 >
                   <Avatar className="size-6">
                     {profile.avatarUrl ? (
-                      <AvatarImage src={profile.avatarUrl} alt={profile.username} />
+                      <AvatarImage src={profile.avatarUrl!} alt={profile.username ?? ''} />
                     ) : null}
                     <AvatarFallback className="text-[10px]">
                       {profile.name?.charAt(0)?.toUpperCase() || '?'}

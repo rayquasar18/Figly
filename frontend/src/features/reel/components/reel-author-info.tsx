@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuthStore } from '@/features/auth';
 import { useFollowMutation } from '@/features/social';
-import type { PostResponse } from '@figly/shared';
+import type { PostResponse, LinkedItemResponse } from '@figly/shared';
 
 interface ReelAuthorInfoProps {
   reel: PostResponse;
@@ -33,7 +33,7 @@ export function ReelAuthorInfo({ reel }: ReelAuthorInfoProps) {
         <Link href={`/${reel.author.username ?? ''}`}>
           <Avatar className="size-8">
             {reel.author.avatarUrl && (
-              <AvatarImage src={reel.author.avatarUrl} alt={reel.author.username ?? ''} />
+              <AvatarImage src={reel.author.avatarUrl!} alt={reel.author.username ?? ''} />
             )}
             <AvatarFallback className="text-xs">
               {reel.author.displayName?.charAt(0)?.toUpperCase() || '?'}
@@ -70,7 +70,7 @@ export function ReelAuthorInfo({ reel }: ReelAuthorInfoProps) {
       {/* Linked items */}
       {reel.linkedItems && reel.linkedItems.length > 0 && (
         <div className="mt-1 flex flex-wrap gap-1">
-          {reel.linkedItems.map((item) => (
+          {reel.linkedItems.map((item: LinkedItemResponse) => (
             <span key={item.id} className="rounded-full bg-white/20 px-2 py-0.5 text-xs text-white">
               {item.name}
             </span>

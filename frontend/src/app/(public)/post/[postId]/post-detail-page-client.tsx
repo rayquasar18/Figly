@@ -6,12 +6,14 @@ import { formatDistanceToNow } from 'date-fns';
 import { vi } from 'date-fns/locale';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
-import { usePostDetail } from '@/hooks/queries/post-queries';
-import { PostCarousel } from '@/components/post/post-carousel';
-import { PostActions } from '@/components/post/post-actions';
-import { PostMenu } from '@/components/post/post-menu';
-import { CaptionDisplay } from '@/components/post/caption-display';
-import { CommentList } from '@/components/comment/comment-list';
+import {
+  usePostDetail,
+  PostCarousel,
+  PostActions,
+  PostMenu,
+  CaptionDisplay,
+} from '@/features/post';
+import { CommentList } from '@/features/comment';
 import Link from 'next/link';
 
 interface PostDetailPageClientProps {
@@ -70,17 +72,20 @@ export default function PostDetailPageClient({ postId }: PostDetailPageClientPro
 
       {/* Author */}
       <div className="flex items-center gap-3 px-3 py-2">
-        <Link href={`/${post.author.username}`}>
+        <Link href={`/${post.author.username ?? ''}`}>
           <Avatar className="size-8">
             {post.author.avatarUrl ? (
-              <AvatarImage src={post.author.avatarUrl} alt={post.author.username} />
+              <AvatarImage src={post.author.avatarUrl!} alt={post.author.username ?? ''} />
             ) : null}
             <AvatarFallback className="text-xs">
               {post.author.displayName?.charAt(0)?.toUpperCase() || '?'}
             </AvatarFallback>
           </Avatar>
         </Link>
-        <Link href={`/${post.author.username}`} className="text-sm font-semibold hover:underline">
+        <Link
+          href={`/${post.author.username ?? ''}`}
+          className="text-sm font-semibold hover:underline"
+        >
           {post.author.username}
         </Link>
       </div>
@@ -99,7 +104,7 @@ export default function PostDetailPageClient({ postId }: PostDetailPageClientPro
       {/* Caption */}
       {post.caption && (
         <div className="mt-1 px-3">
-          <CaptionDisplay caption={post.caption} username={post.author.username} />
+          <CaptionDisplay caption={post.caption} username={post.author.username ?? ''} />
         </div>
       )}
 

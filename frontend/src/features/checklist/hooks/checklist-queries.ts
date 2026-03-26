@@ -133,18 +133,21 @@ export function useToggleEntry() {
       ]);
 
       // Optimistic toggle
-      queryClient.setQueryData<ChecklistDetailResponse>(['checklist', checklistId], (old) => {
-        if (!old) return old;
-        const entries = old.entries.map((e) =>
-          e.id === entryId ? { ...e, isChecked: !e.isChecked } : e,
-        );
-        const checkedEntries = entries.filter((e) => e.isChecked).length;
-        return {
-          ...old,
-          entries,
-          checkedEntries,
-        };
-      });
+      queryClient.setQueryData<ChecklistDetailResponse>(
+        ['checklist', checklistId],
+        (old: ChecklistDetailResponse | undefined) => {
+          if (!old) return old;
+          const entries = old.entries.map((e: ChecklistEntryResponse) =>
+            e.id === entryId ? { ...e, isChecked: !e.isChecked } : e,
+          );
+          const checkedEntries = entries.filter((e: ChecklistEntryResponse) => e.isChecked).length;
+          return {
+            ...old,
+            entries,
+            checkedEntries,
+          };
+        },
+      );
 
       return { previous, checklistId };
     },
@@ -194,17 +197,20 @@ export function useReorderEntries() {
       ]);
 
       // Optimistic reorder: rearrange entries based on entryIds order
-      queryClient.setQueryData<ChecklistDetailResponse>(['checklist', checklistId], (old) => {
-        if (!old) return old;
-        const entryMap = new Map(old.entries.map((e) => [e.id, e]));
-        const reordered = entryIds
-          .map((id, index) => {
-            const entry = entryMap.get(id);
-            return entry ? { ...entry, position: index } : null;
-          })
-          .filter(Boolean) as ChecklistEntryResponse[];
-        return { ...old, entries: reordered };
-      });
+      queryClient.setQueryData<ChecklistDetailResponse>(
+        ['checklist', checklistId],
+        (old: ChecklistDetailResponse | undefined) => {
+          if (!old) return old;
+          const entryMap = new Map(old.entries.map((e: ChecklistEntryResponse) => [e.id, e]));
+          const reordered = entryIds
+            .map((id, index) => {
+              const entry = entryMap.get(id);
+              return entry ? { ...entry, position: index } : null;
+            })
+            .filter(Boolean) as ChecklistEntryResponse[];
+          return { ...old, entries: reordered };
+        },
+      );
 
       return { previous, checklistId };
     },

@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { FollowerList } from '@/components/social/follower-list';
+import { FollowerList } from '@/features/social';
 
 interface FollowersPageClientProps {
   username: string;

@@ -1,6 +1,6 @@
 'use client';
 
-import { FeedList } from '@/components/feed/feed-list';
+import { FeedList } from '@/features/feed';
 
 export function FeedPageClient() {
   return (

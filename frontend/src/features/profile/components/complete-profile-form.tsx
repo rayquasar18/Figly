@@ -66,8 +66,8 @@ export function CompleteProfileForm() {
   async function onSubmit(data: CompleteProfileForm) {
     try {
       await updateProfile.mutateAsync({
-        username: data.username,
-        displayName: data.displayName,
+        username: data.username as string,
+        displayName: data.displayName as string,
       });
       // CRITICAL: Invalidate auth cache so layout username gate sees updated data
       await queryClient.invalidateQueries({ queryKey: ['auth', 'me'] });

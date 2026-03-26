@@ -1,9 +1,8 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useCreateChecklist } from '@/hooks/queries/checklist-queries';
-import { ChecklistForm } from '@/components/checklist/checklist-form';
-import type { CreateChecklistDto } from '@figly/shared';
+import { useCreateChecklist, ChecklistForm } from '@/features/checklist';
+import type { CreateChecklistDto, ChecklistResponse } from '@figly/shared';
 
 export function NewChecklistPageClient() {
   const router = useRouter();
@@ -11,7 +10,7 @@ export function NewChecklistPageClient() {
 
   function handleSubmit(data: CreateChecklistDto) {
     createChecklist.mutate(data, {
-      onSuccess: (checklist) => {
+      onSuccess: (checklist: ChecklistResponse) => {
         router.push(`/checklists/${checklist.id}`);
       },
     });

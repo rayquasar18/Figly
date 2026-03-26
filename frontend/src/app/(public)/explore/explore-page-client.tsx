@@ -2,10 +2,9 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { Loader2 } from 'lucide-react';
-import { usePublicFeed } from '@/hooks/queries/post-queries';
-import { PostCard } from '@/components/post/post-card';
-import { FeedSkeleton } from '@/components/feed/feed-skeleton';
-import { PostDetailModal } from '@/components/post/post-detail-modal';
+import { usePublicFeed, PostCard, PostDetailModal } from '@/features/post';
+import { FeedSkeleton } from '@/features/feed';
+import type { PostResponse, PaginatedResponse } from '@figly/shared';
 
 export default function ExplorePageClient() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = usePublicFeed();
@@ -47,7 +46,7 @@ export default function ExplorePageClient() {
     );
   }
 
-  const items = data?.pages.flatMap((page) => page.items) ?? [];
+  const items = data?.pages.flatMap((page: PaginatedResponse<PostResponse>) => page.items) ?? [];
 
   if (items.length === 0) {
     return (
@@ -69,7 +68,7 @@ export default function ExplorePageClient() {
       </div>
 
       <div className="space-y-0">
-        {items.map((post) => (
+        {items.map((post: PostResponse) => (
           <PostCard key={post.id} post={post} onOpenDetail={handleOpenDetail} />
         ))}
 

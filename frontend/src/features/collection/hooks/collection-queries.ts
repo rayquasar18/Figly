@@ -106,34 +106,47 @@ function updateItemInQueries(
   updater: (item: ItemResponse) => ItemResponse,
 ) {
   // Update items list queries
-  queryClient.setQueriesData<InfiniteItemData>({ queryKey: ['items'] }, (old) => {
-    if (!old) return old;
-    return {
-      ...old,
-      pages: old.pages.map((page) => ({
-        ...page,
-        items: page.items.map((item) => (item.id === itemId ? updater(item) : item)),
-      })),
-    };
-  });
+  queryClient.setQueriesData<InfiniteItemData>(
+    { queryKey: ['items'] },
+    (old: InfiniteItemData | undefined) => {
+      if (!old) return old;
+      return {
+        ...old,
+        pages: old.pages.map((page) => ({
+          ...page,
+          items: page.items.map((item: ItemResponse) =>
+            item.id === itemId ? updater(item) : item,
+          ),
+        })),
+      };
+    },
+  );
 
   // Update search results
-  queryClient.setQueriesData<InfiniteItemData>({ queryKey: ['searchItems'] }, (old) => {
-    if (!old) return old;
-    return {
-      ...old,
-      pages: old.pages.map((page) => ({
-        ...page,
-        items: page.items.map((item) => (item.id === itemId ? updater(item) : item)),
-      })),
-    };
-  });
+  queryClient.setQueriesData<InfiniteItemData>(
+    { queryKey: ['searchItems'] },
+    (old: InfiniteItemData | undefined) => {
+      if (!old) return old;
+      return {
+        ...old,
+        pages: old.pages.map((page) => ({
+          ...page,
+          items: page.items.map((item: ItemResponse) =>
+            item.id === itemId ? updater(item) : item,
+          ),
+        })),
+      };
+    },
+  );
 
   // Update single item detail
-  queryClient.setQueryData<ItemDetailResponse>(['itemDetail', itemId], (old) => {
-    if (!old) return old;
-    return { ...old, ...updater(old) };
-  });
+  queryClient.setQueryData<ItemDetailResponse>(
+    ['itemDetail', itemId],
+    (old: ItemDetailResponse | undefined) => {
+      if (!old) return old;
+      return { ...old, ...updater(old) };
+    },
+  );
 }
 
 /** Toggle owned status with optimistic update */
@@ -172,16 +185,19 @@ export function useToggleOwned() {
       });
 
       // Also update ownerCount on detail
-      queryClient.setQueryData<ItemDetailResponse>(['itemDetail', itemId], (old) => {
-        if (!old) return old;
-        const newOwned = !old.isOwned;
-        return {
-          ...old,
-          isOwned: newOwned,
-          isWishlisted: newOwned ? false : old.isWishlisted,
-          ownerCount: old.ownerCount + (newOwned ? 1 : -1),
-        };
-      });
+      queryClient.setQueryData<ItemDetailResponse>(
+        ['itemDetail', itemId],
+        (old: ItemDetailResponse | undefined) => {
+          if (!old) return old;
+          const newOwned = !old.isOwned;
+          return {
+            ...old,
+            isOwned: newOwned,
+            isWishlisted: newOwned ? false : old.isWishlisted,
+            ownerCount: old.ownerCount + (newOwned ? 1 : -1),
+          };
+        },
+      );
 
       return { previousDetail, previousItems, previousSearch, itemId };
     },
@@ -244,17 +260,20 @@ export function useToggleWishlist() {
       });
 
       // Also update ownerCount on detail if owned was cleared
-      queryClient.setQueryData<ItemDetailResponse>(['itemDetail', itemId], (old) => {
-        if (!old) return old;
-        const newWishlisted = !old.isWishlisted;
-        return {
-          ...old,
-          isWishlisted: newWishlisted,
-          isOwned: newWishlisted ? false : old.isOwned,
-          ownerCount:
-            newWishlisted && old.isOwned ? Math.max(0, old.ownerCount - 1) : old.ownerCount,
-        };
-      });
+      queryClient.setQueryData<ItemDetailResponse>(
+        ['itemDetail', itemId],
+        (old: ItemDetailResponse | undefined) => {
+          if (!old) return old;
+          const newWishlisted = !old.isWishlisted;
+          return {
+            ...old,
+            isWishlisted: newWishlisted,
+            isOwned: newWishlisted ? false : old.isOwned,
+            ownerCount:
+              newWishlisted && old.isOwned ? Math.max(0, old.ownerCount - 1) : old.ownerCount,
+          };
+        },
+      );
 
       return { previousDetail, previousItems, previousSearch, itemId };
     },

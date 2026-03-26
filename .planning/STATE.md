@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Architecture & Production Hardening
-status: completed
-stopped_at: Completed 18-01-PLAN.md
-last_updated: "2026-03-26T21:35:11.904Z"
-last_activity: 2026-03-26
+status: executing
+stopped_at: Phase 18 UI-SPEC approved
+last_updated: '2026-03-26T21:30:42.200Z'
+last_activity: 2026-03-26 -- Phase 18 execution started
 progress:
   total_phases: 8
   completed_phases: 7
   total_plans: 25
-  completed_plans: 22
+  completed_plans: 21
   percent: 100
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-13)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 17 (Backend Regression Restore -- Plan 02 complete)
+**Current focus:** Phase 18 — frontend-regression-restore
 
 ## Current Position
 
-Phase: 18 of 18 (frontend regression restore)
-Plan: Not started
-Status: Plan 17-02 Complete
-Last activity: 2026-03-26
+Phase: 18 (frontend-regression-restore) — EXECUTING
+Plan: 3 of 4 complete
+Status: Executing Phase 18 (Plans 01-03 complete, Plan 04 remaining)
+Last activity: 2025-05-26 -- Plan 18-03 complete (Server Component page restoration)
 
 Progress: [██████████] 100% (Phase 4: 6/6 plans)
 
@@ -42,20 +42,20 @@ Progress: [██████████] 100% (Phase 4: 6/6 plans)
 
 **By Phase:**
 
-| Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| 01-foundation-auth | 3 | 37 min | 12 min |
-| 02-profiles-social-graph | 4 | 23 min | 6 min |
-| 03-content-feed | 4 | 38 min | 10 min |
-| 03.1-public-viewing-mode | 1 | 7 min | 7 min |
-| 04-collection-system | 4 | 20 min | 5 min |
+| Phase                    | Plans | Total  | Avg/Plan |
+| ------------------------ | ----- | ------ | -------- |
+| 01-foundation-auth       | 3     | 37 min | 12 min   |
+| 02-profiles-social-graph | 4     | 23 min | 6 min    |
+| 03-content-feed          | 4     | 38 min | 10 min   |
+| 03.1-public-viewing-mode | 1     | 7 min  | 7 min    |
+| 04-collection-system     | 4     | 20 min | 5 min    |
 
 **Recent Trend:**
 
 - Last 5 plans: 7, 4, 5, 6, 5 min
 - Trend: improving
 
-*Updated after each plan completion*
+_Updated after each plan completion_
 | Phase 03 P01 | 3 | 2 tasks | 8 files |
 | Phase 03 P02 | 10 | 2 tasks | 19 files |
 | Phase 03 P03 | 13 | 2 tasks | 12 files |
@@ -69,7 +69,6 @@ Progress: [██████████] 100% (Phase 4: 6/6 plans)
 | Phase 04 P05 | 9 | 2 tasks | 18 files |
 | Phase 04 P06 | 5 | 2 tasks | 9 files |
 | Phase 17 P02 | 7 | 2 tasks | 15 files |
-| Phase 18 P01 | 2 | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -135,7 +134,7 @@ Recent decisions affecting current work:
 - [04-02]: Toggle endpoints return { success, isOwned/isWishlisted } for frontend state updates
 - [04-02]: Batch status check uses Promise.all for parallel owned + wishlist queries
 - [04-03]: Ownership enforcement via findFirst(id, userId) pattern for checklist write operations
-- [04-03]: Entry position managed via aggregate _max + 1 for append, $transaction for reorder
+- [04-03]: Entry position managed via aggregate \_max + 1 for append, $transaction for reorder
 - [04-03]: mapLinkedItems helper duplicated in PostsService and FeedService for module independence
 - [04-03]: PostResponse.linkedItems optional field to avoid breaking existing frontend code
 - [04-04]: Cross-query optimistic updates via updateItemInQueries helper for items/searchItems/itemDetail consistency
@@ -166,6 +165,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T21:35:11.901Z
-Stopped at: Completed 18-01-PLAN.md
-Resume file: None
+Last session: 2025-05-26
+Stopped at: Completed 18-03-PLAN.md (Server Component page restoration)
+Resume file: .planning/phases/18-frontend-regression-restore/18-04-PLAN.md
