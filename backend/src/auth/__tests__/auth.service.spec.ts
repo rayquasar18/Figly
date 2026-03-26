@@ -36,7 +36,7 @@ describe('AuthService', () => {
       const config: Record<string, string> = {
         'jwt.accessSecret': 'test-access-secret',
         'jwt.refreshSecret': 'test-refresh-secret',
-        frontendUrl: 'http://localhost:3000',
+        'frontendUrl': 'http://localhost:3000',
       };
       return config[key];
     }),
@@ -66,20 +66,15 @@ describe('AuthService', () => {
   });
 
   describe('signup', () => {
-    const signupDto = {
-      email: 'test@test.com',
-      password: 'Test1234',
-      name: 'Test User',
-      username: 'testuser',
-    };
+    const signupDto = { email: 'test@test.com', password: 'Test1234' };
 
     it('should create user with hashed password and emailVerified=false', async () => {
       mockPrisma.user.findUnique.mockResolvedValue(null);
       mockPrisma.user.create.mockResolvedValue({
         id: 'user-1',
         email: signupDto.email,
-        name: signupDto.name,
-        username: signupDto.username,
+        name: null,
+        username: null,
         emailVerified: false,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -94,7 +89,7 @@ describe('AuthService', () => {
         expect.objectContaining({
           data: expect.objectContaining({
             email: signupDto.email,
-            name: signupDto.name,
+            name: null,
             emailVerified: false,
           }),
         }),
@@ -137,9 +132,9 @@ describe('AuthService', () => {
     it('should throw UnauthorizedException with "Email khong ton tai" for non-existent email', async () => {
       mockPrisma.user.findUnique.mockResolvedValue(null);
 
-      await expect(service.validateUser('nonexistent@test.com', 'Test1234')).rejects.toThrow(
-        new UnauthorizedException('Email khong ton tai'),
-      );
+      await expect(service.validateUser('nonexistent@test.com', 'Test1234'))
+        .rejects
+        .toThrow(new UnauthorizedException('Email khong ton tai'));
     });
 
     it('should throw UnauthorizedException with "Sai mat khau" for wrong password', async () => {
@@ -151,9 +146,9 @@ describe('AuthService', () => {
         emailVerified: true,
       });
 
-      await expect(service.validateUser('test@test.com', 'WrongPassword1')).rejects.toThrow(
-        new UnauthorizedException('Sai mat khau'),
-      );
+      await expect(service.validateUser('test@test.com', 'WrongPassword1'))
+        .rejects
+        .toThrow(new UnauthorizedException('Sai mat khau'));
     });
 
     it('should throw ForbiddenException with "Email chua duoc xac minh" for unverified email', async () => {
@@ -165,9 +160,9 @@ describe('AuthService', () => {
         emailVerified: false,
       });
 
-      await expect(service.validateUser('test@test.com', 'Test1234')).rejects.toThrow(
-        new ForbiddenException('Email chua duoc xac minh'),
-      );
+      await expect(service.validateUser('test@test.com', 'Test1234'))
+        .rejects
+        .toThrow(new ForbiddenException('Email chua duoc xac minh'));
     });
   });
 

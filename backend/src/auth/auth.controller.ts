@@ -11,15 +11,15 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
+import { ZodSerializerDto } from 'nestjs-zod';
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
+import { SignupDto, LoginDto, ResetPasswordRequestDto, ResetPasswordDto, VerifyEmailDto } from './dto/auth.dto';
 import {
-  SignupDto,
-  LoginDto,
-  ResetPasswordRequestDto,
-  ResetPasswordDto,
-  VerifyEmailDto,
-} from './dto/auth.dto';
+  SignupResponseDto,
+  LoginResponseDto,
+  MeResponseDto,
+} from '../common/dto/user-response.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
@@ -35,17 +35,19 @@ export class AuthController {
   // Email/Password Auth
   // ---------------------
 
+  @ZodSerializerDto(SignupResponseDto)
   @Post('signup')
   async signup(@Body() signupDto: SignupDto) {
     const user = await this.authService.signup(signupDto);
     // Send verification email
-    await this.authService.sendVerificationEmail(user.id, user.email, user.name ?? '');
+    await this.authService.sendVerificationEmail(user.id, user.email, user.name || 'ban');
     return {
       message: 'Dang ky thanh cong. Vui long kiem tra email de xac minh.',
       user,
     };
   }
 
+  @ZodSerializerDto(LoginResponseDto)
   @Post('login')
   @HttpCode(HttpStatus.OK)
   @UseGuards(LocalAuthGuard)
@@ -53,7 +55,10 @@ export class AuthController {
   async login(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
     const user = req.user as any;
     const userAgent = req.headers['user-agent'] || 'unknown';
-    const tokens = await this.authService.login({ id: user.id, email: user.email }, userAgent);
+    const tokens = await this.authService.login(
+      { id: user.id, email: user.email },
+      userAgent,
+    );
     this.authService.setCookies(res, tokens);
     return {
       user: {
@@ -89,6 +94,7 @@ export class AuthController {
     return { message: 'Dang xuat thanh cong' };
   }
 
+  @ZodSerializerDto(MeResponseDto)
   @Get('me')
   @UseGuards(JwtAuthGuard)
   async me(@Req() req: Request) {
@@ -153,7 +159,10 @@ export class AuthController {
   async googleAuthCallback(@Req() req: Request, @Res() res: Response) {
     const user = req.user as any;
     const userAgent = req.headers['user-agent'] || 'unknown';
-    const tokens = await this.authService.login({ id: user.id, email: user.email }, userAgent);
+    const tokens = await this.authService.login(
+      { id: user.id, email: user.email },
+      userAgent,
+    );
     this.authService.setCookies(res, tokens);
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
     res.redirect(`${frontendUrl}/auth/callback`);
@@ -174,7 +183,10 @@ export class AuthController {
   async appleAuthCallback(@Req() req: Request, @Res() res: Response) {
     const user = req.user as any;
     const userAgent = req.headers['user-agent'] || 'unknown';
-    const tokens = await this.authService.login({ id: user.id, email: user.email }, userAgent);
+    const tokens = await this.authService.login(
+      { id: user.id, email: user.email },
+      userAgent,
+    );
     this.authService.setCookies(res, tokens);
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
     res.redirect(`${frontendUrl}/auth/callback`);
