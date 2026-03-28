@@ -3,9 +3,11 @@ import {
   NotFoundException,
   ForbiddenException,
 } from '@nestjs/common';
+import { getQueueToken } from '@nestjs/bullmq';
 import { CommentsService } from '../comments.service';
 import { PrismaService } from '../../prisma/prisma.service';
 import { StorageService } from '../../media/storage.service';
+import { ModerationService } from '../../moderation/moderation.service';
 
 describe('CommentsService', () => {
   let service: CommentsService;
@@ -20,10 +22,23 @@ describe('CommentsService', () => {
       findUnique: jest.fn(),
       delete: jest.fn(),
     },
+    user: {
+      findMany: jest.fn(),
+    },
   };
 
   const mockStorageService = {
     getPresignedUrl: jest.fn(),
+  };
+
+  const mockNotificationQueue = {
+    add: jest.fn(),
+  };
+
+  const mockModerationService = {
+    getBlockedUserIds: jest.fn().mockResolvedValue([]),
+    getMutedUserIds: jest.fn().mockResolvedValue([]),
+    isBlocked: jest.fn().mockResolvedValue(false),
   };
 
   beforeEach(async () => {
@@ -32,17 +47,21 @@ describe('CommentsService', () => {
         CommentsService,
         { provide: PrismaService, useValue: mockPrisma },
         { provide: StorageService, useValue: mockStorageService },
+        { provide: ModerationService, useValue: mockModerationService },
+        { provide: getQueueToken('notification'), useValue: mockNotificationQueue },
       ],
     }).compile();
 
     service = module.get<CommentsService>(CommentsService);
 
     jest.clearAllMocks();
+    mockModerationService.getBlockedUserIds.mockResolvedValue([]);
+    mockModerationService.isBlocked.mockResolvedValue(false);
   });
 
   describe('createComment', () => {
     it('should create a top-level comment (parentId null)', async () => {
-      mockPrisma.post.findUnique.mockResolvedValue({ id: 'post-1' });
+      mockPrisma.post.findUnique.mockResolvedValue({ id: 'post-1', userId: 'post-owner' });
       const createdComment = {
         id: 'comment-1',
         userId: 'user-1',
@@ -79,10 +98,11 @@ describe('CommentsService', () => {
     });
 
     it('should create a reply to a top-level comment', async () => {
-      mockPrisma.post.findUnique.mockResolvedValue({ id: 'post-1' });
+      mockPrisma.post.findUnique.mockResolvedValue({ id: 'post-1', userId: 'post-owner' });
       mockPrisma.comment.findUnique.mockResolvedValue({
         id: 'parent-1',
         parentId: null, // Top-level comment
+        userId: 'parent-author',
       });
       const createdReply = {
         id: 'reply-1',
@@ -109,10 +129,11 @@ describe('CommentsService', () => {
     });
 
     it('should flatten reply-to-reply to 1 level (use parent\'s parentId)', async () => {
-      mockPrisma.post.findUnique.mockResolvedValue({ id: 'post-1' });
+      mockPrisma.post.findUnique.mockResolvedValue({ id: 'post-1', userId: 'post-owner' });
       mockPrisma.comment.findUnique.mockResolvedValue({
         id: 'reply-1',
         parentId: 'top-level-1', // This is already a reply, not a top-level comment
+        userId: 'reply-author',
       });
       const createdReply = {
         id: 'flattened-reply',
@@ -154,7 +175,7 @@ describe('CommentsService', () => {
     });
 
     it('should throw NotFoundException if parent comment does not exist', async () => {
-      mockPrisma.post.findUnique.mockResolvedValue({ id: 'post-1' });
+      mockPrisma.post.findUnique.mockResolvedValue({ id: 'post-1', userId: 'post-owner' });
       mockPrisma.comment.findUnique.mockResolvedValue(null);
 
       await expect(

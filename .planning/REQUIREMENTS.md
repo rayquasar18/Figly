@@ -30,8 +30,8 @@
 - [x] **CONT-05**: User can delete own posts
 - [x] **CONT-06**: User can include hashtags and @mentions in captions
 - [x] **CONT-07**: User can link post to item(s) from the collection database
-- [ ] **CONT-08**: User can post stories (24h ephemeral photo/video content)
-- [ ] **CONT-09**: User can view stories from followed users
+- [x] **CONT-08**: User can post stories (24h ephemeral photo/video content)
+- [x] **CONT-09**: User can view stories from followed users
 - [ ] **CONT-10**: User can upload and post short-form video (reels)
 - [ ] **CONT-11**: User can browse reels in dedicated vertical scroll feed
 
@@ -52,9 +52,9 @@
 
 ### Discovery
 
-- [ ] **DISC-01**: User can search for users, hashtags, and items
-- [ ] **DISC-02**: User can view hashtag pages with aggregated posts
-- [ ] **DISC-03**: User can browse explore page curated by collection category
+- [x] **DISC-01**: User can search for users, hashtags, and items
+- [x] **DISC-02**: User can view hashtag pages with aggregated posts
+- [x] **DISC-03**: User can browse explore page curated by collection category
 
 ### Collection
 
@@ -68,23 +68,23 @@
 
 ### Messaging
 
-- [ ] **MESG-01**: User can send and receive direct messages (1-on-1)
-- [ ] **MESG-02**: User can share media in DMs
-- [ ] **MESG-03**: User can see message read status
-- [ ] **MESG-04**: User can participate in group chats by category/interest
+- [x] **MESG-01**: User can send and receive direct messages (1-on-1)
+- [x] **MESG-02**: User can share media in DMs
+- [x] **MESG-03**: User can see message read status
+- [x] **MESG-04**: User can participate in group chats by category/interest
 
 ### Notifications
 
-- [ ] **NOTF-01**: User receives in-app notifications for likes, comments, follows, mentions
-- [ ] **NOTF-02**: User can view notification history with read/unread state
-- [ ] **NOTF-03**: User receives push notifications via PWA/service worker
+- [x] **NOTF-01**: User receives in-app notifications for likes, comments, follows, mentions
+- [x] **NOTF-02**: User can view notification history with read/unread state
+- [x] **NOTF-03**: User receives push notifications via PWA/service worker
 
 ### Moderation
 
-- [ ] **MODR-01**: User can report posts or users
-- [ ] **MODR-02**: User can block other users
-- [ ] **MODR-03**: User can mute other users
-- [ ] **MODR-04**: Admin can view and act on reported content queue
+- [x] **MODR-01**: User can report posts or users
+- [x] **MODR-02**: User can block other users
+- [x] **MODR-03**: User can mute other users
+- [x] **MODR-04**: Admin can view and act on reported content queue
 
 ## v2 Requirements
 
@@ -140,8 +140,8 @@
 | CONT-05 | Phase 3 | Complete |
 | CONT-06 | Phase 3 | Complete |
 | CONT-07 | Phase 4 | Complete |
-| CONT-08 | Phase 9 | Pending |
-| CONT-09 | Phase 9 | Pending |
+| CONT-08 | Phase 9 | Complete |
+| CONT-09 | Phase 9 | Complete |
 | CONT-10 | Phase 10 | Pending |
 | CONT-11 | Phase 10 | Pending |
 | INTR-01 | Phase 3 | Complete |
@@ -153,9 +153,9 @@
 | SOCL-02 | Phase 2 | Complete |
 | SOCL-03 | Phase 3 | Complete |
 | SOCL-04 | Phase 4 | Complete |
-| DISC-01 | Phase 5 | Pending |
-| DISC-02 | Phase 5 | Pending |
-| DISC-03 | Phase 5 | Pending |
+| DISC-01 | Phase 5 | Complete |
+| DISC-02 | Phase 5 | Complete |
+| DISC-03 | Phase 5 | Complete |
 | COLL-01 | Phase 4 | Complete |
 | COLL-02 | Phase 4 | Complete |
 | COLL-03 | Phase 4 | Complete |
@@ -163,17 +163,17 @@
 | COLL-05 | Phase 4 | Complete |
 | COLL-06 | Phase 4 | Complete |
 | COLL-07 | Phase 4 | Complete |
-| MESG-01 | Phase 8 | Pending |
-| MESG-02 | Phase 8 | Pending |
-| MESG-03 | Phase 8 | Pending |
-| MESG-04 | Phase 8 | Pending |
-| NOTF-01 | Phase 6 | Pending |
-| NOTF-02 | Phase 6 | Pending |
-| NOTF-03 | Phase 6 | Pending |
-| MODR-01 | Phase 7 | Pending |
-| MODR-02 | Phase 7 | Pending |
-| MODR-03 | Phase 7 | Pending |
-| MODR-04 | Phase 7 | Pending |
+| MESG-01 | Phase 8 | Complete |
+| MESG-02 | Phase 8 | Complete |
+| MESG-03 | Phase 8 | Complete |
+| MESG-04 | Phase 8 | Complete |
+| NOTF-01 | Phase 6 | Complete |
+| NOTF-02 | Phase 6 | Complete |
+| NOTF-03 | Phase 6 | Complete |
+| MODR-01 | Phase 7 | Complete |
+| MODR-02 | Phase 7 | Complete |
+| MODR-03 | Phase 7 | Complete |
+| MODR-04 | Phase 7 | Complete |
 
 **Coverage:**
 - v1 requirements: 41 total

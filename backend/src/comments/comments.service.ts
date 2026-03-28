@@ -2,9 +2,13 @@ import {
   Injectable,
   NotFoundException,
   ForbiddenException,
+  BadRequestException,
 } from '@nestjs/common';
+import { InjectQueue } from '@nestjs/bullmq';
+import { Queue } from 'bullmq';
 import { PrismaService } from '../prisma/prisma.service';
 import { StorageService } from '../media/storage.service';
+import { ModerationService } from '../moderation/moderation.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { POST_LIMITS } from '@figly/shared';
 
@@ -13,17 +17,27 @@ export class CommentsService {
   constructor(
     private prisma: PrismaService,
     private storageService: StorageService,
+    private moderationService: ModerationService,
+    @InjectQueue('notification') private notificationQueue: Queue,
   ) {}
 
   async createComment(userId: string, postId: string, dto: CreateCommentDto) {
     // Verify post exists
     const post = await this.prisma.post.findUnique({
       where: { id: postId },
-      select: { id: true },
+      select: { id: true, userId: true },
     });
 
     if (!post) {
       throw new NotFoundException('Bai viet khong ton tai');
+    }
+
+    // Prevent commenting on blocked user's post
+    if (post.userId !== userId) {
+      const isBlocked = await this.moderationService.isBlocked(userId, post.userId);
+      if (isBlocked) {
+        throw new BadRequestException('Khong the binh luan bai viet nay');
+      }
     }
 
     let resolvedParentId: string | null = dto.parentId || null;
@@ -69,6 +83,65 @@ export class CommentsService {
       ? await this.storageService.getPresignedUrl(comment.user.avatar.mediumKey)
       : null;
 
+    // Enqueue notification for comment/reply
+    const notifiedUserIds = new Set<string>();
+
+    if (resolvedParentId) {
+      // Reply: notify parent comment author
+      const parentComment = await this.prisma.comment.findUnique({
+        where: { id: resolvedParentId },
+        select: { userId: true },
+      });
+      if (parentComment && parentComment.userId !== userId) {
+        notifiedUserIds.add(parentComment.userId);
+        await this.notificationQueue.add('notification', {
+          type: 'reply',
+          actorId: userId,
+          recipientId: parentComment.userId,
+          targetId: postId,
+          targetType: 'post',
+        });
+      }
+    } else {
+      // Top-level comment: notify post author
+      const postRecord = await this.prisma.post.findUnique({
+        where: { id: postId },
+        select: { userId: true },
+      });
+      if (postRecord && postRecord.userId !== userId) {
+        notifiedUserIds.add(postRecord.userId);
+        await this.notificationQueue.add('notification', {
+          type: 'comment',
+          actorId: userId,
+          recipientId: postRecord.userId,
+          targetId: postId,
+          targetType: 'post',
+        });
+      }
+    }
+
+    // Detect @mentions in comment body
+    const mentionMatches = dto.content.match(/@(\w+)/g);
+    if (mentionMatches) {
+      const usernames = [...new Set(mentionMatches.map((m) => m.slice(1)))];
+      const mentionedUsers = await this.prisma.user.findMany({
+        where: { username: { in: usernames } },
+        select: { id: true, username: true },
+      });
+      for (const mentioned of mentionedUsers) {
+        // Skip self, skip already notified users
+        if (mentioned.id === userId || notifiedUserIds.has(mentioned.id)) continue;
+        notifiedUserIds.add(mentioned.id);
+        await this.notificationQueue.add('notification', {
+          type: 'mention',
+          actorId: userId,
+          recipientId: mentioned.id,
+          targetId: postId,
+          targetType: 'post',
+        });
+      }
+    }
+
     return {
       id: comment.id,
       author: {
@@ -84,11 +157,15 @@ export class CommentsService {
     };
   }
 
-  async getComments(postId: string, cursor?: string, take: number = POST_LIMITS.commentsPageSize) {
+  async getComments(postId: string, viewerId?: string, cursor?: string, take: number = POST_LIMITS.commentsPageSize) {
+    // Get blocked user IDs for filtering
+    const blockedIds = viewerId ? await this.moderationService.getBlockedUserIds(viewerId) : [];
+
     const comments = await this.prisma.comment.findMany({
       where: {
         postId,
         parentId: null, // Only top-level comments
+        userId: blockedIds.length > 0 ? { notIn: blockedIds } : undefined,
       },
       include: {
         user: {

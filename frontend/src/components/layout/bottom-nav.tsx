@@ -2,15 +2,17 @@
 
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { Home, Search, Package, PlusSquare, User } from 'lucide-react';
+import { Home, Search, PlusSquare, Heart, User } from 'lucide-react';
 import { useMe } from '@/hooks/queries/auth-queries';
 import { useCreatePostStore } from '@/stores/create-post-store';
+import { useNotificationStore } from '@/stores/notification-store';
 import { cn } from '@/lib/utils';
 
 export function BottomNav() {
   const pathname = usePathname();
   const { data: user } = useMe();
   const openCreatePost = useCreatePostStore((s) => s.open);
+  const unreadCount = useNotificationStore((s) => s.unreadCount);
 
   const profileHref = user?.username ? `/${user.username}` : '/';
 
@@ -29,12 +31,6 @@ export function BottomNav() {
           label="Tim kiem"
           isActive={pathname.startsWith('/search')}
         />
-        <NavLink
-          href="/collection"
-          icon={Package}
-          label="Suu tap"
-          isActive={pathname.startsWith('/collection')}
-        />
         <button
           type="button"
           onClick={openCreatePost}
@@ -43,6 +39,13 @@ export function BottomNav() {
         >
           <PlusSquare className="size-6 stroke-[2.5]" />
         </button>
+        <NavLink
+          href="/notifications"
+          icon={Heart}
+          label="Thong bao"
+          isActive={pathname.startsWith('/notifications')}
+          badge={unreadCount > 0}
+        />
         <NavLink
           href={profileHref}
           icon={User}
@@ -61,22 +64,27 @@ function NavLink({
   icon: Icon,
   label,
   isActive,
+  badge,
 }: {
   href: string;
   icon: React.ComponentType<{ className?: string }>;
   label: string;
   isActive: boolean;
+  badge?: boolean;
 }) {
   return (
     <Link
       href={href}
       className={cn(
-        'flex flex-col items-center justify-center gap-0.5 p-2',
+        'relative flex flex-col items-center justify-center gap-0.5 p-2',
         isActive ? 'text-foreground' : 'text-muted-foreground',
       )}
       aria-label={label}
     >
       <Icon className={cn('size-6', isActive && 'fill-current')} />
+      {badge && (
+        <span className="absolute right-1 top-1 size-2 rounded-full bg-destructive" />
+      )}
     </Link>
   );
 }

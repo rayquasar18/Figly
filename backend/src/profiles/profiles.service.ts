@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { StorageService } from '../media/storage.service';
+import { ModerationService } from '../moderation/moderation.service';
 import { USERNAME_RULES, RESERVED_USERNAMES } from '@figly/shared';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 
@@ -14,6 +15,7 @@ export class ProfilesService {
   constructor(
     private prisma: PrismaService,
     private storageService: StorageService,
+    private moderationService: ModerationService,
   ) {}
 
   async getProfile(username: string, viewerId: string | null) {
@@ -25,6 +27,7 @@ export class ProfilesService {
         name: true,
         bio: true,
         avatarId: true,
+        isBanned: true,
         avatar: {
           select: { thumbnailKey: true, mediumKey: true },
         },
@@ -40,6 +43,14 @@ export class ProfilesService {
 
     if (!user) {
       throw new NotFoundException('Nguoi dung khong ton tai');
+    }
+
+    // Check block status between viewer and profile owner
+    if (viewerId && viewerId !== user.id) {
+      const isBlocked = await this.moderationService.isBlocked(viewerId, user.id);
+      if (isBlocked) {
+        throw new NotFoundException('Nguoi dung khong ton tai');
+      }
     }
 
     // Check follow relationships in parallel (skip when unauthenticated)
@@ -82,12 +93,13 @@ export class ProfilesService {
       displayName: user.name,
       bio: user.bio,
       avatarUrl,
-      postCount: user._count.posts,
-      followerCount: user._count.followers,
-      followingCount: user._count.following,
+      postCount: user.isBanned ? 0 : user._count.posts,
+      followerCount: user.isBanned ? 0 : user._count.followers,
+      followingCount: user.isBanned ? 0 : user._count.following,
       isOwnProfile,
       isFollowing,
       isFollowedBy,
+      isBanned: user.isBanned,
     };
   }
 
@@ -153,13 +165,18 @@ export class ProfilesService {
     });
   }
 
-  async searchProfiles(query: string, limit = 10) {
+  async searchProfiles(query: string, limit = 10, viewerId?: string) {
+    // Get blocked user IDs for filtering
+    const blockedIds = viewerId ? await this.moderationService.getBlockedUserIds(viewerId) : [];
+
     const users = await this.prisma.user.findMany({
       where: {
         OR: [
           { username: { contains: query, mode: 'insensitive' } },
           { name: { contains: query, mode: 'insensitive' } },
         ],
+        id: blockedIds.length > 0 ? { notIn: blockedIds } : undefined,
+        isBanned: false,
       },
       select: {
         id: true,

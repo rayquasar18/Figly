@@ -14,6 +14,12 @@ import { CommentsModule } from './comments/comments.module';
 import { FeedModule } from './feed/feed.module';
 import { CollectionModule } from './collection/collection.module';
 import { ChecklistModule } from './checklist/checklist.module';
+import { SearchModule } from './search/search.module';
+import { NotificationsModule } from './notifications/notifications.module';
+import { ModerationModule } from './moderation/moderation.module';
+import { AdminModule } from './admin/admin.module';
+import { MessagingModule } from './messaging/messaging.module';
+import { StoriesModule } from './stories/stories.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -61,6 +67,12 @@ import configuration from './config/configuration';
     FeedModule,
     CollectionModule,
     ChecklistModule,
+    SearchModule,
+    NotificationsModule,
+    ModerationModule,
+    AdminModule,
+    MessagingModule,
+    StoriesModule,
   ],
   controllers: [],
   providers: [

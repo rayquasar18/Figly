@@ -4,6 +4,9 @@ import type { ProfileResponse } from '@figly/shared';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { FollowButton } from '@/components/social/follow-button';
+import { UserActionMenu } from '@/components/moderation/user-action-menu';
+import { useBlockStatus, useMuteStatus } from '@/hooks/queries/moderation-queries';
+import { useAuthStore } from '@/stores/auth-store';
 import { ProfileStats } from './profile-stats';
 
 interface ProfileHeaderProps {
@@ -22,6 +25,14 @@ function getInitials(name: string): string {
 }
 
 export function ProfileHeader({ profile, onEditClick }: ProfileHeaderProps) {
+  const { user: currentUser } = useAuthStore();
+  const { data: blockStatus } = useBlockStatus(
+    profile.isOwnProfile ? '' : profile.id,
+  );
+  const { data: muteStatus } = useMuteStatus(
+    profile.isOwnProfile ? '' : profile.id,
+  );
+
   return (
     <div className="space-y-4">
       {/* Top section: avatar + stats */}
@@ -58,6 +69,13 @@ export function ProfileHeader({ profile, onEditClick }: ProfileHeaderProps) {
                     Theo doi ban
                   </span>
                 )}
+
+                <UserActionMenu
+                  userId={profile.id}
+                  username={profile.username}
+                  isBlocked={blockStatus?.isBlocked ?? false}
+                  isMuted={muteStatus?.isMuted ?? false}
+                />
               </div>
             )}
           </div>

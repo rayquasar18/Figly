@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 04-06-PLAN.md
-last_updated: "2026-03-15T00:28:20.246Z"
-last_activity: 2026-03-15 -- Completed 04-06 Item Picker and Post-Item Linking Frontend
+stopped_at: Phase 10 context gathered
+last_updated: "2026-03-20T10:56:45.589Z"
+last_activity: 2026-03-20 -- Completed 09-02 Stories Frontend
 progress:
-  total_phases: 11
-  completed_phases: 5
-  total_plans: 19
-  completed_plans: 19
+  total_phases: 12
+  completed_phases: 11
+  total_plans: 31
+  completed_plans: 31
   percent: 100
 ---
 
@@ -21,23 +21,24 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-13)
 
 **Core value:** Collectors can share, showcase, and manage their collections in a community of shared passion -- combining social media with collection tracking.
-**Current focus:** Phase 4 (Collection System -- COMPLETE, 6/6 plans)
+**Current focus:** Phase 9: Stories (Complete)
 
 ## Current Position
 
-Phase: 5 of 10
-Plan: 0 of ? in current phase
-Status: Phase 4 Complete
-Last activity: 2026-03-15 -- Completed 04-06 Item Picker and Post-Item Linking Frontend
+Phase: 9
+Plan: 2 of 2 in current phase
+Status: Phase 09 Complete
+Last activity: 2026-03-20 -- Completed 09-02 Stories Frontend
 
-Progress: [██████████] 100% (Phase 4: 6/6 plans)
+Progress: [██████████] 100% (Phase 9: 2/2 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 16
-- Average duration: 7 min
-- Total execution time: 2.1 hours
+
+- Total plans completed: 23
+- Average duration: 9 min
+- Total execution time: 3.3 hours
 
 **By Phase:**
 
@@ -48,9 +49,16 @@ Progress: [██████████] 100% (Phase 4: 6/6 plans)
 | 03-content-feed | 4 | 38 min | 10 min |
 | 03.1-public-viewing-mode | 1 | 7 min | 7 min |
 | 04-collection-system | 4 | 20 min | 5 min |
+| 05-search-discovery | 2 | 12 min | 6 min |
+| 06-notifications | 1 | 21 min | 21 min |
+| 07-moderation-safety | 1 | 31 min | 31 min |
+
+| 08-direct-messaging | 3 | 17 min | 6 min |
+| 07.1-docker-split | 1 | 6 min | 6 min |
 
 **Recent Trend:**
-- Last 5 plans: 7, 4, 5, 6, 5 min
+
+- Last 5 plans: 31, 8, 8, 6, 4 min
 - Trend: improving
 
 *Updated after each plan completion*
@@ -66,6 +74,18 @@ Progress: [██████████] 100% (Phase 4: 6/6 plans)
 | Phase 04 P04 | 6 | 2 tasks | 12 files |
 | Phase 04 P05 | 9 | 2 tasks | 18 files |
 | Phase 04 P06 | 5 | 2 tasks | 9 files |
+| Phase 05 P01 | 6 | 2 tasks | 14 files |
+| Phase 05 P02 | 6 | 2 tasks | 9 files |
+| Phase 06 P01 | 21 | 2 tasks | 28 files |
+| Phase 06 P02 | 5 | 2 tasks | 16 files |
+| Phase 07 P01 | 31 | 3 tasks | 55 files |
+| Phase 07 P02 | 14 | 2 tasks | 18 files |
+| Phase 08 P01 | 8 | 2 tasks | 22 files |
+| Phase 08 P02 | 8 | 3 tasks | 14 files |
+| Phase 08 P03 | 1 | 1 tasks | 2 files |
+| Phase 07.1 P01 | 6 | 2 tasks | 1 files |
+| Phase 09 P01 | 8 | 2 tasks | 14 files |
+| Phase 09 P02 | 4 | 2 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -143,6 +163,53 @@ Recent decisions affecting current work:
 - [Phase 04]: ItemPicker onSelect returns both IDs and LinkedItemResponse for store hydration without extra API calls
 - [Phase 04]: PostCard shows max 3 linked item badges with overflow count for compact feed display
 - [Phase 04]: Checklist detail replaced manual ID input with ItemPicker in single-select mode
+- [05-01]: SearchService uses PrismaService directly for hashtag _count aggregation instead of PostsService.searchHashtags
+- [05-01]: Explore feed is public with no guard and empty liked/bookmarked sets
+- [05-01]: Hashtag posts endpoint placed before :id param route to avoid route conflict
+- [05-02]: useSearchItemsGlobal named to avoid collision with existing useSearchItems in collection-queries.ts
+- [05-02]: Explore page uses useExploreFeed for category sections and usePublicFeed for "Moi nhat" chronological fallback
+- [05-02]: ExploreCategorySectionComponent accesses post.media[0].url for thumbnail display with gradient placeholder
+- [06-01]: NotificationsGateway as injectable service with per-user Subject map (not WebSocket gateway) for SSE
+- [06-01]: Notification grouping via groupKey pattern (type:targetId) with 5-min window
+- [06-01]: Vietnamese notification messages composed in service with actor count-aware text
+- [06-01]: Push service graceful degradation when VAPID keys not configured
+- [06-01]: BullModule.registerQueue added to PostsModule, CommentsModule, SocialModule for notification enqueuing
+- [06-01]: @mention detection uses /@(\w+)/g regex with batch username resolution and deduplication
+- [Phase 06]: Instagram 5-tab BottomNav: Home, Search, Create, Heart (notifications), Profile
+- [Phase 06]: Top header bar with Figly logo, notification bell, and user avatar
+- [Phase 06]: Auto-mark-as-read via IntersectionObserver on NotificationItem
+- [Phase 06]: Push permission gated behind 2+ sessions via localStorage counter
+- [07-01]: Block is bidirectional: both blocker and blocked are hidden from each other
+- [07-01]: Ban check added to JwtStrategy validate for per-request enforcement
+- [07-01]: Block transaction includes follow cleanup in both directions
+- [07-01]: Banned user content hidden globally (feed, search, profiles) not just per-viewer
+- [07-01]: Mute is one-directional: only affects muter's feed/notifications
+- [07-01]: Report is unique per (reporter, target, targetType) with P2002 upsert
+- [Phase 07]: PublicUser role field pulled forward to Task 1 for admin UI gating compile-time correctness
+- [Phase 07]: Admin actions in PostMenu and UserActionMenu share admin-queries hooks for consistency
+- [08-01]: Socket.IO with NestJS 10 compat (@nestjs/websockets@^10) for peer dependency alignment
+- [08-01]: WebSocket JWT auth via cookie parsing (access_token) matching existing auth flow
+- [08-01]: userSockets Map<userId, Set<socketId>> for multi-device connection tracking
+- [08-01]: Room-based broadcast (conv:{conversationId}) for efficient message delivery
+- [08-01]: 1-on-1 duplicate prevention via findFirst with AND participant queries
+- [08-02]: Socket.IO connection at app layout level for app-wide real-time messaging
+- [08-02]: DM icon (MessageCircle) before NotificationBell in header per Instagram pattern
+- [08-02]: Bottom nav unchanged at 5 tabs -- DMs from header only
+- [08-02]: Read receipts via lastReadAt with Check/CheckCheck icons
+- [08-02]: Media upload via existing /media/upload before socket sendMessage
+- [Phase 08-03]: No frontend changes needed -- frontend already expects wrapped { message, conversationId } payload shape
+- [07.1-01]: Removed legacy single-container Dockerfile to prevent confusion with split setup
+- [07.1-01]: Backend entrypoint made executable locally for developer consistency
+- [09-01]: Video upload marks COMPLETED immediately (no Sharp processing); ffmpeg thumbnail generation deferred
+- [09-01]: Story cleanup via BullMQ repeatable job every 15 min (not cron)
+- [09-01]: Story feed grouped by user with unviewed-first sort, own stories separated as myStories
+- [09-01]: Self-views not tracked to avoid inflating view counts
+- [09-01]: Presigned URLs for story media use 24h expiry matching story TTL
+- [09-01]: class-validator DTO pattern (not nestjs-zod) following existing project convention
+- [09-02]: apiClient from @/lib/api-client used instead of plan's api from @/lib/api to match project convention
+- [09-02]: Progress bar auto-advance via CSS animation onAnimationEnd for images, onEnded for video
+- [09-02]: Touch zone split: left 40% previous, right 60% next for story viewer navigation
+- [09-02]: Delete confirmation uses shadcn AlertDialog with Vietnamese copy
 
 ### Pending Todos
 
@@ -151,6 +218,7 @@ None yet.
 ### Roadmap Evolution
 
 - Phase 3.1 inserted after Phase 3: Public Viewing Mode (URGENT)
+- Phase 7.1 inserted after Phase 7: Docker Split — tách figly-app thành 2 container riêng figly-frontend + figly-backend (URGENT)
 
 ### Blockers/Concerns
 
@@ -158,6 +226,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T00:19:51Z
-Stopped at: Completed 04-06-PLAN.md
-Resume file: None
+Last session: 2026-03-20T10:56:45.586Z
+Stopped at: Phase 10 context gathered
+Resume file: .planning/phases/10-reels/10-CONTEXT.md

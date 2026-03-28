@@ -4,8 +4,11 @@ import {
   NotFoundException,
   ForbiddenException,
 } from '@nestjs/common';
+import { InjectQueue } from '@nestjs/bullmq';
+import { Queue } from 'bullmq';
 import { PrismaService } from '../prisma/prisma.service';
 import { StorageService } from '../media/storage.service';
+import { ModerationService } from '../moderation/moderation.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { POST_LIMITS } from '@figly/shared';
@@ -15,6 +18,8 @@ export class PostsService {
   constructor(
     private prisma: PrismaService,
     private storageService: StorageService,
+    private moderationService: ModerationService,
+    @InjectQueue('notification') private notificationQueue: Queue,
   ) {}
 
   async createPost(userId: string, dto: CreatePostDto) {
@@ -87,6 +92,7 @@ export class PostsService {
             id: true,
             username: true,
             name: true,
+            isBanned: true,
             avatar: { select: { mediumKey: true } },
           },
         },
@@ -118,6 +124,17 @@ export class PostsService {
     });
 
     if (!post) {
+      throw new NotFoundException('Bai viet khong ton tai');
+    }
+
+    // Check block status and banned user
+    if (viewerId) {
+      const blockedIds = await this.moderationService.getBlockedUserIds(viewerId);
+      if (blockedIds.includes(post.user.id)) {
+        throw new NotFoundException('Bai viet khong ton tai');
+      }
+    }
+    if ((post as any).user?.isBanned) {
       throw new NotFoundException('Bai viet khong ton tai');
     }
 
@@ -257,6 +274,21 @@ export class PostsService {
         await this.prisma.like.create({
           data: { userId, postId },
         });
+
+        // Enqueue notification for post author
+        const post = await this.prisma.post.findUnique({
+          where: { id: postId },
+          select: { userId: true },
+        });
+        if (post) {
+          await this.notificationQueue.add('notification', {
+            type: 'like',
+            actorId: userId,
+            recipientId: post.userId,
+            targetId: postId,
+            targetType: 'post',
+          });
+        }
       } catch (error: any) {
         if (error.code === 'P2002') return { success: true };
         throw error;
@@ -298,8 +330,16 @@ export class PostsService {
   }
 
   async getSavedPosts(userId: string, cursor?: string, take = POST_LIMITS.feedPageSize) {
+    const blockedIds = await this.moderationService.getBlockedUserIds(userId);
+
     const bookmarks = await this.prisma.bookmark.findMany({
-      where: { userId },
+      where: {
+        userId,
+        post: {
+          userId: blockedIds.length > 0 ? { notIn: blockedIds } : undefined,
+          user: { isBanned: false },
+        },
+      },
       include: {
         post: {
           include: {
@@ -371,11 +411,24 @@ export class PostsService {
   async getUserPosts(username: string, viewerId: string | null, cursor?: string, take = POST_LIMITS.feedPageSize) {
     const user = await this.prisma.user.findUnique({
       where: { username },
-      select: { id: true },
+      select: { id: true, isBanned: true },
     });
 
     if (!user) {
       throw new NotFoundException('Nguoi dung khong ton tai');
+    }
+
+    // Check block status between viewer and profile owner
+    if (viewerId) {
+      const blockedIds = await this.moderationService.getBlockedUserIds(viewerId);
+      if (blockedIds.includes(user.id)) {
+        return { items: [], nextCursor: null, hasMore: false };
+      }
+    }
+
+    // Hide banned user posts
+    if (user.isBanned) {
+      return { items: [], nextCursor: null, hasMore: false };
     }
 
     const posts = await this.prisma.post.findMany({
@@ -460,6 +513,112 @@ export class PostsService {
       where: { name: { startsWith: query.toLowerCase(), mode: 'insensitive' } },
       take: limit,
     });
+  }
+
+  async getPostsByHashtag(
+    hashtagName: string,
+    viewerId: string | null,
+    cursor?: string,
+    take = POST_LIMITS.feedPageSize,
+  ) {
+    const name = hashtagName.toLowerCase();
+
+    const hashtag = await this.prisma.hashtag.findUnique({
+      where: { name },
+      include: { _count: { select: { posts: true } } },
+    });
+
+    if (!hashtag) {
+      throw new NotFoundException('Hashtag khong ton tai');
+    }
+
+    // Get blocked users for filtering
+    const blockedIds = viewerId ? await this.moderationService.getBlockedUserIds(viewerId) : [];
+
+    const posts = await this.prisma.post.findMany({
+      where: {
+        hashtags: { some: { hashtag: { name } } },
+        userId: blockedIds.length > 0 ? { notIn: blockedIds } : undefined,
+        user: { isBanned: false },
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            username: true,
+            name: true,
+            avatar: { select: { mediumKey: true } },
+          },
+        },
+        media: {
+          include: {
+            media: { select: { id: true, largeKey: true } },
+          },
+          orderBy: { position: 'asc' as const },
+        },
+        items: {
+          include: {
+            item: {
+              select: {
+                id: true,
+                name: true,
+                imageKey: true,
+                series: {
+                  select: {
+                    name: true,
+                    category: { select: { name: true } },
+                  },
+                },
+              },
+            },
+          },
+        },
+        _count: { select: { likes: true, comments: true } },
+      },
+      orderBy: { createdAt: 'desc' as const },
+      take: take + 1,
+      ...(cursor && {
+        cursor: { id: cursor },
+        skip: 1,
+      }),
+    });
+
+    const hasMore = posts.length > take;
+    const items = posts.slice(0, take);
+    const nextCursor = hasMore ? items[items.length - 1].id : null;
+
+    // Batch check like/bookmark status (skip when unauthenticated)
+    const postIds = items.map((p: any) => p.id);
+    let likedSet = new Set<string>();
+    let bookmarkedSet = new Set<string>();
+    if (viewerId) {
+      const [likes, bookmarks] = await Promise.all([
+        this.prisma.like.findMany({
+          where: { userId: viewerId, postId: { in: postIds } },
+          select: { postId: true },
+        }),
+        this.prisma.bookmark.findMany({
+          where: { userId: viewerId, postId: { in: postIds } },
+          select: { postId: true },
+        }),
+      ]);
+      likedSet = new Set(likes.map((l: any) => l.postId));
+      bookmarkedSet = new Set(bookmarks.map((b: any) => b.postId));
+    }
+
+    // Batch resolve presigned URLs
+    const urlMap = await this.resolvePresignedUrls(items);
+
+    return {
+      hashtag: {
+        id: hashtag.id,
+        name: hashtag.name,
+        postCount: (hashtag as any)._count.posts,
+      },
+      items: items.map((post: any) => this.mapPostResponse(post, likedSet, bookmarkedSet, urlMap)),
+      nextCursor,
+      hasMore,
+    };
   }
 
   private extractHashtags(text: string): string[] {
