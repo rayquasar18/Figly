@@ -11,7 +11,7 @@ import * as argon2 from 'argon2';
 import * as crypto from 'crypto';
 import { PrismaService } from '../prisma/prisma.service';
 import { EmailService } from '../email/email.service';
-import { TOKEN_EXPIRY } from '@figly/shared';
+import { TOKEN_EXPIRY, RESERVED_USERNAMES } from '@figly/shared';
 import type { TokenPair } from '@figly/shared';
 
 @Injectable()
@@ -27,7 +27,7 @@ export class AuthService {
   // Signup & Login
   // ---------------------
 
-  async signup(dto: { email: string; password: string; name: string }) {
+  async signup(dto: { email: string; password: string; name: string; username: string }) {
     // Check email uniqueness
     const existing = await this.prisma.user.findUnique({
       where: { email: dto.email },
@@ -37,28 +37,43 @@ export class AuthService {
       throw new ConflictException('Email da duoc su dung');
     }
 
+    // Check reserved usernames
+    if ((RESERVED_USERNAMES as readonly string[]).includes(dto.username.toLowerCase())) {
+      throw new BadRequestException('Ten nguoi dung nay da duoc dat truoc');
+    }
+
     // Hash password with Argon2
     const passwordHash = await argon2.hash(dto.password);
 
-    // Create user with emailVerified=false
-    const user = await this.prisma.user.create({
-      data: {
-        email: dto.email,
-        passwordHash,
-        name: dto.name,
-        emailVerified: false,
-      },
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        emailVerified: true,
-        createdAt: true,
-        updatedAt: true,
-      },
-    });
+    // Create user with username
+    try {
+      const user = await this.prisma.user.create({
+        data: {
+          email: dto.email,
+          passwordHash,
+          name: dto.name,
+          username: dto.username,
+          emailVerified: false,
+        },
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          username: true,
+          emailVerified: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      });
 
-    return user;
+      return user;
+    } catch (error: any) {
+      // Handle Prisma unique constraint violation (P2002)
+      if (error.code === 'P2002' && error.meta?.target?.includes('username')) {
+        throw new ConflictException('Ten nguoi dung da duoc su dung');
+      }
+      throw error;
+    }
   }
 
   async validateUser(email: string, password: string) {
@@ -69,6 +84,11 @@ export class AuthService {
 
     if (!user) {
       throw new UnauthorizedException('Email khong ton tai');
+    }
+
+    // Check ban status BEFORE password check
+    if (user.isBanned) {
+      throw new ForbiddenException('Tai khoan cua ban da bi cam');
     }
 
     // Verify password
@@ -168,11 +188,20 @@ export class AuthService {
     // Get user for new token generation
     const user = await this.prisma.user.findUnique({
       where: { id: userId },
-      select: { id: true, email: true },
+      select: { id: true, email: true, isBanned: true },
     });
 
     if (!user) {
       throw new UnauthorizedException('User khong ton tai');
+    }
+
+    // Check ban status
+    if (user.isBanned) {
+      // Delete all refresh tokens for banned user
+      await this.prisma.refreshToken.deleteMany({
+        where: { userId },
+      });
+      throw new ForbiddenException('Tai khoan cua ban da bi cam');
     }
 
     // Generate new token pair
@@ -348,6 +377,9 @@ export class AuthService {
     });
 
     if (existingByGoogleId) {
+      if (existingByGoogleId.isBanned) {
+        throw new ForbiddenException('Tai khoan cua ban da bi cam');
+      }
       return existingByGoogleId;
     }
 
@@ -357,6 +389,9 @@ export class AuthService {
     });
 
     if (existingByEmail) {
+      if (existingByEmail.isBanned) {
+        throw new ForbiddenException('Tai khoan cua ban da bi cam');
+      }
       return this.prisma.user.update({
         where: { id: existingByEmail.id },
         data: {
@@ -386,6 +421,9 @@ export class AuthService {
     });
 
     if (existingByAppleId) {
+      if (existingByAppleId.isBanned) {
+        throw new ForbiddenException('Tai khoan cua ban da bi cam');
+      }
       return existingByAppleId;
     }
 
@@ -395,6 +433,9 @@ export class AuthService {
     });
 
     if (existingByEmail) {
+      if (existingByEmail.isBanned) {
+        throw new ForbiddenException('Tai khoan cua ban da bi cam');
+      }
       return this.prisma.user.update({
         where: { id: existingByEmail.id },
         data: {
@@ -429,7 +470,9 @@ export class AuthService {
         id: true,
         email: true,
         name: true,
+        username: true,
         emailVerified: true,
+        role: true,
       },
     });
 

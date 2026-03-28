@@ -11,6 +11,11 @@ services:
       POSTGRES_DB: figly
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U figly"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   redis:
     image: redis:7-alpine
@@ -20,6 +25,11 @@ services:
       - "6379:6379"
     volumes:
       - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   minio:
     image: minio/minio:latest
@@ -34,12 +44,18 @@ services:
     volumes:
       - minio_data:/data
     command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   minio-init:
     image: minio/mc:latest
     container_name: figly-minio-init
     depends_on:
-      - minio
+      minio:
+        condition: service_healthy
     entrypoint: >
       /bin/sh -c "
       sleep 3;
@@ -48,6 +64,49 @@ services:
       mc anonymous set download local/figly-media;
       echo 'Bucket figly-media created with public download policy';
       "
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: figly-backend
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      DATABASE_URL: postgresql://figly:figly_dev@figly-postgres:5432/figly
+      REDIS_URL: redis://figly-redis:6379
+      MINIO_ENDPOINT: figly-minio
+      MINIO_PORT: 9000
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+      MINIO_BUCKET: figly-media
+      JWT_ACCESS_SECRET: dev-access-secret-change-in-prod
+      JWT_REFRESH_SECRET: dev-refresh-secret-change-in-prod
+      FRONTEND_URL: http://localhost:3000
+      RESEND_API_KEY: re_dev_placeholder
+      PORT: 4000
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio-init:
+        condition: service_completed_successfully
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:4000/api
+    container_name: figly-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      backend:
+        condition: service_started
 
 volumes:
   postgres_data:

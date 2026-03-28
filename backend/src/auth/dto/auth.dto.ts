@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength, Matches } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, MinLength, MaxLength, Matches } from 'class-validator';
 
 export class SignupDto {
   @IsEmail({}, { message: 'Email khong hop le' })
@@ -13,6 +13,12 @@ export class SignupDto {
   @IsString()
   @IsNotEmpty({ message: 'Ten khong duoc de trong' })
   name!: string;
+
+  @IsString({ message: 'Ten nguoi dung phai la chuoi ky tu' })
+  @MinLength(3, { message: 'Ten nguoi dung phai co it nhat 3 ky tu' })
+  @MaxLength(30, { message: 'Ten nguoi dung khong duoc vuot qua 30 ky tu' })
+  @Matches(/^[a-z0-9_.]+$/, { message: 'Ten nguoi dung chi chua chu thuong, so, dau gach duoi va dau cham' })
+  username!: string;
 }
 
 export class LoginDto {

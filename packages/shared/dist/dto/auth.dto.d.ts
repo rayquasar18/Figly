@@ -3,14 +3,17 @@ export declare const signupSchema: z.ZodObject<{
     email: z.ZodString;
     password: z.ZodString;
     name: z.ZodString;
+    username: z.ZodString;
 }, "strip", z.ZodTypeAny, {
     email: string;
     password: string;
     name: string;
+    username: string;
 }, {
     email: string;
     password: string;
     name: string;
+    username: string;
 }>;
 export declare const loginSchema: z.ZodObject<{
     email: z.ZodString;

@@ -1,9 +1,11 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { signupSchema, type SignupDto } from '@figly/shared';
+import { signupSchema, type SignupDto, USERNAME_RULES } from '@figly/shared';
 import { useSignupMutation } from '@/hooks/queries/auth-queries';
+import { useCheckUsername } from '@/hooks/queries/profile-queries';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -13,15 +15,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription,
 } from '@/components/ui/form';
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AxiosError } from 'axios';
+import { Check, X, Loader2 } from 'lucide-react';
 
 export function SignupForm() {
   const router = useRouter();
   const signupMutation = useSignupMutation();
   const [serverError, setServerError] = useState<string | null>(null);
+  const [debouncedUsername, setDebouncedUsername] = useState('');
 
   const form = useForm<SignupDto>({
     resolver: zodResolver(signupSchema),
@@ -29,8 +33,23 @@ export function SignupForm() {
       email: '',
       password: '',
       name: '',
+      username: '',
     },
   });
+
+  const watchedUsername = form.watch('username');
+
+  // Debounce username for availability check
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedUsername(watchedUsername ?? '');
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [watchedUsername]);
+
+  const shouldCheck = debouncedUsername.length >= USERNAME_RULES.minLength;
+  const { data: usernameCheck, isFetching: isCheckingUsername } =
+    useCheckUsername(shouldCheck ? debouncedUsername : '');
 
   async function onSubmit(data: SignupDto) {
     setServerError(null);
@@ -74,6 +93,45 @@ export function SignupForm() {
                   {...field}
                 />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Ten nguoi dung</FormLabel>
+              <FormControl>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
+                    @
+                  </span>
+                  <Input
+                    className="pl-7"
+                    placeholder="username"
+                    autoComplete="username"
+                    {...field}
+                  />
+                  {/* Availability indicator */}
+                  {shouldCheck && (
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2">
+                      {isCheckingUsername ? (
+                        <Loader2 className="size-4 animate-spin text-muted-foreground" />
+                      ) : usernameCheck?.available ? (
+                        <Check className="size-4 text-green-600" />
+                      ) : (
+                        <X className="size-4 text-red-500" />
+                      )}
+                    </span>
+                  )}
+                </div>
+              </FormControl>
+              <FormDescription>
+                Chi chua chu thuong, so, dau gach duoi va dau cham
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
