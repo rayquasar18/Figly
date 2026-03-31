@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Figly là một mạng xã hội dành cho người sưu tập (collectors), lấy cảm hứng từ Instagram. Hiện tại đã ship v1.0 MVP với core social features (feed, posts, profiles, follow, likes/comments/bookmarks), collection system (shared database, owned/wishlist tracking, custom checklists), public viewing mode, và reels. Hỗ trợ nhiều loại sưu tập: Gundam, figurine, sneakers, trading cards.
+Figly là một mạng xã hội dành cho người sưu tập (collectors), lấy cảm hứng từ Instagram. Đã ship v2.0 với production-ready architecture: React 19, Next.js 16, NestJS 11, SSR/SEO, structured logging, Docker dual-container, CI/CD. Core features: feed, posts, profiles, follow, likes/comments/bookmarks, collection system, public viewing mode, reels.
 
 ## Core Value
 
@@ -27,23 +27,22 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 - ✓ Collection showcase on profile — v1.0
 - ✓ Short-form video reels with vertical scroll feed — v1.0
 - ✓ Media upload (photos/videos) with async processing — v1.0
+- ✓ Framework upgrades (React 19, Next.js 16, NestJS 11) — v2.0
+- ✓ Frontend restructure to features/ pattern — v2.0
+- ✓ SSR/SEO with Server Components and generateMetadata — v2.0
+- ✓ Backend hardening (env validation, exception filter, Pino logging, health checks) — v2.0
+- ✓ Unified DTO validation with nestjs-zod — v2.0
+- ✓ Redis-backed rate limiter — v2.0
+- ✓ ESLint/Prettier/Husky + GitHub Actions CI/CD — v2.0
+- ✓ Docker dual-container split — v2.0
+- ✓ Shared package cleanup (schemas/, no dist/) — v2.0
+- ✓ Auth middleware for server-side redirects — v2.0
+- ✓ Dark mode support (ThemeProvider) — v2.0
 
 ### Active
 
-**v2.0 — Architecture & Production Hardening:**
-- [x] Tai cau truc thu muc frontend/backend theo chuan best practice — Validated in Phase 18
-- [x] Cap nhat framework len phien ban moi nhat (React 19, Next.js 16, NestJS 11) — Validated in Phase 12, 18
-- [x] Don file thua, tai cau truc shared package — Validated in Phase 16
-- [x] Env validation, global exception filter, structured logging — Validated in Phase 13
-- [x] Next.js middleware, SSR/SEO cho trang cong khai — Validated in Phase 18
-- [x] Swagger/OpenAPI — Validated in Phase 13
-- [x] ESLint/Prettier/Husky, CI/CD — Validated in Phase 15
-- [x] Docker split 2 container — Validated in Phase 15
-- [x] Redis-backed rate limiter — Validated in Phase 13
-- [x] Thong nhat DTO validation, response serialization, health check — Validated in Phase 13
-- [ ] ThemeProvider dark mode
-
 **Deferred features (v2.1+):**
+
 - [ ] Search for users, hashtags, and collection items (DISC-01, DISC-02, DISC-03)
 - [ ] Real-time in-app notifications + push notifications via PWA (NOTF-01, NOTF-02, NOTF-03)
 - [ ] Report/block/mute users + admin moderation queue (MODR-01, MODR-02, MODR-03, MODR-04)
@@ -59,128 +58,53 @@ Người sưu tập có thể chia sẻ, khoe và quản lý bộ sưu tập c�
 - Auction system — full auction logic is an entire product
 - Offline mode — real-time is core value
 
-## Current Milestone: v2.0 Architecture & Production Hardening
-
-**Goal:** Nang cap kien truc, cau truc thu muc, cap nhat framework len phien ban moi nhat, bo sung cac thanh phan production-ready, va don dep code thua — truoc khi xay tinh nang moi.
-
-**Target features:**
-- Tai cau truc thu muc frontend va backend theo chuan best practice
-- ✓ Cap nhat Next.js, React, NestJS len phien ban moi nhat (React 19, Next.js 16, NestJS 11) — Phase 12
-- Don file thua, sua shared package cho kien truc doc lap
-- Env validation, global exception filter, structured logging (Pino)
-- Next.js middleware cho auth redirect (xoa flash of content)
-- SSR/SEO cho cac trang cong khai voi generateMetadata()
-- Swagger/OpenAPI documentation
-- ESLint + Prettier + Husky/lint-staged
-- CI/CD pipeline (GitHub Actions)
-- Docker split thanh 2 container rieng biet
-- Thong nhat DTO validation (nestjs-zod thay class-validator trung lap)
-- Health check endpoint
-- Redis-backed rate limiter
-- Response serialization layer
-- ThemeProvider cho dark mode
-
 ## Current State
 
-**v1.0 MVP shipped 2026-03-20**
-- 23,289 LOC TypeScript + 782 LOC Prisma
-- 8 phases completed (1, 2, 3, 3.1, 4, 10, 11, 12, 13, 14, 15, 16, 17), 35 plans executed
-- NestJS backend + Next.js frontend monorepo
-- PostgreSQL (Prisma), MinIO media storage, BullMQ async processing
-- ffmpeg video transcoding for reels
+**v2.0 shipped 2026-03-31**
 
-**Phase 17 complete (2026-03-26):**
-- app.module.ts restored to full Phase 13 state: validateEnv, AllExceptionsFilter, LoggerModule, HealthModule, RedisModule, ZodValidationPipe, ZodSerializerInterceptor, ThrottlerStorageRedisService
-- 3 DTO files restored from class-validator to createZodDto (auth, profile, checklist)
-- @ZodSerializerDto decorators restored on auth controller signup/login/me
-- Null-safe name handling (user.name || 'ban') applied
-- 238 unit tests pass, verification 10/10
+- 23,321 LOC TypeScript
+- 14 phases completed (v1.0: 6, v2.0: 8), 46 plans executed
+- NestJS 11 backend + Next.js 16 frontend monorepo
+- PostgreSQL (Prisma), MinIO media storage, BullMQ async processing, Redis
+- Docker: figly-frontend + figly-backend containers
+- CI/CD: GitHub Actions (lint, typecheck, build, test)
 
-**Phase 16 complete (2026-03-26):**
-- Shared package dto/ renamed to schemas/ (7 files) with barrel imports updated
-- createReelSchema, CreateReelInput, REEL_LIMITS missing barrel exports fixed
-- 52 dist/ build artifacts removed from git tracking
-- .gitignore configured to prevent re-adding dist/
-- D-08 (main field change) deferred — Node.js cannot require .ts at runtime in Docker
+**Tech debt:**
 
-**Phase 15 complete (2026-03-25):**
-- ESLint 9 flat config + Prettier enforced across all 3 workspaces (zero errors)
-- Husky pre-commit hook with lint-staged auto-formatting
-- GitHub Actions CI/CD with 4 parallel jobs (lint, typecheck, build, test)
-- Docker dual-container split: figly-frontend (Next.js standalone) + figly-backend (NestJS)
-- Docker internal network (figly-net) for container communication
-
-**Phase 13 complete (2026-03-25):**
-- Zod env validation — rejects missing JWT secrets and DATABASE_URL at startup
-- All 7 DTO files migrated from class-validator to nestjs-zod (class-validator removed)
-- Global exception filter with Prisma error mapping (no stack traces leaked)
-- Pino structured JSON logging with header redaction
-- Health check endpoint (/health) with Prisma/Redis/MinIO indicators
-- Redis-backed rate limiter (replaced in-memory)
-- Swagger/OpenAPI at /api/docs
-- Response serialization stripping internal fields (passwordHash, etc.)
-
-**Phase 12 complete (2026-03-24):**
-- NestJS upgraded v10→v11 with all satellites aligned
-- React.forwardRef removed from all 20 shadcn/ui components (React 19 ref-as-prop)
-- 4 pages migrated from useParams() to async params with use() hook
-- Zero deprecation warnings remaining
-
-**Phase 11 complete (2026-03-24):**
-- Signup simplified to email+password only (name/username deferred to complete-profile)
-- Profile redirect loop fixed (auth cache invalidation)
-- Explore page null-username filter added
-- Instagram-style desktop sidebar navigation (220px fixed left sidebar)
-
-**Known gaps from v1.0:**
-- Phases 5-9 (Search, Notifications, Moderation, DM, Stories) not yet built
-- Docker dual-container setup incomplete (Phase 7.1)
-
-**Architecture audit findings (v2.0 trigger):**
-- Tat ca trang frontend la 'use client' — khong SSR, khong SEO
-- Khong co env validation — ~~JWT secret fallback ve gia tri mac dinh (lo hong bao mat)~~ Fixed Phase 13
-- Khong co global exception filter — ~~lo Prisma error ra client~~ Fixed Phase 13
-- Khong co structured logging — ~~chi NestJS Logger co ban~~ Fixed Phase 13
-- Khong co middleware.ts — auth redirect phia client gay nhap nhay
-- ~~Khong co Swagger/OpenAPI~~ Fixed Phase 13
-- Khong co ESLint/Prettier/Husky config
-- Khong co CI/CD
-- Docker la 1 container ket hop (can tach 2)
-- ~~DTO validation trung lap giua class-validator va Zod~~ Fixed Phase 13 (class-validator removed)
-- ~~Rate limiter dung bo nho trong tien trinh (khong Redis)~~ Fixed Phase 13
-- ThemeProvider thieu (dark mode la ma chet)
-- Thu muc frontend/backend chua theo chuan best practice
-- ~~Shared package can tai cau truc cho doc lap hon~~ Fixed Phase 16
+- Swagger setup in main.ts needs restoration (~10 lines)
+- app.useLogger() for bootstrap logs not wired to Pino
+- Some plan checkboxes in ROADMAP unchecked due to worktree merge (plans actually executed)
 
 ## Constraints
 
-- **Tech stack**: Next.js (frontend) + NestJS (backend) — validated
+- **Tech stack**: Next.js 16 (frontend) + NestJS 11 (backend)
 - **Platform**: Web only, responsive design
 - **Monorepo**: frontend + backend + shared packages
-- **Media storage**: MinIO (S3-compatible) — decided
-- **Database**: PostgreSQL with Prisma ORM — decided
-- **Async processing**: BullMQ with Redis — decided
-- **Video transcoding**: ffmpeg via BullMQ workers — decided
+- **Media storage**: MinIO (S3-compatible)
+- **Database**: PostgreSQL with Prisma ORM
+- **Async processing**: BullMQ with Redis
+- **Video transcoding**: ffmpeg via BullMQ workers
 
 ## Key Decisions
 
-| Decision | Rationale | Outcome |
-|----------|-----------|---------|
-| Next.js frontend | SSR, routing, React ecosystem | ✓ Good |
-| NestJS backend | TypeScript, modular architecture, scalable | ✓ Good |
-| Web only | Focus resources, mobile later | ✓ Good |
-| PostgreSQL + Prisma | Relational data, type-safe ORM | ✓ Good |
-| MinIO for media | S3-compatible, self-hosted, cost-effective | ✓ Good |
-| BullMQ + Redis | Async media processing, job queues | ✓ Good |
-| Source-only shared package | TypeScript source imported directly by workspace tooling | ✓ Good |
-| Fan-out-on-read feed | Simple query with Follow subquery, sufficient at current scale | ⚠ Revisit at scale |
-| Argon2 for passwords | Strongest password hashing | ✓ Good |
-| Vietnamese UI messages | User preference for Vietnamese error/validation messages | ✓ Good |
-| Collection system early (Phase 4) | Core differentiator validated early | ✓ Good |
-| Reels before Stories | Reels infrastructure enables Stories implementation | ✓ Good |
-| ffmpeg self-hosted | Cost-effective for MVP, consider MediaConvert later | ⚠ Revisit at scale |
-
-| v2.0 Architecture milestone | Audit revealed 15+ production gaps; fix before adding features | — Pending |
+| Decision                        | Rationale                                                      | Outcome                  |
+| ------------------------------- | -------------------------------------------------------------- | ------------------------ |
+| Next.js frontend                | SSR, routing, React ecosystem                                  | ✓ Good                   |
+| NestJS backend                  | TypeScript, modular architecture, scalable                     | ✓ Good                   |
+| Web only                        | Focus resources, mobile later                                  | ✓ Good                   |
+| PostgreSQL + Prisma             | Relational data, type-safe ORM                                 | ✓ Good                   |
+| MinIO for media                 | S3-compatible, self-hosted, cost-effective                     | ✓ Good                   |
+| BullMQ + Redis                  | Async media processing, job queues                             | ✓ Good                   |
+| Source-only shared package      | TypeScript source imported directly by workspace tooling       | ✓ Good                   |
+| Fan-out-on-read feed            | Simple query with Follow subquery, sufficient at current scale | ⚠ Revisit at scale       |
+| Argon2 for passwords            | Strongest password hashing                                     | ✓ Good                   |
+| Vietnamese UI messages          | User preference for Vietnamese error/validation messages       | ✓ Good                   |
+| v2.0 Architecture milestone     | Audit revealed 15+ production gaps; fix before adding features | ✓ Good — all gaps closed |
+| nestjs-zod over class-validator | Single validation source (shared Zod schemas)                  | ✓ Good                   |
+| features/ directory pattern     | Domain-grouped frontend code                                   | ✓ Good                   |
+| Docker dual-container           | Independent scaling, cleaner deployment                        | ✓ Good                   |
+| ESLint 9 flat config            | Modern config format, workspace-aware                          | ✓ Good                   |
 
 ---
-*Last updated: 2026-03-26 after Phase 17 completion*
+
+_Last updated: 2026-03-31 after v2.0 milestone_
