@@ -2,15 +2,15 @@
 
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { useMe } from '@/hooks/queries/auth-queries';
+import Link from 'next/link';
+import { useMe } from '@/features/auth';
 import { BottomNav } from '@/components/layout/bottom-nav';
-import { CreatePostFlow } from '@/components/create-post/create-post-flow';
+import { Sidebar } from '@/components/layout/sidebar';
+import { HeaderSearch } from '@/components/layout/header-search';
+import { CreatePostFlow } from '@/features/create-post';
+import { CreateReelFlow } from '@/features/reel';
 
-export default function AppLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AppLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const { data: user, isLoading, isError } = useMe();
@@ -61,11 +61,28 @@ export default function AppLayout({
     return null;
   }
 
+  // Hide header on full-screen pages like /reels
+  const hideHeader = pathname.startsWith('/reels');
+
   return (
     <>
-      <main className="pb-14 md:pb-0">{children}</main>
+      <Sidebar />
+      <div className="md:ml-[220px]">
+        {!hideHeader && (
+          <header className="sticky top-0 z-40 border-b bg-background">
+            <div className="mx-auto flex h-14 max-w-4xl items-center justify-between px-4">
+              <Link href="/" className="text-xl font-bold md:hidden">
+                Figly
+              </Link>
+              <HeaderSearch />
+            </div>
+          </header>
+        )}
+        <main className="pb-14 md:pb-0">{children}</main>
+      </div>
       <BottomNav />
       <CreatePostFlow />
+      <CreateReelFlow />
     </>
   );
 }

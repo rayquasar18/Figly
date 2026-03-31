@@ -15,6 +15,7 @@ import {
 import { Request } from 'express';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
+import { CreateReelDto } from './dto/create-reel.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { EmailVerifiedGuard } from '../auth/guards/email-verified.guard';
@@ -24,6 +25,14 @@ import { OptionalJwtAuthGuard } from '../auth/guards/optional-jwt-auth.guard';
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
+  // Static routes MUST be before :id param routes
+  @Post('reel')
+  @UseGuards(JwtAuthGuard, EmailVerifiedGuard)
+  async createReel(@Body() dto: CreateReelDto, @Req() req: Request) {
+    const { userId } = req.user as any;
+    return this.postsService.createReel(userId, dto);
+  }
+
   @Post()
   @UseGuards(JwtAuthGuard, EmailVerifiedGuard)
   async createPost(@Body() dto: CreatePostDto, @Req() req: Request) {
@@ -31,15 +40,22 @@ export class PostsController {
     return this.postsService.createPost(userId, dto);
   }
 
-  // Static routes MUST be before :id param routes
   @Get('saved')
   @UseGuards(JwtAuthGuard, EmailVerifiedGuard)
-  async getSavedPosts(
+  async getSavedPosts(@Req() req: Request, @Query('cursor') cursor?: string) {
+    const { userId } = req.user as any;
+    return this.postsService.getSavedPosts(userId, cursor);
+  }
+
+  @Get('user/:username/reels')
+  @UseGuards(OptionalJwtAuthGuard)
+  async getUserReels(
+    @Param('username') username: string,
     @Req() req: Request,
     @Query('cursor') cursor?: string,
   ) {
-    const { userId } = req.user as any;
-    return this.postsService.getSavedPosts(userId, cursor);
+    const viewerId = (req.user as any)?.userId || null;
+    return this.postsService.getUserReels(username, viewerId, cursor);
   }
 
   @Get('user/:username')

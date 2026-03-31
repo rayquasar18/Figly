@@ -62,10 +62,7 @@ describe('FeedService', () => {
 
   describe('getFeed', () => {
     it('should return followed + own posts in chronological order', async () => {
-      const posts = [
-        createMockPost('post-2', 'followed-user'),
-        createMockPost('post-1', 'user-1'),
-      ];
+      const posts = [createMockPost('post-2', 'followed-user'), createMockPost('post-1', 'user-1')];
 
       mockPrisma.post.findMany.mockResolvedValue(posts);
       mockPrisma.like.findMany.mockResolvedValue([]);
@@ -93,9 +90,7 @@ describe('FeedService', () => {
 
     it('should support cursor pagination', async () => {
       // Return 11 posts (take+1)
-      const posts = Array.from({ length: 11 }, (_, i) =>
-        createMockPost(`post-${i}`, 'user-1'),
-      );
+      const posts = Array.from({ length: 11 }, (_, i) => createMockPost(`post-${i}`, 'user-1'));
 
       mockPrisma.post.findMany.mockResolvedValue(posts);
       mockPrisma.like.findMany.mockResolvedValue([]);
@@ -110,10 +105,7 @@ describe('FeedService', () => {
     });
 
     it('should batch check isLiked and isBookmarked for viewer', async () => {
-      const posts = [
-        createMockPost('post-1', 'user-1'),
-        createMockPost('post-2', 'followed-user'),
-      ];
+      const posts = [createMockPost('post-1', 'user-1'), createMockPost('post-2', 'followed-user')];
 
       mockPrisma.post.findMany.mockResolvedValue(posts);
       mockPrisma.like.findMany.mockResolvedValue([{ postId: 'post-1' }]); // liked post-1

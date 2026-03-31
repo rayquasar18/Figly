@@ -11,9 +11,15 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
+import { ZodSerializerDto } from 'nestjs-zod';
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
 import { SignupDto, LoginDto, ResetPasswordRequestDto, ResetPasswordDto, VerifyEmailDto } from './dto/auth.dto';
+import {
+  SignupResponseDto,
+  LoginResponseDto,
+  MeResponseDto,
+} from '../common/dto/user-response.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
@@ -29,17 +35,19 @@ export class AuthController {
   // Email/Password Auth
   // ---------------------
 
+  @ZodSerializerDto(SignupResponseDto)
   @Post('signup')
   async signup(@Body() signupDto: SignupDto) {
     const user = await this.authService.signup(signupDto);
     // Send verification email
-    await this.authService.sendVerificationEmail(user.id, user.email, user.name);
+    await this.authService.sendVerificationEmail(user.id, user.email, user.name || 'ban');
     return {
       message: 'Dang ky thanh cong. Vui long kiem tra email de xac minh.',
       user,
     };
   }
 
+  @ZodSerializerDto(LoginResponseDto)
   @Post('login')
   @HttpCode(HttpStatus.OK)
   @UseGuards(LocalAuthGuard)
@@ -86,6 +94,7 @@ export class AuthController {
     return { message: 'Dang xuat thanh cong' };
   }
 
+  @ZodSerializerDto(MeResponseDto)
   @Get('me')
   @UseGuards(JwtAuthGuard)
   async me(@Req() req: Request) {

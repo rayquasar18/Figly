@@ -2,9 +2,9 @@
 
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { Home, Search, Package, PlusSquare, User } from 'lucide-react';
-import { useMe } from '@/hooks/queries/auth-queries';
-import { useCreatePostStore } from '@/stores/create-post-store';
+import { Home, Clapperboard, Package, PlusSquare, User } from 'lucide-react';
+import { useMe } from '@/features/auth';
+import { useCreatePostStore } from '@/features/create-post';
 import { cn } from '@/lib/utils';
 
 export function BottomNav() {
@@ -17,17 +17,12 @@ export function BottomNav() {
   return (
     <nav className="fixed inset-x-0 bottom-0 z-40 border-t bg-background md:hidden">
       <div className="flex h-14 items-center justify-around">
+        <NavLink href="/" icon={Home} label="Trang chu" isActive={pathname === '/'} />
         <NavLink
-          href="/"
-          icon={Home}
-          label="Trang chu"
-          isActive={pathname === '/'}
-        />
-        <NavLink
-          href="/search"
-          icon={Search}
-          label="Tim kiem"
-          isActive={pathname.startsWith('/search')}
+          href="/reels"
+          icon={Clapperboard}
+          label="Reels"
+          isActive={pathname.startsWith('/reels')}
         />
         <NavLink
           href="/collection"
@@ -47,9 +42,7 @@ export function BottomNav() {
           href={profileHref}
           icon={User}
           label="Ho so"
-          isActive={
-            !!user?.username && pathname.startsWith(`/${user.username}`)
-          }
+          isActive={!!user?.username && pathname.startsWith(`/${user.username}`)}
         />
       </div>
     </nav>

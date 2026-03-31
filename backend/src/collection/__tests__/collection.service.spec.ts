@@ -53,10 +53,7 @@ describe('CollectionService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        CollectionService,
-        { provide: PrismaService, useValue: mockPrisma },
-      ],
+      providers: [CollectionService, { provide: PrismaService, useValue: mockPrisma }],
     }).compile();
 
     service = module.get<CollectionService>(CollectionService);
@@ -92,10 +89,7 @@ describe('CollectionService', () => {
           coverImage: null,
           position: 1,
           _count: { series: 2 },
-          series: [
-            { _count: { items: 12 } },
-            { _count: { items: 7 } },
-          ],
+          series: [{ _count: { items: 12 } }, { _count: { items: 7 } }],
         },
       ];
 
@@ -104,17 +98,21 @@ describe('CollectionService', () => {
       const result = await service.getCategories();
 
       expect(result).toHaveLength(2);
-      expect(result[0]).toEqual(expect.objectContaining({
-        id: 'cat-1',
-        name: 'Gundam',
-        slug: 'gundam',
-        seriesCount: 4,
-        itemCount: 26,
-      }));
-      expect(result[1]).toEqual(expect.objectContaining({
-        id: 'cat-2',
-        itemCount: 19,
-      }));
+      expect(result[0]).toEqual(
+        expect.objectContaining({
+          id: 'cat-1',
+          name: 'Gundam',
+          slug: 'gundam',
+          seriesCount: 4,
+          itemCount: 26,
+        }),
+      );
+      expect(result[1]).toEqual(
+        expect.objectContaining({
+          id: 'cat-2',
+          itemCount: 19,
+        }),
+      );
 
       // Verify ordered by position
       expect(mockPrisma.category.findMany).toHaveBeenCalledWith(
@@ -160,19 +158,19 @@ describe('CollectionService', () => {
       const result = await service.getSeriesByCategory('gundam');
 
       expect(result).toHaveLength(2);
-      expect(result[0]).toEqual(expect.objectContaining({
-        id: 'series-1',
-        name: 'Master Grade',
-        itemCount: 10,
-      }));
+      expect(result[0]).toEqual(
+        expect.objectContaining({
+          id: 'series-1',
+          name: 'Master Grade',
+          itemCount: 10,
+        }),
+      );
     });
 
     it('should throw NotFoundException for invalid category slug', async () => {
       mockPrisma.category.findUnique.mockResolvedValue(null);
 
-      await expect(
-        service.getSeriesByCategory('nonexistent'),
-      ).rejects.toThrow(NotFoundException);
+      await expect(service.getSeriesByCategory('nonexistent')).rejects.toThrow(NotFoundException);
     });
 
     it('should include isFollowed when viewerId is provided', async () => {
@@ -205,9 +203,7 @@ describe('CollectionService', () => {
       ]);
 
       // Batch follow check -- viewer follows series-1
-      mockPrisma.seriesFollow.findMany.mockResolvedValue([
-        { seriesId: 'series-1' },
-      ]);
+      mockPrisma.seriesFollow.findMany.mockResolvedValue([{ seriesId: 'series-1' }]);
 
       const result = await service.getSeriesByCategory('gundam', 'viewer-1');
 
@@ -315,17 +311,19 @@ describe('CollectionService', () => {
 
       const result = await service.getItemDetail('item-1');
 
-      expect(result).toEqual(expect.objectContaining({
-        id: 'item-1',
-        name: 'RX-78-2 Gundam Ver.3.0',
-        ownerCount: 42,
-        seriesName: 'Master Grade',
-        categoryName: 'Gundam',
-        categorySlug: 'gundam',
-        seriesSlug: 'master-grade',
-        isOwned: false,
-        isWishlisted: false,
-      }));
+      expect(result).toEqual(
+        expect.objectContaining({
+          id: 'item-1',
+          name: 'RX-78-2 Gundam Ver.3.0',
+          ownerCount: 42,
+          seriesName: 'Master Grade',
+          categoryName: 'Gundam',
+          categorySlug: 'gundam',
+          seriesSlug: 'master-grade',
+          isOwned: false,
+          isWishlisted: false,
+        }),
+      );
     });
 
     it('should include viewer owned/wishlist status', async () => {
@@ -359,9 +357,7 @@ describe('CollectionService', () => {
     it('should throw NotFoundException for non-existent item', async () => {
       mockPrisma.item.findUnique.mockResolvedValue(null);
 
-      await expect(
-        service.getItemDetail('nonexistent'),
-      ).rejects.toThrow(NotFoundException);
+      await expect(service.getItemDetail('nonexistent')).rejects.toThrow(NotFoundException);
     });
   });
 
@@ -401,9 +397,7 @@ describe('CollectionService', () => {
       await service.searchItems('test', { categoryId: 'cat-1' });
 
       const findManyCall = mockPrisma.item.findMany.mock.calls[0][0];
-      expect(findManyCall.where.series).toEqual(
-        expect.objectContaining({ categoryId: 'cat-1' }),
-      );
+      expect(findManyCall.where.series).toEqual(expect.objectContaining({ categoryId: 'cat-1' }));
     });
 
     it('should apply seriesId filter', async () => {
@@ -568,19 +562,10 @@ describe('CollectionService', () => {
 
   describe('getItemStatuses', () => {
     it('should return correct owned and wishlist Sets', async () => {
-      mockPrisma.ownedItem.findMany.mockResolvedValue([
-        { itemId: 'item-1' },
-        { itemId: 'item-3' },
-      ]);
-      mockPrisma.wishlistItem.findMany.mockResolvedValue([
-        { itemId: 'item-2' },
-      ]);
+      mockPrisma.ownedItem.findMany.mockResolvedValue([{ itemId: 'item-1' }, { itemId: 'item-3' }]);
+      mockPrisma.wishlistItem.findMany.mockResolvedValue([{ itemId: 'item-2' }]);
 
-      const result = await service.getItemStatuses('user-1', [
-        'item-1',
-        'item-2',
-        'item-3',
-      ]);
+      const result = await service.getItemStatuses('user-1', ['item-1', 'item-2', 'item-3']);
 
       expect(result.ownedSet.has('item-1')).toBe(true);
       expect(result.ownedSet.has('item-3')).toBe(true);
@@ -646,20 +631,20 @@ describe('CollectionService', () => {
       const result = await service.getUserOwnedItems('collector');
 
       expect(result.items).toHaveLength(1);
-      expect(result.items[0]).toEqual(expect.objectContaining({
-        id: 'item-1',
-        name: 'RX-78-2',
-        seriesName: 'Master Grade',
-        categoryName: 'Gundam',
-      }));
+      expect(result.items[0]).toEqual(
+        expect.objectContaining({
+          id: 'item-1',
+          name: 'RX-78-2',
+          seriesName: 'Master Grade',
+          categoryName: 'Gundam',
+        }),
+      );
     });
 
     it('should throw NotFoundException for non-existent username', async () => {
       mockPrisma.user.findUnique.mockResolvedValue(null);
 
-      await expect(
-        service.getUserOwnedItems('nonexistent'),
-      ).rejects.toThrow(NotFoundException);
+      await expect(service.getUserOwnedItems('nonexistent')).rejects.toThrow(NotFoundException);
     });
   });
 });

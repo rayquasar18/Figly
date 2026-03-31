@@ -2,8 +2,16 @@ import { join } from 'path';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
+import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis';
 import { BullModule } from '@nestjs/bullmq';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, APP_PIPE, APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import { LoggerModule } from 'nestjs-pino';
+import { ZodValidationPipe, ZodSerializerInterceptor } from 'nestjs-zod';
+import { validateEnv } from './config/env.schema';
+import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
+import { RedisModule } from './redis/redis.module';
+import { RedisService } from './redis/redis.service';
+import { HealthModule } from './health/health.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { MediaModule } from './media/media.module';
@@ -21,23 +29,33 @@ import configuration from './config/configuration';
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configuration],
-      envFilePath: [
-        join(__dirname, '..', '.env'),
-        join(__dirname, '..', '..', '.env'),
-      ],
+      validate: validateEnv,
+      envFilePath: [join(__dirname, '..', '.env'), join(__dirname, '..', '..', '.env')],
     }),
-    ThrottlerModule.forRoot([
-      {
-        name: 'short',
-        ttl: 60000,
-        limit: 100,
-      },
-      {
-        name: 'login',
-        ttl: 60000,
-        limit: 5,
-      },
-    ]),
+    RedisModule,
+    LoggerModule.forRootAsync({
+      useFactory: (configService: ConfigService) => ({
+        pinoHttp: {
+          level: configService.get('NODE_ENV') === 'production' ? 'info' : 'debug',
+          transport:
+            configService.get('NODE_ENV') !== 'production'
+              ? { target: 'pino-pretty', options: { colorize: true, singleLine: true } }
+              : undefined,
+          redact: ['req.headers.authorization', 'req.headers.cookie'],
+        },
+      }),
+      inject: [ConfigService],
+    }),
+    ThrottlerModule.forRootAsync({
+      inject: [RedisService],
+      useFactory: (redis: RedisService) => ({
+        throttlers: [
+          { name: 'short', ttl: 60000, limit: 100 },
+          { name: 'login', ttl: 60000, limit: 5 },
+        ],
+        storage: new ThrottlerStorageRedisService(redis),
+      }),
+    }),
     BullModule.forRootAsync({
       useFactory: (configService: ConfigService) => {
         const redisUrl = configService.get<string>('redis.url') || 'redis://localhost:6379';
@@ -52,6 +70,7 @@ import configuration from './config/configuration';
       inject: [ConfigService],
     }),
     PrismaModule,
+    HealthModule,
     AuthModule,
     MediaModule,
     ProfilesModule,
@@ -64,6 +83,18 @@ import configuration from './config/configuration';
   ],
   controllers: [],
   providers: [
+    {
+      provide: APP_FILTER,
+      useClass: AllExceptionsFilter,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ZodSerializerInterceptor,
+    },
+    {
+      provide: APP_PIPE,
+      useClass: ZodValidationPipe,
+    },
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,

@@ -1,11 +1,11 @@
-'use client';
+import type { Metadata } from 'next';
+import { FeedPageClient } from './feed-page-client';
 
-import { FeedList } from '@/components/feed/feed-list';
+export const metadata: Metadata = {
+  title: 'Trang chu | Figly',
+  description: 'Xem bai viet moi nhat tu nhung nguoi ban theo doi tren Figly',
+};
 
-export default function FeedPage() {
-  return (
-    <div className="mx-auto max-w-[470px] pb-16">
-      <FeedList />
-    </div>
-  );
+export default async function FeedPage() {
+  return <FeedPageClient />;
 }

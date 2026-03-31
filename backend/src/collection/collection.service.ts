@@ -1,7 +1,4 @@
-import {
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import type {
   CategoryResponse,
@@ -57,10 +54,7 @@ export class CollectionService {
   /**
    * Get series for a category by slug with item counts and optional follow status
    */
-  async getSeriesByCategory(
-    categorySlug: string,
-    viewerId?: string,
-  ): Promise<SeriesResponse[]> {
+  async getSeriesByCategory(categorySlug: string, viewerId?: string): Promise<SeriesResponse[]> {
     const category = await this.prisma.category.findUnique({
       where: { slug: categorySlug },
     });
@@ -187,10 +181,7 @@ export class CollectionService {
   /**
    * Get item detail with ownerCount and viewer status
    */
-  async getItemDetail(
-    itemId: string,
-    viewerId?: string,
-  ): Promise<ItemDetailResponse> {
+  async getItemDetail(itemId: string, viewerId?: string): Promise<ItemDetailResponse> {
     const item = await this.prisma.item.findUnique({
       where: { id: itemId },
       include: {
@@ -322,10 +313,7 @@ export class CollectionService {
   /**
    * Toggle owned status for an item (mutual exclusion with wishlist)
    */
-  async toggleOwned(
-    userId: string,
-    itemId: string,
-  ): Promise<{ success: true; isOwned: boolean }> {
+  async toggleOwned(userId: string, itemId: string): Promise<{ success: true; isOwned: boolean }> {
     return this.prisma.$transaction(async (tx) => {
       const existing = await tx.ownedItem.findUnique({
         where: { userId_itemId: { userId, itemId } },

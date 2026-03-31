@@ -10,7 +10,7 @@ import { AuthService } from '../auth.service';
  * passport-apple provides the Strategy class.
  * Apple Sign-In requires: clientID, teamID, keyID, privateKeyString, callbackURL.
  */
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+
 let ApplePassportStrategy: any;
 try {
   ApplePassportStrategy = require('passport-apple').Strategy;
@@ -32,7 +32,9 @@ export class AppleStrategy extends PassportStrategy(ApplePassportStrategy, 'appl
       teamID: configService.get<string>('apple.teamId') || 'apple-team-id',
       keyID: configService.get<string>('apple.keyId') || 'apple-key-id',
       privateKeyString: configService.get<string>('apple.privateKey') || 'apple-private-key',
-      callbackURL: configService.get<string>('apple.callbackUrl') || 'http://localhost:4000/api/auth/apple/callback',
+      callbackURL:
+        configService.get<string>('apple.callbackUrl') ||
+        'http://localhost:4000/api/auth/apple/callback',
       scope: ['name', 'email'],
     });
   }

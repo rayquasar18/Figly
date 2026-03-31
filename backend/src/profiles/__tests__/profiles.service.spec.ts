@@ -1,9 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import {
-  NotFoundException,
-  BadRequestException,
-  ConflictException,
-} from '@nestjs/common';
+import { NotFoundException, BadRequestException, ConflictException } from '@nestjs/common';
 import { ProfilesService } from '../profiles.service';
 import { PrismaService } from '../../prisma/prisma.service';
 import { StorageService } from '../../media/storage.service';
@@ -112,9 +108,9 @@ describe('ProfilesService', () => {
     it('should throw NotFoundException for non-existent username', async () => {
       mockPrisma.user.findUnique.mockResolvedValue(null);
 
-      await expect(service.getProfile('nonexistent', 'viewer-1'))
-        .rejects
-        .toThrow(NotFoundException);
+      await expect(service.getProfile('nonexistent', 'viewer-1')).rejects.toThrow(
+        NotFoundException,
+      );
     });
 
     it('should resolve avatar presigned URL when avatar exists', async () => {
@@ -125,7 +121,9 @@ describe('ProfilesService', () => {
       };
       mockPrisma.user.findUnique.mockResolvedValue(userWithAvatar);
       mockPrisma.follow.findUnique.mockResolvedValue(null);
-      mockStorageService.getPresignedUrl.mockResolvedValue('https://minio.local/medium/avatar.jpg?signed=1');
+      mockStorageService.getPresignedUrl.mockResolvedValue(
+        'https://minio.local/medium/avatar.jpg?signed=1',
+      );
 
       const result = await service.getProfile('john_doe', 'viewer-1');
 
@@ -218,9 +216,9 @@ describe('ProfilesService', () => {
       };
       mockPrisma.user.findUnique.mockResolvedValue(recentlyChanged);
 
-      await expect(
-        service.updateProfile('user-1', { username: 'brand_new_name' }),
-      ).rejects.toThrow(BadRequestException);
+      await expect(service.updateProfile('user-1', { username: 'brand_new_name' })).rejects.toThrow(
+        BadRequestException,
+      );
     });
 
     it('should allow username change after cooldown expires', async () => {
@@ -230,9 +228,7 @@ describe('ProfilesService', () => {
         ...existingUser,
         usernameChangedAt: oldChange,
       };
-      mockPrisma.user.findUnique
-        .mockResolvedValueOnce(expiredCooldown)
-        .mockResolvedValueOnce(null); // uniqueness check
+      mockPrisma.user.findUnique.mockResolvedValueOnce(expiredCooldown).mockResolvedValueOnce(null); // uniqueness check
       mockPrisma.user.update.mockResolvedValue({
         ...expiredCooldown,
         username: 'allowed_name',
@@ -249,17 +245,17 @@ describe('ProfilesService', () => {
         .mockResolvedValueOnce(existingUser) // current user
         .mockResolvedValueOnce({ id: 'other-user', username: 'taken_name' }); // username taken
 
-      await expect(
-        service.updateProfile('user-1', { username: 'taken_name' }),
-      ).rejects.toThrow(ConflictException);
+      await expect(service.updateProfile('user-1', { username: 'taken_name' })).rejects.toThrow(
+        ConflictException,
+      );
     });
 
     it('should reject reserved usernames', async () => {
       mockPrisma.user.findUnique.mockResolvedValue(existingUser);
 
-      await expect(
-        service.updateProfile('user-1', { username: 'admin' }),
-      ).rejects.toThrow(BadRequestException);
+      await expect(service.updateProfile('user-1', { username: 'admin' })).rejects.toThrow(
+        BadRequestException,
+      );
     });
   });
 

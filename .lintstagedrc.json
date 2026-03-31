@@ -1,0 +1,6 @@
+{
+  "frontend/**/*.{ts,tsx}": ["prettier --write"],
+  "backend/**/*.ts": ["prettier --write"],
+  "packages/shared/**/*.ts": ["prettier --write"],
+  "*.{json,md,yml,yaml}": ["prettier --write"]
+}

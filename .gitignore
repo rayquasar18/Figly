@@ -1,10 +1,10 @@
 # Dependencies
 node_modules/
+package-lock.json
 
 # Build outputs
 .next/
 dist/
-!packages/shared/dist/
 .turbo/
 
 # Environment variables
@@ -34,3 +34,4 @@ pnpm-debug.log*
 
 # Planning (keep in repo)
 # !.planning/
+.claude/worktrees/

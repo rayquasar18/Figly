@@ -57,7 +57,12 @@ describe('Auth E2E (real DB)', () => {
   it('POST /api/auth/signup — rejects duplicate email', async () => {
     await request(app.getHttpServer())
       .post('/api/auth/signup')
-      .send({ email: testEmail, password: testPassword, name: testName, username: `${testUsername}_dup` })
+      .send({
+        email: testEmail,
+        password: testPassword,
+        name: testName,
+        username: `${testUsername}_dup`,
+      })
       .expect(409);
   });
 
@@ -141,9 +146,7 @@ describe('Auth E2E (real DB)', () => {
   });
 
   it('GET /api/auth/me — returns 401 without cookies', async () => {
-    await request(app.getHttpServer())
-      .get('/api/auth/me')
-      .expect(401);
+    await request(app.getHttpServer()).get('/api/auth/me').expect(401);
   });
 
   // ─── Token refresh ───
@@ -206,8 +209,6 @@ describe('Auth E2E (real DB)', () => {
 
   it('GET /api/auth/me — fails after logout (cookies cleared)', async () => {
     // After logout, cookies should be cleared
-    await request(app.getHttpServer())
-      .get('/api/auth/me')
-      .expect(401);
+    await request(app.getHttpServer()).get('/api/auth/me').expect(401);
   });
 });

@@ -9,9 +9,16 @@ export interface PostMediaItem {
 
 export interface PostAuthor {
   id: string;
-  username: string;
+  username: string | null;
   displayName: string;
   avatarUrl: string | null;
+}
+
+export interface ReelMetaResponse {
+  duration: number;
+  thumbnailUrl: string | null;
+  width: number;
+  height: number;
 }
 
 export interface PostResponse {
@@ -26,6 +33,8 @@ export interface PostResponse {
   isBookmarked: boolean;
   createdAt: string;
   updatedAt: string;
+  postType?: 'POST' | 'REEL';
+  reelMeta?: ReelMetaResponse | null;
 }
 
 export type FeedPostResponse = PostResponse;

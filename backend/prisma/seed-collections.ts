@@ -18,7 +18,10 @@ interface SeedCategory {
 }
 
 function seedId(category: string, series: string, item: string): string {
-  return `seed-${category}-${series}-${item.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`;
+  return `seed-${category}-${series}-${item
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')}`;
 }
 
 const SEED_DATA: SeedCategory[] = [
@@ -368,5 +371,7 @@ export async function seedCollections(prisma: PrismaClient): Promise<void> {
   const categoryCount = await prisma.category.count();
   const seriesCount = await prisma.series.count();
   const itemCount = await prisma.item.count();
-  console.log(`Collections seeded: ${categoryCount} categories, ${seriesCount} series, ${itemCount} items`);
+  console.log(
+    `Collections seeded: ${categoryCount} categories, ${seriesCount} series, ${itemCount} items`,
+  );
 }

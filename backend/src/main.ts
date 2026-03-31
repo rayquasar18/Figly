@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { ZodValidationPipe } from 'nestjs-zod';
 import * as cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
 
@@ -23,14 +23,8 @@ async function bootstrap() {
   // Cookie parser
   app.use(cookieParser());
 
-  // Global validation pipe
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      transform: true,
-    }),
-  );
+  // Global Zod validation pipe (replaces class-validator ValidationPipe)
+  app.useGlobalPipes(new ZodValidationPipe());
 
   await app.listen(port, '0.0.0.0');
   console.log(`NestJS server running on port ${port}`);

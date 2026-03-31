@@ -1,8 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import {
-  BadRequestException,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { SocialService } from '../social.service';
 import { PrismaService } from '../../prisma/prisma.service';
 
@@ -24,10 +21,7 @@ describe('SocialService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        SocialService,
-        { provide: PrismaService, useValue: mockPrisma },
-      ],
+      providers: [SocialService, { provide: PrismaService, useValue: mockPrisma }],
     }).compile();
 
     service = module.get<SocialService>(SocialService);
@@ -56,9 +50,7 @@ describe('SocialService', () => {
     });
 
     it('should prevent self-follow', async () => {
-      await expect(service.follow('user-1', 'user-1'))
-        .rejects
-        .toThrow(BadRequestException);
+      await expect(service.follow('user-1', 'user-1')).rejects.toThrow(BadRequestException);
     });
 
     it('should handle duplicate follow gracefully (idempotent)', async () => {
@@ -111,32 +103,33 @@ describe('SocialService', () => {
 
     it('should return paginated followers list', async () => {
       mockPrisma.user.findUnique.mockResolvedValue(mockUser);
-      mockPrisma.follow.findMany
-        .mockResolvedValueOnce([
-          {
-            id: 'follow-1',
-            follower: {
-              id: 'follower-1',
-              username: 'alice',
-              name: 'Alice',
-              avatarId: null,
-              avatar: null,
-            },
-            createdAt: new Date(),
+      mockPrisma.follow.findMany.mockResolvedValueOnce([
+        {
+          id: 'follow-1',
+          follower: {
+            id: 'follower-1',
+            username: 'alice',
+            name: 'Alice',
+            avatarId: null,
+            avatar: null,
           },
-        ]);
+          createdAt: new Date(),
+        },
+      ]);
       // Batch follow status check
       mockPrisma.follow.findMany.mockResolvedValueOnce([]);
 
       const result = await service.getFollowers('john_doe', 'viewer-1', {});
 
       expect(result.items).toHaveLength(1);
-      expect(result.items[0]).toEqual(expect.objectContaining({
-        id: 'follower-1',
-        username: 'alice',
-        displayName: 'Alice',
-        isFollowing: false,
-      }));
+      expect(result.items[0]).toEqual(
+        expect.objectContaining({
+          id: 'follower-1',
+          username: 'alice',
+          displayName: 'Alice',
+          isFollowing: false,
+        }),
+      );
       expect(result.hasMore).toBe(false);
       expect(result.nextCursor).toBeNull();
     });
@@ -155,9 +148,7 @@ describe('SocialService', () => {
         },
         createdAt: new Date(),
       }));
-      mockPrisma.follow.findMany
-        .mockResolvedValueOnce(follows)
-        .mockResolvedValueOnce([]);
+      mockPrisma.follow.findMany.mockResolvedValueOnce(follows).mockResolvedValueOnce([]);
 
       const result = await service.getFollowers('john_doe', 'viewer-1', {});
 
@@ -201,12 +192,24 @@ describe('SocialService', () => {
         .mockResolvedValueOnce([
           {
             id: 'follow-1',
-            follower: { id: 'follower-1', username: 'alice', name: 'Alice', avatarId: null, avatar: null },
+            follower: {
+              id: 'follower-1',
+              username: 'alice',
+              name: 'Alice',
+              avatarId: null,
+              avatar: null,
+            },
             createdAt: new Date(),
           },
           {
             id: 'follow-2',
-            follower: { id: 'follower-2', username: 'bob', name: 'Bob', avatarId: null, avatar: null },
+            follower: {
+              id: 'follower-2',
+              username: 'bob',
+              name: 'Bob',
+              avatarId: null,
+              avatar: null,
+            },
             createdAt: new Date(),
           },
         ])
@@ -221,9 +224,9 @@ describe('SocialService', () => {
     it('should throw NotFoundException for non-existent username', async () => {
       mockPrisma.user.findUnique.mockResolvedValue(null);
 
-      await expect(
-        service.getFollowers('nonexistent', 'viewer-1', {}),
-      ).rejects.toThrow(NotFoundException);
+      await expect(service.getFollowers('nonexistent', 'viewer-1', {})).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 
@@ -251,20 +254,22 @@ describe('SocialService', () => {
       const result = await service.getFollowing('john_doe', 'viewer-1', {});
 
       expect(result.items).toHaveLength(1);
-      expect(result.items[0]).toEqual(expect.objectContaining({
-        id: 'following-1',
-        username: 'bob',
-        displayName: 'Bob',
-        isFollowing: true,
-      }));
+      expect(result.items[0]).toEqual(
+        expect.objectContaining({
+          id: 'following-1',
+          username: 'bob',
+          displayName: 'Bob',
+          isFollowing: true,
+        }),
+      );
     });
 
     it('should throw NotFoundException for non-existent username', async () => {
       mockPrisma.user.findUnique.mockResolvedValue(null);
 
-      await expect(
-        service.getFollowing('nonexistent', 'viewer-1', {}),
-      ).rejects.toThrow(NotFoundException);
+      await expect(service.getFollowing('nonexistent', 'viewer-1', {})).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 

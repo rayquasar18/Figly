@@ -38,6 +38,4 @@ export const usernameSchema = z
     message: 'Ten nguoi dung chi chua chu thuong, so, dau gach duoi va dau cham',
   });
 
-export const bioSchema = z
-  .string()
-  .max(150, { message: 'Tieu su khong duoc vuot qua 150 ky tu' });
+export const bioSchema = z.string().max(150, { message: 'Tieu su khong duoc vuot qua 150 ky tu' });

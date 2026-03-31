@@ -1,6 +1,6 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import { LoginForm } from '@/components/auth/login-form';
-import { SocialLoginButtons } from '@/components/auth/social-login-buttons';
+import { LoginForm, SocialLoginButtons } from '@/features/auth';
 import {
   Card,
   CardContent,
@@ -10,14 +10,17 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
+export const metadata: Metadata = {
+  title: 'Dang nhap | Figly',
+  description: 'Dang nhap vao tai khoan Figly cua ban',
+};
+
 export default function LoginPage() {
   return (
     <Card>
       <CardHeader className="text-center">
         <CardTitle className="text-2xl font-bold">Dang nhap</CardTitle>
-        <CardDescription>
-          Dang nhap vao tai khoan Figly cua ban
-        </CardDescription>
+        <CardDescription>Dang nhap vao tai khoan Figly cua ban</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <LoginForm />
@@ -42,7 +45,7 @@ export default function LoginPage() {
         </Link>
         <p className="text-sm text-muted-foreground">
           Chua co tai khoan?{' '}
-          <Link href="/signup" className="text-primary hover:underline font-medium">
+          <Link href="/signup" className="font-medium text-primary hover:underline">
             Dang ky
           </Link>
         </p>

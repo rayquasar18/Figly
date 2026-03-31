@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { StorageService } from '../media/storage.service';
-import { POST_LIMITS } from '@figly/shared';
+import { POST_LIMITS, REEL_LIMITS } from '@figly/shared';
 
 @Injectable()
 export class FeedService {
@@ -14,6 +14,7 @@ export class FeedService {
     // Get posts from users the viewer follows + own posts
     const posts = await this.prisma.post.findMany({
       where: {
+        postType: 'POST' as const,
         OR: [
           { userId },
           {
@@ -36,10 +37,20 @@ export class FeedService {
         },
         media: {
           include: {
-            media: { select: { id: true, largeKey: true, mediumKey: true } },
+            media: {
+              select: {
+                id: true,
+                originalKey: true,
+                largeKey: true,
+                thumbnailKey: true,
+                mediumKey: true,
+                mimeType: true,
+              },
+            },
           },
           orderBy: { position: 'asc' as const },
         },
+        reelMeta: true,
         items: {
           include: {
             item: {
@@ -99,6 +110,12 @@ export class FeedService {
   async getPublicFeed(cursor?: string, take = POST_LIMITS.feedPageSize) {
     // Query all posts from all users, ordered chronologically
     const posts = await this.prisma.post.findMany({
+      where: {
+        postType: 'POST' as const,
+        user: {
+          username: { not: null },
+        },
+      },
       include: {
         user: {
           select: {
@@ -110,10 +127,20 @@ export class FeedService {
         },
         media: {
           include: {
-            media: { select: { id: true, largeKey: true, mediumKey: true } },
+            media: {
+              select: {
+                id: true,
+                originalKey: true,
+                largeKey: true,
+                thumbnailKey: true,
+                mediumKey: true,
+                mimeType: true,
+              },
+            },
           },
           orderBy: { position: 'asc' as const },
         },
+        reelMeta: true,
         items: {
           include: {
             item: {
@@ -158,6 +185,94 @@ export class FeedService {
     };
   }
 
+  async getReelsFeed(userId?: string | null, cursor?: string, take = REEL_LIMITS.feedPageSize) {
+    const posts = await this.prisma.post.findMany({
+      where: {
+        postType: 'REEL',
+        user: {
+          username: { not: null },
+        },
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            username: true,
+            name: true,
+            avatar: { select: { mediumKey: true } },
+          },
+        },
+        media: {
+          include: {
+            media: {
+              select: {
+                id: true,
+                originalKey: true,
+                largeKey: true,
+                thumbnailKey: true,
+                mimeType: true,
+              },
+            },
+          },
+          orderBy: { position: 'asc' as const },
+        },
+        reelMeta: true,
+        items: {
+          include: {
+            item: {
+              select: {
+                id: true,
+                name: true,
+                imageKey: true,
+                series: {
+                  select: {
+                    name: true,
+                    category: { select: { name: true } },
+                  },
+                },
+              },
+            },
+          },
+        },
+        _count: { select: { likes: true, comments: true } },
+      },
+      orderBy: { createdAt: 'desc' as const },
+      take: take + 1,
+      ...(cursor && { cursor: { id: cursor }, skip: 1 }),
+    });
+
+    const hasMore = posts.length > take;
+    const items = posts.slice(0, take);
+    const nextCursor = hasMore ? items[items.length - 1].id : null;
+
+    // Batch check like/bookmark status (skip when unauthenticated)
+    let likedSet = new Set<string>();
+    let bookmarkedSet = new Set<string>();
+    if (userId) {
+      const postIds = items.map((p: any) => p.id);
+      const [likes, bookmarks] = await Promise.all([
+        this.prisma.like.findMany({
+          where: { userId, postId: { in: postIds } },
+          select: { postId: true },
+        }),
+        this.prisma.bookmark.findMany({
+          where: { userId, postId: { in: postIds } },
+          select: { postId: true },
+        }),
+      ]);
+      likedSet = new Set(likes.map((l: any) => l.postId));
+      bookmarkedSet = new Set(bookmarks.map((b: any) => b.postId));
+    }
+
+    const urlMap = await this.resolvePresignedUrls(items);
+
+    return {
+      items: items.map((post: any) => this.mapPostResponse(post, likedSet, bookmarkedSet, urlMap)),
+      nextCursor,
+      hasMore,
+    };
+  }
+
   private mapPostResponse(
     post: any,
     likedSet: Set<string>,
@@ -179,7 +294,11 @@ export class FeedService {
         id: pm.id,
         mediaId: pm.mediaId,
         position: pm.position,
-        url: pm.media?.largeKey ? urlMap.get(pm.media.largeKey) || '' : '',
+        url: pm.media?.largeKey
+          ? urlMap.get(pm.media.largeKey) || ''
+          : pm.media?.originalKey
+            ? urlMap.get(pm.media.originalKey) || ''
+            : '',
       })),
       linkedItems: this.mapLinkedItems(post.items),
       likeCount: post._count.likes,
@@ -188,6 +307,17 @@ export class FeedService {
       isBookmarked: bookmarkedSet.has(post.id),
       createdAt: post.createdAt.toISOString(),
       updatedAt: post.updatedAt.toISOString(),
+      postType: post.postType || 'POST',
+      reelMeta: post.reelMeta
+        ? {
+            duration: post.reelMeta.duration,
+            thumbnailUrl: post.reelMeta.thumbnailKey
+              ? urlMap.get(post.reelMeta.thumbnailKey) || null
+              : null,
+            width: post.reelMeta.width,
+            height: post.reelMeta.height,
+          }
+        : null,
     };
   }
 
@@ -213,6 +343,15 @@ export class FeedService {
         if (pm.media?.largeKey) {
           storageKeys.push(pm.media.largeKey);
         }
+        if (pm.media?.originalKey) {
+          storageKeys.push(pm.media.originalKey);
+        }
+        if (pm.media?.thumbnailKey) {
+          storageKeys.push(pm.media.thumbnailKey);
+        }
+      }
+      if (post.reelMeta?.thumbnailKey) {
+        storageKeys.push(post.reelMeta.thumbnailKey);
       }
     }
 

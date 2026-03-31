@@ -34,9 +34,7 @@ export class StorageService implements OnModuleInit {
 
   async onModuleInit() {
     try {
-      await this.s3Client.send(
-        new CreateBucketCommand({ Bucket: this.bucket }),
-      );
+      await this.s3Client.send(new CreateBucketCommand({ Bucket: this.bucket }));
       this.logger.log(`Bucket "${this.bucket}" created`);
     } catch (error: any) {
       if (
@@ -46,9 +44,7 @@ export class StorageService implements OnModuleInit {
       ) {
         this.logger.log(`Bucket "${this.bucket}" already exists`);
       } else {
-        this.logger.warn(
-          `Could not create bucket "${this.bucket}": ${error.message}`,
-        );
+        this.logger.warn(`Could not create bucket "${this.bucket}": ${error.message}`);
       }
     }
   }

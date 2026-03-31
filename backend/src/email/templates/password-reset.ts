@@ -59,6 +59,7 @@ export function renderPasswordResetEmail(name: string, resetUrl: string): string
 }
 
 function escapeHtml(str: string): string {
+  if (!str) return '';
   return str
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
